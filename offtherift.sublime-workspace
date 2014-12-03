@@ -1,0 +1,786 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"padd",
+				"padding-top"
+			],
+			[
+				"clor",
+				"color"
+			],
+			[
+				"ng",
+				"ng-click	AngularJS"
+			],
+			[
+				"$state",
+				"$stateParams"
+			],
+			[
+				"isD",
+				"angular.isDefined"
+			],
+			[
+				"$root",
+				"$rootScope	AngularJS"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"ionic-css-bu",
+				"ionic-css-button-full	ionic-css-button"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"$roo",
+				"$rootScope	AngularJS"
+			],
+			[
+				"ionic-hea",
+				"ionic-css-header	ionic-css-header-bar"
+			],
+			[
+				"for",
+				"angular.forEach"
+			],
+			[
+				"ionic-",
+				"ionic-nav-view	ionic-nav-view"
+			],
+			[
+				"ionic",
+				"ionic-slide-box	ionic-slide-box"
+			],
+			[
+				"ionic-na",
+				"ionic-nav-view	ionic-nav-view"
+			],
+			[
+				"input",
+				"input	input - hidden"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"ng-s",
+				"ng-show	AngularJS"
+			],
+			[
+				"obj",
+				"object"
+			],
+			[
+				"ng-cl",
+				"ng-click	AngularJS"
+			],
+			[
+				"border-col",
+				"border-color"
+			],
+			[
+				"ng-re",
+				"ng-repeat	AngularJS"
+			],
+			[
+				"$sc",
+				"$scope	AngularJS"
+			],
+			[
+				"angua",
+				"angular-websql"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "public/modules/users/controllers/profile.client.controller.js",
+			"settings":
+			{
+				"buffer_size": 469,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/modules/users/views/profile.client.view.html",
+			"settings":
+			{
+				"buffer_size": 185,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/modules/core/less/core.less",
+			"settings":
+			{
+				"buffer_size": 289,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "public/modules/users/config/users.client.routes.js",
+			"settings":
+			{
+				"buffer_size": 1502,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 368.0,
+		"selected_items":
+		[
+			[
+				"rename",
+				"Emmet: Rename Tag"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"to",
+				"Toggle Block Comment"
+			],
+			[
+				"tg",
+				"Toggle Block Comment"
+			],
+			[
+				"togl",
+				"Toggle Comment"
+			],
+			[
+				"tog",
+				"Toggle Block Comment"
+			],
+			[
+				"comm",
+				"Toggle Comment"
+			],
+			[
+				"block",
+				"Toggle Block Comment"
+			],
+			[
+				"togg",
+				"Toggle Block Comment"
+			],
+			[
+				"space",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"spa",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"toggl",
+				"Toggle Block Comment"
+			],
+			[
+				"toggle",
+				"Toggle Comment"
+			],
+			[
+				"spaces",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"commen",
+				"Toggle Comment"
+			],
+			[
+				"renae",
+				"File: Rename"
+			],
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"mini",
+				"Minify Javascript to file"
+			],
+			[
+				"mii",
+				"Minify Javascript to file"
+			],
+			[
+				"mni",
+				"Minify Javascript to file"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"nistal",
+				"Package Control: Install Package"
+			],
+			[
+				"git",
+				"Github: Repository"
+			]
+		],
+		"width": 440.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/config/users.client.routes.js",
+		"/C/xampp/htdocs/git/offtherift/public/modules/core/views/header.client.view.html",
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/controllers/authentication.client.controller.js",
+		"/C/xampp/htdocs/git/offtherift/app/routes/users.server.routes.js",
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/controllers/profile.client.controller.js",
+		"/C/xampp/htdocs/git/offtherift/app/controllers/users/users.profile.server.controller.js",
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/controllers/profileclientcontroller.client.controller.js",
+		"/C/xampp/htdocs/git/offtherift/gruntfile.js",
+		"/C/xampp/htdocs/git/offtherift/public/modules/core/less/core.less",
+		"/C/xampp/htdocs/git/offtherift/public/modules/core/css/core.css",
+		"/C/xampp/htdocs/git/offtherift/node_modules/load-grunt-tasks/load-grunt-tasks.js",
+		"/C/xampp/htdocs/git/offtherift/app/views/layout.server.view.html",
+		"/C/xampp/htdocs/git/offtherift/config/env/all.js",
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/less/users.less",
+		"/C/xampp/htdocs/git/offtherift/public/modules/users/css/users.css",
+		"/C/xampp/htdocs/git/offtherift/config/env/development.js",
+		"/C/Users/PCDESK/Desktop/DOCUMENTOS ROMUALDO/Licenciatura em EFD/1º ANO, 1º SEMESTRE/Retórica e Comunicação/Comunicação/The structure and function of communication in society- Lasswell.pdf",
+		"/C/xampp/htdocs/git/offtherift/bower.json",
+		"/C/xampp/htdocs/git/offtherift/package.json",
+		"/C/xampp/htdocs/git/offtherift/.gitignore",
+		"/C/xampp/htdocs/git/lol/client/components/navbar/navbar.controller.js",
+		"/C/xampp/htdocs/git/lol/server/config/environment/development.js",
+		"/C/xampp/htdocs/git/lol/package.json",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/xampp/htdocs/git/fado/dev/app/less/template.less",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/views/layouts/main.php",
+		"/C/xampp/htdocs/git/insurance/backend/protected/views/layouts/main.php",
+		"/C/xampp/htdocs/git/fado/dev/app/views/music/new.html",
+		"/C/xampp/htdocs/git/fado/dev/app/scripts/app.js",
+		"/C/xampp/htdocs/git/fado/dev/app/scripts/services/music.js",
+		"/C/xampp/htdocs/git/fado/dev/app/scripts/controllers/music.js",
+		"/C/xampp/htdocs/git/insurance/backend/protected/views/layouts/panel.php",
+		"/C/xampp/htdocs/git/fado/dev/app/views/main.html",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/controllers/SiteController.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/main_frontend.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/SiteController 2.php",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/config/main_frontend.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/SiteController.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/main_public.php",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/config/main_public.php",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/config/main.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/test.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/index 2.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/index 3.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/main_root.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/.htaccess",
+		"/C/xampp/htdocs/git/insurance/frontend/.htaccess",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/.htaccess 2",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/index.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/error_log",
+		"/C/xampp/htdocs/git/fado/dev/app/views/menu.html",
+		"/C/xampp/htdocs/git/fado/dev/app/views/music/list.html",
+		"/C/xampp/htdocs/git/fado/dev/app/views/music/view.html",
+		"/C/xampp/htdocs/git/fado/dev/app/index.html",
+		"/C/xampp/htdocs/git/fado/dev/app/views/music/music.html",
+		"/C/xampp/htdocs/git/insurance/frontend/protected/views/layouts/_footer.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/.cpanelinfo.php",
+		"/C/Users/PCDESK/AppData/Local/Temp/fz3temp-1/User.php",
+		"/C/xampp/htdocs/git/fado/www/app/fado.sublime-workspace",
+		"/C/xampp/htdocs/git/fado/www/app/fado.sublime-project",
+		"/C/xampp/htdocs/git/fado/fado.sublime-workspace",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/services/musicchord.js",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/services/attribute.js",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/services/music.js",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/app.js",
+		"/C/xampp/htdocs/git/fado/www/app/views/music.view.html",
+		"/C/xampp/htdocs/git/fado/www/app/views/music.list.html",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/services/chord.js",
+		"/C/xampp/htdocs/git/fado/www/app/index.html",
+		"/C/xampp/htdocs/git/fado/www/app/less/template.less",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/controllers/music.js",
+		"/C/xampp/htdocs/git/fado/www/app/views/main.html",
+		"/C/xampp/htdocs/git/fado/www/app/views/menu.html",
+		"/C/xampp/htdocs/git/fado/www/node_modules/grunt-google-cdn/node_modules/google-cdn/node_modules/bower/node_modules/update-notifier/node_modules/request/node_modules/http-signature/node_modules/ctype/CHANGELOG",
+		"/C/xampp/htdocs/git/fado/www/node_modules/grunt-svgmin/node_modules/svgo/plugins/_collections.js",
+		"/C/xampp/htdocs/git/fado/www/node_modules/grunt-contrib-uglify/node_modules/maxmin/node_modules/gzip-size/node_modules/concat-stream/node_modules/readable-stream/lib/_stream_duplex.js",
+		"/C/xampp/htdocs/git/blog/app/scripts/app.js",
+		"/C/xampp/htdocs/git/fado/www/Gruntfile.js",
+		"/C/xampp/htdocs/git/fado/www/bower.json",
+		"/C/xampp/htdocs/git/fado/www/package.json",
+		"/C/xampp/htdocs/git/fado/www/app/server.js",
+		"/C/xampp/htdocs/git/fado/www/app/views/music.html",
+		"/C/xampp/htdocs/git/fado/www/app/json/music.json",
+		"/C/xampp/htdocs/git/fado/www/app/json/music/fado-alberto.json",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/controllers/public.js",
+		"/C/Users/PCDESK/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/xampp/htdocs/git/fado/_www/index.html",
+		"/C/xampp/htdocs/git/fado/www/app/styles/template.css",
+		"/C/xampp/htdocs/git/fado/www/app/views/music/list.html",
+		"/C/xampp/htdocs/git/fado/www/app/views/music/index.html",
+		"/C/xampp/htdocs/git/fado/www/app/views/public/menu.html",
+		"/C/xampp/htdocs/git/fado/www/app/views/music/view.html",
+		"/C/xampp/htdocs/git/fado/_www/js/app.js",
+		"/C/xampp/htdocs/git/telexfreetool/mobile/www/views/account/index.html",
+		"/C/xampp/htdocs/git/telexfreetool/mobile/www/views/dollar/index.html",
+		"/C/xampp/htdocs/git/telexfreetool/www/app/views/main.html",
+		"/C/xampp/htdocs/git/fado/www/app/styles/main.css",
+		"/C/xampp/htdocs/git/fado/www/bower_components/angular-ui-router/test/viewDirectiveSpec.js",
+		"/C/xampp/htdocs/git/fado/www/bower_components/angular-ui-router/src/view.js",
+		"/C/xampp/htdocs/git/fado/www/node_modules/grunt-google-cdn/node_modules/bower/node_modules/inquirer/node_modules/cli-color/node_modules/es5-ext/node_modules/es6-iterator/valid-iterable.js",
+		"/C/xampp/htdocs/git/fado/_www/lib/version.json",
+		"/C/xampp/htdocs/git/fado/www/.tmp/styles/main.css",
+		"/C/xampp/htdocs/git/fado/www/node_modules/grunt-contrib-uglify/node_modules/uglify-js/lib/mozilla-ast.js",
+		"/C/xampp/htdocs/git/fado/www/test/spec/controllers/main.js",
+		"/C/xampp/htdocs/git/fado/www/test/spec/controllers/about.js",
+		"/C/xampp/htdocs/git/fado/www/app/views/about.html",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/controllers/main.js",
+		"/C/xampp/htdocs/git/fado/www/app/scripts/controllers/about.js",
+		"/C/Users/PCDESK/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/xampp/htdocs/git/fado/package.json",
+		"/C/xampp/htdocs/git/fado/Gruntfile",
+		"/C/xampp/htdocs/git/blog/.tmp/styles/main.css",
+		"/C/xampp/htdocs/git/blog/node_modules/grunt-google-cdn/node_modules/bower/node_modules/request/node_modules/form-data/node_modules/async/async.min.js.gzip",
+		"/C/xampp/htdocs/git/blog/node_modules/grunt/node_modules/minimatch/test/caching.js",
+		"/C/xampp/htdocs/git/blog/app/views/main.html",
+		"/C/xampp/htdocs/git/blog/node_modules/grunt-contrib-imagemin/node_modules/gifsicle/node_modules/bin-wrapper/node_modules/download/node_modules/decompress/node_modules/adm-zip/headers/mainHeader.js",
+		"/C/xampp/htdocs/git/blog/node_modules/grunt-contrib-uglify/node_modules/uglify-js/lib/mozilla-ast.js",
+		"/C/xampp/htdocs/git/angular-websql/angular-websql.js",
+		"/C/xampp/htdocs/git/telexfreetool/mobile/www/js/app.js",
+		"/C/xampp/htdocs/git/gitlab/index.php",
+		"/C/xampp/htdocs/git/blog/app/styles/main.css",
+		"/C/xampp/htdocs/git/blog/app/index.html",
+		"/C/xampp/htdocs/git/blog/app/scripts/controllers/main.js",
+		"/C/xampp/htdocs/git/blog/app/bower_components/angular-websql/.bower.json",
+		"/C/xampp/htdocs/git/blog/app/bower_components/angular-websql/angular-websql.min.js",
+		"/C/xampp/htdocs/git/blog/app/bower_components/angular-websql/angular-websql.js",
+		"/C/xampp/htdocs/git/blog/app/bower_components/angular-websql/bower.json",
+		"/C/xampp/htdocs/git/blog/bower.json"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 157.0,
+		"where_history":
+		[
+			"C:\\xampp\\htdocs\\git\\offtherift\\public",
+			"C:\\xampp\\htdocs\\git\\fado\\www",
+			"C:\\xampp\\htdocs\\git\\blog\\app",
+			"usersApp"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"signin.client.view.html",
+			"AuthenticationController",
+			"desc",
+			"src",
+			"dest",
+			".min",
+			"users",
+			"scss",
+			"{\n",
+			"\"",
+			"class",
+			"isNewChord",
+			"$loader",
+			"a",
+			".col.col-50",
+			"\n    <ion-list>\n      <ion-item ng-repeat=\"music in musics| filter:search:strict\" ui-sref=\"musicView({ alias: music.alias, id: music.id })\">\n          <i class=\"icon ion-music-note\"></i>\n          {{music.name}}\n          <span class=\"item-note\">\n            {{music.tone.name}}\n          </span>\n      </ion-item>\n    </ion-list>",
+			"h1",
+			"bar-footer ",
+			"header",
+			"create",
+			"newMusic",
+			"generateAlias",
+			"console",
+			"console.log",
+			"chord",
+			".chord",
+			"header",
+			"notes-row",
+			"lines",
+			".lines",
+			"music",
+			"nav-title-slide-ios7",
+			" ng-repeat=\"chord in chords\"",
+			" checked=\"checked\"",
+			"name=\"group\" ",
+			"/www",
+			"www",
+			"margin",
+			"musicChordIndex",
+			"chords",
+			"results",
+			"Music",
+			"console.log",
+			"obj",
+			"chord",
+			"music",
+			"Music",
+			"chords",
+			"Chord",
+			"Name",
+			"music",
+			"Music",
+			"music",
+			"<li>",
+			" class=\"col col-10\"",
+			" class=\"note\"",
+			"/div",
+			"<div",
+			"console.log",
+			"chords.item(i)",
+			"index",
+			"name",
+			"Tone",
+			"appConfig",
+			"yeoman",
+			"header",
+			"nav",
+			"col  ",
+			"  ",
+			"col",
+			"       ",
+			"templateUrl",
+			"music-6",
+			"music-1",
+			", name:",
+			",\n",
+			"1",
+			"wwwApp",
+			"styles",
+			"form.left",
+			">\n",
+			"blogApp",
+			"$scope",
+			"'",
+			"console.log",
+			">\n",
+			"console.log",
+			"\"",
+			"\"></",
+			"webSql"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"fadoApp",
+			"'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "public/modules/users/controllers/profile.client.controller.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 469,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								362,
+								362
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "public/modules/users/views/profile.client.view.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 185,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								119,
+								119
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/modules/core/less/core.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 289,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LESS/LESS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "public/modules/users/config/users.client.routes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								260,
+								260
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "offtherift.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"load-grunt-tasks",
+				"node_modules\\load-grunt-tasks\\load-grunt-tasks.js"
+			],
+			[
+				"/modules/core/views/header.client.view.html",
+				"public\\modules\\core\\views\\header.client.view.html"
+			],
+			[
+				"apps",
+				"scripts\\app.js"
+			],
+			[
+				"music",
+				"scripts\\controllers\\music.js"
+			],
+			[
+				"music.vi",
+				"app\\views\\music.view.html"
+			],
+			[
+				"music.list.html",
+				"app\\views\\music.list.html"
+			],
+			[
+				"views/ma",
+				"www\\app\\views\\main.html"
+			],
+			[
+				"main.js",
+				"app\\scripts\\controllers\\main.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"fado",
+				"C:\\Program Files\\Sublime Text 3\\fado.sublime-project"
+			],
+			[
+				"af",
+				"C:\\xampp\\htdocs\\git\\fado\\fado.sublime-workspace"
+			],
+			[
+				"fa",
+				"C:\\xampp\\htdocs\\git\\fado\\fado.sublime-workspace"
+			],
+			[
+				"",
+				"C:\\xampp\\htdocs\\git\\angular-websql\\angular-websql.sublime-project"
+			],
+			[
+				"ang",
+				"C:\\xampp\\htdocs\\git\\angular-websql\\angular-websql.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 426.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
