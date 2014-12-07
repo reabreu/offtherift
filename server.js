@@ -33,4 +33,11 @@ app.listen(config.port);
 exports = module.exports = app;
 
 // Logging initialization
-console.log('MEAN.JS application started on port ' + config.port);
+console.log('   _____ _          _ _ ____            _                     \r\n' +
+'  / ____| |        | | |  _ \\          (_)                    \r\n' +
+' | (___ | |__   ___| | | |_) |_   _ ___ _ _ __   ___  ___ ___ \r\n' +
+'  \\___ \\| \'_ \\ / _ \\ | |  _ <| | | / __| | \'_ \\ / _ \\/ __/ __|\r\n' +
+'  ____) | | | |  __/ | | |_) | |_| \\__ \\ | | | |  __/\\__ \\__ \\\r\n' +
+' |_____/|_| |_|\\___|_|_|____/ \\__,_|___/_|_| |_|\\___||___/___/\r\n' +
+'                                                              \r\n' +
+'Listen on port ' + config.port);
