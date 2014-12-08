@@ -13,8 +13,9 @@ module.exports = {
 	assets: {
 		lib: {
 			css: [
-				'public/lib/bootstrap/dist/css/bootstrap.css',
-				'public/lib/bootstrap/dist/css/bootstrap-theme.css',
+				'public/lib/bootstrap/dist/css/bootstrap.min.css',
+				'public/lib/font-awesome/css/font-awesome.min.css',
+				'public/lib/iCheck/skins/minimal/blue.css',
 			],
 			js: [
 				'public/lib/angular/angular.js',
@@ -25,7 +26,14 @@ module.exports = {
 				'public/lib/angular-sanitize/angular-sanitize.js', 
 				'public/lib/angular-ui-router/release/angular-ui-router.js',
 				'public/lib/angular-ui-utils/ui-utils.js',
-				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js'
+				'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+				'public/lib/jquery/dist/jquery.min.js',
+				'public/lib/bootstrap/dist/js/bootstrap.min.js',
+				'public/lib/jquery-layout/source/stable/jquery.layout.min.js',
+				'public/lib/jScrollPane/script/jquery.jscrollpane.min.js',
+				'public/lib/iCheck/icheck.min.js',
+				'public/lib/jquery-touchswipe/jquery.touchSwipe.min.js',
+				'public/lib/enquire/dist/enquire.min.js',
 			]
 		},
 		css: [

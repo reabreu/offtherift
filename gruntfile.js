@@ -156,8 +156,8 @@ module.exports = function(grunt) {
 					cleancss: true
 				},
 				files: [
-					{ src: 'public/modules/core/less/**/*.less',   dest: 'public/modules/core/css/core.min.css',  },
-					{ src: 'public/modules/users/less/**/*.less', dest: 'public/modules/users/css/users.min.css', },
+					{ src: 'public/modules/core/less/**/styles.less',   dest: 'public/modules/core/css/core.min.css'  },
+					{ src: 'public/modules/users/less/**/styles.less', dest: 'public/modules/users/css/users.min.css' },
 				],
 			}
 		}

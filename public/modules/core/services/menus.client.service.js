@@ -160,7 +160,9 @@ angular.module('core').service('Menus', [
 			return this.menus[menuId];
 		};
 
-		//Adding the topbar menu
-		this.addMenu('topbar');
+		//Adding the topnav menu
+		this.addMenu('topnav');
+		//Adding the sidebar menu
+		this.addMenu('sidebar');
 	}
 ]);

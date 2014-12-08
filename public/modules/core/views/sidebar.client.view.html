@@ -1,0 +1,24 @@
+<section data-ng-controller="SidebarController">
+    <div class="widget">
+        <div class="widget-body welcome-box tabular">
+            <div class="tabular-row">
+                <div class="tabular-cell welcome-avatar">
+                    <a href="/#!/dashboard"><img src="/modules/users/img/nophoto.png" class="avatar"></a>
+                </div>
+                <div class="tabular-cell welcome-options">
+                    <span class="welcome-text">Welcome,</span>
+                    <a href="/#!/dashboard" class="name" data-ng-bind="authentication.user.displayName"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget" id="widget-sidebar">
+        <span class="widget-heading">Explore</span>
+        <nav class="widget-body" role="navigation">
+            <ul class="acc-menu">
+                <li ui-route="/dashboard" ng-class="{active: $uiRoute}"><a href="/#!/dashboard"><i class="fa fa-home"></i><span>Profile</span></a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
