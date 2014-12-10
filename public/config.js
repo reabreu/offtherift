@@ -20,6 +20,4 @@ var ApplicationConfiguration = (function() {
 		applicationModuleVendorDependencies: applicationModuleVendorDependencies,
 		registerModule: registerModule
 	};
-
-	//teste de commit
 })();
