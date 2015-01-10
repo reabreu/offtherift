@@ -42,31 +42,33 @@
     <!-- HTML5 Shim -->
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        <![endif]-->
 </head>
 
-<body class="ng-cloak fixed-header">
+<body class="ng-cloak fixed-header infobar-offcanvas">
     <header data-ng-include="'/modules/core/views/header.client.view.html'" id="topnav" class="navbar navbar-inverse navbar-fixed-top clearfix" role="banner"></header>
 
-    <div id="layout-fixed">
-        <div class="ui-layout-west fixed-sidebar-wrapper sidebar-default">
-            <div class="fixed-sidebar">
-                <section data-ng-include="'/modules/core/views/sidebar.client.view.html'" id="sidebar" class="sidebar" role="sidebar"></section>
+    <div id="wrapper">
+        <div id="layout-static">
+            <div class="static-sidebar-wrapper sidebar-default">
+                <div class="static-sidebar">
+                    <div class="sidebar">
+                        <section data-ng-include="'/modules/core/views/sidebar.client.view.html'" id="sidebar" class="sidebar" role="sidebar"></section>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="ui-layout-center">
-            <div class="fixed-content-wrapper">
-                <div class="fixed-content">
+            <div class="static-content-wrapper">
+                <div class="static-content">
                     <div class="page-content">
                         <div class="container-fluid">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </div>
+                            <div ui-view></div>
+                        </div> <!-- .container-fluid -->
+                    </div> <!-- #page-content -->
                 </div>
                 <footer role="contentinfo">
                     <div class="clearfix">
                         <ul class="list-unstyled list-inline pull-left">
-                            <li><h6 style="margin: 0;"> &copy; 2014 {{title}}</h6></li>
+                            <li><h6 style="margin: 0;"> &copy; 2014 Avalon</h6></li>
                         </ul>
                         <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
                     </div>
@@ -87,6 +89,7 @@
     <!--Livereload script rendered -->
     <script type="text/javascript" src="http://{{request.hostname}}:35729/livereload.js"></script>
     {% endif %}
+    
 </body>
 
 </html>

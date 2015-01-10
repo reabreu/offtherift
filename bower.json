@@ -20,6 +20,8 @@
     "enquire": "~2.1.2",
     "jquery-touchswipe": "~1.6.6",
     "jquery-placeholder": "~2.0.8",
-    "font-awesome": "~4.2.0"
+    "font-awesome": "~4.2.0",
+    "angular-bootstrap-switch": "~0.3.0",
+    "angular-block-ui": "~0.1.2"
   }
 }

@@ -1,0 +1,47 @@
+<section data-ng-controller="ItemController">
+	<div class="page-heading">            
+		<h1>Items</h1>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="panel">
+				<div class="panel-body panel-no-padding">
+					<div class="input-search-icon-sm">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label ">Patch</label>
+								<div class="col-sm-10">
+									<select 
+										class 	=	"form-control" 
+										ng-model 		=	"selectedPatch" 
+										ng-options 		= 	"patches[order].version for order in patches_order"
+										ng-change 		= 	"getItems()"
+									>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label ">Filter</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control input-sm" placeholder="Item Name..." ng-model="search.name">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<ul class="mailbox-msg-list">
+					<li ng-repeat = "item in items | filter:search:strict">
+						<a class="mailbox-msg-list-item" ui-sref="item.details({item_id:item.id})">
+							<!--<span class="time">30s</span>-->
+							<img style="" title="" alt="avatar" src="{{item.image.full | ddItemFilter}}">
+							<div><span class="name">{{item.name}}</span><span class="msg">{{item.tags | tagsFilter}}</span></div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div ui-view></div>
+		</div>
+	</div>
+</section>

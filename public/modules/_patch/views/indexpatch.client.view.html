@@ -1,0 +1,46 @@
+<section data-ng-controller="PatchController">
+	<div class="page-heading">            
+		<h1>Patches</h1>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Avaliable Patches</h2>
+			<div class="options"></div>
+		</div>
+		<div class="panel-body">
+			<table class="table table-hover mb0 table-responsive">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Synched</th>
+						<th>Active</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat = "order in patches_order">
+						<td>{{ patches[order].version }}</td>
+						<td>
+							<p ng-class="{ 'text-success':patches[order].synched, 'text-warning':!patches[order].synched  }">
+								{{ patches[order].synched | boolFilter }}
+							</p>
+						</td>
+						<td>
+							<p ng-class="{ 'text-success':patches[order].enabled, 'text-warning':!patches[order].enabled  }">
+								{{ patches[order].enabled | boolFilter}}
+							</p>
+						</td>
+						<td>
+							<a ng-click="synchPatch(patches[order].version)" class="btn btn-midnightblue-alt btn-sm">
+								{{ patches[order].synched | synchedActionFilter}}
+							</a>
+							<a ng-click="changePatchState(patches[order].version)" class="btn btn-midnightblue-alt btn-sm">
+								{{ patches[order].enabled | stateActionFilter}}
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

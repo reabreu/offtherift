@@ -3,7 +3,13 @@
 module.exports = {
 	db: 'mongodb://localhost/offtherift-dev',
 	app: {
-		title: 'OTR - DEV'
+		title: 'Off the Rift - Development',
+		api: {
+			version: 	'/v1.2',
+			region: 	'/euw',
+			endpoint: 	'http://global.api.pvp.net/api/lol/static-data',
+			api_key: 	'api_key=02d31520-47fc-4e61-a721-5d84a913229c'
+		}
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
