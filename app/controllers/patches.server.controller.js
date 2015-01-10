@@ -134,8 +134,7 @@ exports.checkPatches = function(req,res){
 	    	var options 			= { upsert: true};
 
 	    	for (var i = 0; i < patches_response.length; i++) {
-	    		Patch.findOneAndUpdate({version: patches_response[i] }, {} , {upsert:true}, function(err, doc){
-	    		});
+	    		Patch.findOneAndUpdate({version: patches_response[i] }, {} , {upsert:true}, function(err, doc){});
 	    	}
 	    	
 	    	res.jsonp({force: true});
