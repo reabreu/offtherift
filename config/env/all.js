@@ -35,7 +35,8 @@ module.exports = {
 				'public/lib/jquery-touchswipe/jquery.touchSwipe.min.js',
 				'public/lib/enquire/dist/enquire.min.js',
 				'public/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js',
-				'public/lib/angular-block-ui/dist/angular-block-ui.min.js'
+				'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
+				'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js'
 			]
 		},
 		css: [

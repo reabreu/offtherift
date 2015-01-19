@@ -10,7 +10,7 @@ module.exports = function(app) {
 		.post(users.requiresLogin, patches.create);
 
 	app.route('/patches/sync').get(patches.checkPatches);
-
+	
 	app.route('/patches/:patchId')
 		.get(patches.read)
 		.put(users.requiresLogin, patches.update)

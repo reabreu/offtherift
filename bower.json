@@ -22,6 +22,7 @@
     "jquery-placeholder": "~2.0.8",
     "font-awesome": "~4.2.0",
     "angular-bootstrap-switch": "~0.3.0",
-    "angular-block-ui": "~0.1.2"
+    "angular-block-ui": "~0.1.2",
+    "ngInfiniteScroll": "~1.2.0"
   }
 }

@@ -10,12 +10,16 @@
             </div>
         </div>
         <div class="panel-body">
-            <table class="table table-hover mb0 table-responsive">
+            <table class="table table-hover mb0 table-responsive" 
+                infinite-scroll                 = "loadMore();$event.stopPropagation()"
+                infinite-scroll-disabled        = "busy">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Synched</th>
                         <th>Active</th>
+                        <th>Created</th>
+                        <th>Updated</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,6 +37,12 @@
                             </p>
                         </td>
                         <td>
+                            {{patch.created | date : 'medium' : timezone}}
+                        </td>
+                        <td>
+                            {{patch.update | date : 'medium' : timezone}}
+                        </td>
+                        <td>
                             <a ng-click="synchPatch(patch)" 
                                class="btn btn-sm"
                                ng-class="{ 'btn-midnightblue-alt': !patch.synched, 'btn-midnightblue': patch.synched }">
@@ -43,6 +53,11 @@
                                ng-class="{ 'btn-midnightblue-alt': !patch.enabled, 'btn-midnightblue': patch.enabled }">
                                 {{ patch.enabled ? 'Enabled': 'Disabled' }}
                             </a>
+                        </td>
+                    </tr>
+                    <tr> 
+                        <td ng-show="busy && !full" colspan="6" class="align-center">
+                            Loading Patches <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt="">
                         </td>
                     </tr>
                 </tbody>
