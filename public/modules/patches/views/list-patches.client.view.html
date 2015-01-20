@@ -18,12 +18,9 @@
                         <th>#</th>
                         <th>Synched</th>
                         <th>Active</th>
-<<<<<<< HEAD
                         <th>Enabled</th>
-=======
                         <th>Created</th>
                         <th>Updated</th>
->>>>>>> 009555abc076febc5418f30403f593da97102d3b
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -41,17 +38,16 @@
                             </p>
                         </td>
                         <td>
-<<<<<<< HEAD
                             <input
                                 bs-switch
                                 ng-model="patch.enabled"
                                 type="checkbox" />
-=======
+                        </td>
+                        <td>
                             {{patch.created | date : 'medium' : timezone}}
                         </td>
                         <td>
                             {{patch.update | date : 'medium' : timezone}}
->>>>>>> 009555abc076febc5418f30403f593da97102d3b
                         </td>
                         <td>
                             <a ng-click="synchPatch(patch)" 
