@@ -36,7 +36,8 @@ module.exports = {
 				'public/lib/enquire/dist/enquire.min.js',
 				'public/lib/bootstrap-switch/dist/js/bootstrap-switch.min.js',
 				'public/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js',
-				'public/lib/angular-block-ui/dist/angular-block-ui.min.js'
+				'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
+				'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
 			]
 		},
 		css: [
