@@ -40,8 +40,7 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
 	var patch = req.patch ;
-
-	patch = _.extend(patch , req.body);
+	patch 	= _.extend(patch , req.body);
 
 	patch.save(function(err) {
 		if (err) {
@@ -74,8 +73,17 @@ exports.delete = function(req, res) {
 /**
  * List of Patches
  */
-exports.list = function(req, res) { 
-	Patch.find().sort('-version').populate('user', 'displayName').exec(function(err, patches) {
+exports.list = function(req, res) {
+	
+	var skip 	= req.param('skip');
+	var limit 	= req.param('limit');
+
+	var options = {
+		skip: skip,
+		limit: limit
+	}
+
+	Patch.find(null,null,options).sort('-version').populate('user', 'displayName').exec(function(err, patches) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -143,4 +151,8 @@ exports.checkPatches = function(req,res){
 	}).on('error', function(e) {
 	      console.log("Got error: ", e);
 	});
+}
+
+exports.paginatePatches = function(req, res){
+	console.log("aquiiii");
 }

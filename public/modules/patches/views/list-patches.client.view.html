@@ -10,13 +10,20 @@
             </div>
         </div>
         <div class="panel-body">
-            <table class="table table-hover mb0 table-responsive">
+            <table class="table table-hover mb0 table-responsive" 
+                infinite-scroll                 = "loadMore();$event.stopPropagation()"
+                infinite-scroll-disabled        = "busy">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Synched</th>
                         <th>Active</th>
+<<<<<<< HEAD
                         <th>Enabled</th>
+=======
+                        <th>Created</th>
+                        <th>Updated</th>
+>>>>>>> 009555abc076febc5418f30403f593da97102d3b
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -34,10 +41,17 @@
                             </p>
                         </td>
                         <td>
+<<<<<<< HEAD
                             <input
                                 bs-switch
                                 ng-model="patch.enabled"
                                 type="checkbox" />
+=======
+                            {{patch.created | date : 'medium' : timezone}}
+                        </td>
+                        <td>
+                            {{patch.update | date : 'medium' : timezone}}
+>>>>>>> 009555abc076febc5418f30403f593da97102d3b
                         </td>
                         <td>
                             <a ng-click="synchPatch(patch)" 
@@ -47,11 +61,16 @@
                             </a>
                         </td>
                     </tr>
+                    <tr> 
+                        <td ng-show="busy && !full" colspan="6" class="align-center">
+                            Loading Patches <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt="">
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!patches.$resolved || patches.length">
+    <div class="alert alert-warning text-center" data-ng-hide="patches.length">
     	No Patches yet, why don't you check for new patches fucker?
     </div>
 </section>

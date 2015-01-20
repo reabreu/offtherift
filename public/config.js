@@ -14,7 +14,8 @@ var ApplicationConfiguration = (function() {
 		'ui.bootstrap', 
 		'ui.utils', 
 		'frapontillo.bootstrap-switch',
-		'blockUI'
+		'blockUI',
+		'infinite-scroll'
 	];
 
 	// Add a new vertical module

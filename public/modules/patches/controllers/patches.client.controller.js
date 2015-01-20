@@ -3,63 +3,13 @@
 // Patches controller
 angular.module('patches').controller('PatchesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Patches','Repository',
 	function($scope, $stateParams, $location, Authentication, Patches, Repository) {
-		$scope.authentication = Authentication;
-
-		// Create new Patch
-		/*$scope.create = function() {
-			// Create new Patch object
-			var patch = new Patches.model ({
-				name: this.name
-			});
-
-			// Redirect after save
-			patch.model.$save(function(response) {
-				$location.path('patches/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		// Remove existing Patch
-		$scope.remove = function(patch) {
-			if ( patch ) { 
-				patch.model.$remove();
-
-				for (var i in $scope.patches) {
-					if ($scope.patches [i] === patch) {
-						$scope.patches.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.patch.model.$remove(function() {
-					$location.path('patches');
-				});
-			}
-		};
-
-		// Update existing Patch
-		$scope.update = function() {
-			var patch = $scope.patch;
-
-			patch.model.$update(function() {
-				$location.path('patches/' + patch._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};*/
+		$scope.authentication 	= Authentication;
+		$scope.busy 			= false;
 
 		// Find a list of Patches
 		$scope.find = function() {
-			$scope.patches = Repository.getPatches();
+			$scope.patches 	= Repository.getCachedPatches();
 		};
-
-		// Find existing Patch
-		/*$scope.findOne = function() {
-			$scope.patch = Patches.getPatchById($stateParams.patchId);
-		};*/
 
 		/**
 		 * Toggle Enabled
@@ -67,10 +17,12 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 		 */
 		$scope.toggleEnabled = function (patch) {
 			patch.enabled = !patch.enabled;
+			Patches.data.update( {id : patch._id}, patch);
 		}
 
 		$scope.synchPatch = function (patch) {
 			patch.synched = true;
+			Patches.data.update( {id : patch._id}, patch);
 			// @TODO: Synch method DD
 		}
 
@@ -80,7 +32,35 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 		 */
 		$scope.checkPatches = function(){
 			Patches.checkPatches.get(function(res){
-				$scope.patches = Repository.getPatches(res.force);
+				if(!res.force) return;
+				Repository.clearPagination();
+				updatePatches();
+			});
+		}
+
+		/**
+		 * Load more patches, the number of patches can be configured in the repository
+		 * @return {[type]} [description]
+		 */
+		$scope.loadMore = function() {
+
+			if ($scope.busy) return;
+    		updatePatches();
+		};
+
+		/**
+		 * Method in charge of updating the patches variable in the current scope
+		 * @param  {[type]} force [description]
+		 * @return {[type]}       [description]
+		 */
+		function updatePatches(){
+			$scope.busy 	= true;
+			Repository.getPatches().then(function(data) {
+				for (var i = 0 ; i < data.patches.length; i++) {
+					$scope.patches.push(data.patches[i]);
+				};
+			    $scope.busy 	= data.full;
+			    $scope.full 	= data.full;
 			});
 		}
 	}
