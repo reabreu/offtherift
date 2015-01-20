@@ -6,7 +6,7 @@
         <div class="panel-heading">
             <h2>Avaliable Patches</h2>
             <div class="options pull-right">
-                <a class="btn btn-midnightblue btn-sm" ng-click="checkPatches()">Check Patches</a>
+                <a class="btn btn-midnightblue btn-sm" ng-click="checkPatches()"><i class="fa fa-refresh"></i> Check Patches</a>
             </div>
         </div>
         <div class="panel-body">
@@ -16,6 +16,7 @@
                         <th>#</th>
                         <th>Synched</th>
                         <th>Active</th>
+                        <th>Enabled</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -33,15 +34,16 @@
                             </p>
                         </td>
                         <td>
+                            <input
+                                bs-switch
+                                ng-model="patch.enabled"
+                                type="checkbox" />
+                        </td>
+                        <td>
                             <a ng-click="synchPatch(patch)" 
                                class="btn btn-sm"
                                ng-class="{ 'btn-midnightblue-alt': !patch.synched, 'btn-midnightblue': patch.synched }">
                                 {{ patch.synched ? 'Re-synch': 'Not Synched' }}
-                            </a>
-                            <a ng-click="toggleEnabled(patch)" 
-                               class="btn btn-sm"                               
-                               ng-class="{ 'btn-midnightblue-alt': !patch.enabled, 'btn-midnightblue': patch.enabled }">
-                                {{ patch.enabled ? 'Enabled': 'Disabled' }}
                             </a>
                         </td>
                     </tr>
