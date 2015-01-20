@@ -16,7 +16,6 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 		 * @param  {boolean} attr Boolean
 		 */
 		$scope.toggleEnabled = function (patch) {
-			patch.enabled = !patch.enabled;
 			Patches.data.update( {id : patch._id}, patch);
 		}
 

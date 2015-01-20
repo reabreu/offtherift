@@ -40,8 +40,12 @@
                         <td>
                             <input
                                 bs-switch
-                                ng-model="patch.enabled"
-                                type="checkbox" />
+                                type            = "checkbox"
+                                ng-model        = "patch.enabled"
+                                type            = "checkbox" 
+                                switch-size     = "mini"
+                                ng-change       = "toggleEnabled(patch)"
+                            />
                         </td>
                         <td>
                             {{patch.created | date : 'medium' : timezone}}
@@ -58,12 +62,7 @@
                         </td>
                     </tr>
                     <tr> 
-                        <td ng-show="busy && !full" colspan="6" class="align-center">
-                            Loading Patches <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt="">
-                        </td>
-                    </tr>
-                    <tr> 
-                        <td ng-show="busy && !full" colspan="6" class="align-center">
+                        <td ng-show="busy" colspan="6" class="align-center">
                             Loading Patches <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt="">
                         </td>
                     </tr>
