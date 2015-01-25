@@ -17,6 +17,7 @@ module.exports = {
 				'public/lib/font-awesome/css/font-awesome.min.css',
 				'public/lib/iCheck/skins/minimal/blue.css',
 				'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
+				'public/lib/ngtoast/dist/ngToast.min.css',
 			],
 			js: [
 				'public/lib/jquery/dist/jquery.min.js',
@@ -38,6 +39,7 @@ module.exports = {
 				'public/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js',
 				'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
 				'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
+				'public/lib/ngtoast/dist/ngToast.min.js'
 			]
 		},
 		css: [

@@ -18,12 +18,11 @@ var validateLocalStrategyProperty = function(property) {
  */
 var PatchSchema = new Schema({
 	created: {
-		type: Date,
-		default: Date.now
+		type: Date
 	},
 	update: {
 		type: Date,
-		default: Date.now
+		default: null
 	},
 	version: {
 		type: String,

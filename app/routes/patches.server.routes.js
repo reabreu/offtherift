@@ -5,23 +5,17 @@ module.exports = function(app) {
 	var patches = require('../../app/controllers/patches.server.controller');
 
 	// Patches Routes
-	app.route('/patches')
-		.get(patches.list)
-		.post(users.requiresLogin, patches.create);
+	app.route('/patches').get(patches.list);
 
-	app.route('/patches/sync').get(patches.checkPatches);
-	
-	app.route('/patches/:patchId')
-		.get(patches.read)
-		.put(users.requiresLogin, patches.update)
-		.delete(users.requiresLogin, patches.delete);
+	app.route('/patches/:patchId').put(users.requiresLogin, patches.update);
 
-	app.route('/patches/version/:versionNumber')
-		.get(patches.list);
-	app.route('/patch/version/:versionNumber')
-		.get(patches.read);
+	//sync patches list
+	app.route('/patches/sync/').get(patches.checkPatches);
+
+	//sync a specific patch info
+	app.route('/patches/syncPatch/:version').get(patches.syncPatchData);
 
 	// Finish by binding the Patch middleware
+	app.param('version', patches.patchByVersion);
 	app.param('patchId', patches.patchByID);
-	app.param('versionNumber', patches.patchByVersion);
 };

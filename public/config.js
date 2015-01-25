@@ -14,8 +14,8 @@ var ApplicationConfiguration = (function() {
 		'ui.bootstrap', 
 		'ui.utils', 
 		'frapontillo.bootstrap-switch',
-		'blockUI',
-		'infinite-scroll'
+		'infinite-scroll',
+		'ngToast'
 	];
 
 	// Add a new vertical module

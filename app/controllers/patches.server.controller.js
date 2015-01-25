@@ -1,5 +1,10 @@
 'use strict';
 
+/**/
+var _this 		= this;
+var version 	= '',
+	asyncTasks 	= [];
+
 /**
  * Module dependencies.
  */
@@ -7,8 +12,10 @@ var mongoose 		= require('mongoose'),
 	http 			= require('http'),
 	errorHandler 	= require('./errors.server.controller'),
 	Patch 			= mongoose.model('Patch'),
+	Item 			= mongoose.model('Item'),
 	_ 				= require('lodash'),
-	api 			= require('../../app/controllers/api.server.controller');
+	api 			= require('../../app/controllers/api.server.controller'),
+	async			= require("async");
 
 /**
  * Create a Patch
@@ -43,23 +50,9 @@ exports.update = function(req, res) {
 	patch 	= _.extend(patch , req.body);
 
 	patch.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(patch);
-		}
-	});
-};
 
-/**
- * Delete an Patch
- */
-exports.delete = function(req, res) {
-	var patch = req.patch ;
-
-	patch.remove(function(err) {
+		if(version != '') return;
+		
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -110,10 +103,10 @@ exports.patchByID = function(req, res, next, id) {
 * Patch middleware
 */
 exports.patchByVersion = function(req, res, next, version) {
-	Patch.find({ version: '/'+version+'[\d\.]+/i' }).exec(function(err, patch) {
+	Patch.find({ version: version }).exec(function(err, patch) {
 		if (err) return next(err);
 		if (!patch) return next(new Error('Failed to load patch ' + id));
-		req.patch = patch;
+		req.patch = patch[0];
 		next();
 	});
 };
@@ -138,21 +131,130 @@ exports.checkPatches = function(req,res){
 	    });
 
 	    res_api.on('end', function() {
+
+	    	if(res_api.statusCode > 400){
+	    		inserted 	= -1;
+	    		updated 	= -1;
+	    		callback(null,{items: { inserted: inserted, updated: updated}});
+	    		return;
+	    	}
+
 	    	var patches_response 	= JSON.parse(body);
-	    	var options 			= { upsert: true};
+	    	var options 			= { upsert: true, new: false };
+	    	var total 				= Object.keys(patches_response).length;
+	    	var inserted 			= 0;
+	    	var updated 			= 0;
+	    	var processed 			= 0;
+	    	var update 				= { 
+	    		$setOnInsert: {
+					created: new Date().toISOString()
+				}
+	    	}
 
 	    	for (var i = 0; i < patches_response.length; i++) {
-	    		Patch.findOneAndUpdate({version: patches_response[i] }, {} , {upsert:true}, function(err, doc){});
-	    	}
-	    	
-	    	res.jsonp({force: true});
+	    		Patch.findOneAndUpdate({version: patches_response[i] }, update , options, function(err, doc){
+	    			if(doc === null){
+	    				++inserted;
+	    			}
+	    			else{
+	    				++updated;
+	    			}
 
+	    			++processed;
+
+	    			//when finished we call the callback function
+	    			if(total == processed){
+	    				res.jsonp({force: true,updated: updated, inserted: inserted});
+	    			}
+	    		});
+	    	}
 	    });
 	}).on('error', function(e) {
-	      console.log("Got error: ", e);
+	      console.log('Got error: ', e);
 	});
 }
 
-exports.paginatePatches = function(req, res){
-	console.log("aquiiii");
+//Metodo anonimo que sincroniza ITEMS
+asyncTasks.push(function(callback){
+
+	api.setParam('&itemListData=all&version=' + version);
+
+	//start by sychronizing item data
+	var url = api.generateUrl(api.ITEM);
+
+	http.get(url, function(res_api) {
+		
+		var body 	 	= '';
+
+		res_api.on('data', function(chunk) {
+	        body += chunk;
+	    });
+
+	    res_api.on('end', function() {
+	    	if(res_api.statusCode > 400){
+	    		inserted 	= -1;
+	    		updated 	= -1;
+	    		callback(null,{items: { inserted: inserted, updated: updated}});
+	    		return;
+	    	}
+
+	    	var items 		= JSON.parse(body);
+	    	var options 	= { upsert: true, new: false };
+	    	var processed 	= 0;
+	    	var total 		= Object.keys(items.data).length;
+	    	var inserted 	= 0;
+	    	var updated 	= 0;
+
+	    	for (var key in items.data) {
+
+	    		//adicionar os nossos propios campos
+	    		items.data[key].version = version;
+
+				var search_conditions = {
+					version: 	items.data[key].version,
+					id: 		items.data[key].id
+				}
+
+	    		Item.findOneAndUpdate( search_conditions , items.data[key] , options, function(err, doc){
+
+	    			if(doc === null){
+	    				++inserted;
+	    			}
+	    			else{
+	    				++updated;
+	    			}
+
+	    			++processed;
+
+	    			//when finished we call the callback function
+	    			if(total == processed){
+	    				callback(null,{items: { inserted: inserted, updated: updated}});
+	    			}
+	    		});
+	    	}
+	    });
+	});
+});
+
+exports.syncPatchData = function(req, res){
+	version = req.patch.version;
+	//Efetuar os pedidos para os diferentes categorias (items/champions/etc) em paralelo
+	async.parallel(asyncTasks, function(err,response){
+		var send = {};
+
+		//update patch info
+		req.patch.synched 	= true;
+		req.patch.update 	= new Date().toISOString();
+		_this.update(req,res);
+
+		//build report object
+		for (var i = 0; i < response.length; i++) {
+			for (var key in response[i]) {
+				send[key] = response[i][key];
+			}
+		};
+
+	  	// All tasks are done now
+	  	res.jsonp({report: send});
+	});
 }

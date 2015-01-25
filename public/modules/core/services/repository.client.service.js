@@ -33,6 +33,16 @@ angular.module('core').factory('Repository', ['Patches',
 				skip 	= 0;
 				patches = [];
 				full 	= false;
+			},
+			sincronizePatch: function( patch ){
+				
+				var promise = Patches.sincronizePatch.get({patchVersion: patch.version})
+				.$promise.then(function(data) {
+					//process answer on repository
+					return data;
+			    });
+
+			    return promise;
 			}
 		};
 	}

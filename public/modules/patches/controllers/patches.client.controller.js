@@ -1,8 +1,8 @@
 'use strict';
 
 // Patches controller
-angular.module('patches').controller('PatchesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Patches','Repository',
-	function($scope, $stateParams, $location, Authentication, Patches, Repository) {
+angular.module('patches').controller('PatchesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Patches','Repository','ngToast',
+	function($scope, $stateParams, $location, Authentication, Patches, Repository,ngToast) {
 		$scope.authentication 	= Authentication;
 		$scope.busy 			= false;
 
@@ -19,21 +19,60 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 			Patches.data.update( {id : patch._id}, patch);
 		}
 
-		$scope.synchPatch = function (patch) {
-			patch.synched = true;
-			Patches.data.update( {id : patch._id}, patch);
-			// @TODO: Synch method DD
+		$scope.synchPatch = function (clickEvent, patch) {
+
+			var btn = $(clickEvent.currentTarget);
+			btn.button('loading');
+
+			//emitir pedido de sincro
+			Repository.sincronizePatch(patch).then(function(data) {
+				var report = '';
+
+				btn.button('reset');
+				$scope.patches = [];
+
+				Repository.clearPagination();
+				updatePatches();
+
+				for(var key in data.report){
+					report += key + ': ' + data.report[key].inserted + ' inserted and ' + data.report[key].updated + ' updated.';	
+				}
+
+				ngToast.create({
+					content: 			report,
+					dismissButton: 		true,
+					dismissOnTimeout: 	false
+				});
+			});
 		}
 
 		/**
 		 * Ask server to check for new patches
 		 * @return {[type]} [description]
 		 */
-		$scope.checkPatches = function(){
+		$scope.checkPatches = function(clickEvent){
+			var btn = $(clickEvent.currentTarget);
+			btn.button('loading');
 			Patches.checkPatches.get(function(res){
+				var report = '';
+				btn.button('reset');
 				if(!res.force) return;
+
+				$scope.patches = [];
 				Repository.clearPagination();
 				updatePatches();
+
+				if(res.inserted == 0){
+					report = 'Report: No new patches found :(';
+				}else {
+					report = 'Report: Inserted ' + res.inserted + ' patches :)';
+				}
+
+				ngToast.create({
+					content: 			report,
+					dismissButton: 		true,
+					dismissOnTimeout: 	false
+				});
 			});
 		}
 
