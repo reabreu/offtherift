@@ -1,0 +1,72 @@
+<section data-ng-controller="ChampionsController" data-ng-init="find()">
+  <div class="page-header">
+    <h1>Champions</h1>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <input type="search"
+      ng-model    = "search.attributes.name"
+      ng-change   = "searchChampion(search)"
+      class       = "form-control"
+      placeholder = "Search by name...">
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>{{ champions.length }} Avaliable Champions</h2>
+      <div class="options pull-right">
+        <button
+        class               = "btn btn-midnightblue btn-sm"
+        ng-click            = "checkChampions($event)"
+        data-loading-text   = "Searching..."
+        ><i class="fa fa-refresh"></i> Check Champions</button>
+      </div>
+    </div>
+    <div class               = "panel-body"
+    infinite-scroll          = "loadMore();$event.stopPropagation()"
+    infinite-scroll-disabled = "busy"
+    data-ng-show             = "champions.length">
+    <div class="panel panel-default" data-ng-repeat="champion in champions">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <h3 class="text-center">
+              <span class="badge badge-info" ng-repeat="tag in champion.tags">{{ tag.name }}</span>
+            </h3>
+            <img ng-src="{{ champion.key | ddragon: champion.version:'champion' }}" alt="{{ champion.name }} Photo" class="img-rounded">
+            <h3 class="text-center">{{ champion.name }}</h3>
+          </div>
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Skills</h4>
+                <div class="row">
+                  <div class="col-md-2" ng-repeat="spell in champion.spells">
+                    <img ng-src="{{ spell.key | ddragon: champion.version:'spell' }}" alt="{{ spell.name }} Photo" class="img-rounded">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" ng-show="champion.passive">
+                <h4>Passive</h4>
+                <div class="row">
+                  <div class="col-md-2">
+                    <img ng-src="{{ champion.passive.image.full | ddragon: champion.version:'passive' }}" alt="{{ champion.passive.image.name }} Photo" class="img-rounded">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="busy && !full">
+      <div class="col-md-12 text-center">
+        <span>Loading Champions <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt="Ajax Loader"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-warning text-center" data-ng-hide="champions.length || !busy">
+  No Champions yet, why don't you check for new champions fucker?
+</div>
+</section>
