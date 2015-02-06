@@ -122,57 +122,48 @@ exports.hasAuthorization = function(req, res, next) {
 };
 
 exports.checkPatches = function(req,res){
-	var url = api.generateUrl(api.PATCH);
+	api.requestData(api.PATCH).then(function(apiRes) {
 
-	https.get(url, function(res_api) {
-	    var body = '';
+		if(apiRes.statusCode > 400){
+    		inserted 	= -1;
+    		updated 	= -1;
+    		callback(null,{items: { inserted: inserted, updated: updated}});
+    		return;
+    	}
 
-	    res_api.on('data', function(chunk) {
-	        body += chunk;
-	    });
+    	var patches_response 	= apiRes.data;
+    	var options 			= { upsert: true, new: false };
+    	var total 				= Object.keys(patches_response).length;
+    	var inserted 			= 0;
+    	var updated 			= 0;
+    	var processed 			= 0;
+    	var update 				= { 
+    		$setOnInsert: {
+				created: new Date().toISOString()
+			}
+    	}
 
-	    res_api.on('end', function() {
+    	for (var i = 0; i < patches_response.length; i++) {
+    		Patch.findOneAndUpdate({version: patches_response[i] }, update , options, function(err, doc){
+    			if(doc === null){
+    				++inserted;
+    			}
+    			else{
+    				++updated;
+    			}
 
-	    	if(res_api.statusCode > 400){
-	    		inserted 	= -1;
-	    		updated 	= -1;
-	    		callback(null,{items: { inserted: inserted, updated: updated}});
-	    		return;
-	    	}
+    			++processed;
 
-	    	var patches_response 	= JSON.parse(body);
-	    	var options 			= { upsert: true, new: false };
-	    	var total 				= Object.keys(patches_response).length;
-	    	var inserted 			= 0;
-	    	var updated 			= 0;
-	    	var processed 			= 0;
-	    	var update 				= { 
-	    		$setOnInsert: {
-					created: new Date().toISOString()
-				}
-	    	}
+    			//when finished we call the callback function
+    			if(total == processed){
+    				res.jsonp({force: true,updated: updated, inserted: inserted});
+    			}
+    		});
+    	}
 
-	    	for (var i = 0; i < patches_response.length; i++) {
-	    		Patch.findOneAndUpdate({version: patches_response[i] }, update , options, function(err, doc){
-	    			if(doc === null){
-	    				++inserted;
-	    			}
-	    			else{
-	    				++updated;
-	    			}
-
-	    			++processed;
-
-	    			//when finished we call the callback function
-	    			if(total == processed){
-	    				res.jsonp({force: true,updated: updated, inserted: inserted});
-	    			}
-	    		});
-	    	}
-	    });
-	}).on('error', function(e) {
-	      console.log('Got error: ', e);
-	});
+	}, function(e) {
+        console.log('Got error: ', e);
+    });
 }
 
 //Metodo anonimo que sincroniza ITEMS
@@ -180,62 +171,52 @@ asyncTasks.push(function(callback){
 
 	api.setParam('&itemListData=all&version=' + version);
 
-	//start by sychronizing item data
-	var url = api.generateUrl(api.ITEM);
+    api.requestData(api.ITEM).then(function(apiRes) {
+    	if(apiRes.statusCode > 400){
+    		inserted 	= -1;
+    		updated 	= -1;
+    		callback(null,{items: { inserted: inserted, updated: updated}});
+    		return;
+    	}
 
-	https.get(url, function(res_api) {
-		
-		var body 	 	= '';
+    	var items 		= apiRes.data;
+    	var options 	= { upsert: true, new: false };
+    	var processed 	= 0;
+    	var total 		= Object.keys(items.data).length;
+    	var inserted 	= 0;
+    	var updated 	= 0;
 
-		res_api.on('data', function(chunk) {
-	        body += chunk;
-	    });
+    	for (var key in items.data) {
 
-	    res_api.on('end', function() {
-	    	if(res_api.statusCode > 400){
-	    		inserted 	= -1;
-	    		updated 	= -1;
-	    		callback(null,{items: { inserted: inserted, updated: updated}});
-	    		return;
-	    	}
+    		//adicionar os nossos propios campos
+    		items.data[key].version = version;
+    		items.data[key].enabled = false;
 
-	    	var items 		= JSON.parse(body);
-	    	var options 	= { upsert: true, new: false };
-	    	var processed 	= 0;
-	    	var total 		= Object.keys(items.data).length;
-	    	var inserted 	= 0;
-	    	var updated 	= 0;
+			var search_conditions = {
+				version: 	items.data[key].version,
+				id: 		items.data[key].id
+			}
 
-	    	for (var key in items.data) {
+    		Item.findOneAndUpdate( search_conditions , items.data[key] , options, function(err, doc){
 
-	    		//adicionar os nossos propios campos
-	    		items.data[key].version = version;
-	    		items.data[key].enabled = false;
+    			if(doc === null){
+    				++inserted;
+    			}
+    			else{
+    				++updated;
+    			}
 
-				var search_conditions = {
-					version: 	items.data[key].version,
-					id: 		items.data[key].id
-				}
+    			++processed;
 
-	    		Item.findOneAndUpdate( search_conditions , items.data[key] , options, function(err, doc){
-
-	    			if(doc === null){
-	    				++inserted;
-	    			}
-	    			else{
-	    				++updated;
-	    			}
-
-	    			++processed;
-
-	    			//when finished we call the callback function
-	    			if(total == processed){
-	    				callback(null,{items: { inserted: inserted, updated: updated}});
-	    			}
-	    		});
-	    	}
-	    });
-	});
+    			//when finished we call the callback function
+    			if(total == processed){
+    				callback(null,{items: { inserted: inserted, updated: updated}});
+    			}
+    		});
+    	}
+    }, function(e) {
+        console.log('Got error: ', e);
+    });
 });
 
 exports.syncPatchData = function(req, res){

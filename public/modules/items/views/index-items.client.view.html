@@ -12,10 +12,11 @@
 
 					<label class="col-sm-1 control-label label-input-sm pull-left" for="selector1">Patch</label>
 					<div class="col-sm-4">
-						<select 
+						<select
 							ng-model	= "formData.version"
 							class 		= "form-control input-sm" 
 						>
+						<option value=""></option>
 						<option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
 						</select>
 					</div>
@@ -33,7 +34,6 @@
 						ng-model        = "formData.enabled"
 						type            = "checkbox"
 						switch-size     = "mini"
-						ng-change       = ""
 						class 			= "label-input-sm pull-right"
 						/>
 					</div>
@@ -67,7 +67,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-show = "items.length" data-ng-repeat="item in items">
+					<tr ng-show = "items.length" data-ng-repeat="item in items | orderBy: item.version">
 						<td><img class="avatar" alt="avatar" src="{{ item.image[0].full | dataDragon : 'item'}}"></td>
 						<td>{{item.name}}</td>
 						<td ng-class="{ 'text-success':item.enabled, 'text-warning':!item.enabled  }" >{{item.enabled ? 'yes' : 'no'}}</td>
