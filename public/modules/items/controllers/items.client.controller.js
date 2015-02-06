@@ -6,6 +6,7 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 		$scope.authentication 	= Authentication;
 		$scope.busy 			= false;
 		$scope.items 			= [];
+		$scope.patches  		= [];
 		$scope.formData 		= {
 			enabled: 	false,
 			name: 		null,

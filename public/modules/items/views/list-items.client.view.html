@@ -1,19 +1,122 @@
-<section data-ng-controller="ItemsController" data-ng-init="find()">
+<section data-ng-controller="ItemsController" data-ng-init="init()">
     <div class="page-header">
         <h1>Items</h1>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="item in items" data-ng-href="#!/items/{{item._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="item.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="item.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="item.name"></h4>
-        </a>
+    <div class="panel panel-default panel-items">
+        <div class="panel-heading">
+            <h2>Items Panel</h2>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+
+                    <label class="col-sm-1 control-label label-input-sm pull-left" for="selector1">Patch</label>
+                    <div class="col-sm-4">
+                        <select
+                            ng-model    = "formData.version"
+                            class       = "form-control input-sm" 
+                        >
+                        <option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+                        </select>
+                    </div>
+
+                    <label class="col-sm-1 control-label label-input-sm" for="focusedinput">Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="focusedinput" class="form-control input-sm" ng-model = "formData.name">
+                    </div>
+
+                    <label class="col-sm-1 control-label label-input-sm">State</label>
+                    <div class="col-sm-1">
+                        <input
+                        bs-switch
+                        type            = "checkbox"
+                        ng-model        = "formData.enabled"
+                        type            = "checkbox"
+                        switch-size     = "mini"
+                        class           = "label-input-sm pull-right"
+                        />
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <a 
+                        class       = "btn btn-midnightblue btn-sm btn-block" 
+                        ng-click    = "searchItems($event)"
+                        >Go</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!items.$resolved || items.length">
-    	No Items yet, why don't you <a href="/#!/items/create">create one</a>?
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table 
+                class                           = "table table-striped table-vam table-bordered mb0"
+                infinite-scroll                 = "loadMore();$event.stopPropagation()"
+                infinite-scroll-disabled        = "busy"
+                infinite-scroll-immediate-check = "false"
+            >
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Name</th>
+                        <th>Active</th>
+                        <th>Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-show = "items.length" data-ng-repeat="item in items">
+                        <td><img class="avatar" alt="avatar" src="{{ item.image[0].full | ddragon: item.version:'item'}}"></td>
+                        <td>{{item.name}}</td>
+                        <td ng-class="{ 'text-success':item.enabled, 'text-warning':!item.enabled  }" >{{item.enabled ? 'yes' : 'no'}}</td>
+                        <td>{{item.version}} <a class="btn btn-default btn-xs pull-right" data-toggle="modal" href="#itemModal">View</a></td>
+                    </tr>
+                    <tr ng-show = "!items.length" style="text-align:center">
+                        <td colspan="4">No items fetched...Try setting some research params!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Modal title</h2>
+            </div>
+            <div class="modal-body">
+                <h2>Text in a modal</h2>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+
+                <h2>Tooltips in a modal</h2>
+                <p><a href="#" class="tooltips" title="Tooltip">This link</a> and <a href="#" class="tooltips" title="Tooltip">that link</a> should have tooltips on hover.</p>
+
+                <!--<hr>
+
+                <h2>Overflowing text to show scroll behavior</h2>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p><img src="assets/demo/stockphoto/music_02.jpg" alt="Fountain" class="img-rounded img-responsive"></p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>-->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
