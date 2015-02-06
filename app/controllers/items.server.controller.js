@@ -72,8 +72,30 @@ exports.delete = function(req, res) {
 /**
  * List of Items
  */
-exports.list = function(req, res) { 
-	Item.find().sort('-created').populate('user', 'displayName').exec(function(err, items) {
+exports.list = function(req, res) {
+	var skip 		= req.param('skip');
+	var limit 		= req.param('limit');
+	var version 	= req.param('version');
+	var name 		= req.param('name');
+	var enabled 	= req.param('enabled');
+
+	var options = {
+		skip: 		skip,
+		limit: 		limit
+	}
+
+	var query = {};
+
+	if( version != undefined)
+		query.version = version;
+
+	if( name != undefined)
+		query.name = { "$regex": name, "$options": "i" };
+
+	if( enabled != undefined)
+		query.enabled = enabled;
+	
+	Item.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, items) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

@@ -3,11 +3,13 @@
 //Items service used to communicate Items REST endpoints
 angular.module('items').factory('Items', ['$resource',
 	function($resource) {
-		return $resource('items/:itemId', { itemId: '@_id'
-		}, {
-			update: {
-				method: 'PUT'
-			}
-		});
+		return { 
+			data: $resource('items/:patchId', { patchId: '@_id' }, 
+			{
+				update: {
+					method: 'PUT'
+				}
+			})
+		};
 	}
 ]);

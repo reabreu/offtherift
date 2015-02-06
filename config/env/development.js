@@ -7,7 +7,7 @@ module.exports = {
 		api: {
 			version: 	'/v1.2',
 			region: 	'/euw',
-			endpoint: 	'http://global.api.pvp.net/api/lol/static-data',
+			endpoint: 	'https://global.api.pvp.net/api/lol/static-data',
 			api_key: 	'api_key=02d31520-47fc-4e61-a721-5d84a913229c'
 		}
 	},

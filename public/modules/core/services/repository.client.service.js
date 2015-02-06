@@ -1,16 +1,20 @@
 'use strict';
 
-angular.module('core').factory('Repository', ['Patches',
-	function(Patches) {
+angular.module('core').factory('Repository', ['Patches','Items',
+	function(Patches,Items) {
 		var patches = [];
+
+		/*Patches Control vars*/
 		var skip  	= 0;
 		var limit 	= 15;
 		var full 	= false;
 
+		/*Items Control vars*/
+		var itemsSkip 		= 0;
+		var itemsLimit 		= 15;
+		var itemsFull 		= false;
+
 		return {
-			getFull: function(){
-				return full;
-			},
 			getCachedPatches: function(){
 				return patches;
 			},
@@ -40,6 +44,30 @@ angular.module('core').factory('Repository', ['Patches',
 				.$promise.then(function(data) {
 					//process answer on repository
 					return data;
+			    });
+
+			    return promise;
+			},
+			/****************************
+			* 		Items Methods		*
+			****************************/
+			clearItemPagination: function(){
+				itemsSkip 	= 0;
+				itemsFull 	= false;
+			},
+			getItems: function( search_params ){
+				search_params.skip 	= itemsSkip;
+				search_params.limit 	= itemsLimit;
+				var promise = Items.data.query( search_params )
+				.$promise.then(function(data) {
+
+					if (data.length == 0) itemsFull = true;
+
+					//items = items.concat(data);
+
+					itemsSkip += itemsLimit;
+
+					return { items: data, full: itemsFull };
 			    });
 
 			    return promise;

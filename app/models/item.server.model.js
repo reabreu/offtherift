@@ -56,6 +56,10 @@ var ImageSchema = new Schema({
  * Item Schema
  */
 var ItemSchema = new Schema({
+	enabled: {
+		type: Boolean,
+		default: false,
+	},
 	version : {
 		type: 		String,
 		required: 	'Please fill version name',
@@ -106,8 +110,8 @@ var ItemSchema = new Schema({
 			trim: true
 		}
 	],
-	image: {
-		type: [ImageSchema]
+	image:{
+		type: 		[ImageSchema]
 	}
 });
 

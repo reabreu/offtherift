@@ -5,6 +5,10 @@ angular.module('items').config(['$stateProvider',
 	function($stateProvider) {
 		// Items state routing
 		$stateProvider.
+		state('indexItems', {
+			url: '/indexItems',
+			templateUrl: 'modules/items/views/index-items.client.view.html'
+		}).
 		state('listItems', {
 			url: '/items',
 			templateUrl: 'modules/items/views/list-items.client.view.html'

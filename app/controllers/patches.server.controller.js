@@ -9,7 +9,7 @@ var version 	= '',
  * Module dependencies.
  */
 var mongoose 		= require('mongoose'),
-	http 			= require('http'),
+	https 			= require('https'),
 	errorHandler 	= require('./errors.server.controller'),
 	Patch 			= mongoose.model('Patch'),
 	Item 			= mongoose.model('Item'),
@@ -123,7 +123,8 @@ exports.hasAuthorization = function(req, res, next) {
 
 exports.checkPatches = function(req,res){
 	var url = api.generateUrl(api.PATCH);
-	http.get(url, function(res_api) {
+
+	https.get(url, function(res_api) {
 	    var body = '';
 
 	    res_api.on('data', function(chunk) {
@@ -182,7 +183,7 @@ asyncTasks.push(function(callback){
 	//start by sychronizing item data
 	var url = api.generateUrl(api.ITEM);
 
-	http.get(url, function(res_api) {
+	https.get(url, function(res_api) {
 		
 		var body 	 	= '';
 
@@ -209,6 +210,7 @@ asyncTasks.push(function(callback){
 
 	    		//adicionar os nossos propios campos
 	    		items.data[key].version = version;
+	    		items.data[key].enabled = false;
 
 				var search_conditions = {
 					version: 	items.data[key].version,
