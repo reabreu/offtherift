@@ -5,7 +5,6 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Authentication, Items,Repository) {
 		$scope.authentication 	= Authentication;
 		$scope.busy 			= false;
-		$scope.items 			= [];
 		$scope.patches  		= [];
 		$scope.formData 		= {
 			enabled: 	false,
@@ -53,6 +52,10 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 			    $scope.busy 	= data.full;
 			    $scope.full 	= data.full;
 			});
+		}
+
+		$scope.setCurrentItemIndex= function(index){
+			$scope.itemIndex = index;
 		}
 
 		// Create new Item
