@@ -17,6 +17,9 @@ angular.module('core').directive('customEffect', [
 						unique 	: false
 					});
 				}
+				$scope.removeEffect = function ( target, index ){
+					target.customEffect.splice(index);
+				} 
 		    }
 		};
 	}

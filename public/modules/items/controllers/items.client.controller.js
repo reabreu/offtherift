@@ -23,6 +23,7 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 					$scope.patches = data.patches;
 				});
 			}
+			loadItems();
 		}
 
 		$scope.searchItems = function(){
