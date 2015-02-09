@@ -2,3 +2,18 @@
 	margin-top:5px;
 	margin-bottom:0px;
 }
+
+.compact-form .form-group{
+	margin-bottom: 5px;
+}
+
+.center-alignment{
+  	position: relative;
+  	left: 50%;
+  	top: 50%;
+  	transform: translateX(-50%) translateY(-50%);
+}
+
+.cursor{
+	cursor: pointer;
+}

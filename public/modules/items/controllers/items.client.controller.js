@@ -6,32 +6,30 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 		$scope.authentication 	= Authentication;
 		$scope.busy 			= false;
 		$scope.patches  		= [];
+		$scope.items 			= [];
+
 		$scope.formData 		= {
 			enabled: 	false,
 			name: 		null,
 			version: 	null,
-		};
+		}
 
 		$scope.init = function() {
-			$scope.patches 		= Repository.getCachedPatches();
+			$scope.formData.version = "";
+			$scope.patches 			= Repository.getCachedPatches();
 
 			if($scope.patches.length == 0){
 				Repository.getPatches().then(function(data) {
 					$scope.patches = data.patches;
 				});
 			}
-		};
+		}
 
-		$scope.searchItems = function(clickEvent){
-			var btn = $(clickEvent.currentTarget);
-
+		$scope.searchItems = function(){
 			//Se for uma nova pesquisa, limpamos os dados
 			Repository.clearItemPagination();
 			$scope.items 	= [];
-			
-			btn.button('loading');
 			loadItems();
-			btn.button('reset');
 		}
 
 		/**
@@ -41,7 +39,7 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 		$scope.loadMore = function() {
 			if ($scope.busy) return;
     		loadItems();
-		};
+		}
 
 		function loadItems(){
 			$scope.busy 	= true;
@@ -58,62 +56,13 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 			$scope.itemIndex = index;
 		}
 
-		// Create new Item
-		/*$scope.create = function() {
-			// Create new Item object
-			var item = new Items ({
-				name: this.name
-			});
-
-			// Redirect after save
-			item.$save(function(response) {
-				$location.path('items/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-		};
-
-		// Remove existing Item
-		$scope.remove = function(item) {
-			if ( item ) { 
-				item.$remove();
-
-				for (var i in $scope.items) {
-					if ($scope.items [i] === item) {
-						$scope.items.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.item.$remove(function() {
-					$location.path('items');
-				});
-			}
-		};
-
 		// Update existing Item
-		$scope.update = function() {
-			var item = $scope.item;
-
+		$scope.update = function( item ) {
 			item.$update(function() {
-				$location.path('items/' + item._id);
+				$('#itemModal').modal('hide')
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
-
-		// Find a list of Items
-		$scope.find = function() {
-			$scope.items = Items.query();
-		};
-
-		// Find existing Item
-		$scope.findOne = function() {
-			$scope.item = Items.get({ 
-				itemId: $stateParams.itemId
-			});
-		};*/
 	}
 ]);

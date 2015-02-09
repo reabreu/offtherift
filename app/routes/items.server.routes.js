@@ -11,7 +11,7 @@ module.exports = function(app) {
 
 	app.route('/items/:itemId')
 		.get(items.read)
-		.put(users.requiresLogin, items.hasAuthorization, items.update)
+		.put(items.update) //@TODO: Rever metodos a chamar deveriam estar iguais abaixo
 		.delete(users.requiresLogin, items.hasAuthorization, items.delete);
 
 	// Finish by binding the Item middleware

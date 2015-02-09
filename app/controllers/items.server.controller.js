@@ -37,6 +37,7 @@ exports.read = function(req, res) {
  * Update a Item
  */
 exports.update = function(req, res) {
+
 	var item = req.item ;
 
 	item = _.extend(item , req.body);
@@ -86,7 +87,7 @@ exports.list = function(req, res) {
 
 	var query = {};
 
-	if( version != undefined)
+	if( version != undefined && version != '')
 		query.version = version;
 
 	if( name != undefined)

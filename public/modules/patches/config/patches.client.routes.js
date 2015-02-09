@@ -6,7 +6,7 @@ angular.module('patches').config(['$stateProvider',
 		// Patches state routing
 		$stateProvider.
 		state('listPatches', {
-			url: '/patches',
+			url: '/listPatches',
 			templateUrl: 'modules/patches/views/list-patches.client.view.html'
 		});
 	}

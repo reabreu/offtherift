@@ -1,23 +1,72 @@
-<section data-ng-controller="ItemsController" data-ng-init="findOne()">
-    <div class="page-header">
-        <h1>Edit Item</h1>
-    </div>
-    <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="item.name" id="name" class="form-control" placeholder="Name" required>
-                    </div>
+<!-- Modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">
+                    <img class  = "avatar" 
+                        alt     = "avatar" 
+                        ng-if   = "itemIndex >= 0"
+                        ng-src  = "{{ items[itemIndex].image.full | ddragon: items[itemIndex].version:'item'}}">
+                    {{items[itemIndex].name}}
+                </h2>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive table-userinfo">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr ng-show ="items[itemIndex].tags.length">
+                                <td colspan="2">
+                                    <span
+                                        style="margin-right: 5px;"
+                                        data-ng-repeat  = "tag in items[itemIndex].tags" 
+                                        class="badge badge-info"
+                                    >{{tag}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Version</td>
+                                <td>{{items[itemIndex].version}}</td>
+                            </tr>
+                            <tr>
+                                <td>Enabled</td>
+                                <td ng-class="{ 'text-success':items[itemIndex].enabled, 'text-warning':!items[itemIndex].enabled  }">
+                                    <input
+                                        bs-switch
+                                        type            = "checkbox"
+                                        ng-model        = "items[itemIndex].enabled"
+                                        type            = "checkbox" 
+                                        switch-size     = "mini"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Purchasable</td>
+                                <td ng-class="{ 'text-success':items[itemIndex].gold.purchasable, 'text-warning':!items[itemIndex].gold[0].purchasable  }">
+                                    {{items[itemIndex].gold[0].purchasable ? 'yes' : 'no'}}
+                                </td>
+                            </tr>
+                            <tr ng-show = "items[itemIndex].plaintext.length">
+                                <td>Description</td>
+                                <td>{{items[itemIndex].plaintext}}</td>
+                            </tr>
+                            <tr>
+                                <td>Stats</td>
+                                <td>{{items[itemIndex].sanitizedDescription}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
-    </div>
-</section>
+                <h4>Effects</h4>
+                <form class="form-horizontal compact-form">
+                    <custom-effect target="items[itemIndex]"></custom-effect>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="update(items[itemIndex])">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

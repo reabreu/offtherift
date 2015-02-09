@@ -192,12 +192,12 @@ asyncTasks.push(function(callback){
     		items.data[key].version = version;
     		items.data[key].enabled = false;
 
-			var search_conditions = {
+			var conditions = {
 				version: 	items.data[key].version,
 				id: 		items.data[key].id
 			}
-
-    		Item.findOneAndUpdate( search_conditions , items.data[key] , options, function(err, doc){
+			
+    		Item.findOneAndUpdate( conditions, items.data[key], options, function(err, doc){
 
     			if(doc === null){
     				++inserted;
