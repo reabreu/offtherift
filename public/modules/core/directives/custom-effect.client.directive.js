@@ -1,15 +1,20 @@
 'use strict';
 
-angular.module('core').directive('customEffect', [
-	function() {
+angular.module('core').directive('customEffect', ['Repository','$timeout',
+	function(Repository,$timeout) {
 		return {
 			templateUrl: 	'modules/core/views/custom-effect.client.view.html',
 			restrict: 		'E',
 			scope: { 
-				target: 	'='
+				target: '=',
+				copy: 	'=',
+				load: 	'&'
 			},
 			controller: function($scope, $element){
-				$scope.newEffect = function( target ){
+				$scope.patches 		= [];
+				$scope.patches 		= Repository.getCachedPatches();
+
+				$scope.newEffect 	= function( target ){
 					target.customEffect.push({
 						stat 	: "ArmorPenetration",
 						value 	: '',

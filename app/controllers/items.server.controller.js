@@ -79,6 +79,7 @@ exports.list = function(req, res) {
 	var version 	= req.param('version');
 	var name 		= req.param('name');
 	var enabled 	= req.param('enabled');
+	var riotId 		= req.param('riotId');
 
 	var options = {
 		skip: 		skip,
@@ -95,6 +96,9 @@ exports.list = function(req, res) {
 
 	if( enabled != undefined)
 		query.enabled = enabled;
+
+	if( riotId != undefined)
+		query.id = riotId;
 	
 	Item.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, items) {
 		if (err) {

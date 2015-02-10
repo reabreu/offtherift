@@ -4,12 +4,13 @@
 angular.module('items').factory('Items', ['$resource',
 	function($resource) {
 		return { 
-			data: $resource('items/:patchId', { patchId: '@_id' }, 
-			{
-				update: {
-					method: 'PUT'
+			data: $resource('items/:itemID', { itemID: '@_id' }, 
+				{
+					update: {
+						method: 'PUT'
+					}
 				}
-			})
+			)
 		};
 	}
 ]);

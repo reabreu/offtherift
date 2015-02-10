@@ -61,10 +61,7 @@
                     </tr>
                 </thead>
                     <tbody>
-                        <tr 
-                        ng-show         = "items.length" 
-                        data-ng-repeat  = "item in items" 
-                        >
+                        <tr ng-show         = "items.length" data-ng-repeat  = "item in items" >
                             <td><img class="avatar" alt="avatar" ng-src="{{ item.image.full | ddragon: item.version:'item'}}"></td>
                             <td>{{item.name}}</td>
                             <td ng-class="{ 'text-success':item.enabled, 'text-warning':!item.enabled  }" >{{item.enabled ? 'yes' : 'no'}}</td>
@@ -82,7 +79,7 @@
                     <tr ng-show = "!items.length && !busy" style="text-align:center">
                         <td colspan="4">No items fetched...Try setting some research params!</td>
                     </tr>
-                    <tr  ng-show = "busy" style="text-align:center">
+                    <tr ng-show = "busy && !full" style="text-align:center">
                         <td colspan="4">Searching <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt=""></td>
                     </tr>
                 </tbody>
@@ -93,7 +90,18 @@
 </div>
 
 <div ng-include src="'modules/items/views/edit-item.client.view.html'"></div>
-
+<div type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">I'm a modal!</h3>
+    </div>
+    <div class="modal-body">
+        TESTE
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</div>
 </section>
 
 
