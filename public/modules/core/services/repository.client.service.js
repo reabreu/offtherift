@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').factory('Repository', ['Patches','Items','Champions',
-	function(Patches,Items,Champions) {
+angular.module('core').factory('Repository', ['Patches','Items','Runes','Champions',
+	function(Patches,Items,Runes,Champions) {
 		var patches 	= [];
 		var champions 	= [];
 
@@ -14,6 +14,11 @@ angular.module('core').factory('Repository', ['Patches','Items','Champions',
 		var itemsSkip 		= 0;
 		var itemsLimit 		= 15;
 		var itemsFull 		= false;
+
+		/*Runes Control vars*/
+		var runesSkip 		= 0;
+		var runesLimit 		= 15;
+		var runesFull 		= false;
 
 		return {
 			getCachedPatches: function(){
@@ -93,6 +98,28 @@ angular.module('core').factory('Repository', ['Patches','Items','Champions',
 					itemsSkip += itemsLimit;
 
 					return { items: data, full: itemsFull };
+			    });
+
+			    return promise;
+			},
+			/****************************
+			* 		Runes Methods		*
+			****************************/
+			clearRunePagination: function(){
+				runesSkip 	= 0;
+				runesFull 	= false;
+			},
+			getRunes: function( search_params ){
+				search_params.skip 		= runesSkip;
+				search_params.limit 	= runesLimit;
+				var promise = Runes.data.query( search_params )
+				.$promise.then(function(data) {
+
+					if (data.length == 0) runesFull = true;
+
+					runesSkip += itemsLimit;
+					
+					return { runes: data, full: runesFull };
 			    });
 
 			    return promise;

@@ -13,6 +13,7 @@ var mongoose 		= require('mongoose'),
 	errorHandler 	= require('./errors.server.controller'),
 	Patch 			= mongoose.model('Patch'),
 	Item 			= mongoose.model('Item'),
+	Rune 			= mongoose.model('Rune'),
 	_ 				= require('lodash'),
 	api 			= require('../../app/controllers/api.server.controller'),
 	async			= require("async");
@@ -187,7 +188,6 @@ asyncTasks.push(function(callback){
     	var updated 	= 0;
 
     	for (var key in items.data) {
-
     		//adicionar os nossos propios campos
     		items.data[key].version = version;
     		items.data[key].enabled = false;
@@ -211,6 +211,59 @@ asyncTasks.push(function(callback){
     			//when finished we call the callback function
     			if(total == processed){
     				callback(null,{items: { inserted: inserted, updated: updated}});
+    			}
+    		});
+    	}
+    }, function(e) {
+        console.log('Got error: ', e);
+    });
+});
+
+//Metodo anonimo que sincroniza Runes
+asyncTasks.push(function(callback){
+
+	api.setParam('&runeListData=all&version=' + version);
+
+    api.requestData(api.RUNE).then(function(apiRes) {
+    	if(apiRes.statusCode > 400){
+    		inserted 	= -1;
+    		updated 	= -1;
+    		callback(null,{runes: { inserted: inserted, updated: updated}});
+    		return;
+    	}
+
+    	var runes 		= apiRes.data;
+    	var options 	= { upsert: true, new: false };
+    	var processed 	= 0;
+    	var total 		= Object.keys(runes.data).length;
+    	var inserted 	= 0;
+    	var updated 	= 0;
+
+    	for (var key in runes.data) {
+    		//adicionar os nossos propios campos
+            console.log(runes.data[key].image);
+    		runes.data[key].version = version;
+    		runes.data[key].enabled = false;
+
+			var conditions = {
+				version: 	runes.data[key].version,
+				id: 		runes.data[key].id
+			}
+			
+    		Rune.findOneAndUpdate( conditions, runes.data[key], options, function(err, doc){
+
+    			if(doc === null){
+    				++inserted;
+    			}
+    			else{
+    				++updated;
+    			}
+
+    			++processed;
+
+    			//when finished we call the callback function
+    			if(total == processed){
+    				callback(null,{runes: { inserted: inserted, updated: updated}});
     			}
     		});
     	}

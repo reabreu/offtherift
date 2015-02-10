@@ -1,0 +1,74 @@
+<!-- Modal -->
+<div class="modal fade" id="runeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">
+                    <img class  = "avatar" 
+                        alt     = "avatar" 
+                        ng-if   = "runeIndex >= 0"
+                        ng-src  = "{{ runes[runeIndex].image.full | ddragon: runes[runeIndex].version:'rune'}}">
+                    {{runes[runeIndex].name}}
+                </h2>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive table-userinfo">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr ng-show ="runes[runeIndex].tags.length">
+                                <td colspan="2">
+                                    <span
+                                        style           = "margin-right: 5px;"
+                                        data-ng-repeat  = "tag in runes[runeIndex].tags" 
+                                        class           = "badge badge-info"
+                                    >{{tag}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Version</td>
+                                <td>{{runes[runeIndex].version}}</td>
+                            </tr>
+                            <tr>
+                                <td>Enabled</td>
+                                <td ng-class="{ 'text-success':runes[runeIndex].enabled, 'text-warning':!runes[runeIndex].enabled  }">
+                                    <input
+                                        bs-switch
+                                        type            = "checkbox"
+                                        ng-model        = "runes[runeIndex].enabled"
+                                        type            = "checkbox" 
+                                        switch-size     = "mini"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Purchasable</td>
+                                <td ng-class="{ 'text-success':runes[runeIndex].gold.purchasable, 'text-warning':!runes[runeIndex].gold[0].purchasable  }">
+                                    {{runes[runeIndex].gold[0].purchasable ? 'yes' : 'no'}}
+                                </td>
+                            </tr>
+                            <tr ng-show = "runes[runeIndex].plaintext.length">
+                                <td>Description</td>
+                                <td>{{runes[runeIndex].plaintext}}</td>
+                            </tr>
+                            <tr>
+                                <td>Stats</td>
+                                <td>{{runes[runeIndex].sanitizedDescription}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4>Effects</h4>
+                <form class="form-horizontal compact-form">
+                    {{runes[runeIndex] | json}}
+                    <custom-effect target="runes[runeIndex]"></custom-effect>
+                    }
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="update(runes[runeIndex]);searchRunes()">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

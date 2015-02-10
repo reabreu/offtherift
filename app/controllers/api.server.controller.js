@@ -21,6 +21,7 @@ module.exports = {
 	PATCH:  	1,
 	CHAMPION: 	2,
 	ITEM: 		3,
+	RUNE: 		4,
 
 
 	/**
@@ -39,6 +40,10 @@ module.exports = {
 		{
 			type: 3,
 			url: '/item'
+		},
+		{
+			type: 4,
+			url: '/rune'
 		}
 	],
 	/**
