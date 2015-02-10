@@ -7,6 +7,7 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 		$scope.busy 			= false;
 		$scope.patches  		= [];
 		$scope.items 			= [];
+		$scope.copyPatch 		= { version : ''};
 
 		$scope.formData 		= {
 			enabled: 	false,
@@ -65,5 +66,14 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 				$scope.error = errorResponse.data.message;
 			});
 		};
+
+		$scope.loadEffects = function(){
+			Items.data.query({ 
+				version: 	$scope.copyPatch.version,
+				riotId: 	$scope.items[$scope.itemIndex].id
+			}).$promise.then(function(data){
+				$scope.items[$scope.itemIndex].customEffect = data[0].customEffect;
+			});
+		}
 	}
 ]);

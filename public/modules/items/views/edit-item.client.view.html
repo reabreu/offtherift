@@ -3,8 +3,8 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <img class  = "avatar" 
                         alt     = "avatar" 
                         ng-if   = "itemIndex >= 0"
@@ -43,7 +43,7 @@
                             </tr>
                             <tr>
                                 <td>Purchasable</td>
-                                <td ng-class="{ 'text-success':items[itemIndex].gold.purchasable, 'text-warning':!items[itemIndex].gold[0].purchasable  }">
+                                <td ng-class="{ 'text-success':items[itemIndex].gold.purchasable, 'text-warning':!items[itemIndex].gold.purchasable  }">
                                     {{items[itemIndex].gold[0].purchasable ? 'yes' : 'no'}}
                                 </td>
                             </tr>
@@ -60,7 +60,7 @@
                 </div>
                 <h4>Effects</h4>
                 <form class="form-horizontal compact-form">
-                    <custom-effect target="items[itemIndex]"></custom-effect>
+                    <custom-effect target="items[itemIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
                 </form>
             </div>
             <div class="modal-footer">
