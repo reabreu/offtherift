@@ -1,4 +1,3 @@
-<!-- Modal -->
 <div class="modal fade" id="runeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -60,15 +59,13 @@
                 </div>
                 <h4>Effects</h4>
                 <form class="form-horizontal compact-form">
-                    {{runes[runeIndex] | json}}
-                    <custom-effect target="runes[runeIndex]"></custom-effect>
-                    }
+                    <custom-effect target="runes[runeIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="update(runes[runeIndex]);searchRunes()">Save changes</button>
+                <button type="button" class="btn btn-primary" ng-click="update(runes[runeIndex]);searchRunes();">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal

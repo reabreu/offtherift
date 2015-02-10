@@ -95,8 +95,6 @@ exports.list = function(req, res) {
 	if( enabled != undefined)
 		query.enabled = enabled;
 	
-	console.log(query);
-	console.log(options);
 	Rune.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, runes) {
 		if (err) {
 			return res.status(400).send({

@@ -11,7 +11,7 @@ module.exports = function(app) {
 
 	app.route('/runes/:runeId')
 		.get(runes.read)
-		.put(users.requiresLogin, runes.hasAuthorization, runes.update)
+		.put(runes.update)
 		.delete(users.requiresLogin, runes.hasAuthorization, runes.delete);
 
 	// Finish by binding the Rune middleware

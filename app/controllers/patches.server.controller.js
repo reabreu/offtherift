@@ -241,7 +241,6 @@ asyncTasks.push(function(callback){
 
     	for (var key in runes.data) {
     		//adicionar os nossos propios campos
-            console.log(runes.data[key].image);
     		runes.data[key].version = version;
     		runes.data[key].enabled = false;
 

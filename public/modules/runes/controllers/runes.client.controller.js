@@ -7,6 +7,7 @@ angular.module('runes').controller('RunesController', ['$scope', '$stateParams',
 		$scope.busy 			= false;
 		$scope.patches  		= [];
 		$scope.runes 			= [];
+		$scope.copyPatch 		= { version : ''};
 
 		$scope.formData 		= {
 			enabled: 	false,
@@ -68,51 +69,14 @@ angular.module('runes').controller('RunesController', ['$scope', '$stateParams',
 			});
 		};
 
-		// Find a list of Runes
-		// $scope.find = function() {
-		// 	$scope.runes = Runes.query();
-		// };
+		$scope.loadEffects = function(){
+			Runes.data.query({ 
+				version: 	$scope.copyPatch.version,
+				riotId: 	$scope.runes[$scope.runeIndex].id
+			}).$promise.then(function(data){
+				$scope.runes[$scope.runeIndex].customEffect = data[0].customEffect;
+			});
+		}
 
-		// Find existing Rune
-		// $scope.findOne = function() {
-		// 	$scope.rune = Runes.get({ 
-		// 		runeId: $stateParams.runeId
-		// 	});
-		// };
-
-		// Create new Rune
-		// $scope.create = function() {
-		// 	// Create new Rune object
-		// 	var rune = new Runes ({
-		// 		name: this.name
-		// 	});
-
-		// 	// Redirect after save
-		// 	rune.$save(function(response) {
-		// 		$location.path('runes/' + response._id);
-
-		// 		// Clear form fields
-		// 		$scope.name = '';
-		// 	}, function(errorResponse) {
-		// 		$scope.error = errorResponse.data.message;
-		// 	});
-		// };
-
-		// Remove existing Rune
-		// $scope.remove = function(rune) {
-		// 	if ( rune ) { 
-		// 		rune.$remove();
-
-		// 		for (var i in $scope.runes) {
-		// 			if ($scope.runes [i] === rune) {
-		// 				$scope.runes.splice(i, 1);
-		// 			}
-		// 		}
-		// 	} else {
-		// 		$scope.rune.$remove(function() {
-		// 			$location.path('runes');
-		// 		});
-		// 	}
-		// };
 	}
 ]);

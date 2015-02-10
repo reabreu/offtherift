@@ -87,7 +87,6 @@ module.exports = {
 	{
 		var deferred = $q.defer();
 		var url      = this.generateUrl(type);
-		console.log(url);
 		https.get(url, function(res) {
 		    var body = '';
 
