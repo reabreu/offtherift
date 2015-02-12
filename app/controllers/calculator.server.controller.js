@@ -11,5 +11,6 @@ var mongoose = require('mongoose'),
  */
 exports.processStats = function(req, res) {
 	var request = req.body;
+	//console.log(request);
 	res.jsonp(request);
 };

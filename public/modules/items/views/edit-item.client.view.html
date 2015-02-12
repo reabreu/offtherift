@@ -13,7 +13,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive table-userinfo">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed" style="margin-bottom: 0px">
                         <tbody>
                             <tr ng-show ="items[itemIndex].tags.length">
                                 <td colspan="2">
@@ -59,6 +59,7 @@
                 </div>
                 <h4>Effects</h4>
                 <form class="form-horizontal compact-form">
+                    {{items[itemIndex].customEffect}}
                     <custom-effect target="items[itemIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
                 </form>
             </div>

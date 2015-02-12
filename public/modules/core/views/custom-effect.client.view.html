@@ -1,6 +1,6 @@
 
-<div class="form-group" style="margin-bottom:20px;">
-	<label style="text-align:left;" class="col-sm-2 control-label label-input-sm pull-left" for="selector1">Load from</label>
+<!--<div class="form-group" style="margin-bottom:20px;">
+	<label style="text-align:left;min-width:76px;" class="col-sm-1 control-label label-input-sm pull-left" for="selector1">Load from</label>
 	<div class="col-sm-3">
 		<select 
 			class 		= "form-control input-sm" 
@@ -10,12 +10,12 @@
 		<option ng-repeat="patch in patches | filter:{ synched: true }" value="{{ patch.version }}">{{patch.version}}</option>
 		</select>
 	</div>
-</div>
+</div>-->
 
 <div class="row">
 	<div ng-repeat="effect in target.customEffect">
-		<div ng-if="$index + 1 % 3 == 0" class="clearfix"></div>
-		<div class="col-sm-4">
+		<div ng-if="$index + 1 % 4 == 0" class="clearfix"></div>
+		<div class="col-sm-3">
 			<div class="tiles-sparkline">
 				<div class="tiles-sparkline-header">
 					<a 
@@ -28,29 +28,12 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Stat</label>
 						<div class="col-sm-8">
-							<select 
-								class 		= "form-control input-sm" 
-								ng-model 	= "effect.stat"
-							>
-								<option value="ArmorPenetration">Armor Penetration</option>
-								<option value="AttackDamage">Attack Damage</option>
-								<option value="AttackSpeed">Attack Speed</option>
-								<option value="CriticalStrikeChance">Critical Strike Change</option>
-								<option value="CriticalStrikeDamage">Critical Strike Damage</option>
-								<option value="LifeSteal">Life Steal</option>
-
-								<option value="Armor">Armor</option>
-								<option value="Health">Health</option>
-								<option value="HealthRegeneration">Health Regeneration</option>
-								<option value="MagicResistance">MagicResistance</option>
-
-								<option value="AbilityPower">Ability Power</option>
-								<option value="CooldownReduction">Cooldown Reduction</option>
-								<option value="MagicPenetration">Magic Penetration</option>
-								<option value="ManaRegeneration">Mana Regeneration</option>
-								<option value="SpellVamp">Spell Vamp</option>
-
-								<option value="MovementSpeed">Movement Speed</option>
+							<select ng-model = "effect.dest" class="form-control input-sm">
+								<option 
+									ng-repeat 	= "stat in stats" 
+									value 		= "{{stat.value}}"
+									ng-selected = "stat.value == effect.dest"
+								>{{stat.label}}</option>
 							</select>
 						</div>
 					</div>
@@ -71,12 +54,37 @@
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Type</label>
 						<div class="col-sm-8">
 							<select 
-							class 		= "form-control input-sm" 
-							ng-model 	= "effect.type"
+								class 		= "form-control input-sm" 
+								ng-model 	= "effect.type"
 							>
-							<option value="Flat">Flat</option>
-							<option value="Percentage">Percentage</option>
+							<option 
+								ng-repeat 	= "type in types" 
+								value 		= "{{type.value}}"
+								ng-selected = "type.value == effect.type"
+							>{{type.label}}</option>
 							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Src</label>
+						<div class="col-sm-8">
+							<select ng-model = "effect.src" class="form-control input-sm" >
+								<option value=""></option>
+								<option ng-selected = "stat.value == effect.src" ng-repeat = " stat in stats" value="{{stat.value}}">{{stat.label}}</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Name</label>
+						<div class="col-sm-8">
+							<input 
+							type        = "text" 
+							id          = "" 
+							class       = "form-control input-sm" 
+							ng-model 	= "effect.name"
+							>
 						</div>
 					</div>
 
@@ -85,6 +93,7 @@
 						<div class="col-sm-8">
 							<div class="checkbox block">
 								<label><input type="checkbox" ng-model="effect.unique"> Unique</label>
+								<label><input type="checkbox" ng-model="effect.perlevel"> Per level</label>
 							</div>
 						</div>
 					</div>
@@ -92,7 +101,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-4">
+	<div class="col-sm-3">
 		<div class="tiles-sparkline">
 			<div class="tiles-sparkline-body" style="height:195px;">
 				<span class="fa-stack fa-lg center-alignment cursor" ng-click="newEffect(target)">
