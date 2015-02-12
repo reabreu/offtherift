@@ -35,13 +35,11 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 				updatePatches();
 
 				for(var key in data.report){
-					report += key + ': ' + data.report[key].inserted + ' inserted and ' + data.report[key].updated + ' updated.';	
+					report += key + ': ' + data.report[key].inserted + ' inserted and ' + data.report[key].updated + ' updated.<br>';	
 				}
 
 				ngToast.create({
-					content: 			report,
-					dismissButton: 		true,
-					dismissOnTimeout: 	false
+					content: report
 				});
 			});
 		}
