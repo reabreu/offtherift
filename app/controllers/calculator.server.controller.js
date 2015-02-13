@@ -14,10 +14,32 @@ exports.processStats = function(req, res) {
 
 	// @TODO Validate request
 	
+	// growth per lvl: (nextLevel * 3.5) + 65
+	var growth = {
+		"1" 	: 0.0000,
+		"2" 	: 0.7200,
+		"3" 	: 1.4750,
+		"4"		: 2.2650,
+		"5" 	: 3.0900,
+		"6" 	: 3.9500,
+		"7" 	: 4.8450,
+		"8" 	: 5.7750,
+		"9" 	: 6.7400,
+		"10"	: 7.7400,
+		"11"	: 8.7750,
+		"12"	: 9.8450,
+		"13"	: 10.950,
+		"14"	: 12.090,
+		"15"	: 13.265,
+		"16"	: 14.475,
+		"17"	: 15.720,
+		"18"	: 17.000
+	}
+
 	var stats = {
 		hp: {
 			name: "hp",
-			base: request.stats.hp + request.level * request.stats.hpperlevel,
+			base: request.stats.hp + growth[request.level] * request.stats.hpperlevel,
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
@@ -30,7 +52,7 @@ exports.processStats = function(req, res) {
 		},
 		mp: {
 			name: "mp",
-			base: request.stats.mp + request.level * request.stats.mpperlevel,
+			base: request.stats.mp + growth[request.level] * request.stats.mpperlevel,
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
@@ -60,6 +82,7 @@ exports.processStats = function(req, res) {
 		if ( !effect.unique  || (effect.unique && !uniques.contains(effect.name)) ) {
 			if (effect.perlevel) {
 				effect.value *= request.level;
+				console.log(effect.value);
 			}
 
 			if (effect.type === "flat") {
@@ -92,7 +115,7 @@ exports.processStats = function(req, res) {
 		response[stat.name] = calculateStatValue(stat, response);
 	}
 	
-	res.jsonp({stats: stats, response: response});
+	res.jsonp({response: response, stats: stats});
 };
 
 function calculateStatValue(stat, resStats) {
