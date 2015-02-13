@@ -101,7 +101,6 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 						name 	: ''
 					});
 				}
-
 				
 				$scope.removeEffect = function ( target, index ){
 					target.customEffect.splice(index,1);
