@@ -98,8 +98,7 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 						unique 	: false,
 						perlevel: false,
 						src 	: '',
-						name 	: '',
-						nature	: $scope.nature
+						name 	: ''
 					});
 				}
 
