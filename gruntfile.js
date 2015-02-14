@@ -157,7 +157,9 @@ module.exports = function(grunt) {
 				},
 				files: [
 					{ src: 'public/modules/core/less/**/styles.less',   dest: 'public/modules/core/css/core.min.css'  },
-					{ src: 'public/modules/users/less/**/styles.less', dest: 'public/modules/users/css/users.min.css' },
+					{ src: 'public/modules/users/less/**/styles.less', 	dest: 'public/modules/users/css/users.min.css' },
+					{ src: 'public/modules/items/less/styles.less', 	dest: 'public/modules/items/css/items.min.css' },
+					{ src: 'public/modules/patches/less/styles.less', 	dest: 'public/modules/patches/css/patches.min.css'},
 				],
 			}
 		}

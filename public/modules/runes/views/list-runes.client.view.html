@@ -1,10 +1,10 @@
-<section data-ng-controller="ItemsController" data-ng-init="init()">
+<section data-ng-controller="RunesController" data-ng-init="init()">
     <div class="page-header">
-        <h1>Items</h1>
+        <h1>Runes</h1>
     </div>
-    <div class="panel panel-default panel-items">
+    <div class="panel panel-default panel-runes">
         <div class="panel-heading">
-            <h2>Items Panel</h2>
+            <h2>Runes Panel</h2>
         </div>
         <div class="panel-body">
             <form class="form-horizontal">
@@ -14,7 +14,7 @@
                             <select
                             ng-model    = "formData.version"
                             class       = "form-control input-sm" 
-                            ng-change   = "searchItems()"
+                            ng-change   = "searchRunes()"
                             >
                             <option value=""></option>
                             <option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
@@ -27,7 +27,7 @@
                         id          = "focusedinput" 
                         class       = "form-control input-sm" 
                         ng-model    = "formData.name" 
-                        ng-keypress = "($event.which === 13)?searchItems($event):0"
+                        ng-keypress = "($event.which === 13)?searchRunes($event):0"
                         >
                     </div>
                     <label class="col-sm-1 control-label label-input-sm">State</label>
@@ -39,7 +39,7 @@
                         type            = "checkbox"
                         switch-size     = "mini"
                         class           = "label-input-sm pull-right"
-                        ng-change       = "searchItems()"
+                        ng-change       = "searchRunes()"
                         />
                     </div>
                 </div>
@@ -61,25 +61,28 @@
                     </tr>
                 </thead>
                     <tbody>
-                        <tr ng-show         = "items.length" data-ng-repeat  = "item in items" >
-                            <td><img class="avatar" alt="avatar" ng-src="{{ item.image.full | ddragon: item.version:'item'}}"></td>
-                            <td>{{item.name}}</td>
-                            <td ng-class="{ 'text-success':item.enabled, 'text-warning':!item.enabled  }" >{{item.enabled ? 'yes' : 'no'}}</td>
+                        <tr 
+                        ng-show         = "runes.length" 
+                        data-ng-repeat  = "rune in runes" 
+                        >
+                            <td><img class="avatar" alt="avatar" ng-src="{{ rune.image.full | ddragon: rune.version:'rune'}}"></td>
+                            <td>{{rune.name}}</td>
+                            <td ng-class="{ 'text-success':rune.enabled, 'text-warning':!rune.enabled  }" >{{rune.enabled ? 'yes' : 'no'}}</td>
                             <td>
-                                {{item.version}} 
+                                {{rune.version}}
                                 <a
                                 class           = "btn btn-default btn-xs pull-right" 
                                 data-toggle     = "modal" 
-                                href            = "#itemModal"
-                                ng-click        = "setCurrentItemIndex($index)">
+                                href            = "#runeModal"
+                                ng-click        = "setCurrentRuneIndex($index)">
                                 Edit
                             </a>
                         </td>
                     </tr>
-                    <tr ng-show = "!items.length && !busy" style="text-align:center">
-                        <td colspan="4">No items fetched...Try setting some research params!</td>
+                    <tr ng-show = "!runes.length && !busy" style="text-align:center">
+                        <td colspan="4">No runes fetched...Try setting some research params!</td>
                     </tr>
-                    <tr ng-show = "busy && !full" style="text-align:center">
+                    <tr  ng-show = "busy && !full" style="text-align:center">
                         <td colspan="4">Searching <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt=""></td>
                     </tr>
                 </tbody>
@@ -87,11 +90,6 @@
             </div>
         </div>
     </div>
-</div>
 
-<div ng-include src="'modules/items/views/edit-item.client.view.html'"></div>
-
+    <div ng-include src="'modules/runes/views/edit-rune.client.view.html'"></div>
 </section>
-
-
-

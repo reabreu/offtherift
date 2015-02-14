@@ -5,81 +5,79 @@
  */
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
-	Item = mongoose.model('Item'),
+	Rune = mongoose.model('Rune'),
 	_ = require('lodash');
 
 /**
- * Create a Item
+ * Create a Rune
  */
 exports.create = function(req, res) {
-	var item = new Item(req.body);
-	item.user = req.user;
+	var rune = new Rune(req.body);
+	rune.user = req.user;
 
-	item.save(function(err) {
+	rune.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(item);
+			res.jsonp(rune);
 		}
 	});
 };
 
 /**
- * Show the current Item
+ * Show the current Rune
  */
 exports.read = function(req, res) {
-	res.jsonp(req.item);
+	res.jsonp(req.rune);
 };
 
 /**
- * Update a Item
+ * Update a Rune
  */
 exports.update = function(req, res) {
+	var rune = req.rune ;
 
-	var item = req.item ;
+	rune = _.extend(rune , req.body);
 
-	item = _.extend(item , req.body);
-
-	item.save(function(err) {
+	rune.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(item);
+			res.jsonp(rune);
 		}
 	});
 };
 
 /**
- * Delete an Item
+ * Delete an Rune
  */
 exports.delete = function(req, res) {
-	var item = req.item ;
+	var rune = req.rune ;
 
-	item.remove(function(err) {
+	rune.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(item);
+			res.jsonp(rune);
 		}
 	});
 };
 
 /**
- * List of Items
+ * List of Runes
  */
-exports.list = function(req, res) {
+exports.list = function(req, res) { 
 	var skip 		= req.param('skip');
 	var limit 		= req.param('limit');
 	var version 	= req.param('version');
 	var name 		= req.param('name');
 	var enabled 	= req.param('enabled');
-	var riotId 		= req.param('riotId');
 
 	var options = {
 		skip: 		skip,
@@ -96,38 +94,35 @@ exports.list = function(req, res) {
 
 	if( enabled != undefined)
 		query.enabled = enabled;
-
-	if( riotId != undefined)
-		query.id = riotId;
 	
-	Item.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, items) {
+	Rune.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, runes) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(items);
+			res.jsonp(runes);
 		}
 	});
 };
 
 /**
- * Item middleware
+ * Rune middleware
  */
-exports.itemByID = function(req, res, next, id) { 
-	Item.findById(id).populate('user', 'displayName').exec(function(err, item) {
+exports.runeByID = function(req, res, next, id) { 
+	Rune.findById(id).populate('user', 'displayName').exec(function(err, rune) {
 		if (err) return next(err);
-		if (! item) return next(new Error('Failed to load Item ' + id));
-		req.item = item ;
+		if (! rune) return next(new Error('Failed to load Rune ' + id));
+		req.rune = rune ;
 		next();
 	});
 };
 
 /**
- * Item authorization middleware
+ * Rune authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.item.user.id !== req.user.id) {
+	if (req.rune.user.id !== req.user.id) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

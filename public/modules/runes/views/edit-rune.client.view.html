@@ -1,40 +1,40 @@
-<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="runeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <img class  = "avatar" 
                         alt     = "avatar" 
-                        ng-if   = "itemIndex >= 0"
-                        ng-src  = "{{ items[itemIndex].image.full | ddragon: items[itemIndex].version:'item'}}">
-                    {{items[itemIndex].name}}
+                        ng-if   = "runeIndex >= 0"
+                        ng-src  = "{{ runes[runeIndex].image.full | ddragon: runes[runeIndex].version:'rune'}}">
+                    {{runes[runeIndex].name}}
                 </h2>
             </div>
             <div class="modal-body">
                 <div class="table-responsive table-userinfo">
-                    <table class="table table-condensed" style="margin-bottom: 0px">
+                    <table class="table table-condensed">
                         <tbody>
-                            <tr ng-show ="items[itemIndex].tags.length">
+                            <tr ng-show ="runes[runeIndex].tags.length">
                                 <td colspan="2">
                                     <span
                                         style           = "margin-right: 5px;"
-                                        data-ng-repeat  = "tag in items[itemIndex].tags" 
+                                        data-ng-repeat  = "tag in runes[runeIndex].tags" 
                                         class           = "badge badge-info"
                                     >{{tag}}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Version</td>
-                                <td>{{items[itemIndex].version}}</td>
+                                <td>{{runes[runeIndex].version}}</td>
                             </tr>
                             <tr>
                                 <td>Enabled</td>
-                                <td ng-class="{ 'text-success':items[itemIndex].enabled, 'text-warning':!items[itemIndex].enabled  }">
+                                <td ng-class="{ 'text-success':runes[runeIndex].enabled, 'text-warning':!runes[runeIndex].enabled  }">
                                     <input
                                         bs-switch
                                         type            = "checkbox"
-                                        ng-model        = "items[itemIndex].enabled"
+                                        ng-model        = "runes[runeIndex].enabled"
                                         type            = "checkbox" 
                                         switch-size     = "mini"
                                     />
@@ -42,30 +42,29 @@
                             </tr>
                             <tr>
                                 <td>Purchasable</td>
-                                <td ng-class="{ 'text-success':items[itemIndex].gold.purchasable, 'text-warning':!items[itemIndex].gold.purchasable  }">
-                                    {{items[itemIndex].gold[0].purchasable ? 'yes' : 'no'}}
+                                <td ng-class="{ 'text-success':runes[runeIndex].gold.purchasable, 'text-warning':!runes[runeIndex].gold[0].purchasable  }">
+                                    {{runes[runeIndex].gold[0].purchasable ? 'yes' : 'no'}}
                                 </td>
                             </tr>
-                            <tr ng-show = "items[itemIndex].plaintext.length">
+                            <tr ng-show = "runes[runeIndex].plaintext.length">
                                 <td>Description</td>
-                                <td>{{items[itemIndex].plaintext}}</td>
+                                <td>{{runes[runeIndex].plaintext}}</td>
                             </tr>
                             <tr>
                                 <td>Stats</td>
-                                <td>{{items[itemIndex].sanitizedDescription}}</td>
+                                <td>{{runes[runeIndex].sanitizedDescription}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <h4>Effects</h4>
                 <form class="form-horizontal compact-form">
-                    {{items[itemIndex].customEffect}}
-                    <custom-effect target="items[itemIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
+                    <custom-effect target="runes[runeIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="update(items[itemIndex]);searchItems()">Save changes</button>
+                <button type="button" class="btn btn-primary" ng-click="update(runes[runeIndex]);searchRunes();">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

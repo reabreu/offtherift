@@ -21,6 +21,7 @@ module.exports = {
 	PATCH:  	1,
 	CHAMPION: 	2,
 	ITEM: 		3,
+	RUNE: 		4,
 
 
 	/**
@@ -39,6 +40,10 @@ module.exports = {
 		{
 			type: 3,
 			url: '/item'
+		},
+		{
+			type: 4,
+			url: '/rune'
 		}
 	],
 	/**
@@ -82,7 +87,6 @@ module.exports = {
 	{
 		var deferred = $q.defer();
 		var url      = this.generateUrl(type);
-		console.log(url);
 		https.get(url, function(res) {
 		    var body = '';
 
