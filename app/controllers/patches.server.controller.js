@@ -15,7 +15,8 @@ var mongoose 		= require('mongoose'),
 	Item 			= mongoose.model('Item'),
 	_ 				= require('lodash'),
 	api 			= require('../../app/controllers/api.server.controller'),
-	async			= require("async");
+	async			= require("async"),
+    Champion        = mongoose.model('Champion');
 
 /**
  * Create a Patch
@@ -52,7 +53,7 @@ exports.update = function(req, res) {
 	patch.save(function(err) {
 
 		if(version != '') return;
-		
+
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -67,7 +68,7 @@ exports.update = function(req, res) {
  * List of Patches
  */
 exports.list = function(req, res) {
-	
+
 	var skip 	= req.param('skip');
 	var limit 	= req.param('limit');
 
@@ -90,7 +91,7 @@ exports.list = function(req, res) {
 /**
  * Patch middleware
  */
-exports.patchByID = function(req, res, next, id) { 
+exports.patchByID = function(req, res, next, id) {
 	Patch.findById(id).populate('user', 'displayName').exec(function(err, patch) {
 		if (err) return next(err);
 		if (! patch) return next(new Error('Failed to load Patch ' + id));
@@ -137,7 +138,7 @@ exports.checkPatches = function(req,res){
     	var inserted 			= 0;
     	var updated 			= 0;
     	var processed 			= 0;
-    	var update 				= { 
+    	var update 				= {
     		$setOnInsert: {
 				created: new Date().toISOString()
 			}
@@ -196,7 +197,7 @@ asyncTasks.push(function(callback){
 				version: 	items.data[key].version,
 				id: 		items.data[key].id
 			}
-			
+
     		Item.findOneAndUpdate( conditions, items.data[key], options, function(err, doc){
 
     			if(doc === null){
@@ -214,6 +215,67 @@ asyncTasks.push(function(callback){
     			}
     		});
     	}
+    }, function(e) {
+        console.log('Got error: ', e);
+    });
+});
+
+//Metodo anonimo que sincroniza CHAMPIONS
+asyncTasks.push(function(callback) {
+
+    api.setParam('&champData=all&version=' + version);
+
+    api.requestData(api.CHAMPION).then(function(apiRes) {
+
+        // API ERROR
+        if(apiRes.response.statusCode > 400){
+            inserted    = -1;
+            updated     = -1;
+            callback(null, {champions: { inserted: inserted, updated: updated }});
+            return;
+        }
+
+        var options       = { upsert: true, new: false };
+        var champions     = apiRes.data.data       || {};
+        var championsKeys = Object.keys(champions) || {};
+        var total         = championsKeys.length   || 0;
+        var inserted      = 0;
+        var updated       = 0;
+        var processed     = 0;
+
+        // for all champions
+        for (var i = 0; i < total; i++) {
+            var champion = champions[championsKeys[i]];
+
+            // champion data
+            champion = _.extend(champion, {
+                version: version,
+                created: new Date().toISOString()
+            });
+
+            // update conditions
+            var conditions = {
+                version: version,
+                id:      champion.id
+            };
+
+            Champion.findOneAndUpdate(conditions, champion, options, function(err, doc){
+                if(doc === null){
+                    ++inserted;
+                }
+                else{
+                    ++updated;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null, {champions: { inserted: inserted, updated: updated }});
+                }
+            });
+        }
+
     }, function(e) {
         console.log('Got error: ', e);
     });

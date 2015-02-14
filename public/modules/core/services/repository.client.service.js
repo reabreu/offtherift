@@ -43,10 +43,12 @@ angular.module('core').factory('Repository', ['Patches','Items','Champions',
 			},
 			/**
 			 * Get champions from server limited
+			 * @param  {params} params    Search Parameters
 			 * @return {object} Champions
 			 */
-			getChampions: function() {
-				return Champions.data.query({skip: skip, limit: limit})
+			getChampions: function( params ) {
+				var searchParams = angular.extend({}, {skip: skip, limit: limit}, params);
+				return Champions.data.query(searchParams)
 				.$promise.then(function(data) {
 
 					if (data.length == 0) full = true;

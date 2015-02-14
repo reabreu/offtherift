@@ -12,8 +12,9 @@ angular.module('core').filter('ddragon', [
 		return function(key, version, type) {
 			if (key && !key.match(/\.(png|jpg|gif|jpeg)$/)) {
 				key = key + '.png';
-			};
-			return 'http://ddragon.leagueoflegends.com/cdn/' + version + '/img/' + type + '/' + key;
+				return 'http://ddragon.leagueoflegends.com/cdn/' + version + '/img/' + type + '/' + key;
+			}
+			return '/modules/users/img/nophoto.png';
 		};
 	}
 ]);

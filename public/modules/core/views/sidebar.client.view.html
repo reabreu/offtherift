@@ -3,7 +3,10 @@
         <div class="widget-body welcome-box tabular">
             <div class="tabular-row">
                 <div class="tabular-cell welcome-avatar">
-                    <a href="/#!/dashboard"><img src="/modules/users/img/nophoto.png" class="avatar"></a>
+                    <a href="/#!/dashboard">
+                        <img ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar">
+                        <img ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar">
+                    </a>
                 </div>
                 <div class="tabular-cell welcome-options">
                     <span class="welcome-text">Welcome,</span>

@@ -35,6 +35,6 @@ var ChampionSchema = new Schema({
 		required: 'Please fill Champion title',
 		trim: true
 	}
-});
+}, { strict: false });
 
 mongoose.model('Champion', ChampionSchema);

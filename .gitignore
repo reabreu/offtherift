@@ -7,4 +7,5 @@ public/lib
 app/tests/coverage/
 .bower-*/
 .idea/
-.sublime*
+*.sublime-*
+public/modules/**/**/*.min.css

@@ -1,21 +1,50 @@
-<section data-ng-controller="ChampionsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="champion.name"></h1>
+<section data-ng-controller="ChampionsController">
+	<div class="modal-header">
+		<h3 class="modal-title">
+            <img class="avatar" alt="avatar" ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}">
+			<span ng-bind="champion.name"></span>
+			<div class="pull-right"><span class="glyphicon glyphicon-remove" ng-click="closeModal()"></span></div>
+		</h3>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == champion.user._id))">
-		<a class="btn btn-primary" href="/#!/champions/{{champion._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
+	<div class="modal-body">
+        <div class="table-responsive table-userinfo">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-show ="champion.tags.length">
+                        <td colspan="2">
+                            <span
+                                style           = "margin-right: 5px;"
+                                data-ng-repeat  = "tag in champion.tags"
+                                class           = "badge badge-info"
+                            >{{tag}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+                        <td>{{champion.version}}</td>
+                    </tr>
+                    <tr>
+                        <td>Enabled</td>
+                        <td ng-class="{ 'text-success':champion.enabled, 'text-warning':!champion.enabled  }">
+                            <input
+                                bs-switch
+                                type            = "checkbox"
+                                ng-model        = "champion.enabled"
+                                type            = "checkbox"
+                                switch-size     = "mini"
+                            />
+                        </td>
+                    </tr>
+                    <tr ng-show = "champion.plaintext.length">
+                        <td>Description</td>
+                        <td>{{champion.plaintext}}</td>
+                    </tr>
+                    <tr>
+                        <td>Stats</td>
+                        <td>{{champion.sanitizedDescription}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="champion.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="champion.user.displayName"></span>
-		</em>
-	</small>
 </section>
