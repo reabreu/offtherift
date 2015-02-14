@@ -13,11 +13,26 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 			controller: function($scope, $element){
 				//opcoes
 				$scope.stats = [
-					{ 	value 		: 'armorpenetration',
-						label		: 'Armor Penetration'
+					{ 	value 		: 'hp',
+						label  		: 'Health'
+					},
+					{ 	value 		: 'mp',
+						label  		: 'Mana'
+					},
+					{ 	value 		: 'hpregen',
+						label  		: 'Health Regeneration'
+					},
+					{ 	value 		: 'mpregen',
+						label  		: 'Mana Regeneration'
 					},
 					{ 	value 		: 'attackdamage',
 						label  		: 'Attack Damage'
+					},
+					{ 	value 		: 'abilitypower',
+						label  		: 'Ability Power'
+					},
+					{ 	value 		: 'armorpenetration',
+						label		: 'Armor Penetration'
 					},
 					{ 	value 		: 'attackspeed',
 						label  		: 'Attack Speed'
@@ -34,29 +49,14 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'armor',
 						label  		: 'Armor'
 					},
-					{ 	value 		: 'health',
-						label  		: 'Health'
-					},
-					{ 	value 		: 'healthregeneration',
-						label  		: 'Health Regeneration'
-					},
 					{ 	value 		: 'spellblock',
 						label  		: 'Magic Resistance'
-					},
-					{ 	value 		: 'ap',
-						label  		: 'Ability Power'
 					},
 					{ 	value 		: 'cooldowndeduction',
 						label  		: 'Cooldown Reduction'
 					},
 					{ 	value 		: 'magicpenetration',
 						label  		: 'Magic Penetration'
-					},
-					{ 	value 		: 'mp',
-						label  		: 'Mana'
-					},
-					{ 	value 		: 'mpregen',
-						label  		: 'Mana Regeneration'
 					},
 					{ 	value 		: 'spellVamp',
 						label  		: 'Spell Vamp'
@@ -84,6 +84,9 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					},
 					{ 	value 		: 'bonusmodifier',
 						label		: 'Bonus'
+					},
+					{ 	value 		: 'basemodifier',
+						label		: 'Base Modifier'
 					}
 				];
 
