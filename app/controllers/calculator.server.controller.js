@@ -44,6 +44,7 @@ exports.processStats = function(req, res) {
 			modifiers: {
 				flat: 			0.0,
 				bonusmodifier: 	[],
+				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
@@ -57,6 +58,63 @@ exports.processStats = function(req, res) {
 			modifiers: {
 				flat: 			0.0,
 				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		hpregen: {
+			name: "hpregen",
+			base: request.stats.hpregen + growth[request.level] * request.stats.hpregenperlevel,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		mpregen: {
+			name: "mpregen",
+			base: request.stats.mpregen + growth[request.level] * request.stats.mpregenperlevel,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		attackdamage: {
+			name: "attackdamage",
+			base: request.stats.attackdamage + growth[request.level] * request.stats.attackdamageperlevel,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		abilitypower: {
+			name: "abilitypower",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
@@ -79,7 +137,7 @@ exports.processStats = function(req, res) {
 		}
 
 		// Add flat bonus from normal or unprocessed uniques.
-		if ( !effect.unique  || (effect.unique && !uniques.contains(effect.name)) ) {
+		if ( !effect.unique  || (effect.unique && (uniques.indexOf(effect.name)) == -1) ) {
 			if (effect.perlevel) {
 				effect.value *= request.level;
 				console.log(effect.value);
@@ -126,19 +184,21 @@ function calculateStatValue(stat, resStats) {
 	var flatBonus			= calculateFlatBonus(stat.dependencies, resStats) + stat.modifiers.flat;
 	var statModifier		= calculateModifier(stat.name, runesModifier, masteriesModifier, itemsModifier, abilitiesModifier);
 	var bonusModifier		= calculateBonusModifier(stat.name, stat.modifiers.bonusmodifier);
-
+	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
+	console.log(baseModifier);
 	switch (stat.name) {
-		case "hp":
-		case "mp":
 		default:
-			return stat.base + (flatBonus + (stat.base + flatBonus) * statModifier) * (1 + bonusModifier);
+			var baseCoef 	= stat.base*baseModifier;
+			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
+			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
+			return stat.base + statBonus * (1 + bonusModifier);
 	}
 }
 
 function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 	switch (stat.name) {
-		case "hp":
-		case "mp":
+		case "attackdamage": // stacks additively between sources
+			return runeMod + masteryMod + itemMod + abilityMod;
 		default:
 			var summonerMod = runeMod + masteryMod;
 
@@ -158,10 +218,20 @@ function calculateBonusModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "hp":
-		case "mp":
 		default:
-			for (var i = 0; i < modifiers; i++) {
+			for (var i = 0; i < modifiers.length; i++) {
+				bonus += modifiers[i];
+			}
+			return bonus;
+	}
+}
+
+function calculateBaseModifier(statName, modifiers) {
+	var bonus = 0;
+
+	switch (statName) {
+		default:
+			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
 			return bonus;
@@ -172,10 +242,8 @@ function calculateRunesModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "hp":
-		case "mp":
 		default:
-			for (var i = 0; i < modifiers; i++) {
+			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
 			return bonus;
@@ -186,10 +254,8 @@ function calculateMasteriesModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "hp":
-		case "mp":
 		default:
-			for (var i = 0; i < modifiers; i++) {
+			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
 			return bonus;
@@ -200,10 +266,8 @@ function calculateItemsModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "hp":
-		case "mp":
 		default:
-			for (var i = 0; i < modifiers; i++) {
+			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
 			return bonus;
@@ -214,10 +278,8 @@ function calculateAbilitiesModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "hp":
-		case "mp":
 		default:
-			for (var i = 0; i < modifiers; i++) {
+			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
 			return bonus;
@@ -247,21 +309,4 @@ function isValidEffect(effect) {
 	return (("dest" in effect) && ("value" in effect) && ("type" in effect) &&
 		("name" in effect) && ("src" in effect) && ("unique" in effect) &&
 		("perlevel" in effect));
-}
-
-/**
- * [bonusMechanic description]
- * @param  {[type]}
- * @return {string} [additive, multiplicative]
- */
-function bonusMechanic(stat) {
-	switch (stat) {
-		case "ap":
-		case "":
-			return "multiplicative";
-		case "armor":
-		case "attackspeed":
-		case "attackdamage":
-			return "additive";
-	}
 }
