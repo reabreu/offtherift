@@ -79,8 +79,8 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'item',
 						label		: 'Item'
 					},
-					{ 	value 		: 'skill',
-						label		: 'Skill'
+					{ 	value 		: 'abilities',
+						label		: 'Abilitie'
 					},
 					{ 	value 		: 'bonusmodifier',
 						label		: 'Bonus'
