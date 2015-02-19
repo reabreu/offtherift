@@ -5,11 +5,11 @@ module.exports = function(grunt) {
 	var watchFiles = {
 		serverViews: ['app/views/**/*.*'],
 		serverJS: ['gruntfile.js', 'server.js', 'config/**/*.js', 'app/**/*.js'],
-		clientViews: ['public/modules/**/views/**/*.html'],
-		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
-		clientCSS: ['public/modules/**/*.min.css'],
+		clientViews: ['public/modules/**/views/**/*.html', 'public/modules/**/views/**/*.html'],
+		clientJS: ['public/js/*.js', 'public/modules/**/*.js', 'admin/js/*.js', 'admin/modules/**/*.js'],
+		clientCSS: ['public/modules/**/*.min.css', 'admin/modules/**/*.min.css'],
 		mochaTests: ['app/tests/**/*.js'],
-		clientLESS: ['public/modules/**/*.less'],
+		clientLESS: ['public/modules/**/*.less', 'admin/modules/**/*.less'],
 	};
 
 	// Project Configuration
@@ -79,14 +79,14 @@ module.exports = function(grunt) {
 					mangle: false
 				},
 				files: {
-					'public/dist/application.min.js': 'public/dist/application.js'
+					'admin/dist/application.min.js': 'admin/dist/application.js'
 				}
 			}
 		},
 		cssmin: {
 			combine: {
 				files: {
-					'public/dist/application.min.css': '<%= applicationCSSFiles %>'
+					'admin/dist/application.min.css': '<%= applicationCSSFiles %>'
 				}
 			}
 		},
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
 		ngAnnotate: {
 			production: {
 				files: {
-					'public/dist/application.js': '<%= applicationJavaScriptFiles %>'
+					'admin/dist/application.js': '<%= applicationJavaScriptFiles %>'
 				}
 			}
 		},
@@ -151,15 +151,15 @@ module.exports = function(grunt) {
 		less: {
 			development: {
 				options: {
-					paths: ['public/modules'],
+					paths: ['admin/modules'],
 					compress: true,
 					cleancss: true
 				},
 				files: [
-					{ src: 'public/modules/core/less/**/styles.less',   dest: 'public/modules/core/css/core.min.css'  },
-					{ src: 'public/modules/users/less/**/styles.less', 	dest: 'public/modules/users/css/users.min.css' },
-					{ src: 'public/modules/items/less/styles.less', 	dest: 'public/modules/items/css/items.min.css' },
-					{ src: 'public/modules/patches/less/styles.less', 	dest: 'public/modules/patches/css/patches.min.css'},
+					{ src: 'admin/modules/core/less/**/styles.less',   dest: 'admin/modules/core/css/core.min.css'  },
+					{ src: 'admin/modules/users/less/**/styles.less', 	dest: 'admin/modules/users/css/users.min.css' },
+					{ src: 'admin/modules/items/less/styles.less', 	dest: 'admin/modules/items/css/items.min.css' },
+					{ src: 'admin/modules/patches/less/styles.less', 	dest: 'admin/modules/patches/css/patches.min.css'},
 				],
 			}
 		}

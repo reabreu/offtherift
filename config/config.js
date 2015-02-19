@@ -27,7 +27,7 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 	// The output array
 	var output = [];
 
-	// If glob pattern is array so we use each pattern in a recursive way, otherwise we use glob 
+	// If glob pattern is array so we use each pattern in a recursive way, otherwise we use glob
 	if (_.isArray(globPatterns)) {
 		globPatterns.forEach(function(globPattern) {
 			output = _.union(output, _this.getGlobbedFiles(globPattern, removeRoot));
@@ -55,13 +55,15 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 
 /**
  * Get the modules JavaScript files
+ * @param {string}  env            Environment (admin|public)
+ * @param {boolean} includeTests   Include test fileds
  */
-module.exports.getJavaScriptAssets = function(includeTests) {
-	var output = this.getGlobbedFiles(this.assets.lib.js.concat(this.assets.js), 'public/');
+module.exports.getJavaScriptAssets = function(env, includeTests) {
+	var output = this.getGlobbedFiles(this.env[env].assets.lib.js.concat(this.env[env].assets.js), env + '/');
 
 	// To include tests
 	if (includeTests) {
-		output = _.union(output, this.getGlobbedFiles(this.assets.tests));
+		output = _.union(output, this.getGlobbedFiles(this.env[env].assets.tests));
 	}
 
 	return output;
@@ -69,8 +71,9 @@ module.exports.getJavaScriptAssets = function(includeTests) {
 
 /**
  * Get the modules CSS files
+ * @param {string} env Environment (admin|public)
  */
-module.exports.getCSSAssets = function() {
-	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
+module.exports.getCSSAssets = function(env) {
+	var output = this.getGlobbedFiles(this.env[env].assets.lib.css.concat(this.env[env].assets.css), env + '/');
 	return output;
 };
