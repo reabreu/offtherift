@@ -82,9 +82,7 @@ exports.list = function(req, res) {
     if (req.param('name')) {
         attributes = _.extend({}, attributes, { name:  new RegExp('.*'+req.param('name')+'.*', 'i') });
     };
-
-    console.log(attributes);
-
+    
     var options = {
         skip:  req.param('skip')  || null,
         limit: req.param('limit') || null,
