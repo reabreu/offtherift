@@ -5,7 +5,7 @@ angular.module('champions').factory('Champions', ['$resource',
 	function($resource) {
 
 		return {
-			data: $resource('champions/:championId', { championId: '@_id'
+			data: $resource('/champions/:championId', { championId: '@_id'
 			}, {
 				update: {
 					method: 'PUT'
@@ -15,7 +15,7 @@ angular.module('champions').factory('Champions', ['$resource',
 			 * Check for champions
 			 * @type {object}
 			 */
-			checkChampions: $resource('champions/sync')
+			checkChampions: $resource('/champions/sync')
 		};
 	}
 ]);

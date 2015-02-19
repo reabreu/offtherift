@@ -6,7 +6,7 @@
 
 					<div class="row">
 						<div class="col-md-6">
-	                        <img ng-if="authentication.user.providerData.picture" src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar pull-left" style="margin: 0 20px 20px 0">
+	                        <img ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar pull-left" style="margin: 0 20px 20px 0">
 	                        <img ng-if="!authentication.user.providerData.picture" src="/admin/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar pull-left" style="margin: 0 20px 20px 0">
 							<div class="table-responsive table-userinfo">
 								<h3 class="mt0" data-ng-bind="authentication.user.displayName"></h3><table class="table table-condensed">
