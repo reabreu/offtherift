@@ -3,14 +3,14 @@
         <div class="widget-body welcome-box tabular">
             <div class="tabular-row">
                 <div class="tabular-cell welcome-avatar">
-                    <a href="/#!/dashboard">
+                    <a href="/admin/#!/dashboard">
                         <img ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar">
-                        <img ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar">
+                        <img ng-if="!authentication.user.providerData.picture" src="/admin/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar">
                     </a>
                 </div>
                 <div class="tabular-cell welcome-options">
                     <span class="welcome-text">Welcome,</span>
-                    <a href="/#!/dashboard" class="name" data-ng-bind="authentication.user.displayName"></a>
+                    <a href="/admin/#!/dashboard" class="name" data-ng-bind="authentication.user.displayName"></a>
                 </div>
             </div>
         </div>

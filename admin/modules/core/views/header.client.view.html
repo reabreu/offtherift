@@ -1,7 +1,7 @@
 <div data-ng-controller="HeaderController">
 
     <!-- <a id="leftmenu-trigger" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a> -->
-    <a class="navbar-brand" href="/#!/">{{title}}</a>
+    <a class="navbar-brand" href="/admin/#!/">{{title}}</a>
 
     <nav class="navbar-left navbar-collapse" collapse="!isCollapsed" role="navigation">
         <ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
@@ -12,21 +12,21 @@
                 </a>
                 <ul ng-switch-when="dropdown" class="dropdown-menu">
                     <li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-                        <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
+                        <a href="/admin/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
                     </li>
                 </ul>
-                <a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
+                <a ng-switch-default href="/admin/#!/{{item.link}}" data-ng-bind="item.title"></a>
             </li>
         </ul>
     </nav>
 
     <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-        <li ui-route="/signup" ng-class="{active: $uiRoute}">
-            <a href="/#!/signup">Sign Up</a>
+        <li ui-route="/admin/signup" ng-class="{active: $uiRoute}">
+            <a href="/admin/#!/signup">Sign Up</a>
         </li>
         <li class="divider-vertical"></li>
-        <li ui-route="/signin" ng-class="{active: $uiRoute}">
-            <a href="/#!/signin">Sign In</a>
+        <li ui-route="/admin/signin" ng-class="{active: $uiRoute}">
+            <a href="/admin/#!/signin">Sign In</a>
         </li>
     </ul>
 
@@ -34,25 +34,21 @@
         <li class="dropdown" style="display: none;">
             <a href="#" id="navbar-links-toggle" data-toggle="collapse" data-target="header>.navbar-collapse">&nbsp;</a>
         </li>
-        <li>
-            <a href="/admin/">Admin</a>
-        </li>
-
         <li class="dropdown">
             <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
                 <span data-ng-bind="authentication.user.displayName" class="hidden-xs"></span>
                 <img class="img-circle" ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Header Photo">
-                <img class="img-circle" ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Header Photo">
+                <img class="img-circle" ng-if="!authentication.user.providerData.picture" src="/admin/modules/users/img/nophoto.png" alt="Header Photo">
             </a>
             <ul class="dropdown-menu userinfo">
                 <li>
-                    <a href="/#!/settings/profile">Edit Profile</a>
+                    <a href="/admin/#!/settings/profile">Edit Profile</a>
                 </li>
                 <li>
-                    <a href="/#!/settings/accounts">Manage Social Accounts</a>
+                    <a href="/admin/#!/settings/accounts">Manage Social Accounts</a>
                 </li>
                 <li data-ng-show="authentication.user.provider === 'local'">
-                    <a href="/#!/settings/password">Change Password</a>
+                    <a href="/admin/#!/settings/password">Change Password</a>
                 </li>
                 <li class="divider"></li>
                 <li>
