@@ -3,8 +3,9 @@
 .sass-cache/
 npm-debug.log
 node_modules/
-public/lib
 app/tests/coverage/
 .bower-*/
 .idea/
-.sublime*
+*.sublime-*
+**/lib
+**/modules/**/**/*.min.css

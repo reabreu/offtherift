@@ -1,0 +1,83 @@
+<section data-ng-controller="PatchesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Patches</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2>Avaliable Patches</h2>
+            <div class="options pull-right">
+                <button
+                    class               = "btn btn-midnightblue btn-sm"
+                    ng-click            = "checkPatches($event)"
+                    data-loading-text   = "Searching..."
+                ><i class="fa fa-refresh"></i> Check Patches</button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover mb0 table-responsive"
+                infinite-scroll                 = "loadMore();$event.stopPropagation()"
+                infinite-scroll-disabled        = "busy">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Synched</th>
+                        <th>Active</th>
+                        <th>Enabled</th>
+                        <th>Created</th>
+                        <th>Last Synchro</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="patch in patches">
+                        <td>{{ patch.version }}</td>
+                        <td>
+                            <p ng-class="{ 'text-success':patch.synched, 'text-warning':!patch.synched  }">
+                                {{ patch.synched ? 'Yes': 'No' }}
+                            </p>
+                        </td>
+                        <td>
+                            <p ng-class="{ 'text-success':patch.enabled, 'text-warning':!patch.enabled  }">
+                                {{ patch.enabled ? 'Yes': 'No' }}
+                            </p>
+                        </td>
+                        <td>
+                            <input
+                                bs-switch
+                                type            = "checkbox"
+                                ng-model        = "patch.enabled"
+                                type            = "checkbox"
+                                switch-size     = "mini"
+                                ng-change       = "toggleEnabled(patch)"
+                            />
+                        </td>
+                        <td>
+                            {{patch.created | date : 'medium' : timezone}}
+                        </td>
+                        <td>
+                            {{patch.update | date : 'medium' : timezone}}
+                        </td>
+                        <td>
+                            <button
+                                ng-click            = "synchPatch($event,patch)"
+                                class               = "btn btn-sm"
+                                ng-class            = "{ 'btn-midnightblue-alt': !patch.synched, 'btn-midnightblue': patch.synched}"
+                                data-loading-text   = "Synching..."
+                            >
+                                {{ patch.synched ? 'Re-synch': 'Not Synched' }}
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ng-show="busy && !full" colspan="6" class="align-center">
+                            Loading Patches <img class="loading-spinner-small" src="/admin/modules/core/img/loaders/loader.gif" alt="">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="patches.length || !busy">
+    	No Patches yet, why don't you check for new patches fucker?
+    </div>
+</section>

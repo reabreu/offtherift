@@ -37,8 +37,6 @@ module.exports = function(db) {
 	app.locals.description = config.app.description;
 	app.locals.keywords = config.app.keywords;
 	app.locals.facebookAppId = config.facebook.clientID;
-	app.locals.jsFiles = config.getJavaScriptAssets();
-	app.locals.cssFiles = config.getCSSAssets();
 
 	// Passing the request url to environment locals
 	app.use(function(req, res, next) {
@@ -110,8 +108,25 @@ module.exports = function(db) {
 	app.use(helmet.ienoopen());
 	app.disable('x-powered-by');
 
-	// Setting the app router and static folder
-	app.use(express.static(path.resolve('./public')));
+	// Public AngularApp
+	app.use(function(req, res, next) {
+
+		// Public Libs
+		app.locals.jsFiles  = config.getJavaScriptAssets('public');
+		app.locals.cssFiles = config.getCSSAssets('public');
+
+		next();
+	}, express.static(path.resolve('./public')));
+
+	// Administration AngularApp
+	app.use('/admin', function(req, res, next) {
+
+		// Administration Libs
+		app.locals.jsFiles  = config.getJavaScriptAssets('admin');
+		app.locals.cssFiles = config.getCSSAssets('admin');
+
+		next();
+	}, express.static(path.resolve('./admin')));
 
 	// Globbing routing files
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {

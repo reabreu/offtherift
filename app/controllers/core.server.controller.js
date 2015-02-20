@@ -1,11 +1,20 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Public Index
  */
 exports.index = function(req, res) {
-	var view = ( typeof(req.user) !== 'undefined' ) ? 'index' : 'public-index';
-	res.render(view, {
+    res.render('public-index', {
+        user: req.user || null,
+        request: req
+    });
+};
+
+/**
+ * Admin Index
+ */
+exports.admin = function(req, res) {
+	res.render('index', {
 		user: req.user || null,
 		request: req
 	});

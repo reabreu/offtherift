@@ -9,9 +9,6 @@ module.exports = function(app) {
 		.get(champions.list)
 		.post(users.requiresLogin, champions.create);
 
-	//sync champions list
-	app.route('/champions/sync/').get(champions.checkChampions);
-
 	app.route('/champions/:championId')
 		.get(champions.read)
 		.put(users.requiresLogin, champions.hasAuthorization, champions.update)

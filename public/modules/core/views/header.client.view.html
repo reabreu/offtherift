@@ -1,5 +1,5 @@
 <div data-ng-controller="HeaderController">
-    
+
     <!-- <a id="leftmenu-trigger" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a> -->
     <a class="navbar-brand" href="/#!/">{{title}}</a>
 
@@ -19,13 +19,13 @@
             </li>
         </ul>
     </nav>
-        
+
     <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-        <li ui-route="/signup" ng-class="{active: $uiRoute}">
+        <li ui-route="/admin/signup" ng-class="{active: $uiRoute}">
             <a href="/#!/signup">Sign Up</a>
         </li>
         <li class="divider-vertical"></li>
-        <li ui-route="/signin" ng-class="{active: $uiRoute}">
+        <li ui-route="/admin/signin" ng-class="{active: $uiRoute}">
             <a href="/#!/signin">Sign In</a>
         </li>
     </ul>
@@ -34,11 +34,14 @@
         <li class="dropdown" style="display: none;">
             <a href="#" id="navbar-links-toggle" data-toggle="collapse" data-target="header>.navbar-collapse">&nbsp;</a>
         </li>
-
+        <li>
+            <a href="/admin/">Admin</a>
+        </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
                 <span data-ng-bind="authentication.user.displayName" class="hidden-xs"></span>
-                <img class="img-circle" src="/modules/users/img/nophoto.png" alt="Header Photo">
+                <img class="img-circle" ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Header Photo">
+                <img class="img-circle" ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Header Photo">
             </a>
             <ul class="dropdown-menu userinfo">
                 <li>
@@ -58,4 +61,3 @@
         </li>
     </ul>
 </div>
- 
