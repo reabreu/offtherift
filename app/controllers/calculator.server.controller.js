@@ -36,11 +36,13 @@ exports.processStats = function(req, res) {
 		"18"	: 17.000
 	}
 
+	// Structure of the stats with all the necessary components to
+	// calculate each stat's value
 	var stats = {
 		hp: {
 			name: "hp",
 			base: request.stats.hp + growth[request.level] * request.stats.hpperlevel,
-			dependencies: [],
+			dependencies: [], // {name: source, coef: percentValue}
 			modifiers: {
 				flat: 			0.0,
 				bonusmodifier: 	[],
@@ -120,9 +122,178 @@ exports.processStats = function(req, res) {
 				items: 			[],
 				abilities: 		[]
 			}
+		},
+		armorpenetration: {
+			name: "armorpenetration",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		magicpenetration: {
+			name: "magicpenetration",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		lifesteal: {
+			name: "lifesteal",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		spellvamp: {
+			name: "spellvamp",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		attackspeed: {
+			name: "attackspeed",
+			base: 0.625 / (1 + request.stats.attackspeedoffset),
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel]
+			}
+		},
+		cooldownreduction: {
+			name: "cooldownreduction",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		critchance: {
+			name: "critchance",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		armor: {
+			name: "armor",
+			base: request.stats.armor + growth[request.level] * request.stats.armorperlevel,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		attackrange: {
+			name: "attackrange",
+			base: request.stats.attackrange,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		spellblock: {
+			name: "spellblock",
+			base: request.stats.spellblock + growth[request.level] * request.stats.spellblockperlevel,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		movespeed: {
+			name: "movespeed",
+			base: request.stats.movespeed,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
+		},
+		tenacity: {
+			name: "tenacity",
+			base: 0,
+			dependencies: [],
+			modifiers: {
+				flat: 			0.0,
+				bonusmodifier: 	[],
+				basemodifier: 	[],
+				runes: 			[],
+				masteries : 	[],
+				items: 			[],
+				abilities: 		[]
+			}
 		}
 	};
 
+	// List containing all the unique names found.
 	var uniques = [];
 
 	// Apply flat effect, store percent modifiers and get effects with dependencies.
@@ -138,11 +309,12 @@ exports.processStats = function(req, res) {
 
 		// Add flat bonus from normal or unprocessed uniques.
 		if ( !effect.unique  || (effect.unique && (uniques.indexOf(effect.name)) == -1) ) {
+			// If the value is applied per level, set value to appropriate level.
 			if (effect.perlevel) {
 				effect.value *= request.level;
-				console.log(effect.value);
 			}
 
+			// "Move" the effect's value to the correct place.
 			if (effect.type === "flat") {
 				stats[effect.dest].modifiers.flat += effect.value;
 			}
@@ -155,6 +327,7 @@ exports.processStats = function(req, res) {
 	}
 
 	var response = {};
+
 	// Calculate independent stats first.
 	for (var key in stats) {
 		var stat = stats[key];
@@ -173,9 +346,54 @@ exports.processStats = function(req, res) {
 		response[stat.name] = calculateStatValue(stat, response);
 	}
 	
+	// Format stats according to the in-game stats window.
+	for (var key in response) {
+		switch (key) {
+			case "hp":
+				response[key] = Math.ceil(response[key]);
+				break;
+			case "mp":
+				response[key] = Math.floor(response[key]);
+				break;
+			case "attackspeed":
+				response[key] = Math.min(response[key], 2.5);
+				response[key] = parseFloat(response[key].toFixed(2));
+				break;
+			case "cooldownreduction":
+				response[key] = Math.min(response[key], 40);
+				response[key] = parseFloat(response[key].toFixed(2));
+				break;
+			case "critchance":
+				response[key] = Math.min(response[key], 100);
+				response[key] = Math.round(response[key]);
+				break;
+			case "movespeed":
+				var secondCap = Math.max((response[key] - 490), 0) * 0.5;
+				var firstCap  = (Math.max(Math.min(response[key] - 490, 415) - 415), 0) * 0.8;
+				response[key] = secondCap + firstCap + Math.min(response[key], 415);
+				break;
+			case "armorpenetration":
+			case "magicpenetration":
+				break;
+			default:
+				response[key] = Math.round(response[key]);
+				break;
+		}
+	}
+
 	res.jsonp({response: response, stats: stats});
 };
 
+/**
+ * Calculates the final stat value according to the provided stat structure
+ * and the stats that have been calculated so far.
+ * @param  {[type]}
+ * 				Stat structure with bonuses to be applied.
+ * @param  {[type]}
+ * 				Stats calculated so far ({stat: value, stat2: value2})
+ * @return {[type]}
+ * 				Final value for the stat after applying bonuses.
+ */
 function calculateStatValue(stat, resStats) {
 	var runesModifier		= calculateRunesModifier(stat.name, stat.modifiers.runes);
 	var masteriesModifier 	= calculateMasteriesModifier(stat.name, stat.modifiers.masteries);
@@ -185,35 +403,71 @@ function calculateStatValue(stat, resStats) {
 	var statModifier		= calculateModifier(stat.name, runesModifier, masteriesModifier, itemsModifier, abilitiesModifier);
 	var bonusModifier		= calculateBonusModifier(stat.name, stat.modifiers.bonusmodifier);
 	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
-	console.log(baseModifier);
+	
+	var converted = statModifier.toFixed(3);
+	statModifier = parseFloat(converted);
+
 	switch (stat.name) {
+		case "tanacity":
+			return statModifier;
+		case "attackspeed":
+			return stat.base * (1 + statModifier);
+		case "armorpenetration":
+		case "magicpenetration":
+			return [flatBonus, statModifier];
 		default:
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
 			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
+			
+			// DEBUG
+			console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
+			
+			if (stat.name === "abilitypower")
+				console.log(stat);
 			return stat.base + statBonus * (1 + bonusModifier);
 	}
 }
 
+/**
+ * Calculates the cumulative modifier from all the different sources.
+ * @param  {[type]}
+ * 				Stat name.
+ * @param  {[type]}
+ * 				Cumulative modifier from runes.
+ * @param  {[type]}
+ * 				Cumulative modifier from the masteries.
+ * @param  {[type]}
+ * 				Cumulative modifier from the items.
+ * @param  {[type]}
+ * 				Cumulative modifier from the abilities.
+ * @return {[type]}
+ * 				Cumulative modifier for the given stat.
+ */
 function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
-	switch (stat.name) {
+	switch (stat) {
 		case "attackdamage": // stacks additively between sources
+		case "attackspeed":
+		case "cooldownreduction":
+		case "critchance":
 			return runeMod + masteryMod + itemMod + abilityMod;
 		default:
 			var summonerMod = runeMod + masteryMod;
 
-			if ((summonerMod == 0) && (itemMod == 0) && (abilityMod == 0)) {
-				return 0;
-			}
+			summonerMod  	= 1 + summonerMod;
+			itemMod  		= 1 + itemMod;
+			abilityMod  	= 1 + abilityMod;
 
-			summonerMod  	= (summonerMod == 0) 	? 1 : summonerMod;
-			itemMod  		= (itemMod == 0) 		? 1 : itemMod;
-			abilityMod  	= (abilityMod == 0) 	? 1 : abilityMod;
-
-			return summonerMod*itemMod*abilityMod;
+			return summonerMod*itemMod*abilityMod-1;
 	}
 }
 
+/**
+ * Calculates the cumulative bonus modifier.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateBonusModifier(statName, modifiers) {
 	var bonus = 0;
 
@@ -226,6 +480,12 @@ function calculateBonusModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the cumulative modifier to be applied to the stat's base.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateBaseModifier(statName, modifiers) {
 	var bonus = 0;
 
@@ -238,6 +498,12 @@ function calculateBaseModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the cumulative modifier from all runes.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateRunesModifier(statName, modifiers) {
 	var bonus = 0;
 
@@ -250,6 +516,12 @@ function calculateRunesModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the cumulative modifier from all masteries.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateMasteriesModifier(statName, modifiers) {
 	var bonus = 0;
 
@@ -262,10 +534,21 @@ function calculateMasteriesModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the cumulative modifier from all items.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateItemsModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
+		case "tenacity":
+			for (var i = 0; i < modifiers.length; i++) {
+				bonus *= (1 + modifiers[i]);
+			}
+			return (bonus - 1);
 		default:
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
@@ -274,6 +557,12 @@ function calculateItemsModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the cumulative modifier from all abilities.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateAbilitiesModifier(statName, modifiers) {
 	var bonus = 0;
 
@@ -286,6 +575,12 @@ function calculateAbilitiesModifier(statName, modifiers) {
 	}
 }
 
+/**
+ * Calculates the flat bonus based on each dependency.
+ * @param  {[type]}
+ * @param  {[type]}
+ * @return {[type]}
+ */
 function calculateFlatBonus(dependencies, resStats) {
 	var bonus = 0;
 
