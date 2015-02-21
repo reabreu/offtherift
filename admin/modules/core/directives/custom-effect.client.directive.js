@@ -34,32 +34,30 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'armorpenetration',
 						label		: 'Armor Penetration'
 					},
-					{ 	value 		: 'attackspeed',
-						label  		: 'Attack Speed'
-					},
-					{ 	value 		: 'criticalstrikechance',
-						label  		: 'Citical Strike Change'
-					},
-					{ 	value 		: 'criticalstrikedamage',
-						label  		: 'Citical Strike Damage'
+					{ 	value 		: 'magicpenetration',
+						label  		: 'Magic Penetration'
 					},
 					{ 	value 		: 'lifesteal',
 						label  		: 'Life Steal'
 					},
+					{ 	value 		: 'spellVamp',
+						label  		: 'Spell Vamp'
+					},
+					{ 	value 		: 'attackspeed',
+						label  		: 'Attack Speed'
+					},
+					{ 	value 		: 'cooldownreduction',
+						label  		: 'Cooldown Reduction'
+					},
+					{ 	value 		: 'critchance',
+						label  		: 'Citical Strike Chance'
+					},
 					{ 	value 		: 'armor',
 						label  		: 'Armor'
 					},
+					
 					{ 	value 		: 'spellblock',
 						label  		: 'Magic Resistance'
-					},
-					{ 	value 		: 'cooldowndeduction',
-						label  		: 'Cooldown Reduction'
-					},
-					{ 	value 		: 'magicpenetration',
-						label  		: 'Magic Penetration'
-					},
-					{ 	value 		: 'spellVamp',
-						label  		: 'Spell Vamp'
 					},
 					{ 	value 		: 'movespeed',
 						label  		: 'Movement Speed'
