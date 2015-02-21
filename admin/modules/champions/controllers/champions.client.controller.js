@@ -2,13 +2,12 @@
 
 // Champions controller
 angular.module('champions').controller('ChampionsController', ['$scope', '$stateParams', '$location',
-	'Authentication', 'Champions', 'Repository', 'ngToast', '$modal',
-	function($scope, $stateParams, $location, Authentication, Champions, Repository, ngToast, $modal) {
-		$scope.authentication = Authentication;
-
-		$scope.busy 		= false;
-		$scope.patches  	= [];
-		$scope.champions 	= [];
+	'Authentication', 'Champions', 'Repository', '$modal',
+	function($scope, $stateParams, $location, Authentication, Champions, Repository, $modal) {
+		$scope.authentication 	= Authentication;
+		$scope.busy 			= false;
+		$scope.patches  		= [];
+		$scope.champions 		= [];
 
 		$scope.formData 		= {
 			enabled: 	false,
@@ -30,7 +29,7 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 
 		$scope.searchChampions = function(){
 			//Se for uma nova pesquisa, limpamos os dados
-			Repository.clearItemPagination();
+			Repository.clearChampionPagination();
 			$scope.champions = [];
 			loadChampions();
 		}
@@ -69,7 +68,7 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 
 			$scope.modal = $modal.open({
 				scope: $scope,
-				templateUrl: 'modules/champions/views/view-champion.client.view.html',
+				templateUrl: 'modules/champions/views/edit-champion.client.view.html',
 				controller:  'ChampionsController',
 				size: 'lg',
       			windowClass: "modal fade",

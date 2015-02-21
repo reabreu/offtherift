@@ -74,13 +74,10 @@
               </td>
             </tr>
             <tr ng-show = "!champions.length && !busy" style="text-align:center">
-                <td colspan="4">No champions fetched...Try setting some research params!</td>
+                <td colspan="4">No items fetched...Try setting some research params!</td>
             </tr>
-            <tr ng-show = "busy && champions.length" style="text-align:center">
-                <td colspan="4">Searching <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt=""></td>
-            </tr>
-            <tr ng-show = "!champions.length">
-                <td colspan="4">No Champions yet, why don't you check for new champions fucker?</td>
+            <tr ng-show = "busy && !full" style="text-align:center">
+                <td colspan="4">Searching <img class="loading-spinner-small" src="/admin/modules/core/img/loaders/loader.gif" alt=""></td>
             </tr>
           </tbody>
         </table>

@@ -100,7 +100,7 @@ exports.list = function(req, res) {
 	if( riotId != undefined)
 		query.id = riotId;
 	
-	Item.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, items) {
+	Item.find(query,null,options).sort('-created').exec(function(err, items) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
