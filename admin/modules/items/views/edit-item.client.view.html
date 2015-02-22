@@ -4,8 +4,8 @@
             <div class="modal-header">
                 <h2 class="modal-title">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <img class  = "avatar" 
-                        alt     = "avatar" 
+                    <img class  = "avatar"
+                        alt     = "avatar"
                         ng-if   = "itemIndex >= 0"
                         ng-src  = "{{ items[itemIndex].image.full | ddragon: items[itemIndex].version:'item'}}">
                     {{items[itemIndex].name}}
@@ -19,7 +19,7 @@
                                 <td colspan="2">
                                     <span
                                         style           = "margin-right: 5px;"
-                                        data-ng-repeat  = "tag in items[itemIndex].tags" 
+                                        data-ng-repeat  = "tag in items[itemIndex].tags"
                                         class           = "badge badge-info"
                                     >{{tag}}</span>
                                 </td>
@@ -35,7 +35,7 @@
                                         bs-switch
                                         type            = "checkbox"
                                         ng-model        = "items[itemIndex].enabled"
-                                        type            = "checkbox" 
+                                        type            = "checkbox"
                                         switch-size     = "mini"
                                     />
                                 </td>
@@ -43,7 +43,7 @@
                             <tr>
                                 <td>Purchasable</td>
                                 <td ng-class="{ 'text-success':items[itemIndex].gold.purchasable, 'text-warning':!items[itemIndex].gold.purchasable  }">
-                                    {{items[itemIndex].gold[0].purchasable ? 'yes' : 'no'}}
+                                    {{items[itemIndex].gold.purchasable ? 'yes' : 'no'}}
                                 </td>
                             </tr>
                             <tr ng-show = "items[itemIndex].plaintext.length">
@@ -59,7 +59,6 @@
                 </div>
                 <h4>Effects</h4>
                 <form class="form-horizontal compact-form">
-                    {{items[itemIndex].customEffect}}
                     <custom-effect target="items[itemIndex]" copy="copyPatch" load="loadEffects()"></custom-effect>
                 </form>
             </div>

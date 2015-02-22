@@ -247,10 +247,11 @@ asyncTasks.push(function(callback) {
         for (var i = 0; i < total; i++) {
             var champion = champions[championsKeys[i]];
 
-            // champion data
+            //adicionar os nosso propios campos
             champion = _.extend(champion, {
                 version: version,
-                created: new Date().toISOString()
+                created: new Date().toISOString(),
+                enabled: false,
             });
 
             // update conditions
@@ -258,6 +259,12 @@ asyncTasks.push(function(callback) {
                 version: version,
                 id:      champion.id
             };
+
+
+            //insert blank effect on skills
+            for (var z = 0; z < champion.spells.length; z++) {
+                champion.spells[z].customEffect = [];
+            }
 
             Champion.findOneAndUpdate(conditions, champion, options, function(err, doc){
                 if(doc === null){
@@ -279,6 +286,7 @@ asyncTasks.push(function(callback) {
         console.log('Got error: ', e);
     });
 });
+
 //Metodo anonimo que sincroniza Runes
 asyncTasks.push(function(callback){
 

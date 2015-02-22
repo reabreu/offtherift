@@ -10,6 +10,10 @@ var mongoose = require('mongoose'),
  * Champion Schema
  */
 var ChampionSchema = new Schema({
+	enabled: {
+		type: Boolean,
+		default: false,
+	},
 	created: {
 		type: Date,
 		default: Date.now
@@ -17,25 +21,12 @@ var ChampionSchema = new Schema({
 	version: {
 		type: String
 	},
-	key: {
-		type: String,
-		default: '',
-		required: 'Please fill Champion key',
-		trim: true
-	},
 	name: {
 		type: String,
 		default: '',
 		required: 'Please fill Champion name',
 		trim: true
-	},
-	title: {
-		type: String,
-		default: '',
-		required: 'Please fill Champion title',
-		trim: true
-	},
-	customEffect : []
+	}
 }, { strict: false });
 
 mongoose.model('Champion', ChampionSchema);

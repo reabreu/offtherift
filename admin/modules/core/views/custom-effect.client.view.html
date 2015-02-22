@@ -2,8 +2,8 @@
 <div class="form-group" style="margin-bottom:20px;">
 	<label style="text-align:left;min-width:76px;" class="col-sm-1 control-label label-input-sm pull-left" for="selector1">Load from</label>
 	<div class="col-sm-3">
-		<select 
-			class 		= "form-control input-sm" 
+		<select
+			class 		= "form-control input-sm"
 			ng-model 	= "copy.version"
 			ng-change 	= "load()"
 		>
@@ -18,9 +18,9 @@
 		<div class="col-sm-3">
 			<div class="tiles-sparkline">
 				<div class="tiles-sparkline-header">
-					<a 
-						style   	= "margin-bottom:10px;width:100%;" 
-						class   	= "btn btn-inverse-alt btn-xs pull-right" 
+					<a
+						style   	= "margin-bottom:10px;width:100%;"
+						class   	= "btn btn-inverse-alt btn-xs pull-right"
 						ng-click 	= "removeEffect(target,$index)"
 					><i class="fa fa-times"></i></a>
 				</div>
@@ -29,8 +29,8 @@
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Stat</label>
 						<div class="col-sm-8">
 							<select ng-model = "effect.dest" class="form-control input-sm">
-								<option 
-									ng-repeat 	= "stat in stats" 
+								<option
+									ng-repeat 	= "stat in stats"
 									value 		= "{{stat.value}}"
 									ng-selected = "stat.value == effect.dest"
 								>{{stat.label}}</option>
@@ -41,10 +41,10 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Value</label>
 						<div class="col-sm-8">
-							<input 
-							type        = "text" 
-							id          = "" 
-							class       = "form-control input-sm" 
+							<input
+							type        = "text"
+							id          = ""
+							class       = "form-control input-sm"
 							ng-model 	= "effect.value"
 							>
 						</div>
@@ -53,12 +53,12 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Type</label>
 						<div class="col-sm-8">
-							<select 
-								class 		= "form-control input-sm" 
+							<select
+								class 		= "form-control input-sm"
 								ng-model 	= "effect.type"
 							>
-							<option 
-								ng-repeat 	= "type in types" 
+							<option
+								ng-repeat 	= "type in types"
 								value 		= "{{type.value}}"
 								ng-selected = "type.value == effect.type"
 							>{{type.label}}</option>
@@ -77,12 +77,22 @@
 					</div>
 
 					<div class="form-group">
+						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Rank</label>
+						<div class="col-sm-8">
+							<select ng-model = "effect.src" class="form-control input-sm" >
+								<option value=""></option>
+								<option ng-selected = "stat.rank == effect.rank" ng-repeat = "rank in getNumber(target.maxrank) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Name</label>
 						<div class="col-sm-8">
-							<input 
-							type        = "text" 
-							id          = "" 
-							class       = "form-control input-sm" 
+							<input
+							type        = "text"
+							id          = ""
+							class       = "form-control input-sm"
 							ng-model 	= "effect.name"
 							>
 						</div>

@@ -55,7 +55,6 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'armor',
 						label  		: 'Armor'
 					},
-					
 					{ 	value 		: 'spellblock',
 						label  		: 'Magic Resistance'
 					},
@@ -99,13 +98,18 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 						unique 	: false,
 						perlevel: false,
 						src 	: '',
-						name 	: ''
+						name 	: '',
+						rank	: ''
 					});
 				}
-				
+
 				$scope.removeEffect = function ( target, index ){
 					target.customEffect.splice(index,1);
-				} 
+				}
+
+				$scope.getNumber = function(num) {
+				    return new Array(num);
+				}
 		    }
 		};
 	}

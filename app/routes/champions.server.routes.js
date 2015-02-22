@@ -11,7 +11,7 @@ module.exports = function(app) {
 
 	app.route('/champions/:championId')
 		.get(champions.read)
-		.put(users.requiresLogin, champions.hasAuthorization, champions.update)
+		.put(champions.update)
 		.delete(users.requiresLogin, champions.hasAuthorization, champions.delete);
 
 	// Finish by binding the Champion middleware
