@@ -1,0 +1,86 @@
+{
+	"description" : "Cho'Gath Test 1",
+	"test" : {
+		"level": 1,
+		"stats": {
+			"armor": 28.88,
+			"armorperlevel": 3.5,
+			"attackdamage": 61.156,
+			"attackdamageperlevel": 4.2,
+			"attackrange": 125,
+			"attackspeedoffset": 0,
+			"attackspeedperlevel": 1.44,
+			"crit": 0,
+			"critperlevel": 0,
+			"hp": 574.4,
+			"hpperlevel": 80,
+			"hpregen": 8.925,
+			"hpregenperlevel": 0.85,
+			"movespeed": 345,
+			"mp": 272.2,
+			"mpperlevel": 40,
+			"mpregen": 7.205,
+			"mpregenperlevel": 0.45,
+			"spellblock": 32.1,
+			"spellblockperlevel": 1.25
+		},
+		"effects": [
+			{
+				"dest"			: "hp",
+				"value"			: 36,
+				"type"			: "flat",
+				"unique"		: false,
+				"name"			: "",
+				"src"			: "",
+				"perlevel"		: false
+			},
+			{
+				"dest"			: "hp",
+				"value"			: 0.08,
+				"type"			: "runes",
+				"unique"		: false,
+				"name"			: "",
+				"src"			: "",
+				"perlevel"		: false
+			},
+			{
+				"dest"			: "hp",
+				"value"			: 0.03,
+				"type"			: "masteries",
+				"unique"		: false,
+				"name"			: "",
+				"src"			: "",
+				"perlevel"		: false
+			},
+			{
+				"dest"			: "hpregen",
+				"value"			: 2,
+				"type"			: "flat",
+				"unique"		: false,
+				"name"			: "",
+				"src"			: "",
+				"perlevel"		: false
+			}
+		]
+	},
+	"expected" : {
+		"hp": 678,
+		"mp": 272,
+		"hpregen": 11,
+		"mpregen": 7,
+		"attackdamage": 61,
+		"abilitypower": 0,
+		"armorpenetration": [0,	0],
+		"magicpenetration": [0, 0],
+		"lifesteal": 0,
+		"spellvamp": 0,
+		"attackspeed": 0.63,
+		"cooldownreduction": 0,
+		"critchance": 0,
+		"armor": 29,
+		"attackrange": 125,
+		"spellblock": 32,
+		"movespeed": 345,
+		"tenacity": 0
+	}
+}
