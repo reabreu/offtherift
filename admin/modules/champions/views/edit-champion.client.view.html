@@ -2,7 +2,7 @@
     <div class="modal-header">
         <h3 class="modal-title">
             <img class="avatar" alt="avatar" ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}">
-            <span ng-bind="champion.name"></span>
+            <span ng-bind="champion.name + ', ' +  champion.title"></span>
             <div class="pull-right"><span class="glyphicon glyphicon-remove" ng-click="closeModal()"></span></div>
         </h3>
     </div>
@@ -35,16 +35,29 @@
                             />
                         </td>
                     </tr>
-                    <tr ng-show = "champion.plaintext.length">
+                    <tr ng-show = "champion.blurb.length">
                         <td>Description</td>
-                        <td>{{champion.plaintext}}</td>
-                    </tr>
-                    <tr>
-                        <td>Stats</td>
-                        <td>{{champion.sanitizedDescription}}</td>
+                        <td>{{champion.blurb}}</td>
                     </tr>
                 </tbody>
             </table>
+            <!--Skills-->
+            <h2>Spells</h2>
+            <div ng-repeat="spell in champion.spells" style="padding-left:50px;">
+                <hr>
+                <h4 >
+                    <img class="avatar" alt="avatar" ng-src="{{ spell.image.full | ddragon: champion.version:'spell'}}">
+                    {{spell.name}}
+                </h4>
+                <p>{{spell.sanitizedDescription}}</p>
+                <form class="form-horizontal compact-form">
+                    <custom-effect target="spell" copy="copyPatch" load="loadEffects()"></custom-effect>
+                </form>
+            </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="closeModal();">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="update(champion);searchChampions();">Save changes</button>
     </div>
 </section>

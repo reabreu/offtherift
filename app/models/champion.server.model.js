@@ -26,8 +26,7 @@ var ChampionSchema = new Schema({
 		default: '',
 		required: 'Please fill Champion name',
 		trim: true
-	},
-	customEffect : []
+	}
 }, { strict: false });
 
 mongoose.model('Champion', ChampionSchema);

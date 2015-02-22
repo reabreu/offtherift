@@ -5,17 +5,13 @@ angular.module('champions').factory('Champions', ['$resource',
 	function($resource) {
 
 		return {
-			data: $resource('/champions/:championId', { championId: '@_id'
-			}, {
-				update: {
-					method: 'PUT'
+			data: $resource('/champions/:championId', { championId: '@_id'},
+				{
+					update: {
+						method: 'PUT'
+					}
 				}
-			}),
-			/**
-			 * Check for champions
-			 * @type {object}
-			 */
-			checkChampions: $resource('/champions/sync')
+			)
 		};
 	}
 ]);

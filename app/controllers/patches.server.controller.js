@@ -260,6 +260,12 @@ asyncTasks.push(function(callback) {
                 id:      champion.id
             };
 
+
+            //insert blank effect on skills
+            for (var z = 0; z < champion.spells.length; z++) {
+                champion.spells[z].customEffect = [];
+            }
+
             Champion.findOneAndUpdate(conditions, champion, options, function(err, doc){
                 if(doc === null){
                     ++inserted;

@@ -68,7 +68,7 @@ angular.module('items').controller('ItemsController', ['$scope', '$stateParams',
 		};
 
 		$scope.loadEffects = function(){
-			Items.data.query({ 
+			Items.data.query({
 				version: 	$scope.copyPatch.version,
 				riotId: 	$scope.items[$scope.itemIndex].id
 			}).$promise.then(function(data){
