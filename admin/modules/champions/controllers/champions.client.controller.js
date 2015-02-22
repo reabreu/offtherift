@@ -86,8 +86,6 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 
 		// Update existing Item
 		$scope.update = function( champion ) {
-			console.log(champion);
-			console.log(champion.spells);
 			champion.$update(function() {
 				$scope.modal.close();
 			}, function(errorResponse) {

@@ -26,6 +26,9 @@ var ChampionSchema = new Schema({
 		default: '',
 		required: 'Please fill Champion name',
 		trim: true
+	},
+	spells: {
+
 	}
 }, { strict: false });
 
