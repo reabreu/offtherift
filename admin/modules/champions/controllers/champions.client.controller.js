@@ -74,7 +74,10 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 				size: 'lg',
       			windowClass: "modal fade",
 				resolve: {
-					champion: champion
+					champion: champion,
+					champions: function () {
+			          return $scope.champions;
+			        }
 				}
 			});
 		};
@@ -89,13 +92,14 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 		$scope.update = function( champion ) {
 			champion.$update(function() {
 				$scope.modal.close();
+				$scope.searchChampions();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
 		$scope.loadEffects = function(){
-			Champions.data.query({
+			champion.data.query({
 				version: 	$scope.copyPatch.version,
 				riotId: 	$scope.champion.id
 			}).$promise.then(function(data){

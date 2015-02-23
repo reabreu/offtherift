@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').factory('Repository', ['Patches','Items','Runes','Champions',
-	function(Patches,Items,Runes,Champions) {
+angular.module('core').factory('Repository', ['Patches','Items','Runes','Champions','Masteries',
+	function(Patches,Items,Runes,Champions,Masteries) {
 		var patches 	= [];
 
 		/*Patches Control vars*/
@@ -23,6 +23,11 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 		var championsSkip 	= 0;
 		var championsLimit 	= 15;
 		var championsFull 	= false;
+
+		/*Masteries Control vars*/
+		var masteriesSkip 	= 0;
+		var masteriesLimit 	= 15;
+		var masteriesFull 	= false;
 
 		return {
 			getCachedPatches: function(){
@@ -98,7 +103,7 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 					if (data.length == 0) runesFull = true;
 
 					runesSkip += itemsLimit;
-					
+
 					return { runes: data, full: runesFull };
 			    });
 
@@ -115,7 +120,7 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 				.$promise.then(function(data) {
 
 					if (data.length == 0) championsFull = true;
-					
+
 					championsSkip += championsLimit;
 
 					return { champions: data, full: championsFull };
@@ -125,6 +130,27 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 				championsSkip 	= 0;
 				championsFull 	= false;
 			},
+			/****************************
+			* 		Masteries Methods	*
+			****************************/
+			getMasteries: function( search_params ) {
+				search_params.skip 		= masteriesSkip;
+				search_params.limit 	= masteriesLimit;
+
+				return Masteries.data.query(search_params)
+				.$promise.then(function(data) {
+
+					if (data.length == 0) masteriesFull = true;
+
+					masteriesSkip += masteriesLimit;
+
+					return { masteries: data, full: masteriesFull };
+			    });
+			},
+			clearMasteriesPagination: function(){
+				masteriesSkip 	= 0;
+				masteriesFull 	= false;
+			}
 		};
 	}
 ]);
