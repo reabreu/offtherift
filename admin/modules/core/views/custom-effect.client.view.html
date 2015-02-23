@@ -79,9 +79,9 @@
 					<div class="form-group">
 						<label class="col-sm-4 control-label label-input-sm pull-left" for="selector1">Rank</label>
 						<div class="col-sm-8">
-							<select ng-model = "effect.src" class="form-control input-sm" >
+							<select ng-model = "effect.rank" class="form-control input-sm" >
 								<option value=""></option>
-								<option ng-selected = "stat.rank == effect.rank" ng-repeat = "rank in getNumber(target.maxrank) track by $index" value="{{$index+1}}">{{$index+1}}</option>
+								<option ng-selected = "($index+1) == effect.rank" ng-repeat = "rank in getNumber(target.maxrank) track by $index" value="{{$index+1}}">{{$index+1}}</option>
 							</select>
 						</div>
 					</div>

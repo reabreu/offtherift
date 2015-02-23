@@ -89,7 +89,7 @@ exports.list = function(req, res) {
     }
 
     var query       = {};
-    
+
     if( version != undefined && version != '')
         query.version = version;
 
@@ -101,7 +101,6 @@ exports.list = function(req, res) {
 
     if( riotId != undefined)
         query.id = riotId;
-    
 
     Champion.find(query, null, options).sort('name').exec(function(err, champions) {
         if (err) {
