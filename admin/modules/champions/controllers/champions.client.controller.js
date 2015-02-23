@@ -8,6 +8,7 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 		$scope.busy 			= false;
 		$scope.patches  		= [];
 		$scope.champions 		= [];
+		$scope.copyPatch 		= { version : ''};
 
 		$scope.formData 		= {
 			enabled: 	false,
@@ -93,5 +94,13 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 			});
 		};
 
+		$scope.loadEffects = function(){
+			Champions.data.query({
+				version: 	$scope.copyPatch.version,
+				riotId: 	$scope.champion.id
+			}).$promise.then(function(data){
+				$scope.champion.spells = data[0].spells;
+			});
+		}
 	}
 ]);

@@ -21,15 +21,17 @@ var ChampionSchema = new Schema({
 	version: {
 		type: String
 	},
+	id: {
+		type: 		Number,
+		required: 	'Please fill id'
+	},
 	name: {
 		type: String,
 		default: '',
 		required: 'Please fill Champion name',
 		trim: true
 	},
-	spells: {
-
-	}
+	spells: []
 }, { strict: false });
 
 mongoose.model('Champion', ChampionSchema);

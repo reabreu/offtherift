@@ -102,7 +102,6 @@ exports.list = function(req, res) {
     if( riotId != undefined)
         query.id = riotId;
 
-
     Champion.find(query, null, options).sort('name').exec(function(err, champions) {
         if (err) {
             return res.status(400).send({
