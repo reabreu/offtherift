@@ -39,7 +39,8 @@ module.exports = {
 						'public/lib/angular-bootstrap-switch/dist/angular-bootstrap-switch.min.js',
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
 						'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
-						'public/lib/ngtoast/dist/ngToast.min.js'
+						'public/lib/ngtoast/dist/ngToast.min.js',
+						'public/lib/angular-translate/angular-translate.min.js'
 					]
 				},
 				css: [
