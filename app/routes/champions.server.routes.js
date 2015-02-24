@@ -6,13 +6,11 @@ module.exports = function(app) {
 
 	// Champions Routes
 	app.route('/champions')
-		.get(champions.list)
-		.post(users.requiresLogin, champions.create);
+		.get(champions.list);
 
 	app.route('/champions/:championId')
 		.get(champions.read)
-		.put(champions.update)
-		.delete(users.requiresLogin, champions.hasAuthorization, champions.delete);
+		.put(users.requiresLogin,users.hasAuthorization(['admin']),champions.update);
 
 	// Finish by binding the Champion middleware
 	app.param('championId', champions.championByID);

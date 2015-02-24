@@ -52,15 +52,3 @@ exports.hasAuthorization = function(roles) {
 		});
 	};
 };
-
-/**
- * Verify if user is an admin
- * @return {Boolean} Is Admin
- */
-exports.isAdmin = function() {
-	var _this = this;
-
-	return function(req, res, next) {
-		return _this.hasAuthorization(['admin']);
-	};
-};

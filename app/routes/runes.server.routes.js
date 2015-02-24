@@ -6,13 +6,11 @@ module.exports = function(app) {
 
 	// Runes Routes
 	app.route('/runes')
-		.get(runes.list)
-		.post(users.requiresLogin, runes.create);
+		.get(runes.list);
 
 	app.route('/runes/:runeId')
 		.get(runes.read)
-		.put(runes.update)
-		.delete(users.requiresLogin, runes.hasAuthorization, runes.delete);
+		.put(users.requiresLogin,users.hasAuthorization(['admin']),runes.update);
 
 	// Finish by binding the Rune middleware
 	app.param('runeId', runes.runeByID);

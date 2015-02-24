@@ -6,13 +6,11 @@ module.exports = function(app) {
 
 	// Masteries Routes
 	app.route('/masteries')
-		.get(masteries.list)
-		.post(users.requiresLogin, masteries.create);
+		.get(masteries.list);
 
 	app.route('/masteries/:masterieId')
 		.get(masteries.read)
-		.put(masteries.update)
-		.delete(users.requiresLogin, masteries.hasAuthorization, masteries.delete);
+		.put(users.requiresLogin,users.hasAuthorization(['admin']),masteries.update);
 
 	// Finish by binding the Masterie middleware
 	app.param('masterieId', masteries.masterieByID);

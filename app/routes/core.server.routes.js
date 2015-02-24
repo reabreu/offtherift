@@ -6,5 +6,5 @@ module.exports = function(app) {
     var users = require('../../app/controllers/users.server.controller');
 
     app.route('/').get(core.index);
-	app.route('/admin').get(users.requiresLogin, core.admin);
+	app.route('/admin').get(users.hasAuthorization(['admin']),users.requiresLogin, core.admin);
 };
