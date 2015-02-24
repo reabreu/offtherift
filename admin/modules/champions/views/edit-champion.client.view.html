@@ -1,23 +1,63 @@
-<section data-ng-controller="ChampionsController" data-ng-init="findOne()">
-    <div class="page-header">
-        <h1>Edit Champion</h1>
+<section data-ng-controller="ChampionsController">
+    <div class="modal-header">
+        <h3 class="modal-title">
+            <img class="avatar" alt="avatar" ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}">
+            <span ng-bind="champion.name + ', ' +  champion.title"></span>
+            <div class="pull-right"><span class="glyphicon glyphicon-remove" ng-click="closeModal()"></span></div>
+        </h3>
     </div>
-    <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="update()" novalidate>
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="name">Name</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="champion.name" id="name" class="form-control" placeholder="Name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-default">
-                </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
-            </fieldset>
-        </form>
+    <div class="modal-body">
+        <div class="table-responsive table-userinfo">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-show ="champion.tags.length">
+                        <td colspan="2">
+                            <span
+                                style           = "margin-right: 5px;"
+                                data-ng-repeat  = "tag in champion.tags"
+                                class           = "badge badge-info"
+                            >{{tag}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Version</td>
+                        <td>{{champion.version}}</td>
+                    </tr>
+                    <tr>
+                        <td>Enabled</td>
+                        <td ng-class="{ 'text-success':champion.enabled, 'text-warning':!champion.enabled  }">
+                            <input
+                                bs-switch
+                                type            = "checkbox"
+                                ng-model        = "champion.enabled"
+                                type            = "checkbox"
+                                switch-size     = "mini"
+                            />
+                        </td>
+                    </tr>
+                    <tr ng-show = "champion.blurb.length">
+                        <td>Description</td>
+                        <td>{{champion.blurb}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!--Skills-->
+            <h2>Spells</h2>
+            <div ng-repeat="spell in champion.spells" style="padding-left:50px;">
+                <hr>
+                <h4 >
+                    <img class="avatar" alt="avatar" ng-src="{{ spell.image.full | ddragon: champion.version:'spell'}}">
+                    {{spell.name}}
+                </h4>
+                <p>{{spell.sanitizedDescription}}</p>
+                <form class="form-horizontal compact-form">
+                    <custom-effect target="spell" copy="copyPatch" load="loadEffects()"></custom-effect>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="closeModal();">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="update(champion);">Save changes</button>
     </div>
 </section>

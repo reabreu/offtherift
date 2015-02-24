@@ -2,13 +2,13 @@
 
 // Champions controller
 angular.module('champions').controller('ChampionsController', ['$scope', '$stateParams', '$location',
-	'Authentication', 'Champions', 'Repository', 'ngToast', '$modal',
-	function($scope, $stateParams, $location, Authentication, Champions, Repository, ngToast, $modal) {
-		$scope.authentication = Authentication;
-
-		$scope.busy 		= false;
-		$scope.patches  	= [];
-		$scope.champions 	= [];
+	'Authentication', 'Champions', 'Repository', '$modal',
+	function($scope, $stateParams, $location, Authentication, Champions, Repository, $modal) {
+		$scope.authentication 	= Authentication;
+		$scope.busy 			= false;
+		$scope.patches  		= [];
+		$scope.champions 		= [];
+		$scope.copyPatch 		= { version : ''};
 
 		$scope.formData 		= {
 			enabled: 	false,
@@ -30,7 +30,7 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 
 		$scope.searchChampions = function(){
 			//Se for uma nova pesquisa, limpamos os dados
-			Repository.clearItemPagination();
+			Repository.clearChampionPagination();
 			$scope.champions = [];
 			loadChampions();
 		}
@@ -69,12 +69,15 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 
 			$scope.modal = $modal.open({
 				scope: $scope,
-				templateUrl: 'modules/champions/views/view-champion.client.view.html',
+				templateUrl: 'modules/champions/views/edit-champion.client.view.html',
 				controller:  'ChampionsController',
 				size: 'lg',
       			windowClass: "modal fade",
 				resolve: {
-					champion: champion
+					champion: champion,
+					champions: function () {
+			          return $scope.champions;
+			        }
 				}
 			});
 		};
@@ -85,5 +88,23 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 			$scope.modal.close();
 		};
 
+		// Update existing Item
+		$scope.update = function( champion ) {
+			champion.$update(function() {
+				$scope.modal.close();
+				$scope.searchChampions();
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+		};
+
+		$scope.loadEffects = function(){
+			champion.data.query({
+				version: 	$scope.copyPatch.version,
+				riotId: 	$scope.champion.id
+			}).$promise.then(function(data){
+				$scope.champion.spells = data[0].spells;
+			});
+		}
 	}
 ]);

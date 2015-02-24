@@ -1,90 +1,87 @@
 <section data-ng-controller="ChampionsController" data-ng-init="init()">
-  <div class="page-header">
-    <h1>Champions</h1>
-  </div>
+	<div class="page-header">
+		<h1>Champions</h1>
+	</div>
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      CHAMPIONS PANEL
-    </div>
-    <div class="panel-body">
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-1 control-label label-input-sm pull-left">Patch</label>
-          <div class="col-sm-4">
-            <select
-              ng-model    = "formData.version"
-              class       = "form-control input-sm"
-              ng-change   = "searchChampions()"
-              >
-              <option value=""></option>
-              <option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
-            </select>
-          </div>
-          <label class="col-sm-1 control-label label-input-sm" for="focusedinput">Name</label>
-          <div class="col-sm-4">
-            <input
-            type        = "text"
-            id          = "focusedinput"
-            class       = "form-control input-sm"
-            ng-model    = "formData.name"
-            ng-keypress = "($event.which === 13)?searchChampions($event):0"
-            >
-          </div>
-          <label class="col-sm-1 control-label label-input-sm">State</label>
-          <div class="col-sm-1">
-            <input
-            bs-switch
-            type            = "checkbox"
-            ng-model        = "formData.enabled"
-            type            = "checkbox"
-            switch-size     = "mini"
-            class           = "label-input-sm pull-right"
-            ng-change       = "searchChampions()"
-            />
-          </div>
-          </div>
-        </form>
-      <hr>
-      <div class="table-responsive">
-        <table
-        class                           = "table table-striped table-vam table-bordered mb0"
-        infinite-scroll                 = "loadMore();$event.stopPropagation()"
-        infinite-scroll-disabled        = "busy"
-        >
-          <thead>
-            <tr>
-              <th>Avatar</th>
-              <th>Name</th>
-              <th>Enabled</th>
-              <th>Version</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-            ng-show         = "champions.length"
-            data-ng-repeat  = "champion in champions"
-            >
-              <td><img class="avatar" alt="avatar" ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}"></td>
-              <td>{{champion.name}}</td>
-              <td ng-class="{ 'text-success':champion.enabled, 'text-warning':!champion.enabled  }" >{{champion.enabled ? 'yes' : 'no'}}</td>
-              <td>
-                <span>{{champion.version}}</span>
-                <button type="button" class="btn btn-default btn-xs pull-right" ng-click="openModal(champion)">Edit</button>
-              </td>
-            </tr>
-            <tr ng-show = "!champions.length && !busy" style="text-align:center">
-                <td colspan="4">No champions fetched...Try setting some research params!</td>
-            </tr>
-            <tr ng-show = "busy && champions.length" style="text-align:center">
-                <td colspan="4">Searching <img class="loading-spinner-small" src="modules/core/img/loaders/loader.gif" alt=""></td>
-            </tr>
-            <tr ng-show = "!champions.length">
-                <td colspan="4">No Champions yet, why don't you check for new champions fucker?</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			CHAMPIONS PANEL
+		</div>
+		<div class="panel-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label class="col-sm-1 control-label label-input-sm pull-left">Patch</label>
+					<div class="col-sm-4">
+						<select
+						ng-model    = "formData.version"
+						class       = "form-control input-sm"
+						ng-change   = "searchChampions()"
+						>
+						<option value=""></option>
+						<option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+					</select>
+				</div>
+				<label class="col-sm-1 control-label label-input-sm" for="focusedinput">Name</label>
+				<div class="col-sm-4">
+					<input
+					type        = "text"
+					id          = "focusedinput"
+					class       = "form-control input-sm"
+					ng-model    = "formData.name"
+					ng-keypress = "($event.which === 13)?searchChampions($event):0"
+					>
+				</div>
+				<label class="col-sm-1 control-label label-input-sm">State</label>
+				<div class="col-sm-1">
+					<input
+					bs-switch
+					type            = "checkbox"
+					ng-model        = "formData.enabled"
+					type            = "checkbox"
+					switch-size     = "mini"
+					class           = "label-input-sm pull-right"
+					ng-change       = "searchChampions()"
+					/>
+				</div>
+			</div>
+		</form>
+		<hr>
+		<div class="table-responsive">
+			<table
+			class                           = "table table-striped table-vam table-bordered mb0"
+			infinite-scroll                 = "loadMore();$event.stopPropagation()"
+			infinite-scroll-disabled        = "busy"
+			>
+			<thead>
+				<tr>
+					<th>Avatar</th>
+					<th>Name</th>
+					<th>Enabled</th>
+					<th>Version</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+				ng-show         = "champions.length"
+				data-ng-repeat  = "champion in champions"
+				>
+				<td><img class="avatar" alt="avatar" ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}"></td>
+				<td>{{champion.name}}</td>
+				<td ng-class="{ 'text-success':champion.enabled, 'text-warning':!champion.enabled  }" >{{champion.enabled ? 'yes' : 'no'}}</td>
+				<td>
+					<span>{{champion.version}}</span>
+					<button type="button" class="btn btn-default btn-xs pull-right" ng-click="openModal(champion)">Edit</button>
+				</td>
+			</tr>
+			<tr ng-show = "!champions.length && !busy" style="text-align:center">
+				<td colspan="4">No items fetched...Try setting some research params!</td>
+			</tr>
+			<tr ng-show = "busy && !full" style="text-align:center">
+				<td colspan="4">Searching <img class="loading-spinner-small" src="/admin/modules/core/img/loaders/loader.gif" alt=""></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+</div>
 </section>

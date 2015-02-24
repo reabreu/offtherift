@@ -22,6 +22,7 @@ module.exports = {
 	CHAMPION: 	2,
 	ITEM: 		3,
 	RUNE: 		4,
+	MASTERIE:   5,
 
 
 	/**
@@ -44,6 +45,10 @@ module.exports = {
 		{
 			type: 4,
 			url: '/rune'
+		},
+		{
+			type: 5,
+			url: '/mastery'
 		}
 	],
 	/**

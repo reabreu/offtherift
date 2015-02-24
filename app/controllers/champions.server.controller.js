@@ -76,19 +76,33 @@ exports.delete = function(req, res) {
  * List of Champions
  */
 exports.list = function(req, res) {
+    var skip        = req.param('skip');
+    var limit       = req.param('limit');
+    var version     = req.param('version');
+    var name        = req.param('name');
+    var enabled     = req.param('enabled');
+    var riotId      = req.param('riotId');
 
-    var attributes = {};
-
-    if (req.param('name')) {
-        attributes = _.extend({}, attributes, { name:  new RegExp('.*'+req.param('name')+'.*', 'i') });
-    };
-    
     var options = {
-        skip:  req.param('skip')  || null,
-        limit: req.param('limit') || null,
-    };
+        skip:       skip,
+        limit:      limit
+    }
 
-    Champion.find(attributes, null, options).sort('name').exec(function(err, champions) {
+    var query       = {};
+
+    if( version != undefined && version != '')
+        query.version = version;
+
+    if( name != undefined)
+        query.name = { "$regex": name, "$options": "i" };
+
+    if( enabled != undefined)
+        query.enabled = enabled;
+
+    if( riotId != undefined)
+        query.id = riotId;
+
+    Champion.find(query, null, options).sort('name').exec(function(err, champions) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)

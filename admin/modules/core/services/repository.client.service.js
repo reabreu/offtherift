@@ -1,14 +1,13 @@
 'use strict';
 
-angular.module('core').factory('Repository', ['Patches','Items','Runes','Champions',
-	function(Patches,Items,Runes,Champions) {
+angular.module('core').factory('Repository', ['Patches','Items','Runes','Champions','Masteries',
+	function(Patches,Items,Runes,Champions,Masteries) {
 		var patches 	= [];
-		var champions 	= [];
 
 		/*Patches Control vars*/
-		var skip  	= 0;
-		var limit 	= 15;
-		var full 	= false;
+		var skip  			= 0;
+		var limit 			= 15;
+		var full 			= false;
 
 		/*Items Control vars*/
 		var itemsSkip 		= 0;
@@ -19,6 +18,16 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 		var runesSkip 		= 0;
 		var runesLimit 		= 15;
 		var runesFull 		= false;
+
+		/*Champions Control vars*/
+		var championsSkip 	= 0;
+		var championsLimit 	= 15;
+		var championsFull 	= false;
+
+		/*Masteries Control vars*/
+		var masteriesSkip 	= 0;
+		var masteriesLimit 	= 15;
+		var masteriesFull 	= false;
 
 		return {
 			getCachedPatches: function(){
@@ -38,32 +47,6 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 			    });
 
 			    return promise;
-			},
-			/**
-			 * Get Repository cached champions
-			 * @return {array} Array of champions
-			 */
-			getCachedChampions: function(){
-				return champions;
-			},
-			/**
-			 * Get champions from server limited
-			 * @param  {params} params    Search Parameters
-			 * @return {object} Champions
-			 */
-			getChampions: function( params ) {
-				var searchParams = angular.extend({}, {skip: skip, limit: limit}, params);
-				return Champions.data.query(searchParams)
-				.$promise.then(function(data) {
-
-					if (data.length == 0) full = true;
-
-					champions = champions.concat(data);
-
-					skip += limit;
-
-					return { champions: data, full: full };
-			    });
 			},
 			clearPagination: function(){
 				skip 	= 0;
@@ -88,9 +71,9 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 				itemsFull 	= false;
 			},
 			getItems: function( search_params ){
-				search_params.skip 	= itemsSkip;
+				search_params.skip 		= itemsSkip;
 				search_params.limit 	= itemsLimit;
-				var promise = Items.data.query( search_params )
+				var promise 			= Items.data.query( search_params )
 				.$promise.then(function(data) {
 
 					if (data.length == 0) itemsFull = true;
@@ -120,11 +103,53 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 					if (data.length == 0) runesFull = true;
 
 					runesSkip += itemsLimit;
-					
+
 					return { runes: data, full: runesFull };
 			    });
 
 			    return promise;
+			},
+			/****************************
+			* 		Champion Methods	*
+			****************************/
+			getChampions: function( search_params ) {
+				search_params.skip 		= championsSkip;
+				search_params.limit 	= championsLimit;
+
+				return Champions.data.query(search_params)
+				.$promise.then(function(data) {
+
+					if (data.length == 0) championsFull = true;
+
+					championsSkip += championsLimit;
+
+					return { champions: data, full: championsFull };
+			    });
+			},
+			clearChampionPagination: function(){
+				championsSkip 	= 0;
+				championsFull 	= false;
+			},
+			/****************************
+			* 		Masteries Methods	*
+			****************************/
+			getMasteries: function( search_params ) {
+				search_params.skip 		= masteriesSkip;
+				search_params.limit 	= masteriesLimit;
+
+				return Masteries.data.query(search_params)
+				.$promise.then(function(data) {
+
+					if (data.length == 0) masteriesFull = true;
+
+					masteriesSkip += masteriesLimit;
+
+					return { masteries: data, full: masteriesFull };
+			    });
+			},
+			clearMasteriesPagination: function(){
+				masteriesSkip 	= 0;
+				masteriesFull 	= false;
 			}
 		};
 	}

@@ -63,14 +63,14 @@ angular.module('runes').controller('RunesController', ['$scope', '$stateParams',
 		// Update existing Rune
 		$scope.update = function( rune ) {
 			rune.$update(function() {
-				$('#runeModal').modal('hide')
+				$('#runeModal').modal('hide');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
 		$scope.loadEffects = function(){
-			Runes.data.query({ 
+			Runes.data.query({
 				version: 	$scope.copyPatch.version,
 				riotId: 	$scope.runes[$scope.runeIndex].id
 			}).$promise.then(function(data){
