@@ -72,7 +72,7 @@ exports.delete = function(req, res) {
 /**
  * List of Runes
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
 	var skip 		= req.param('skip');
 	var limit 		= req.param('limit');
 	var version 	= req.param('version');
@@ -94,8 +94,8 @@ exports.list = function(req, res) {
 
 	if( enabled != undefined)
 		query.enabled = enabled;
-	
-	Rune.find(query,null,options).sort('-created').populate('user', 'displayName').exec(function(err, runes) {
+
+	Rune.find(query,null,options).sort('name').exec(function(err, runes) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -109,7 +109,7 @@ exports.list = function(req, res) {
 /**
  * Rune middleware
  */
-exports.runeByID = function(req, res, next, id) { 
+exports.runeByID = function(req, res, next, id) {
 	Rune.findById(id).populate('user', 'displayName').exec(function(err, rune) {
 		if (err) return next(err);
 		if (! rune) return next(new Error('Failed to load Rune ' + id));
