@@ -193,7 +193,7 @@ exports.processStats = function(request) {
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel]
+				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel * 0.01]
 			}
 		},
 		cooldownreduction: {

@@ -1,4 +1,5 @@
 var should = require('should'),
+	assert = require('assert'),
 	fs = require('fs'),
 	calculator = require('../../app/controllers/calculator.server.controller');
 
@@ -16,10 +17,17 @@ if (files.length != 0) {
 		var result = calculator.processStats(testCase.test);
 		var expected = testCase.expected;
 
-		describe(testCase.description, function(err) {
-			it('result should equal expected', function(err) {
-				result.should.equal(expected);
-			});
+		describe(testCase.description, function() {
+			for (var key in result) {
+				statTest(key, result[key], expected[key]);
+			}
 		});
 	}
+}
+
+function statTest(stat, result, expected) {
+	it(stat + ': ' + result + ' should equal ' + expected, function(done) {
+		result.should.eql(expected);
+		done();
+	});
 }
