@@ -6,11 +6,14 @@
 var mongoose = require('mongoose'),
     _ = require('lodash');
 
+exports.calculate = function(req, res) {
+	res.jsonp(module.exports.processStats(req.body));
+}
+
 /**
  * Calculate
  */
-exports.processStats = function(req, res) {
-	var request = req.body;
+exports.processStats = function(request) {
 
 	// @TODO Validate request
 	
@@ -34,7 +37,7 @@ exports.processStats = function(req, res) {
 		"16"	: 14.475,
 		"17"	: 15.720,
 		"18"	: 17.000
-	}
+	};
 
 	// Structure of the stats with all the necessary components to
 	// calculate each stat's value
@@ -190,7 +193,7 @@ exports.processStats = function(req, res) {
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel]
+				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel * 0.01]
 			}
 		},
 		cooldownreduction: {
@@ -381,7 +384,8 @@ exports.processStats = function(req, res) {
 		}
 	}
 
-	res.jsonp({response: response, stats: stats});
+	return response;
+	//res.jsonp({response: response, stats: stats});
 };
 
 /**
@@ -408,7 +412,7 @@ function calculateStatValue(stat, resStats) {
 	statModifier = parseFloat(converted);
 
 	switch (stat.name) {
-		case "tanacity":
+		case "tenacity":
 			return statModifier;
 		case "attackspeed":
 			return stat.base * (1 + statModifier);
@@ -421,10 +425,10 @@ function calculateStatValue(stat, resStats) {
 			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
 			
 			// DEBUG
-			console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
+			//console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
 			
-			if (stat.name === "abilitypower")
-				console.log(stat);
+			// if (stat.name === "abilitypower")
+			// 	console.log(stat);
 			return stat.base + statBonus * (1 + bonusModifier);
 	}
 }
@@ -545,6 +549,7 @@ function calculateItemsModifier(statName, modifiers) {
 
 	switch (statName) {
 		case "tenacity":
+			bonus = 1;
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus *= (1 + modifiers[i]);
 			}
