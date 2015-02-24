@@ -78,20 +78,8 @@
                                 </a>
                             </li>
                         </ul>
-
-                        <ul class="nav navbar-nav toolbar pull-right" data-ng-show="authentication.user">
-                            <li class="dropdown" style="display: none;">
-                                <a href="#" id="navbar-links-toggle" data-toggle="collapse" data-target="header>.navbar-collapse">&nbsp;</a>
-                            </li>
-                            <li ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
-                                <a href="/admin/">Admin</a>
-                            </li>
-                        </ul>
-
                     </div>
                 </nav>
-
         </div>
-
     </div>
 </div>
