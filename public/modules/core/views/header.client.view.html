@@ -1,63 +1,97 @@
-<div data-ng-controller="HeaderController">
+<div class="container">
+    <div class="row">
 
-    <!-- <a id="leftmenu-trigger" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a> -->
-    <a class="navbar-brand" href="/#!/">{{title}}</a>
+        <!-- Static navbar -->
+        <div role="navigation"> <!-- class="navbar navbar-default"  -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-header">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/#!/">Avalon</a>
+            </div>
 
-    <nav class="navbar-left navbar-collapse" collapse="!isCollapsed" role="navigation">
-        <ul class="nav navbar-nav" data-ng-if="menu.shouldRender(authentication.user);">
-            <li data-ng-repeat="item in menu.items | orderBy: 'position'" data-ng-if="item.shouldRender(authentication.user);" ng-switch="item.menuItemType" ui-route="{{item.uiRoute}}" class="{{item.menuItemClass}}" ng-class="{active: ($uiRoute)}" dropdown="item.menuItemType === 'dropdown'">
-                <a ng-switch-when="dropdown" class="dropdown-toggle">
-                    <span data-ng-bind="item.title"></span>
-                    <b class="caret"></b>
-                </a>
-                <ul ng-switch-when="dropdown" class="dropdown-menu">
-                    <li data-ng-repeat="subitem in item.items | orderBy: 'position'" data-ng-if="subitem.shouldRender(authentication.user);" ui-route="{{subitem.uiRoute}}" ng-class="{active: $uiRoute}">
-                        <a href="/#!/{{subitem.link}}" data-ng-bind="subitem.title"></a>
-                    </li>
-                </ul>
-                <a ng-switch-default href="/#!/{{item.link}}" data-ng-bind="item.title"></a>
-            </li>
-        </ul>
-    </nav>
+            <nav class="navbar-collapse navbar-collapse-header collapse" aria-expanded="false" style="height: 1px;">
+                    <!-- Right nav -->
+                    <div class="navbar-right yamm">
+                        <ul class="nav navbar-nav smart-menu dd-menu sm" data-ng-hide="authentication.user">
+                            <li ui-route="/contactus" ng-class="{active: $uiRoute}">
+                                <a href="/#!/contact-us">
+                                    <span>Contact Us</span>
+                                    <span class="subline">Issues & Sugestions</span>
+                                </a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li ui-route="/aboutus" ng-class="{active: $uiRoute}">
+                                <a href="/#!/about-us">
+                                    <span>About Us</span>
+                                    <span class="subline">Company</span>
+                                </a>
+                            </li>
+                        </ul>
 
-    <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-        <li ui-route="/admin/signup" ng-class="{active: $uiRoute}">
-            <a href="/#!/signup">Sign Up</a>
-        </li>
-        <li class="divider-vertical"></li>
-        <li ui-route="/admin/signin" ng-class="{active: $uiRoute}">
-            <a href="/#!/signin">Sign In</a>
-        </li>
-    </ul>
+                        <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
+                            <li ui-route="/registration" ng-class="{active: $uiRoute}">
+                                <a href="/#!/registration">
+                                    <span>Register</span>
+                                    <span class="subline">Registration Form</span>
+                                </a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li ui-route="/login" ng-class="{active: $uiRoute}">
+                                <a href="/#!/login">
+                                    <span>Login</span>
+                                    <span class="subline">Login Form</span>
+                                </a>
+                            </li>
+                        </ul>
 
-    <ul class="nav navbar-nav toolbar pull-right" data-ng-show="authentication.user">
-        <li class="dropdown" style="display: none;">
-            <a href="#" id="navbar-links-toggle" data-toggle="collapse" data-target="header>.navbar-collapse">&nbsp;</a>
-        </li>
-        <li>
-            <a href="/admin/">Admin</a>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
-                <span data-ng-bind="authentication.user.displayName" class="hidden-xs"></span>
-                <img class="img-circle" ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Header Photo">
-                <img class="img-circle" ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Header Photo">
-            </a>
-            <ul class="dropdown-menu userinfo">
-                <li>
-                    <a href="/#!/settings/profile">Edit Profile</a>
-                </li>
-                <li>
-                    <a href="/#!/settings/accounts">Manage Social Accounts</a>
-                </li>
-                <li data-ng-show="authentication.user.provider === 'local'">
-                    <a href="/#!/settings/password">Change Password</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="/auth/signout">Signout</a>
-                </li>
-            </ul>
-        </li>
-    </ul>
+                        <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
+                            <li ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
+                                <a href="/admin/">
+                                    <span>Admin</span>
+                                    <span class="subline">Administration</span>
+                                </a>
+                            </li>
+                            <li ui-route="/build" ng-class="{active: $uiRoute}">
+                                <a href="/#!/build">
+                                    <span>Build</span>
+                                    <span class="subline">Build Now</span>
+                                </a>
+                            </li>
+                            <li ui-route="/browse" ng-class="{active: $uiRoute}">
+                                <a href="/#!/browse">
+                                    <span>Browse</span>
+                                    <span class="subline">Builds</span>
+                                </a>
+                            </li>
+                            <li ui-route="/settings/profile" ng-class="{active: $uiRoute}">
+                                <a href="/#!/settings/profile">
+                                    <span>User</span>
+                                    <span class="subline">Profile</span>
+                                </a>
+                            </li>
+                            <li class="divider-vertical"></li>
+                            <li>
+                                <a href="/auth/signout" class="no-subline">
+                                    <span>Signout</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav toolbar pull-right" data-ng-show="authentication.user">
+                            <li class="dropdown" style="display: none;">
+                                <a href="#" id="navbar-links-toggle" data-toggle="collapse" data-target="header>.navbar-collapse">&nbsp;</a>
+                            </li>
+                            <li ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
+                                <a href="/admin/">Admin</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </nav>
+
+        </div>
+
+    </div>
 </div>

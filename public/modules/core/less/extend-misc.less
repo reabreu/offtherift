@@ -99,10 +99,8 @@
 	.badge.badge-info     {.label-variant(@label-info-bg);}
 	.badge.badge-warning  {.label-variant(@label-warning-bg);}
 	.badge.badge-danger   {.label-variant(@label-danger-bg);}
-	.badge.badge-green   {.label-variant(@label-green-bg);}
 	.badge.badge-alizarin   {.label-variant(@label-alizarin-bg);}
 	.badge.badge-grape   {.label-variant(@label-grape-bg);}
-	.badge.badge-midnightblue   {.label-variant(@label-midnightblue-bg);}
 }
 
 //progressbars.less
@@ -149,24 +147,20 @@
 	.progress-bar-variant(@progress-bar-alizarin-bg);
 }
 
+.progress-striped .progress-bar {
+	#gradient > .striped(rgba(255,255,255,0.35));
+}
+
 // Contextual Progress
 div.widget .contextual-progress:last-child {border-bottom: none;}
 
 .contextual-progress {
-	margin: 0 -20px;
-	padding: 20px;
+	margin: 0;
+	padding: 20px 0;
 	border-bottom: 1px solid @border-lighter;
 	.progress-percentage {
 		float: right;
 		position: relative;
-	}
-	.label {
-		// position: absolute;
-		// right: 34px; top: 2px;
-		// padding: 4px 5px;
-		// font-size: 11px;
-		// text-transform: uppercase;
-		//font-weight: 400;
 	}
 
 	.progress-title {
@@ -291,12 +285,6 @@ div.widget .contextual-progress:last-child {border-bottom: none;}
   font-size: 20px;
   line-height: 17px;
 }
-
-
-// Contextual colors
-// .text-gray {
-//   color: @text-gray;
-// }
 
 .carousel-caption {
 	h1, h2, h3, h4, h5, h6,

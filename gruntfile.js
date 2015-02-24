@@ -156,10 +156,20 @@ module.exports = function(grunt) {
 					cleancss: true
 				},
 				files: [
+					/**
+					 * Admin LESS Files
+					 * @type {String}
+					 */
 					{ src: 'admin/modules/core/less/**/styles.less',   dest: 'admin/modules/core/css/core.min.css'  },
 					{ src: 'admin/modules/users/less/**/styles.less', 	dest: 'admin/modules/users/css/users.min.css' },
 					{ src: 'admin/modules/items/less/styles.less', 	dest: 'admin/modules/items/css/items.min.css' },
 					{ src: 'admin/modules/patches/less/styles.less', 	dest: 'admin/modules/patches/css/patches.min.css'},
+					/**
+					 * Public LESS Files
+					 * @type {String}
+					 */
+					{ src: 'public/modules/core/less/**/styles.less',   dest: 'public/modules/core/css/core.min.css'  },
+					{ src: 'public/modules/users/less/**/styles.less', 	dest: 'public/modules/users/css/users.min.css' },
 				],
 			}
 		}

@@ -17,6 +17,7 @@ module.exports = {
 						'public/lib/iCheck/skins/minimal/blue.css',
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
 						'public/lib/ngtoast/dist/ngToast.min.css',
+						'public/lib/yamm3/yamm/yamm.css',
 					],
 					js: [
 						'public/lib/jquery/dist/jquery.min.js',

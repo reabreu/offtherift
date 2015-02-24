@@ -65,8 +65,8 @@
 // ## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-@body-bg:               #f2f5f7; //#f7f7f7;
-@page-title-color:		@border-lighter;
+@body-bg:               #fff; //#f2f5f7; //#f7f7f7;
+@page-title-color:		@tone-bright;
 
 //** Global text color on `<body>`.
 @text-color:            @gray-dark;
@@ -119,7 +119,6 @@
 
 
 @footer-height: 		   30px;
-@navbar-brand-width: 	   210px;
 
 //== Components
 //
@@ -235,6 +234,7 @@
 @input-color:                    @gray-darker;
 //** `<input>` border color
 @input-border:                   @border-darker;
+//** `<input>` border radius
 
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
@@ -244,8 +244,6 @@
 //** Small `.form-control` border radius
 @input-border-radius-small:      @border-radius-small;
 
-
-//** Border color for inputs on focus
 @input-border-focus:             @gray-light;
 //** Placeholder text color
 
@@ -263,6 +261,7 @@
 @input-group-addon-bg:           @gray-lighter;
 //** Border color for textual input addons
 @input-group-addon-border-color: @input-border;
+
 
 //** Disabled cursor for form controls and buttons.
 @cursor-disabled:                not-allowed;
@@ -319,9 +318,9 @@
 @zindex-dropdown:          1001;
 @zindex-popover:           1010;
 @zindex-tooltip:           1230;
-@zindex-navbar-fixed:      @zindex-navbar; //1030
-@zindex-modal-background:  1240;
-@zindex-modal:             1250;
+@zindex-navbar-fixed:      1030;
+@zindex-modal-background:  1340;
+@zindex-modal:             1350;
 // Media queries breakpoints
 //
 //## Define the breakpoints at which your layout will change, adapting to different screen sizes.
@@ -364,7 +363,7 @@
 //** Number of columns in the grid.
 @grid-columns:              12;
 //** Padding between columns. Gets divided in half for the left and right.
-@grid-gutter-width:         20px;
+@grid-gutter-width:         40px;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
 @grid-float-breakpoint:     @screen-sm-min;
@@ -394,7 +393,7 @@
 @navbar-default-link-hover-color:          @gray-darker;
 @navbar-default-link-hover-bg:             @tone-brighter; //transparent;
 @navbar-default-link-active-color:         @gray-darker;
-@navbar-default-link-active-bg:            @body-bg; //darken(@navbar-default-bg, 3%);
+@navbar-default-link-active-bg:            @tone-bright; //@body-bg; //darken(@navbar-default-bg, 3%);
 @navbar-default-link-disabled-color:       @gray-light;
 @navbar-default-link-disabled-bg:          transparent;
 
@@ -469,9 +468,9 @@
 
 @nav-tabs-active-link-hover-bg:             @body-bg;
 @nav-tabs-active-link-hover-color:          @gray;
-@nav-tabs-active-link-hover-border-color:   @border-darker;
+@nav-tabs-active-link-hover-border-color:   #ddd;
 
-@nav-tabs-justified-link-border-color:            @border-darker;
+@nav-tabs-justified-link-border-color:            #ddd;
 @nav-tabs-justified-active-link-border-color:     @body-bg;
 
 //== Pills
@@ -780,11 +779,11 @@
 @panel-border-radius:         @border-radius-base;
 //** Border color for elements within panels
 @panel-inner-border:          @border-darker;
-@panel-footer-bg:             @tone-brighter;
+@panel-footer-bg:             #fafbfc;
 
 @panel-default-text:          @gray-dark;
 @panel-default-border:        @border-darker;
-@panel-default-heading-bg:    @tone-brighter;
+@panel-default-heading-bg:    #fafbfc;
 
 @panel-primary-text:          #fff;
 @panel-primary-border:        @brand-primary;
@@ -979,4 +978,8 @@
 @boxed-width: 							1140px;
 @boxed-background: 						rgba(0,0,0,0.9);
 
-@sidebar-static-width: 					260px;
+//@sidebar-static-width: 					260px;
+
+
+// Sticky Footer
+@footer-height: 456px;

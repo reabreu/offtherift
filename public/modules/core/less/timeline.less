@@ -3,16 +3,12 @@
 // --------------------------------------------------
 
 .timeline-month {
-	margin-top: 0px;
-	margin-bottom: 20px;
-	width: 120px;
+	width: 90px;
 	text-align: center;
 	position: relative;
 	left: 6%;
-	margin-left: -55px;
+	margin-left: -42px;
 	span {display: block;}
-	.month {font-size: @font-size-large; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase;}
-	.year {font-size: @font-size-base; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;}
 }
 
 .timeline {
@@ -31,15 +27,13 @@
 	> li {
 		position: relative;
 		.timeline-header {
-			&:extend(.clearfix all);
-			padding: 0;
+			.clearfix();
+			padding: 0 0 10px;
 			color: @gray-light;
 
-			span.date {float: left; text-transform: uppercase; letter-spacing: 0.1em; font-size: @font-size-mini;}
+			span.date {float: left; text-transform: uppercase;}
 			span.author {float: right; font-size:12px; display: none;}
 		}
-
-		.timeline-header + p {padding-top: 10px;}
 
 		.timeline-icon {
 			width: 50px;
@@ -48,7 +42,7 @@
 			line-height: 50px;
 			-webkit-font-smoothing: antialiased;
 			position: absolute;
-			color: @gray;
+			color: @gray-darker;
 			background: @border-lighter;
 			border-radius: 50%;
 			text-align: center;
@@ -63,12 +57,8 @@
 			position: relative;
 			border-width: 2px;
 			border-style: solid;
-			border-radius: @border-radius-base;
+			border-radius: @border-radius-large;
 			background-color: #fff;
-			.timeline-content {
-				p {margin-bottom: 0;}
-				p + p {margin-top: 10px;}
-			}
 			&:after {
 				right: 100%;
 				border: solid transparent;
@@ -79,13 +69,12 @@
 				pointer-events: none;
 				border-color: transparent;
 				border-width: 10px;
-				top: 15px;
+				top: 5%;
 			}
 			img {margin: 5px 20px 0 0;}
 		}
 		.timeline-footer {
-			padding-top: 20px;
-			&:extend(.clearfix all);
+			.clearfix();
 			color: #fff;
 		}
 	}
@@ -98,6 +87,7 @@
 		text-align: center;
 		margin-left: 0;
 		left: 0;
+		span {display: inline !important;}
 	}
 
 	.timeline:before {width: 0;left: 0;}

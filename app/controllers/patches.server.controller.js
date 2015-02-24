@@ -14,6 +14,7 @@ var mongoose 		= require('mongoose'),
 	Patch 			= mongoose.model('Patch'),
 	Item 			= mongoose.model('Item'),
 	Rune 			= mongoose.model('Rune'),
+    Masterie        = mongoose.model('Masterie'),
 	_ 				= require('lodash'),
 	api 			= require('../../app/controllers/api.server.controller'),
 	async			= require("async"),
@@ -334,6 +335,58 @@ asyncTasks.push(function(callback){
     			}
     		});
     	}
+    }, function(e) {
+        console.log('Got error: ', e);
+    });
+});
+
+//Metodo anonimo que sincroniza Masteries
+asyncTasks.push(function(callback){
+
+    api.setParam('&masteryListData=all&all&version=' + version);
+
+    api.requestData(api.MASTERIE).then(function(apiRes) {
+        if(apiRes.statusCode > 400){
+            inserted    = -1;
+            updated     = -1;
+            callback(null,{masteries: { inserted: inserted, updated: updated}});
+            return;
+        }
+
+        var masteries   = apiRes.data;
+        var options     = { upsert: true, new: false };
+        var processed   = 0;
+        var total       = Object.keys(masteries.data).length;
+        var inserted    = 0;
+        var updated     = 0;
+
+        for (var key in masteries.data) {
+            //adicionar os nossos propios campos
+            masteries.data[key].version = version;
+            masteries.data[key].enabled = false;
+
+            var conditions = {
+                version:    masteries.data[key].version,
+                id:         masteries.data[key].id
+            }
+
+            Masterie.findOneAndUpdate( conditions, masteries.data[key], options, function(err, doc){
+
+                if(doc === null){
+                    ++inserted;
+                }
+                else{
+                    ++updated;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null,{masteries: { inserted: inserted, updated: updated}});
+                }
+            });
+        }
     }, function(e) {
         console.log('Got error: ', e);
     });

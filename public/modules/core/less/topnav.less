@@ -12,7 +12,7 @@ header {
 
 .scrollthis {
 	&:extend(.scrollbar-custom all);
-	
+
 	height: 280px;
 	li {
 	     &:extend(.clearfix all);
@@ -24,7 +24,7 @@ header .toolbar .dropdown-menu {
 	&.notifications, &.messages, &.taskprogresses, &.search, &.tabbed, &.language-switcher {
 		background: #fff !important;
 		color: @gray !important;
-		padding: 0; 
+		padding: 0;
 		z-index: 1300;
 		box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1);
 		border-top-left-radius: @border-radius-base !important;
@@ -41,7 +41,7 @@ header .toolbar .dropdown-menu {
 			line-height: 16px;
 			a {color: @link-color;}
 		}
-		
+
 		.dd-header {
 			padding: 7px 10px; .clearfix; font-size: @font-size-mini; border-bottom: 1px solid @border-darker; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
 			span:first-child {.pull-left; font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em;}
@@ -61,16 +61,16 @@ header .toolbar .dropdown-menu {
 		.scrollthis a {
 			white-space: normal; color: @gray-dark !important;
 			&.active, &:hover {
-				color: @gray-dark !important; 
+				color: @gray-dark !important;
 				.rgba(black,0.03) !important;
 
-				.box-shadow(~"0 1px 0 0 rgba(0,0,0,0.04), 0 -1px 0 0 rgba(0,0,0,0.04)"); 
+				.box-shadow(~"0 1px 0 0 rgba(0,0,0,0.04), 0 -1px 0 0 rgba(0,0,0,0.04)");
 				.time{color: @gray-light}}
 		}
 
 		li {
 			border-bottom: 1px solid @tone-bright-alt;
-		
+
 			.time {color: @gray-lighter; font-size: @font-size-mini; white-space: nowrap; text-align: right; vertical-align: top;}
 			a:focus {background-color: #fff !important;}
 
@@ -147,8 +147,8 @@ header .toolbar .dropdown-menu {
 				}
 
 				.notification-time {
-					display: inline; 
-					font-size: @font-size-mini; 
+					display: inline;
+					font-size: @font-size-mini;
 					color: @gray-lighter;
 					float: right;
 					text-align: right;
@@ -212,7 +212,7 @@ header .toolbar .dropdown-menu {
 					top: 12px;
 					right: 15px;
 
-					font-size: @font-size-mini; 
+					font-size: @font-size-mini;
 					color: @gray-lighter;
 				}
 				&:hover {.msg-time{color: @gray-light}}
@@ -236,7 +236,7 @@ header .toolbar .dropdown-menu {
 		.input-group {
 			padding: 15px;
 		}
-		
+
 	}
 }
 
@@ -250,15 +250,15 @@ header .toolbar .dropdown-menu {
 .toolbar.navbar-nav           {margin: 0;}
 .navbar-nav .dropdown-toggle  {font-size:@font-size-base;}
 .navbar-nav.toolbar>li        {
-	float: left; 
+	float: left;
 	>a {
-		padding: 15px 16px; 
+		padding: 15px 16px;
 	}
 }
 
-// .toolbar-icon-bg 
+// .toolbar-icon-bg
 .toolbar-icon-bg > a:hover,
-.toolbar-icon-bg > a:focus,  
+.toolbar-icon-bg > a:focus,
 .toolbar-icon-bg > a.active {background: none !important;}
 .toolbar-icon-bg.open > a span.icon-bg {background-color: rgba(255,255,255,0.3) !important; &:hover {background-color: rgba(255,255,255,0.3) !important;}}
 .toolbar-icon-bg.open > a {background: none !important; &:hover {background: none !important;}}
@@ -316,8 +316,8 @@ a.username {
 }
 
 header.navbar {
-	margin-bottom:0px; 
-	border:none; 
+	margin-bottom:0px;
+	border:none;
 	box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.08), 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
 }
 
@@ -368,11 +368,11 @@ header.navbar {
 	&:hover {background-position: 0px 50px; background-color: transparent;}
 }
 
-// Alignments of dropdowns in small 
+// Alignments of dropdowns in small
 // screen manually so it centers
 //-------------------------------
 @media (max-width: @screen-xs-max) {
-	
+
 	.dropdown-menu.messages {
 		margin-right: -35px;
 		&:before, &:after {margin-right: 35px;}
@@ -429,7 +429,7 @@ header.navbar .navbar-nav .open .dropdown-menu {
 		border-radius: @border-radius-base !important;
 		background: #fff !important;
 		color: @gray !important;
-		padding: 0; 
+		padding: 0;
 		z-index: 1300;
 		border: 1px solid @border-darker !important;
 		box-shadow: 0 3px 1px rgba(0, 0, 0, 0.1) !important;
@@ -447,7 +447,7 @@ header.navbar .navbar-nav .open .dropdown-menu {
 					text-decoration: none;
 					img {margin-right: 8px; margin-top: -3px;}
 					&:hover {
-						background: rgba(0, 0, 0, 0.03) !important; 
+						background: rgba(0, 0, 0, 0.03) !important;
 						color: @gray-darker !important;}
 				}
 			}

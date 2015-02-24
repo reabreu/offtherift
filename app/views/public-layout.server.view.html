@@ -45,30 +45,22 @@
     <![endif]-->
 </head>
 
-<body class="ng-cloak fixed-header">
-    <header data-ng-include="'/modules/core/views/header.client.view.html'" id="topnav" class="navbar navbar-inverse navbar-fixed-top clearfix" role="banner"></header>
+<body class="ng-cloak">
 
-    <div id="layout-fixed">
-        <div class="ui-layout-center">
-            <div class="fixed-content-wrapper">
-                <div class="fixed-content">
-                    <div class="page-content">
-                        <div class="container-fluid">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </div>
-                </div>
-                <footer role="contentinfo">
-                    <div class="clearfix">
-                        <ul class="list-unstyled list-inline pull-left">
-                            <li><h6 style="margin: 0;"> &copy; 2014 {{title}}</h6></li>
-                        </ul>
-                        <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
-                    </div>
-                </footer>
-            </div>
-        </div>
-    </div>
+    <section id="wrapper">
+
+        <header data-ng-controller="HeaderController" data-ng-include="'/modules/core/views/header.client.view.html'" id="headernav" class="navbar-default" role="banner" ng-show="authentication.user"></header>
+
+        <article class="page-content">
+            {% block content %}{% endblock %}
+        </article>
+
+        <footer
+            data-ng-controller="HeaderController"
+            class="footer-inverse"
+            data-ng-include="authentication.user && '/modules/core/views/footer.client.view.html' || '/modules/core/views/teaser-footer.client.view.html'"></footer>
+
+    </section>
 
     <!--Embedding The User Object-->
     <script type="text/javascript">

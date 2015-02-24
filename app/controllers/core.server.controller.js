@@ -4,8 +4,11 @@
  * Public Index
  */
 exports.index = function(req, res) {
+    var layout = (req.user) ? 'public' : 'teaser';
+
     res.render('public-index', {
-        user: req.user || null,
+        user: req.user,
+        layout: layout,
         request: req
     });
 };

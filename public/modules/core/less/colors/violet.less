@@ -1,68 +1,54 @@
-// violet: Sidebar
-	@sidebar-violet-divider:                saturate(darken(@sidebar-violet-background, 5%), 1.5%);
-	@sidebar-violet-static-width: 			260px;
+// Horizontal violet
+    @horizontal-violet-background:                    darken(@brand-violet, 5%);
 
-	@sidebar-violet-background:				desaturate(darken(@brand-violet, 5%), 5%);
-	@sidebar-violet-color: 					lighten(@sidebar-violet-background, 24%);
-	@sidebar-violet-menu-color: 			lighten(@sidebar-violet-background, 32%);
-	@sidebar-violet-icon-color: 			@sidebar-violet-menu-color;
+    @horizontal-violet-menu-color:                    lighten(@horizontal-violet-background, 40%);
+    @horizontal-violet-menu-subline:                  lighten(@horizontal-violet-background, 20%);
 
-	@sidebar-violet-active-bg:				lighten(@sidebar-violet-background, 17.5%);
-	@sidebar-violet-active-color:			#fff;
+    @horizontal-violet-active-bg:                     darken(@horizontal-violet-background, 5%);
+    @horizontal-violet-active-color:                  #fff;
+    @horizontal-violet-active-subline:                lighten(@horizontal-violet-background, 40%);
 
-	@sidebar-violet-hover-bg: 				lighten(@sidebar-violet-background, 1.5%);
-	@sidebar-violet-hover-color:            lighten(@sidebar-violet-background, 60%);
+    @horizontal-violet-hover-bg:                      lighten(@horizontal-violet-background, 2.5%);
+    @horizontal-violet-hover-color:                   @horizontal-violet-active-color;
+    @horizontal-violet-hover-subline:                 @horizontal-violet-active-subline;
 
-	@sidebar-violet-submenu-bg: 			darken(@sidebar-violet-background, 8.5%);
-	@sidebar-violet-submenu-hover-bg: 		darken(@sidebar-violet-submenu-bg, 4%);
-	@sidebar-violet-submenu-color:          lighten(@sidebar-violet-submenu-bg, 32%);
-
-	@sidebar-violet-disabled-color: 		desaturate(lighten(@sidebar-violet-background, 20%), 10%);
-
-	@search-violet-bg:						@sidebar-violet-background;
-	@search-violet-color:                   lighten(@sidebar-violet-background, 24%);
-
-	@sidebar-violet-border-top:				lighten(@sidebar-violet-background, 3.25%);
-	@sidebar-violet-submenu-open: 			#fff;
-
-
-// violet: Horizontal Nav
-
-	@horizontal-violet-background:     					@sidebar-violet-background;
-	@horizontal-violet-menu-color: 						@sidebar-violet-menu-color;
-	@horizontal-violet-icon-color: 						@horizontal-violet-menu-color;
-		
-	@horizontal-violet-active-bg:  						@sidebar-violet-active-bg;
-	@horizontal-violet-active-color:  					@sidebar-violet-active-color;
-
-	@horizontal-violet-hover-bg: 						@sidebar-violet-hover-bg;
-	@horizontal-violet-hover-color: 					@sidebar-violet-hover-color;
-
-	@horizontal-violet-submenu-background: 				@sidebar-violet-submenu-bg;
-	@horizontal-violet-submenu-item-color: 				@sidebar-violet-submenu-color;
-	@horizontal-violet-submenu-item-hover-background: 	@sidebar-violet-hover-bg;
-	@horizontal-violet-submenu-item-hover-color: 		@sidebar-violet-hover-color;
+    @horizontal-violet-dropdown-bg:                   darken(@horizontal-violet-background, 7.5%);
+    @horizontal-violet-dropdown-border:               @horizontal-violet-menu-subline;
+    @horizontal-violet-dropdown-li-border:            darken(@horizontal-violet-dropdown-bg, 4%);
+    @horizontal-violet-dropdown-link-color:           lighten(@horizontal-violet-dropdown-bg, 35%);
+    @horizontal-violet-dropdown-link-hover-color:     #fff;
+    @horizontal-violet-dropdown-link-hover-bg:        lighten(@horizontal-violet-dropdown-bg, 2.5%);
 
 // violet: Topnav
 
-	@topnav-violet-color: lighten(@topnav-violet-bg-color, 20%);
-	@topnav-violet-bg-color: desaturate(darken(@brand-violet, 5%), 5%);
-	@topnav-violet-border-color: darken(@topnav-violet-bg-color, 15%);
+    @topnav-violet-color: lighten(@topnav-violet-bg-color, 20%);
+    @topnav-violet-bg-color: darken(@brand-violet, 5%);
+    @topnav-violet-border-color: darken(@topnav-violet-bg-color, 15%);
 
-	@topnav-violet-brand-color: lighten(@topnav-violet-bg-color, 27.5%);
-	@topnav-violet-brand-hover-color: lighten(@topnav-violet-bg-color, 45%);
-	@topnav-violet-brand-hover-bg: transparent;
+    @topnav-violet-brand-color: lighten(@topnav-violet-bg-color, 35%);
+    @topnav-violet-brand-hover-color: lighten(@topnav-violet-bg-color, 45%);
+    @topnav-violet-brand-hover-bg: transparent;
 
-	@topnav-violet-link-color: lighten(@topnav-violet-bg-color, 32.5%);
-	@topnav-violet-link-hover-color: lighten(@topnav-violet-bg-color, 45%);
-	@topnav-violet-link-hover-bg: darken(@topnav-violet-bg-color, 10%);
-	@topnav-violet-link-active-color: lighten(@topnav-violet-bg-color, 45%);
-	@topnav-violet-link-active-bg: darken(@topnav-violet-bg-color, 14%);
-	@topnav-violet-link-disabled-color: lighten(@topnav-violet-bg-color, 10%);
-	@topnav-violet-link-disabled-bg: transparent;
+    @topnav-violet-link-color: lighten(@topnav-violet-bg-color, 35%);
+    @topnav-violet-link-hover-color: lighten(@topnav-violet-bg-color, 45%);
+    @topnav-violet-link-hover-bg: darken(@topnav-violet-bg-color, 8%);
+    @topnav-violet-link-active-color: lighten(@topnav-violet-bg-color, 45%);
+    @topnav-violet-link-active-bg: darken(@topnav-violet-bg-color, 12.25%);
+    @topnav-violet-link-disabled-color: lighten(@topnav-violet-bg-color, 10%);
+    @topnav-violet-link-disabled-bg: transparent;
 
-	@topnav-violet-dropdown-bg: @topnav-violet-link-active-bg;
-	@topnav-violet-dropdown-color: lighten(@topnav-violet-dropdown-bg, 35%);
-	@topnav-violet-dropdown-link-color: lighten(@topnav-violet-dropdown-bg, 35%);
-	@topnav-violet-dropdown-link-hover-color: lighten(@topnav-violet-dropdown-bg, 55%);
-	@topnav-violet-dropdown-link-hover-bg: darken(@topnav-violet-link-hover-bg, 6.75%);
+    @topnav-violet-dropdown-bg: @topnav-violet-link-active-bg;
+    @topnav-violet-dropdown-color: lighten(@topnav-violet-dropdown-bg, 35%);
+    @topnav-violet-dropdown-link-color: lighten(@topnav-violet-dropdown-bg, 35%);
+    @topnav-violet-dropdown-link-hover-color: lighten(@topnav-violet-dropdown-bg, 55%);
+    @topnav-violet-dropdown-link-hover-bg: darken(@topnav-violet-link-hover-bg, 6.75%);
+
+
+// violet: Footer
+
+    @footer-violet-color:             lighten(@brand-violet, 20%);
+    @footer-violet-background:        darken(@brand-violet, 15%);
+    @footer-violet-link-color:        lighten(@brand-violet, 40%);
+    @footer-violet-link-hover:        #fff;
+    @footer-violet-heading-color:     #fff;
+    @footer-violet-border-color:      lighten(darken(@brand-violet, 15%), 4.25%);

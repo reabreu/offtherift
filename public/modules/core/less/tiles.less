@@ -40,7 +40,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 		}
 	}
 	.tiles-body {
-		font-size: 36px;
+		font-size: 35px;
 		border-bottom-right-radius: @border-radius-large;
 		border-bottom-left-radius: @border-radius-large;
 
@@ -78,7 +78,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 				&:hover {color: rgba(255, 255, 255, 0.15)}
 			}
 			.info-text {
-				font-size: 36px;
+				font-size: 35px;
 				height: 50px;
 				line-height: 50px;
 				color: #fff;
@@ -128,10 +128,10 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 		.sparkline {width: 100px; margin: 0 auto; padding: 0px;}
 		.text-top {vertical-align: super; font-size: 24px}
 		.text-smallcaps {font-variant: small-caps;}
-		//.text-center {margin-top: -5px;}
+		.text-center {margin-top: -5px;}
 
-		i {font-size: 36px; color: rgba(255,255,255,0.4); .transition(~"0.06s ease-in");}
-		> i {position: absolute; font-size: 36px;}
+		i {font-size: 35px; color: rgba(255,255,255,0.4); .transition(~"0.06s ease-in");}
+		> i {position: absolute; font-size: 35px;}
 		div + small {font-size: @font-size-base; text-align: center; display: block; font-weight: 400; color: rgba(255,255,255,0.7); margin-top: -7px; margin-bottom: 4px;}
 	}
 	.tiles-footer {
@@ -148,6 +148,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 				padding: 2px 0;
 			}
 		}
+
 	}
 	&:hover {
 		i {color: rgba(255,255,255,1);}
@@ -166,7 +167,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 .shortcut-tiles {
 	.tiles-body {
 		padding: 10px 10px 0px 10px;
-		font-size: 36px;
+		font-size: 35px;
 		line-height: 35px;
 		border-top-right-radius: @border-radius-large;
 		border-top-left-radius: @border-radius-large;
@@ -236,7 +237,6 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 	&.tiles-orange 			{.info-tiles-variant(@brand-orange)}; 
 	&.tiles-indigo 			{.info-tiles-variant(@brand-indigo)}; 
 	&.tiles-green 			{.info-tiles-variant(@brand-green);}
-	&.tiles-blue 			{.info-tiles-variant(@brand-blue);}
 	&.tiles-magenta  		{.info-tiles-variant(@brand-magenta);}
 	&.tiles-purple  		{.info-tiles-variant(@brand-purple);}
 	&.tiles-brown  			{.info-tiles-variant(@brand-brown);}
@@ -261,7 +261,6 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 	&.tiles-orange 			{.shortcut-tiles-variant(@brand-orange)}; 
 	&.tiles-indigo 			{.shortcut-tiles-variant(@brand-indigo)}; 
 	&.tiles-green 			{.shortcut-tiles-variant(@brand-green);}
-	&.tiles-blue 			{.shortcut-tiles-variant(@brand-blue);}
 	&.tiles-magenta  		{.shortcut-tiles-variant(@brand-magenta);}
 	&.tiles-purple  		{.shortcut-tiles-variant(@brand-purple);}
 	&.tiles-brown  			{.shortcut-tiles-variant(@brand-brown);}
@@ -285,7 +284,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 		padding: 20px 20px 0;
 		text-transform: uppercase;
 		h2 {
-			font-size: 36px;
+			font-size: 35px;
 			margin: 0;
 			float: none;
 			line-height: 1em;
@@ -321,6 +320,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 		padding: 20px;
 
 		.tabular {
+			//border-top: 1px solid @gray-lighter;
 			margin: 5px 0 0;
 			padding: 0 3px;
 			.tabular-cell {
@@ -401,6 +401,7 @@ a.info-tiles, a.shortcut-tiles {background: none;}
 		line-height: 80px;
 		font-size: 20px;
 		font-weight: 300;
+		//letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: #fff;
 	}
