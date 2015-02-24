@@ -16,6 +16,7 @@ var ApplicationConfiguration = (function() {
 		'frapontillo.bootstrap-switch',
 		'infinite-scroll',
 		'ngToast',
+		'ngFx',
 		'pascalprecht.translate'
 	];
 
