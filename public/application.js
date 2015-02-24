@@ -8,9 +8,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 	function($locationProvider) {
 		$locationProvider.hashPrefix('!');
 	}
-]).run(['$anchorScroll', function($anchorScroll) {
-    // always scroll by 80 extra pixels
-    $anchorScroll.yOffset = 80;
+]).run(['$rootScope', function($rootScope) {
+    $rootScope.$on('$stateChangeSuccess', function() {
+        $('html,body').animate({ scrollTop: 0 }, 500);
+    });
 }]);
 
 //Then define the init function for starting up the application
