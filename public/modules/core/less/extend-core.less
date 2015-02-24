@@ -73,11 +73,9 @@ hr.dashed {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-	//color: @gray-darker;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	font-family: @headings-font-family;
-	//font-weight: @headings-font-weight;
 }
 
 h1, h2, h3, .h1, .h2 .h3 {
@@ -87,7 +85,7 @@ h1, h2, h3, .h1, .h2 .h3 {
 
 h4, .h4 {
 	
-	font-weight: 400;
+	font-weight: 600;
 }
 
 h5, h6, .h5, .h6 {
@@ -170,11 +168,9 @@ table > tbody > tr:first-child > th {border-top: 0;}
 table > tbody > tr:first-child > td {border-top: 0;}
 
 table > tbody > tr:last-child > th {border-bottom: 0;}
-// table > tbody > tr:last-child > td {border-bottom: 0;}
 
 table > thead > tr > th {
 	background: #fff;
-	//background-image: linear-gradient(#fff 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 table > thead > tr > th {
@@ -201,25 +197,6 @@ table > tbody > tr:last-child > td:first-child {border-bottom-left-radius: @bord
 table > tbody > tr:last-child > td:last-child {border-bottom-right-radius: @border-radius-base;}
 table > tbody > tr:last-child > th:first-child {border-bottom-left-radius: @border-radius-base;}
 table > tbody > tr:last-child > th:last-child {border-bottom-right-radius: @border-radius-base;}
-
-// .table-bordered {
-//   border: none;
-//   > thead,
-//   > tbody,
-//   > tfoot {
-//     > tr {
-//       > th:first-child,
-//       > td:first-child {
-//         border-left: none;
-//       }
-//       > th:last-child,
-//       > td:last-child {
-//         border-right: none;
-//       }
-//       &:last-child > td {border-bottom: none;}
-//     }
-//   }
-// }
 
 table input[type="text"] {width: 100% !important;}
 
@@ -293,22 +270,6 @@ table input[type="text"] {width: 100% !important;}
 	}
 }
 
-// .table-hidecolumn {
-// 	@media (max-width: @screen-xs-max) {
-// 		.table-hide-xs {display:none; visibility:hidden;}
-// 		.table-hide-sm {display:none; visibility:hidden;}
-// 		.table-hide-md {display:none; visibility:hidden;}
-// 	}
-// 	@media (max-width: @screen-sm-max) {
-// 		.table-hide-xs {display:none; visibility:hidden;}
-// 		.table-hide-sm {display:none; visibility:hidden;}
-// 	}
-// 	@media (max-width: @screen-md-max) {
-// 		.table-hide-md {display:none; visibility:hidden;}
-		
-// 	}
-// }
-
 // forms.less
 legend {
 	padding-bottom: 5px;
@@ -358,6 +319,22 @@ select[multiple] {
 //select.input {padding: 6px 6px;}
 select.input-lg {padding: 6px 12px;}
 select.input-sm {padding: 4px 3px;}
+
+// wrap <select> in div.iSelect for custom icons
+.iSelect {
+	position: relative;
+	&:before {
+		pointer-events: none;
+		position: absolute;
+		top: 20%;
+		right: 1px;
+		content: "\f0dc";
+		font-family: FontAwesome;
+		z-index: 1;
+		padding: 0 10px;
+		background: #fff;
+	}
+}
 
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
@@ -665,20 +642,6 @@ select[multiple] {border-radius: @border-radius-base; border: 1px solid @border-
 }
 
 
-.btn-group .btn {
-	//&:first-child &:not(:last-child) {
-	//	.border-right-radius(0) !important;
-	//}
-	//&:last-child {.border-right-radius(@btn-border-radius) !important}
-	//margin-right: 1px;
-}
-
-.btn-group-vertical {
-	> .btn + .btn, > .btn + .btn-group, > .btn-group + .btn, > .btn-group + .btn-group {
-		//margin-top: 0;
-	}
-}
-
 .btn-toolbar {
 	> .btn:first-child, 
 	> .btn-group:first-child, 
@@ -703,7 +666,6 @@ select[multiple] {border-radius: @border-radius-base; border: 1px solid @border-
 		
 		position: relative;
 		display: inline-block;
-		//background: rgba(0,0,0,.1);
 		.rgba(black,0.0);
 		border-radius: 3px 0 0 3px;
 		box-shadow: inset -1px 0 0 0 rgba(0, 0, 0, 0.1);
@@ -804,7 +766,6 @@ select[multiple] {border-radius: @border-radius-base; border: 1px solid @border-
 	//Only for the black steam button
 	&.btn-steam.btn-label i {
 		.rgba(white,0.15);
-		//background: rgba(255,255,255,0.15);
 	}
 }
 

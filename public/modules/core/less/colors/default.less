@@ -1,43 +1,34 @@
-// Default : Sidebar
+// Horizontal Default
 
-	@sidebar-default-divider:               @border-lighter;
+    @horizontal-default-background:			           #fff;
 
-	@sidebar-default-background:			@tone-bright;
-	@sidebar-default-color: 				@gray;
-	@sidebar-default-menu-color: 			@gray-dark;
-	@sidebar-default-icon-color: 			@gray-dark;
+    @horizontal-default-menu-color: 			       @gray-dark;
+    @horizontal-default-menu-subline:			       @gray-light;
 
-	@sidebar-default-active-bg:				@brand-inverse;
-	@sidebar-default-active-color:			#fff;
+    @horizontal-default-active-bg:				       @tone-bright;
+    @horizontal-default-active-color:			       @gray-darker;
+    @horizontal-default-active-subline: 		       @gray;
 
-	@sidebar-default-hover-bg: 				lighten(@tone-bright, 1.5%);
-	@sidebar-default-hover-color:           @gray-darker;
+    @horizontal-default-hover-bg: 				       @tone-brighter;
+    @horizontal-default-hover-color:                   @gray-darker;
+    @horizontal-default-hover-subline:			       @gray;
 
-	@sidebar-default-submenu-bg: 			lighten(@border-darker, 2%);
-	@sidebar-default-submenu-hover-bg: 		darken(@border-darker, 2.5%);
-	@sidebar-default-submenu-color:         @gray-dark;
-
-	@sidebar-default-disabled-color: 		darken(@border-darker, 7.5%);
-
-	@search-default-bg:					 	@sidebar-default-background;
-	@search-default-color:                  @gray;
-
-	@sidebar-default-border-top:			darken(@border-lighter, 1%);
-	@sidebar-default-submenu-open:			@gray-darker;
+    @horizontal-default-dropdown-bg:                   #fff;
+    @horizontal-default-dropdown-border:               @brand-primary;
+    @horizontal-default-dropdown-li-border:            lighten(@border-lighter, 2.5%);
+    @horizontal-default-dropdown-link-color:           @gray-dark;
+    @horizontal-default-dropdown-link-hover-color:     @gray-darker;
+    @horizontal-default-dropdown-link-hover-bg:        lighten(@horizontal-default-dropdown-li-border, 2.5%);
 
 
-// Default : Horizontal Nav
-	@horizontal-default-background:     					@sidebar-default-background;
-	@horizontal-default-menu-color: 						@sidebar-default-menu-color;
-	@horizontal-default-icon-color: 						@horizontal-default-menu-color;
-		
-	@horizontal-default-active-bg:  						@sidebar-default-active-bg;
-	@horizontal-default-active-color:  						@sidebar-default-active-color;
+// Default: Topnav
 
-	@horizontal-default-hover-bg: 							@sidebar-default-hover-bg;
-	@horizontal-default-hover-color: 						@sidebar-default-hover-color;
 
-	@horizontal-default-submenu-background: 				@sidebar-default-submenu-bg;
-	@horizontal-default-submenu-item-color: 				@sidebar-default-submenu-color;
-	@horizontal-default-submenu-item-hover-background: 		@sidebar-default-submenu-hover-bg;
-	@horizontal-default-submenu-item-hover-color: 			@sidebar-default-hover-color;
+// Default: Footer
+
+    @footer-default-color:             @gray;
+    @footer-default-background:        @border-lighter;
+    @footer-default-link-color:        @brand-primary;
+    @footer-default-link-hover:        @brand-primary;
+    @footer-default-heading-color:     @gray-darker;
+    @footer-default-border-color:      @border-darker;

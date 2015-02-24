@@ -1,68 +1,54 @@
-// green: Sidebar
-	@sidebar-green-divider:                   	darken(@sidebar-green-background, 3.5%);
-	@sidebar-green-static-width: 				260px;
+// Horizontal green
+    @horizontal-green-background:                    darken(@brand-green, 5%);
 
-	@sidebar-green-background:					darken(@brand-green, 5%);
-	@sidebar-green-color: 						lighten(@sidebar-green-background, 30%);
-	@sidebar-green-menu-color: 					lighten(@sidebar-green-background, 40%);
-	@sidebar-green-icon-color: 					@sidebar-green-menu-color;
+    @horizontal-green-menu-color:                    lighten(@horizontal-green-background, 40%);
+    @horizontal-green-menu-subline:                  lighten(@horizontal-green-background, 20%);
 
-	@sidebar-green-active-bg:					lighten(@sidebar-green-background, 21%);
-	@sidebar-green-active-color:				#fff;
+    @horizontal-green-active-bg:                     darken(@horizontal-green-background, 5%);
+    @horizontal-green-active-color:                  #fff;
+    @horizontal-green-active-subline:                lighten(@horizontal-green-background, 40%);
 
-	@sidebar-green-hover-bg: 					lighten(@sidebar-green-background, 1.5%);
-	@sidebar-green-hover-color:               	lighten(@sidebar-green-background, 60%);
+    @horizontal-green-hover-bg:                      lighten(@horizontal-green-background, 2.5%);
+    @horizontal-green-hover-color:                   @horizontal-green-active-color;
+    @horizontal-green-hover-subline:                 @horizontal-green-active-subline;
 
-	@sidebar-green-submenu-bg: 					darken(@sidebar-green-background, 7.5%);
-	@sidebar-green-submenu-hover-bg: 			darken(@sidebar-green-submenu-bg, 4%);
-	@sidebar-green-submenu-color:             	lighten(@sidebar-green-submenu-bg, 40%);
+    @horizontal-green-dropdown-bg:                   darken(@horizontal-green-background, 7.5%);
+    @horizontal-green-dropdown-border:               @horizontal-green-menu-subline;
+    @horizontal-green-dropdown-li-border:            darken(@horizontal-green-dropdown-bg, 4%);
+    @horizontal-green-dropdown-link-color:           lighten(@horizontal-green-dropdown-bg, 35%);
+    @horizontal-green-dropdown-link-hover-color:     #fff;
+    @horizontal-green-dropdown-link-hover-bg:        lighten(@horizontal-green-dropdown-bg, 2.5%);
 
-	@sidebar-green-disabled-color: 				desaturate(lighten(@sidebar-green-background, 20%), 10%);
+// green: Topnav
 
-	@search-green-bg:							@sidebar-green-background;
-	@search-green-color:                      	lighten(@sidebar-green-background, 30%);
+    @topnav-green-color: lighten(@topnav-green-bg-color, 20%);
+    @topnav-green-bg-color: darken(@brand-green, 5%);
+    @topnav-green-border-color: darken(@topnav-green-bg-color, 15%);
 
-	@sidebar-green-border-top:					lighten(@sidebar-green-background, 3.25%);
-	@sidebar-green-submenu-open: 				#fff;
+    @topnav-green-brand-color: lighten(@topnav-green-bg-color, 35%);
+    @topnav-green-brand-hover-color: lighten(@topnav-green-bg-color, 45%);
+    @topnav-green-brand-hover-bg: transparent;
 
-// green: Horizontal Nav
+    @topnav-green-link-color: lighten(@topnav-green-bg-color, 35%);
+    @topnav-green-link-hover-color: lighten(@topnav-green-bg-color, 45%);
+    @topnav-green-link-hover-bg: darken(@topnav-green-bg-color, 8%);
+    @topnav-green-link-active-color: lighten(@topnav-green-bg-color, 45%);
+    @topnav-green-link-active-bg: darken(@topnav-green-bg-color, 12.25%);
+    @topnav-green-link-disabled-color: lighten(@topnav-green-bg-color, 10%);
+    @topnav-green-link-disabled-bg: transparent;
 
-	@horizontal-green-background:     					@sidebar-green-background;
-	@horizontal-green-menu-color: 						@sidebar-green-menu-color;
-	@horizontal-green-icon-color: 						@horizontal-green-menu-color;
-		
-	@horizontal-green-active-bg:  						@sidebar-green-active-bg;
-	@horizontal-green-active-color:  					@sidebar-green-active-color;
-
-	@horizontal-green-hover-bg: 						@sidebar-green-hover-bg;
-	@horizontal-green-hover-color: 						@sidebar-green-hover-color;
-
-	@horizontal-green-submenu-background: 				@sidebar-green-submenu-bg;
-	@horizontal-green-submenu-item-color: 				@sidebar-green-submenu-color;
-	@horizontal-green-submenu-item-hover-background: 	@sidebar-green-hover-bg;
-	@horizontal-green-submenu-item-hover-color: 		@sidebar-green-hover-color;
+    @topnav-green-dropdown-bg: @topnav-green-link-active-bg;
+    @topnav-green-dropdown-color: lighten(@topnav-green-dropdown-bg, 35%);
+    @topnav-green-dropdown-link-color: lighten(@topnav-green-dropdown-bg, 35%);
+    @topnav-green-dropdown-link-hover-color: lighten(@topnav-green-dropdown-bg, 55%);
+    @topnav-green-dropdown-link-hover-bg: darken(@topnav-green-link-hover-bg, 6.75%);
 
 
-// Green: Topnav
+// green: Footer
 
-	@topnav-green-color: lighten(@brand-green, 20%);
-	@topnav-green-bg-color: darken(@brand-green, 5%);
-	@topnav-green-border-color: darken(@brand-green, 15%);
-
-	@topnav-green-brand-color: lighten(@brand-green, 30%);
-	@topnav-green-brand-hover-color: lighten(@brand-green, 45%);
-	@topnav-green-brand-hover-bg: transparent;
-
-	@topnav-green-link-color: lighten(@brand-green, 30%);
-	@topnav-green-link-hover-color: lighten(@brand-green, 45%);
-	@topnav-green-link-hover-bg: darken(@brand-green, 10%);
-	@topnav-green-link-active-color: lighten(@brand-green, 45%);
-	@topnav-green-link-active-bg: darken(@brand-green, 14%);
-	@topnav-green-link-disabled-color: lighten(@brand-green, 10%);
-	@topnav-green-link-disabled-bg: transparent;
-
-	@topnav-green-dropdown-bg: @topnav-green-link-active-bg;
-	@topnav-green-dropdown-color: lighten(@topnav-green-dropdown-bg, 35%);
-	@topnav-green-dropdown-link-color: lighten(@topnav-green-dropdown-bg, 35%);
-	@topnav-green-dropdown-link-hover-color: lighten(@topnav-green-dropdown-bg, 55%);
-	@topnav-green-dropdown-link-hover-bg: darken(@topnav-green-link-hover-bg, 6.75%);
+    @footer-green-color:             lighten(@brand-green, 20%);
+    @footer-green-background:        darken(@brand-green, 15%);
+    @footer-green-link-color:        lighten(@brand-green, 40%);
+    @footer-green-link-hover:        #fff;
+    @footer-green-heading-color:     #fff;
+    @footer-green-border-color:      lighten(darken(@brand-green, 15%), 4.25%);

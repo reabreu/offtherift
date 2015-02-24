@@ -1,17 +1,17 @@
 /*!
- *  Avalon v1.1 (c) by The Red Team
-*   Powered by Bootstrap and FontAwesome
+ * Avalon Front-end v1.0 (c) by The Red Team
+ * Powered by Bootstrap and FontAwesome
  */
 
 // Core variables and mixins
 @import "variables.less";
-@import "avalon-helpers.less";   // Helper Classes
 
 // INCLUDE ALL BOOTSTRAP FILES
 //------------------------------
 
 @import "bootstrap/mixins.less";
 @import "avalon-mixins.less";
+@import "avalon-helpers.less";
 
 // Reset
 @import "bootstrap/normalize.less";
@@ -60,40 +60,55 @@
 // Utility classes
 @import "bootstrap/utilities.less"; // Has to be last to override when necessary
 @import "bootstrap/responsive-utilities.less";
-@import "bootstrap/responsive-embed.less";
+
+//FrontEnd Less
+//----------------------------------
+
+@import "panel-front.less";		// Panel Front
+@import "testimonials.less";	// Testimonal Quote block
+@import "boxes.less";			// Content Boxes
+@import "typography.less"; 		// Typography+
 
 // EXTEND BOOTSTRAP FILES WITH Avalon
 //----------------------------------
 
-@import "colorschemes.less";	// Color Schemes
-
-@import "yamm.less";			// Megamenu
-@import "grid-sh.less";			// Same Height Column
+@import "yamm.less";			//Megamenu
 
 @import "extend-core.less"; 	//scaffolding, type, code, grid, tables, forms, buttons
 @import "extend-common.less";	//dropdown, list-groups, wells, close
 @import "extend-nav.less";		//navs, button-groups, breadcrumbs, paginations, pager
 @import "extend-popovers.less"; //modals, tooltips, popovers
-@import "extend-misc.less";		//alerts, thumbnails, labels, badges, progressbars, input groups, carousel...
+@import "extend-misc.less";		//alerts, thumbnails, labels, badges, progressbars, input groups...
 
 // Theme Specific
-@import "layout.less";  		// Sidebar/Layout of the theme
+@import "layout.less";  		// Layout of the theme
+@import "leftbar.less";			// Leftbar of theme
+
+@import "headernav.less";		// Header Nav
 @import "topnav.less";			// Topnav
-@import "rightbar.less";		// Rightbar
-@import "leftbar.less";			// Leftbar
 
 @import "navbar.less";			// Modified navbar of Bootstrap
 @import "panels.less";			// Completely overhauled panels
 
+@import "pricing-table.less"; 	// Pricing Table Component
+@import "panels-custom.less";   // Custom Panels Component
 @import "tiles.less"; 			// Tiles Component
-@import "panels-custom.less"; 	// Custom Panels Component
-@import "tabs.less"; 			// Inline Tabs and Accordions Component
-
+@import "feeds.less"; 			// Feeds Component
+@import "tabs.less"; 			  // Inline Tabs and Accordions Component
+@import "timeline.less";		// Timeline
 @import "apps.less";    		// Custom plugin stylings
 
-@import "bootstrap-switch.less"; // Bootstrap Switch
-@import "core.less";    		 // Modules Custom Styles
+@import "weather.less";     	// Weather Widget
 
-// Other Plugin Files
-@import "custom.less"; 			//custom css
-//----------------------------------
+@import "blogs.less";			  // Blogs
+
+@import "demo.less";			  // Demo specific
+
+@import "grid-sh.less";    		 //Same Height Grids
+
+@import "colorschemes.less"; 	//Different Colorschemes (more to be added in future versions)
+@import "app-blog.less";    	//Blog styles
+
+@import "weather.less";         //Weather App
+
+@import "teaser/landing-page.less"; //Weather App

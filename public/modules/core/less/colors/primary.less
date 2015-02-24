@@ -1,67 +1,54 @@
-// Primary: Sidebar
-	@sidebar-primary-divider:                   darken(@sidebar-primary-background, 3.5%);
-	@sidebar-primary-static-width: 				260px;
+// Horizontal primary
+    @horizontal-primary-background:                    darken(@brand-primary, 5%);
 
-	@sidebar-primary-background:				darken(@brand-primary, 10%);
-	@sidebar-primary-color: 					lighten(@sidebar-primary-background, 30%);
-	@sidebar-primary-menu-color: 				lighten(@sidebar-primary-background, 40%);
-	@sidebar-primary-icon-color: 				@sidebar-primary-menu-color;
+    @horizontal-primary-menu-color:                    lighten(@horizontal-primary-background, 40%);
+    @horizontal-primary-menu-subline:                  lighten(@horizontal-primary-background, 20%);
 
-	@sidebar-primary-active-bg:					lighten(@sidebar-primary-background, 21%);
-	@sidebar-primary-active-color:				#fff;
+    @horizontal-primary-active-bg:                     darken(@horizontal-primary-background, 2.5%);
+    @horizontal-primary-active-color:                  #fff;
+    @horizontal-primary-active-subline:                lighten(@horizontal-primary-background, 40%);
 
-	@sidebar-primary-hover-bg: 					lighten(@sidebar-primary-background, 1.5%);
-	@sidebar-primary-hover-color:               lighten(@sidebar-primary-background, 60%);
+    @horizontal-primary-hover-bg:                      lighten(@horizontal-primary-background, 2.5%);
+    @horizontal-primary-hover-color:                   @horizontal-primary-active-color;
+    @horizontal-primary-hover-subline:                 @horizontal-primary-active-subline;
 
-	@sidebar-primary-submenu-bg: 				darken(@sidebar-primary-background, 7.5%);
-	@sidebar-primary-submenu-hover-bg: 			darken(@sidebar-primary-submenu-bg, 4%);
-	@sidebar-primary-submenu-color:             lighten(@sidebar-primary-submenu-bg, 40%);
+    @horizontal-primary-dropdown-bg:                   darken(@horizontal-primary-background, 12.25%);
+    @horizontal-primary-dropdown-border:               @horizontal-primary-menu-subline;
+    @horizontal-primary-dropdown-li-border:            darken(@horizontal-primary-dropdown-bg, 4%);
+    @horizontal-primary-dropdown-link-color:           lighten(@horizontal-primary-dropdown-bg, 35%);
+    @horizontal-primary-dropdown-link-hover-color:     #fff;
+    @horizontal-primary-dropdown-link-hover-bg:        lighten(@horizontal-primary-dropdown-bg, 2.5%);
 
-	@sidebar-primary-disabled-color: 			desaturate(lighten(@sidebar-primary-background, 20%), 10%);
+// primary: Topnav
 
-	@search-primary-bg:							@sidebar-primary-background;
-	@search-primary-color:                      lighten(@sidebar-primary-background, 30%);
+    @topnav-primary-color: lighten(@topnav-primary-bg-color, 20%);
+    @topnav-primary-bg-color: darken(@brand-primary, 5%); //lighten(@brand-primary, 2.5%);
+    @topnav-primary-border-color: darken(@topnav-primary-bg-color, 15%);
 
-	@sidebar-primary-border-top:				lighten(@sidebar-primary-background, 3.25%);
-	@sidebar-primary-submenu-open: 				#fff;
+    @topnav-primary-brand-color: lighten(@topnav-primary-bg-color, 35%);
+    @topnav-primary-brand-hover-color: lighten(@topnav-primary-bg-color, 45%);
+    @topnav-primary-brand-hover-bg: transparent;
 
-// Primary: Horizontal Nav
+    @topnav-primary-link-color: lighten(@topnav-primary-bg-color, 35%);
+    @topnav-primary-link-hover-color: lighten(@topnav-primary-bg-color, 45%);
+    @topnav-primary-link-hover-bg: darken(@topnav-primary-bg-color, 8%);
+    @topnav-primary-link-active-color: lighten(@topnav-primary-bg-color, 45%);
+    @topnav-primary-link-active-bg: darken(@topnav-primary-bg-color, 12.25%);
+    @topnav-primary-link-disabled-color: lighten(@topnav-primary-bg-color, 10%);
+    @topnav-primary-link-disabled-bg: transparent;
 
-	@horizontal-primary-background:     				@sidebar-primary-background;
-	@horizontal-primary-menu-color: 					@sidebar-primary-menu-color;
-	@horizontal-primary-icon-color: 					@horizontal-primary-menu-color;
-		
-	@horizontal-primary-active-bg:  					@sidebar-primary-active-bg;
-	@horizontal-primary-active-color:  					@sidebar-primary-active-color;
+    @topnav-primary-dropdown-bg: @topnav-primary-link-active-bg;
+    @topnav-primary-dropdown-color: lighten(@topnav-primary-dropdown-bg, 35%);
+    @topnav-primary-dropdown-link-color: lighten(@topnav-primary-dropdown-bg, 35%);
+    @topnav-primary-dropdown-link-hover-color: lighten(@topnav-primary-dropdown-bg, 55%);
+    @topnav-primary-dropdown-link-hover-bg: darken(@topnav-primary-link-hover-bg, 6.75%);
 
-	@horizontal-primary-hover-bg: 						@sidebar-primary-hover-bg;
-	@horizontal-primary-hover-color: 					@sidebar-primary-hover-color;
 
-	@horizontal-primary-submenu-background: 			@sidebar-primary-submenu-bg;
-	@horizontal-primary-submenu-item-color: 			@sidebar-primary-submenu-color;
-	@horizontal-primary-submenu-item-hover-background: 	@sidebar-primary-hover-bg;
-	@horizontal-primary-submenu-item-hover-color: 		@sidebar-primary-hover-color;
+// primary: Footer
 
-// Primary: Topnav
-
-	@topnav-primary-color: lighten(@topnav-primary-bg-color, 20%);
-	@topnav-primary-bg-color: darken(@brand-primary, 10%);
-	@topnav-primary-border-color: darken(@topnav-primary-bg-color, 15%);
-
-	@topnav-primary-brand-color: lighten(@topnav-primary-bg-color, 35%);
-	@topnav-primary-brand-hover-color: lighten(@topnav-primary-bg-color, 45%);
-	@topnav-primary-brand-hover-bg: transparent;
-
-	@topnav-primary-link-color: lighten(@topnav-primary-bg-color, 35%);
-	@topnav-primary-link-hover-color: lighten(@topnav-primary-bg-color, 45%);
-	@topnav-primary-link-hover-bg: darken(@topnav-primary-bg-color, 8%);
-	@topnav-primary-link-active-color: lighten(@topnav-primary-bg-color, 45%);
-	@topnav-primary-link-active-bg: darken(@topnav-primary-bg-color, 12.25%);
-	@topnav-primary-link-disabled-color: lighten(@topnav-primary-bg-color, 10%);
-	@topnav-primary-link-disabled-bg: transparent;
-
-	@topnav-primary-dropdown-bg: @topnav-primary-link-active-bg;
-	@topnav-primary-dropdown-color: lighten(@topnav-primary-dropdown-bg, 35%);
-	@topnav-primary-dropdown-link-color: lighten(@topnav-primary-dropdown-bg, 35%);
-	@topnav-primary-dropdown-link-hover-color: lighten(@topnav-primary-dropdown-bg, 55%);
-	@topnav-primary-dropdown-link-hover-bg: darken(@topnav-primary-link-hover-bg, 6.75%);
+    @footer-primary-color:             lighten(@brand-primary, 20%);
+    @footer-primary-background:        darken(@brand-primary, 15%);
+    @footer-primary-link-color:        lighten(@brand-primary, 40%);
+    @footer-primary-link-hover:        #fff;
+    @footer-primary-heading-color:     #fff;
+    @footer-primary-border-color:      lighten(darken(@brand-primary, 15%), 4.25%);

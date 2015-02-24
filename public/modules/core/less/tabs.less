@@ -107,12 +107,10 @@
 				border-top-color: transparent !important;
 				border-bottom: 1px solid @brand-primary;
 			}
-			> li:first-child > a,  > li.tabdrop + li > a {border-bottom-left-radius: @border-radius-base; border-top-left-radius: 0;}
-			> li:last-child > a, > li.tabdrop > a {border-bottom-right-radius: @border-radius-base; border-top-right-radius: 0;}
+			> li:first-child > a,  > li.tabdrop + li > a {border-bottom-left-radius: @border-radius-base; border-top-left-radius: 0; border-top-right-radius: 0;}
+			> li:last-child > a, > li.tabdrop > a {border-bottom-right-radius: @border-radius-base; border-top-left-radius: 0; border-top-right-radius: 0;}
 		}
 	}
-
-	.tabdrop .dropdown-menu li.active a {color: @gray-darker;}
 }
 
 .tab-primary      {.tab-states(@brand-primary);}
