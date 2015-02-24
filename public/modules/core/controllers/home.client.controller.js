@@ -1,12 +1,41 @@
 'use strict';
 
+var translations = {
+    HEADLINE: 'What an awesome module!',
+    PARAGRAPH: 'Srsly!',
+    NAMESPACE: {
+        PARAGRAPH: 'And it comes with awesome features!'
+    }
+};
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-	function($scope, Authentication) {
+var translationspt = {
+    HEADLINE: 'Que modulo espetacular!!',
+    PARAGRAPH: 'Srsly!',
+    NAMESPACE: {
+        PARAGRAPH: 'And it comes with awesome features!'
+    }
+};
+
+
+
+var app = angular.module('core').controller('HomeController', ['$scope', 'Authentication', '$translate',
+	function($scope, Authentication, $translate) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
+        $translate('HEADLINE').then(function (headline) {
+            $scope.headline = headline;
+        });
 	}
 ]);
+
+/*Set up language provider*/
+app.config(['$translateProvider', function ($translateProvider) {
+    // add translation table
+    $translateProvider
+    .translations('en', translations)
+    .preferredLanguage('pt');
+}]);
+
 
 /**
  * Boostrap UI Modal Template
