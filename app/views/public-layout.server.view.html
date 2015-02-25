@@ -58,7 +58,7 @@
         <footer
             data-ng-controller="HeaderController"
             class="footer-inverse"
-            data-ng-include="authentication.user && '/modules/core/views/footer.client.view.html' || '/modules/core/views/teaser-footer.client.view.html'"></footer>
+            data-ng-include="authentication.user && '/modules/core/views/footer.client.view.html' || '/modules/core/views/teaser-footer.client.view.html'" ng-class="{ 'p0': !authentication.user }"></footer>
 
     </section>
 

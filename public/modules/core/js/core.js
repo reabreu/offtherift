@@ -55,7 +55,7 @@ var Utility = {
         }
     },
     keepHeaderFixed: function () {
-        if ( $('body').scrollTop() > offset.top){
+        if ($header.is(':visible') && $('body').scrollTop() > offset.top){
             $('body').addClass('header-fixed-top');
         } else {
              $('body').removeClass('header-fixed-top');
