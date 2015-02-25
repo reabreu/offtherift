@@ -7,66 +7,69 @@
     <div class="container" id="login-form">
         <div class="row mb40">
             <div class="col-md-6">
-                <div class="headline"><h2>Email Account</h2></div>
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h2>Login Form</h2></div>
-                    <div class="panel-body">
-
-                        <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                        <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fa fa-key"></i>
-                                        </span>
-                                        <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-xs-12">
-                                    <a href="/#!/password/forgot" class="pull-left">Forgot password?</a>
-                                </div>
-                            </div>
-
-                            <div data-ng-show="error" class="text-center text-danger mb10">
-                                <strong data-ng-bind="error"></strong>
-                            </div>
-
-                            <div class="panel-footer">
-                                <div class="clearfix">
-                                    <a href="/#!/registration" class="btn btn-default pull-left">Register</a>
-                                    <button type="submit" class="btn btn-primary pull-right">Login</button>
-                                </div>
-                            </div>
-
-                        </form>
+                <div class="headline"><h2>Choose social account</h2></div>
+                <div>
+                    <p>To participate in the closed beta, save or share builds you'll need to login with a social account.</p>
+                    <p>By linking with you social account we can authenticate you in our website in a safe way.</p>
+                    <p>We use your info only to create a user profile for us, we won't ever share any personal info.</p>
+                </div>
+                <div class="row mb40">
+                    <div class="col-md-6">
+                        <a href="/auth/facebook" class="btn btn-label btn-social btn-facebook mb20">
+                            <i class="fa fa-fw fa-facebook"></i>Connect with Facebook
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/auth/twitter" class="btn btn-label btn-social btn-twitter mb20"><i class="fa fa-fw fa-twitter"></i>Connect with Twitter</a><br>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="headline"><h2>Social Account</h2></div>
-                <div class="text-center">
-                    <a href="/auth/facebook" class="btn btn-label btn-social btn-facebook mb20"><i class="fa fa-fw fa-facebook"></i>Connect with Facebook</a><br>
+                <div class="panel panel-default">
+                <div class="panel-heading"><h2>If you received a invitational account, please login below</h2></div>
+                <div class="panel-body">
+                <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
+                            </div>
+                        </div>
+                    </div>
 
-                    <a href="/auth/twitter" class="btn btn-label btn-social btn-twitter mb20"><i class="fa fa-fw fa-twitter"></i>Connect with Twitter</a><br>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                                <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                            </div>
+                        </div>
+                    </div>
 
-                    <a href="/auth/google" class="btn btn-label btn-social btn-googleplus mb20"><i class="fa fa-fw fa-google-plus"></i>Connect with +Google</a><br>
+                    <!--<div class="form-group">
+                        <div class="col-xs-12">
+                            <a href="/#!/password/forgot" class="pull-left">Forgot password?</a>
+                        </div>
+                    </div>-->
 
-                    <a href="/auth/linkedin" class="btn btn-label btn-social btn-linkedin mb20"><i class="fa fa-fw fa-linkedin"></i>Connect with LinkedIn</a>
+                    <div data-ng-show="error" class="text-center text-danger mb10">
+                        <strong data-ng-bind="error"></strong>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="clearfix">
+                            <a href="/#!/registration" class="btn btn-default pull-left">Register</a>
+                            <button type="submit" class="btn btn-primary pull-right">Login</button>
+                        </div>
+                    </div>
+                </form>
                 </div>
+            </div>
             </div>
         </div>
     </div>

@@ -40,7 +40,8 @@ module.exports = {
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
 						'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
 						'public/lib/ngtoast/dist/ngToast.min.js',
-						'public/lib/angular-translate/angular-translate.min.js'
+						'public/lib/angular-translate/angular-translate.min.js',
+						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js'
 					]
 				},
 				css: [
