@@ -8,7 +8,7 @@
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="/#!/">Avalon</a>
+                <a class="navbar-brand" href="/#!/">OfftheRift</a>
             </div>
 
             <nav class="navbar-collapse navbar-collapse-header collapse" aria-expanded="false" style="height: 1px;">
@@ -53,14 +53,14 @@
                                     <span class="subline">Administration</span>
                                 </a>
                             </li>
-                            <li ui-route="/build" ng-class="{active: $uiRoute}">
-                                <a href="/#!/build">
+                             <li ui-sref-active="createBuild">
+                                <a ui-sref="createBuild">
                                     <span>Build</span>
                                     <span class="subline">Build Now</span>
                                 </a>
                             </li>
-                            <li ui-route="/browse" ng-class="{active: $uiRoute}">
-                                <a href="/#!/browse">
+                            <li ui-sref-active="listBuilds">
+                                <a ui-sref="listBuilds">
                                     <span>Browse</span>
                                     <span class="subline">Builds</span>
                                 </a>

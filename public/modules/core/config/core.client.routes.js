@@ -38,5 +38,6 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 			url: '/contact-us',
 			templateUrl: 'modules/core/views/pages/contact-us.client.view.html'
 		});
+
 	}
 ]);

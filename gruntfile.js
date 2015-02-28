@@ -170,6 +170,7 @@ module.exports = function(grunt) {
 					 */
 					{ src: 'public/modules/core/less/**/styles.less',   dest: 'public/modules/core/css/core.min.css'  },
 					{ src: 'public/modules/users/less/**/styles.less', 	dest: 'public/modules/users/css/users.min.css' },
+					{ src: 'public/modules/builds/less/**/styles.less', 	dest: 'public/modules/builds/css/build.min.css' },
 				],
 			}
 		}

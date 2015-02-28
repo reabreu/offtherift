@@ -18,7 +18,8 @@ var mongoose 		= require('mongoose'),
 	_ 				= require('lodash'),
 	api 			= require('../../app/controllers/api.server.controller'),
 	async			= require("async"),
-    Champion        = mongoose.model('Champion');
+    Champion        = mongoose.model('Champion'),
+    users           = require('./users.server.controller');
 
 /**
  * Create a Patch
@@ -70,7 +71,7 @@ exports.update = function(req, res) {
  * List of Patches
  */
 exports.list = function(req, res) {
-
+    var query   = {};
 	var skip 	= req.param('skip');
 	var limit 	= req.param('limit');
 
@@ -79,7 +80,12 @@ exports.list = function(req, res) {
 		limit: limit
 	}
 
-	Patch.find(null,null,options).sort('-version').populate('user', 'displayName').exec(function(err, patches) {
+    if (!res.isAdmin) {
+        query.enabled = true;
+        query.synched = true;
+    }
+
+	Patch.find(query,null,options).sort('-version').exec(function(err, patches) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

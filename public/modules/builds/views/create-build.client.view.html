@@ -1,0 +1,139 @@
+<section data-ng-controller="BuildsController" data-ng-init="init()">
+    <div class="container-fluid">
+        <form class="form-horizontal" data-ng-submit="create()" novalidate id="build">
+            <div class="form-group">
+                <div class="col-xs-6">
+                    <input type="text" data-ng-model="name" id="name" class="form-control build-title" placeholder="Enter Build Name" required>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row mt10">
+                        <label class="col-xs-2">
+                            Status
+                        </label>
+                        <div class="col-xs-2">
+                            <span class="badge badge-success">Saved</span>
+                        </div>
+                        <label class="col-xs-2">Public</label>
+                        <div class="col-xs-4">
+                            <input
+                                bs-switch
+                                type            = "checkbox"
+                                ng-model        = "publictmp"
+                                type            = "checkbox"
+                                switch-size     = "mini"
+                                ng-change       = "toggleEnabled(build)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-1">Patch</label>
+                <div class="col-xs-5">
+                    <select style="width:100%" ng-model = "data.selectedPatch" ng-change="getPatchInfo()" >
+                        <option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+                    </select>
+                </div>
+                <label class="col-xs-1">Public URL</label>
+                <label class="col-xs-5"><a href="#" target="_blank">www.offtherift.com/#!/builds/2qwes2!dqwd31</a></label>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div style="width:5.5%;display:inline-block" ng-repeat="n in range(1,18)">
+                        <span ng-click="setLevel(n)" ng-class="{'badge-info': data.level == n}" class="badge" style="width:90%;cursor:pointer;">{{n}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-switch="data.selectedChampion.image.full==undefined">
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12" ng-switch-when="false">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="champ-avatar" ng-click="openModal(data.champions)">
+                                <div class="overlay"></div>
+                                <img
+                                    style="cursor:pointer;width:80px;height:80px;"
+                                    class="avatar pull-left"
+                                    alt=""
+                                    ng-src="{{ data.selectedChampion.image.full | ddragon: data.selectedChampion.version:'champion'}}"
+                                >
+                            </div>
+                        </div>
+                        <div class="col-xs-8">
+                            <h2 style="margin:0px;">{{data.selectedChampion.name}}</h2>
+                            <h4 style="margin:0px;">{{data.selectedChampion.title}}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-condensed mt10 mb0 table-stats" style="font-weight:200">
+                                <tbody>
+                                    <tr>
+                                        <td>Hitpoints</td>
+                                        <td><strong>{{data.calculatedStats.hp}}</strong></td>
+                                        <td>Mana</td>
+                                        <td><strong>{{data.calculatedStats.mp}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>HP Regen per 5</td>
+                                        <td><strong>{{data.calculatedStats.hpregen}}</strong></td>
+                                        <td>Mana Regen per 5</td>
+                                        <td><strong>{{data.calculatedStats.mpregen}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Damage</td>
+                                        <td><strong>{{data.calculatedStats.attackdamage}}</strong></td>
+                                        <td>Ability Power</td>
+                                        <td><strong>{{data.calculatedStats.abilitypower}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Armor Pen</td>
+                                        <td><strong>{{data.calculatedStats.armorpenetration | doubleStat}}</strong></td>
+                                        <td>Magic Pen</td>
+                                        <td><strong>{{data.calculatedStats.magicpenetration | doubleStat}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lifesteal</td>
+                                        <td><strong>{{data.calculatedStats.lifesteal}} %</strong></td>
+                                        <td>Spell Vamp</td>
+                                        <td><strong>{{data.calculatedStats.spellvamp}} %</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attack Speed</td>
+                                        <td><strong>{{data.calculatedStats.attackspeed}}</strong></td>
+                                        <td>Cooldown Red</td>
+                                        <td><strong>{{data.calculatedStats.cooldownreduction}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Crit Chance</td>
+                                        <td><strong>{{data.calculatedStats.critchance}}</strong></td>
+                                        <td>Armor</td>
+                                        <td><strong>{{data.calculatedStats.armor}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Range</td>
+                                        <td><strong>{{data.calculatedStats.attackrange}}</strong></td>
+                                        <td>Magic Resist</td>
+                                        <td><strong>{{data.calculatedStats.spellblock}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Movement Speed</td>
+                                        <td><strong>{{data.calculatedStats.movespeed}}</strong></td>
+                                        <td>Tenacity</td>
+                                        <td><strong>{{data.calculatedStats.tenacity}} %</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
+                    {{data.selectedChampion.stats | json}}
+                    <!--<div class="visible-lg">lg</div>
+                    <div class="visible-md">md</div>
+                    <div class="visible-sm">sm</div>
+                    <div class="visible-xs">xs</div>-->
+                </div>
+            </div>
+        </form>
+     </div>
+</section>

@@ -17,7 +17,8 @@ var ApplicationConfiguration = (function() {
 		'infinite-scroll',
 		'ngToast',
 		'ngFx',
-		'pascalprecht.translate'
+		'pascalprecht.translate',
+		'ngProgress'
 	];
 
 	// Add a new vertical module
