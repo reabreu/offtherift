@@ -3,7 +3,7 @@ var should = require('should'),
 	fs = require('fs'),
 	calculator = require('../../app/controllers/calculator.server.controller');
 
-var version = '5.3.1';
+var version = '5.4.1';
 
 // Get the test files for the selected version.
 var versionPath = './calculator/' + version + '/';

@@ -2,69 +2,40 @@
     <div class="row">
         <div class="col-sm-3 mb40">
             <h3 class="col-title">About</h3>
-            <p class="mb40">Nunc in risus faucibus, cursus quam sit amet, interdum lacus. Morbi lacus risus, suscipit at scelerisque quis, feugiat id nunc. Nullam aliquam mi purus, ut luctus justo malesua.</p>
-            <h3 class="col-title">Follow Us</h3>
-            <ul class="social-networks">
-                <li><a href="#" class="btn btn-social btn-facebook"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#" class="btn btn-social btn-twitter"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#" class="btn btn-social btn-flickr"><i class="fa fa-flickr"></i></a></li>
-                <li><a href="#" class="btn btn-social btn-youtube"><i class="fa fa-youtube"></i></a></li>
-                <li><a href="#" class="btn btn-social btn-skype"><i class="fa fa-skype"></i></a></li>
-                <li><a href="#" class="btn btn-social btn-linkedin"><i class="fa fa-linkedin"></i></a></li>
-            </ul>
-        </div>
-        <div class="col-sm-3 mb40">
-            <h3 class="col-title">Recent Posts</h3>
-            <ul class="recent-posts">
-                <li>
-                    <a href="#">Eos ut quas erant evertitur sea soluta</a>
-                    <span class="author">by <a href="#">Carmelo Mutchler</a> on Sep 20, 2014</span>
-                </li>
-                <li>
-                    <a href="#">Falli sensibus laboramus te</a>
-                    <span class="author">by <a href="#">Dorsey Topham</a> on Sep 15, 2014</span>
-                </li>
-                <li>
-                    <a href="#">Alia liber libris eu eos sint nonumy ex eos</a>
-                    <span class="author">by <a href="#">Noma Alban</a> on Sep 12, 2014</span>
-                </li>
-                <li>
-                    <a href="#">Vim ea odio meliore denique ne</a>
-                    <span class="author">by <a href="#">Buffy Ruckman</a> on Sep 08, 2014</span>
-                </li>
-                <li>
-                    <a href="#">Mea tota tamquam equidem</a>
-                    <span class="author">by <a href="#">Stanford Macdowell</a> on Aug 30, 2014</span>
-                </li>
-            </ul>
+            <p class="mb40" translate>FOOTER_ABOUT_US</p>
         </div>
         <div class="col-sm-3 mb40">
             <h3 class="col-title">Contact Us</h3>
             <ul class="contact-info mb40">
                 <li>
                     <i class="fa fa-home"></i>
-                    795 Folsom Ave, Suite 600
-                    <br>
-                    San Francisco, CA 94107
+                    <span translate>SUPPORT_ADDRESS<span>
                 </li>
                 <li>
                     <i class="fa fa-phone"></i>
-                    (123) 456-7890
+                    <span translate>SUPPORT_PHONE<span>
                 </li>
                 <li>
                     <i class="fa fa-envelope-o"></i>
-                    <a href="#">info@website.com</a>
+                    <a href="mailto:{{ 'SUPPORT_EMAIL' | translate }}" translate>SUPPORT_EMAIL</a>
                 </li>
             </ul>
+        </div>
+        <div class="col-sm-3 mb40">
             <h3 class="col-title">Subscribe</h3>
-            <div class="input-group">
+            <div class="input-group mb20">
                 <input type="text" class="form-control" placeholder="Your email">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" type="button"><i class="fa fa-arrow-right"></i></button>
                 </span>
             </div>
-        </div>
-        <div class="col-sm-3 mb40">
+            <div class="row">
+                <h3 class="col-title col-sm-5 mt5" >Follow Us</h3>
+                <ul class="social-networks col-sm-7">
+                    <li><a href="#" class="btn btn-social btn-facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#" class="btn btn-social btn-twitter"><i class="fa fa-twitter"></i></a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row footer-bottom">
