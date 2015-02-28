@@ -18,6 +18,7 @@ module.exports = {
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
 						'public/lib/ngtoast/dist/ngToast.min.css',
 						'public/lib/yamm3/yamm/yamm.css',
+						'public/lib/ngprogress/ngProgress.css'
 					],
 					js: [
 						'public/lib/jquery/dist/jquery.min.js',
@@ -41,7 +42,8 @@ module.exports = {
 						'public/lib/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
 						'public/lib/ngtoast/dist/ngToast.min.js',
 						'public/lib/angular-translate/angular-translate.min.js',
-						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js'
+						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js',
+						'public/lib/ngprogress/build/ngProgress.min.js'
 					]
 				},
 				css: [
@@ -51,7 +53,18 @@ module.exports = {
 					'public/config.js',
 					'public/application.js',
 					'public/modules/*/*.js',
-					'public/modules/*/*[!tests]*/*.js'
+					'public/modules/*/*[!tests]*/*.js',
+
+					'admin/modules/patches/patches.client.module.js',
+					'admin/modules/patches/services/patches.client.service.js',
+					'admin/modules/items/items.client.module.js',
+					'admin/modules/items/services/items.client.service.js',
+					'admin/modules/champions/champions.client.module.js',
+					'admin/modules/champions/services/champions.client.service.js',
+					'admin/modules/runes/runes.client.module.js',
+					'admin/modules/runes/services/runes.client.service.js',
+					'admin/modules/masteries/masteries.client.module.js',
+					'admin/modules/masteries/services/masteries.client.service.js'
 				],
 				tests: [
 					'public/lib/angular-mocks/angular-mocks.js',

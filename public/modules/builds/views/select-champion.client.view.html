@@ -1,0 +1,43 @@
+<section data-ng-controller="BuildsController">
+    <div class="modal-header">
+        <h3 class="modal-title">
+            <span>Choose Your Champion</span>
+            <div class="pull-right"><span class="glyphicon glyphicon-remove" ng-click="closeModal()"></span></div>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <form class="form-horizontal">
+                <label class="col-sm-1 control-label label-input-sm" for="focusedinput">Name</label>
+                <div class="col-sm-11">
+                    <input
+                    type        = "text"
+                    id          = "focusedinput"
+                    class       = "form-control input-sm"
+                    ng-model    = "search.name"
+                    >
+                </div>
+            </div>
+            </form>
+            <hr>
+            <div class="row">
+                <div data-ng-repeat="champion in data.champions | filter:search track by champion.id">
+                    <div ng-if="$index + 1 % 6 == 0" class="clearfix"></div>
+                    <div class="col-sm-2">
+                        <img
+                            ng-click="setSelectedChampion(champion);closeModal();"
+                            style="margin-left:27%;cursor:pointer;height:80px;width:80px;"
+                            class="avatar"
+                            alt="{{champion.name}}"
+                            ng-src="{{ champion.image.full | ddragon: champion.version:'champion'}}"
+                        >
+                        <h3 style="text-align:center;">{{champion.name}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="closeModal();">Close</button>
+    </div>
+</section>

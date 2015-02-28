@@ -5,7 +5,7 @@ module.exports = function(app) {
 	var patches = require('../../app/controllers/patches.server.controller');
 
 	// Patches Routes
-	app.route('/patches').get(patches.list);
+	app.route('/patches').get(users.hasRole(['admin']),patches.list);
 
 	app.route('/patches/:patchId').put(users.requiresLogin,users.hasAuthorization(['admin']),  patches.update);
 
