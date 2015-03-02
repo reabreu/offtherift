@@ -1,12 +1,13 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout) {
 		$scope.authentication 	= Authentication;
 
 		$scope.init = function(){
 			$scope.data = {
+				timer				: null,
 				champions 			: [],
 				items 				: [],
 				runes 				: [],
@@ -125,7 +126,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 	  	 */
 	  	$scope.setLevel = function (level) {
 	  		$scope.data.level = level;
-	  		$scope.calculate();
 	  	}
 
 	  	/**
@@ -138,18 +138,17 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 	  		var params = {version: $scope.data.selectedPatch };
 
 	  		Repository.getChampions(params).then(function(data) {
-				$scope.data.champions = data.champions;
-				$scope.data.selectedChampion = data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
-				$scope.calculate();
+				$scope.data.champions 			= data.champions;
+				$scope.data.selectedChampion 	= data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
 			});
 			Repository.getItems(params).then(function(data) {
-				$scope.data.items = data.items;
+				$scope.data.items 		= data.items;
 			});
 			Repository.getRunes(params).then(function(data) {
-				$scope.data.runes = data.runes;
+				$scope.data.runes 		= data.runes;
 			});
 			Repository.getMasteries(params).then(function(data) {
-				$scope.data.masteries = data.masteries;
+				$scope.data.masteries 	= data.masteries;
 			});
 	  	}
 
@@ -187,7 +186,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 */
 		$scope.setSelectedChampion = function(champion){
 			$scope.data.selectedChampion = champion;
-			$scope.calculate();
 		}
 
 		/**
@@ -200,12 +198,18 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				stats: $scope.data.selectedChampion.stats,
 				effects: []
 			};
-			ngProgress.reset();
 			ngProgress.start();
 			Calculate.save(request).$promise.then(function(data) {
 				$scope.data.calculatedStats = data;
 				ngProgress.complete();
 			});
 		}
+
+		$scope.$watchGroup(['data.level','data.selectedChampion'], function(newValues, oldValues, scope) {
+			if ($scope.data.timer !== null){
+				$timeout.cancel($scope.data.timer);
+			}
+			$scope.data.timer = $timeout($scope.calculate,1000);
+		});
 	}
 ]);
