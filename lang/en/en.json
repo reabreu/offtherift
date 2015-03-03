@@ -1,5 +1,14 @@
 {
-    "TEASER_HEADLINE": "Hello Summoner ",
-    "TEASER_WELCOME": "Welcome to OfftheRift",
-    "HEADER_MISSION": "We aim to provide fun and usefull services to the League Community"
+	"TEASER_HEADLINE": "Hello Summoner ",
+	"TEASER_WELCOME": "Welcome to OfftheRift",
+	"HEADER_MISSION": "We aim to provide fun and usefull services to the League Community",
+	"LANDING_SLOGAN": "Plan ahead and conquer The Rift!",
+	"LANDING_BUILD": "Build Now!",
+	"LANDING_REGISTER": "Register",
+	"LANDING_GALERY": "Check out your fellow Summoners' work!",
+	"LANDING_GALERY_DESCRIPTION": "Some of the existing builds",
+	"FOOTER_ABOUT_US": "Some good stuff about offtherift goes here...",
+	"SUPPORT_ADDRESS": "Some Road to Nowhere",
+	"SUPPORT_PHONE": "(+351) 123 456 789",
+	"SUPPORT_EMAIL": "feedback@offtherift.com"
 }
