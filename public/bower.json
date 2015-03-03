@@ -28,6 +28,7 @@
     "ngFx": "~1.0.5",
     "angular-translate": "~2.6.0",
     "angular-translate-loader-url": "~2.6.0",
-    "ngprogress": "~1.0.7"
+    "ngprogress": "~1.0.7",
+    "ng-modal": "*"
   }
 }

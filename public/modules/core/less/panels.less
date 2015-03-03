@@ -1,10 +1,7 @@
-// Panels modified from the code of PowerWidgets
-
-
 //Panel Layout
 
 .panel {
-	margin                : 0 0 40px 0;
+	margin                : 0 0 20px 0;
 	position              : relative;
 	padding               : 0 1px;
 	background-color      : @border-darker;
@@ -74,29 +71,6 @@
 		.nav > li > a:hover, .nav > li > a:focus {background: none}
 	}
 	.collapsed .panel-heading {border-radius: @border-radius-base}
-	.panel-with-scroll {
-		.panel-scroll-visible {
-			padding: 20px;
-		}
-		.slimScrollBar {
-			.opacity(1) !important;
-			border: 2px solid @border-lighter;
-			width: 12px !important;
-			border-radius: 6px !important;
-			right: 0px !important;
-			background: @gray !important;
-		}
-		.slimScrollRail {
-			.opacity(1) !important;
-			background: @border-lighter !important; 
-			width: 12px !important;
-			border-top-left-radius: 0 !important;
-			border-top-right-radius: 0 !important;
-			border-bottom-left-radius: 0 !important;
-			border-bottom-right-radius: @border-radius-small !important;
-			right: 0px !important;
-		}
-	}
 
 	// Content
 	.panel-body{
@@ -125,6 +99,12 @@
 		&.bg-default {background-color: @brand-default}
 		&.bg-bright {background-color: @tone-bright}
 		&.bg-brighter {background-color: @tone-brighter}
+
+	}
+
+	.panel-scroll {
+		overflow-y: scroll;
+		.scrollbar-custom();
 	}
 
 
@@ -162,6 +142,7 @@
 	padding: 10px 20px;
 	display: none;
 	background: #fff;
+	//background-image: linear-gradient(to bottom, #fff 0%, #f7f7f7 100%);
 	border-bottom: 2px solid @border-darker;
 
 	.form-group {margin-bottom: 0}
@@ -359,28 +340,27 @@ body.nooverflow{
 	}
 }
 
-.panel {
-	// Said Mixins
-	&.panel-primary {.panel-variated(@panel-primary-text, @panel-primary-heading-bg);}
-	&.panel-success {.panel-variated(@panel-success-text, @panel-success-heading-bg);}
-	&.panel-warning {.panel-variated(@panel-warning-text, @panel-warning-heading-bg);}
-	&.panel-danger  {.panel-variated(@panel-danger-text, @panel-danger-heading-bg);}
-	&.panel-info    {.panel-variated(@panel-info-text, @panel-info-heading-bg);}
-	&.panel-inverse {.panel-variated(@panel-inverse-text, @panel-inverse-heading-bg);}
+// Said Mixins
+.panel-primary {.panel-variated(@panel-primary-text, @panel-primary-heading-bg);}
+.panel-success {.panel-variated(@panel-success-text, @panel-success-heading-bg);}
+.panel-warning {.panel-variated(@panel-warning-text, @panel-warning-heading-bg);}
+.panel-danger  {.panel-variated(@panel-danger-text, @panel-danger-heading-bg);}
+.panel-info    {.panel-variated(@panel-info-text, @panel-info-heading-bg);}
+.panel-inverse {.panel-variated(@panel-inverse-text, @panel-inverse-heading-bg);}
 
-	&.panel-brown   {.panel-variated(#fff, @brand-brown);}
-	&.panel-indigo  {.panel-variated(#fff, @brand-indigo);}
-	&.panel-orange  {.panel-variated(#fff, @brand-orange);}
-	&.panel-sky     {.panel-variated(#fff, @brand-sky);}
-	&.panel-midnightblue {.panel-variated(#fff, @brand-midnightblue);}
-	&.panel-magenta {.panel-variated(#fff, @brand-magenta);}
-	&.panel-green   {.panel-variated(#fff, @brand-green);}
-	&.panel-purple  {.panel-variated(#fff, @brand-purple);}
-	&.panel-grape   {.panel-variated(#fff, @brand-grape);}
+.panel-brown   {.panel-variated(#fff, @brand-brown);}
+.panel-indigo  {.panel-variated(#fff, @brand-indigo);}
+.panel-orange  {.panel-variated(#fff, @brand-orange);}
+.panel-sky     {.panel-variated(#fff, @brand-sky);}
+.panel-midnightblue {.panel-variated(#fff, @brand-midnightblue);}
+.panel-magenta {.panel-variated(#fff, @brand-magenta);}
+.panel-green   {.panel-variated(#fff, @brand-green);}
+.panel-purple  {.panel-variated(#fff, @brand-purple);}
+.panel-grape   {.panel-variated(#fff, @brand-grape);}
 
-	&.panel-toyo   {.panel-variated(#fff, @brand-toyo);}
-	&.panel-alizarin   {.panel-variated(#fff, @brand-alizarin);}
-}
+.panel-toyo   {.panel-variated(#fff, @brand-toyo);}
+.panel-alizarin   {.panel-variated(#fff, @brand-alizarin);}
+
 
  // RTL support ----------- 
 
@@ -423,6 +403,7 @@ body.nooverflow{
 	padding               : 0;
 	background-color	  : @border-lighter;
 	border                : 2px dashed @gray-light;
+	//border                : 0 !important;
 }
 
 .ui-sortable-helper.panel{
@@ -450,6 +431,7 @@ body.nooverflow{
 			i {margin: 0 !important;}
 			a { 
 				border: 1px solid transparent;
+				//color:rgba(255,255,255,0.8);
 				color: @gray;
 				padding: 0 10px;
 				line-height: 48px;
@@ -457,6 +439,7 @@ body.nooverflow{
 			}
 			&:hover {
 				a {
+					//color:#fff;
 					color: @gray-darker;
 					background: none;
 				}
@@ -515,7 +498,7 @@ body.nooverflow{
 }
 
 // Footer
-.panel-footer {background-color: #fafafa; &:extend(.clearfix all);}
+.panel-footer {background-color: #f7f8fa; &:extend(.clearfix all);}
 .panel-body .panel-footer {
 	margin: 0 -20px -20px;
 	padding: 20px;

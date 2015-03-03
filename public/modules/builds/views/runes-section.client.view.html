@@ -1,8 +1,6 @@
-<section class="panel panel-default">
-	<div class="panel-heading">
-		<h2>Runes</h2>
-	</div>
-	<div class="panel-body">
+<a href="#collapseRunes" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Runes</h2></a>
+<div class="collapse" id="collapseRunes">
+	<div class="accordion-body">
 		<div class="row">
 			<!-- Rune page layout -->
 			<div class="col-md-7">
@@ -18,88 +16,88 @@
 									<div class="col-md-4">
 										<span class="input-group-addon">Magic</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-magic-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('magic')"
-											ng-click	= "toggleRuneTag('magic')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-magic-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('magic')"
+										ng-click	= "toggleRuneTag('magic')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Flat</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('flat')"
-											ng-click	= "toggleRuneTag('flat')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('flat')"
+										ng-click	= "toggleRuneTag('flat')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Defense</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('defense')"
-											ng-click	= "toggleRuneTag('defense')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('defense')"
+										ng-click	= "toggleRuneTag('defense')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">PerLevel</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('perLevel')"
-											ng-click	= "toggleRuneTag('perLevel')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('perLevel')"
+										ng-click	= "toggleRuneTag('perLevel')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Mark</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('mark')"
-											ng-click	= "toggleRuneTag('mark')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('mark')"
+										ng-click	= "toggleRuneTag('mark')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Glyph</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('glyph')"
-											ng-click	= "toggleRuneTag('glyph')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('glyph')"
+										ng-click	= "toggleRuneTag('glyph')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Attack Damage</span>
 										<input
-											type		= "checkbox"
-											id			= "runes-flat-filter"
-											class       = "form-control input-sm"
-											ng-checked	= "runeFilterEnabled('physicalAttack')"
-											ng-click	= "toggleRuneTag('physicalAttack')"
-											style		= "font-size: 8;"
+										type		= "checkbox"
+										id			= "runes-flat-filter"
+										class       = "form-control input-sm"
+										ng-checked	= "runeFilterEnabled('physicalAttack')"
+										ng-click	= "toggleRuneTag('physicalAttack')"
+										style		= "font-size: 8;"
 										>
 									</div>
 									<div class="col-md-4">
 										<span class="input-group-addon">Name</span>
 										<input
-											type        = "text"
-											id          = "focusedinput"
-											class       = "form-control input-sm"
-											ng-model    = "runeSearch.name",
-											placeholder = "search..."
+										type        = "text"
+										id          = "focusedinput"
+										class       = "form-control input-sm"
+										ng-model    = "runeSearch.name",
+										placeholder = "search..."
 										>
 									</div>
 								</div>
@@ -108,7 +106,7 @@
 
 					</div> <!-- panel-header -->
 
-					<div class="panel-body panel-scroll" style="overflow: scroll; height: 238px;">
+					<div class="panel-body panel-scroll" style="height: 238px;">
 						<div ng-model="runeSearch" ng-repeat="rune in data.runes | filterRunes:runeSearch" >
 							{{rune.name}}
 						</div>
@@ -116,5 +114,5 @@
 				</div>
 			</div>
 		</div>
-	</div> <!-- panel-body -->
-</section>
+	</div>
+</div>

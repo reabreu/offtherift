@@ -1,0 +1,24 @@
+<a href="#collapseItems" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Items</h2></a>
+<div class="collapse" id="collapseItems">
+    <div class="accordion-body">
+        <div class="row">
+            <div class="col-sm-12">
+                SEARCH-OPTIONS
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">PANEL</div>
+            <div class="col-sm-8">
+                <ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
+                    <li ng-repeat = "item in data.items">
+                        <a class="mailbox-msg-list-item" href="#">
+                            <span class="time">{{item.gold.base}} Gold</span>
+                            <img style="" title="" alt="avatar" ng-src="{{ item.image.full | ddragon: item.version:'item'}}">
+                            <div><span class="name">{{item.name}}</span><span class="msg">{{item.plaintext}}</span></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
