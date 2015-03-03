@@ -38,6 +38,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 			};
 
+			$scope.runeSearch = {
+				name : "",
+				tags : ['magic',
+						'flat'
+				]
+			};
+
 			if (!$scope.data.patches.length) {
 				ngProgress.start();
 				Repository.getPatches().then(function(data){
@@ -46,7 +53,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					$scope.getPatchInfo();
 				});
 			}
-		}
+		};
 
 		// Create new Build
 		$scope.create = function() {
@@ -118,26 +125,26 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			var input = [];
 			for (var i = min; i <= max; i += step) input.push(i);
 			return input;
-	  	};
+		};
 
-	  	/**
-	  	 * [setLevel Set current build level]
-	  	 * @param {[type]}
-	  	 */
-	  	$scope.setLevel = function (level) {
-	  		$scope.data.level = level;
-	  	}
+		/**
+		 * [setLevel Set current build level]
+		 * @param {[type]}
+		 */
+		$scope.setLevel = function (level) {
+			$scope.data.level = level;
+		}
 
-	  	/**
-	  	 * [getPatchInfo Load patch information needed for build]
-	  	 * @return {[type]}
-	  	 */
-	  	$scope.getPatchInfo = function(){
-	  		Repository.setSelectedPatch($scope.data.selectedPatch);
+		/**
+		 * [getPatchInfo Load patch information needed for build]
+		 * @return {[type]}
+		 */
+		$scope.getPatchInfo = function(){
+			Repository.setSelectedPatch($scope.data.selectedPatch);
 
-	  		var params = {version: $scope.data.selectedPatch };
+			var params = {version: $scope.data.selectedPatch };
 
-	  		Repository.getChampions(params).then(function(data) {
+			Repository.getChampions(params).then(function(data) {
 				$scope.data.champions 			= data.champions;
 				$scope.data.selectedChampion 	= data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
 			});
@@ -150,24 +157,24 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Repository.getMasteries(params).then(function(data) {
 				$scope.data.masteries 	= data.masteries;
 			});
-	  	}
+		}
 
-	  	/**
-	  	 * [openModal Open modal]
-	  	 * @param  {[type]}
-	  	 * @return {[type]}
-	  	 */
+		/**
+		 * [openModal Open modal]
+		 * @param  {[type]}
+		 * @return {[type]}
+		 */
 		$scope.openModal = function ( champions ) {
 			$scope.modal = $modal.open({
 				scope: $scope,
 				templateUrl: 'modules/builds/views/select-champion.client.view.html',
 				controller:  'BuildsController',
 				size: 'lg',
-      			windowClass: "modal fade",
+				windowClass: "modal fade",
 				resolve: {
 					data: function () {
-				        return $scope.data;
-				    }
+						return $scope.data;
+					}
 				}
 			});
 		};
@@ -186,7 +193,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 */
 		$scope.setSelectedChampion = function(champion){
 			$scope.data.selectedChampion = champion;
-		}
+		};
 
 		/**
 		 * [calculate Calculate the stats of current build]
@@ -203,7 +210,24 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.data.calculatedStats = data;
 				ngProgress.complete();
 			});
-		}
+		};
+
+		$scope.toggleRuneTag = function(tag) {
+			var idx = $scope.runeSearch.tags.indexOf(tag);
+
+			// is currently selected
+			if (idx > -1) {
+				$scope.runeSearch.tags.splice(idx, 1);
+			} else {
+				$scope.runeSearch.tags.push(tag);
+			}
+
+			console.log($scope.runeSearch);
+		};
+
+		$scope.runeFilterEnabled = function(tag) {
+			return ($scope.runeSearch.tags.indexOf(tag) > -1);
+		};
 
 		$scope.$watchGroup(['data.level','data.selectedChampion'], function(newValues, oldValues, scope) {
 			if ($scope.data.timer !== null){
@@ -213,3 +237,29 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		});
 	}
 ]);
+
+angular.module('builds').filter('filterRunes', function() {
+	return function(input, filters) {
+		var newArray = [];
+
+		for (var r = 0; r < input.length; r++) {
+			var rune = input[r];
+			var accept = true;
+
+			for (var i = 0; i < filters.tags.length; i++) {
+				if (rune.tags.indexOf(filters.tags[i]) === -1) {
+					accept = false;
+					break;
+				}
+			}
+
+			if(accept && (rune.name.indexOf(filters.name) > -1)) {
+				newArray.push(rune);
+			}
+
+			//console.log(filters);
+		}
+
+		return newArray;
+	};
+});
