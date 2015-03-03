@@ -3,7 +3,7 @@
         <form class="form-horizontal" data-ng-submit="create()" novalidate id="build">
             <div class="form-group">
                 <div class="col-xs-6">
-                    <input type="text" data-ng-model="name" id="name" class="form-control build-title" placeholder="Enter Build Name" required>
+                    <input type="text" data-ng-model="build.name" id="name" class="form-control build-title" placeholder="Enter Build Name" required>
                 </div>
                 <div class="col-xs-6">
                     <div class="row mt10">
@@ -18,7 +18,7 @@
                             <input
                                 bs-switch
                                 type            = "checkbox"
-                                ng-model        = "publictmp"
+                                ng-model        = "build.public"
                                 type            = "checkbox"
                                 switch-size     = "mini"
                                 ng-change       = "toggleEnabled(build)"
@@ -127,11 +127,7 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
-                    {{data.selectedChampion.stats | json}}
-                    <!--<div class="visible-lg">lg</div>
-                    <div class="visible-md">md</div>
-                    <div class="visible-sm">sm</div>
-                    <div class="visible-xs">xs</div>-->
+                    {{data.items[0] | json}}
                 </div>
             </div>
         </form>

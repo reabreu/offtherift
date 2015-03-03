@@ -19,7 +19,7 @@ angular.module('builds').config(['$stateProvider',
 		}).
 		state('editBuild', {
 			url: '/builds/:buildId/edit',
-			templateUrl: 'modules/builds/views/edit-build.client.view.html'
+			templateUrl: 'modules/builds/views/create-build.client.view.html'
 		});
 	}
 ]);

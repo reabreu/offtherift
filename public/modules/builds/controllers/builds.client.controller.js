@@ -3,9 +3,10 @@
 // Builds controller
 angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout',
 	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout) {
-		$scope.authentication 	= Authentication;
+		$scope.authentication = Authentication;
 
 		$scope.init = function(){
+			//info que temos na view a uma dada altura
 			$scope.data = {
 				timer				: null,
 				champions 			: [],
@@ -38,6 +39,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 			};
 
+			$scope.build = {
+				name: 	'',
+				enabled: false
+			}
+
 			if (!$scope.data.patches.length) {
 				ngProgress.start();
 				Repository.getPatches().then(function(data){
@@ -46,21 +52,23 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					$scope.getPatchInfo();
 				});
 			}
+
+			//objeto build a guardar na base de dados
+			$scope.build = {
+				public: 		false,
+				name: 			'',
+				champion_id: 	''
+			}
 		}
 
 		// Create new Build
 		$scope.create = function() {
-			// Create new Build object
-			var build = new Builds ({
-				name: this.name
-			});
+
+			$scope.buildService = new Builds ($scope.build);
 
 			// Redirect after save
-			build.$save(function(response) {
-				$location.path('builds/' + response._id);
-
-				// Clear form fields
-				$scope.name = '';
+			$scope.buildService.$save(function(response) {
+				$location.path('builds/' + response._id + '/edit');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -85,10 +93,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Update existing Build
 		$scope.update = function() {
-			var build = $scope.build;
-
-			build.$update(function() {
-				$location.path('builds/' + build._id);
+			var buildService = new Builds ($scope.build);
+			$scope.build.$update(function() {
+				$location.path('builds/' + build._id + '/edit');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -205,6 +212,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		}
 
+		//timeout para calcular novos stats
 		$scope.$watchGroup(['data.level','data.selectedChampion'], function(newValues, oldValues, scope) {
 			if ($scope.data.timer !== null){
 				$timeout.cancel($scope.data.timer);
