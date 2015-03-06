@@ -227,23 +227,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		};
 
-		$scope.toggleRuneTag = function(tag) {
-			var idx = $scope.runeSearch.tags.indexOf(tag);
-
-			// is currently selected
-			if (idx > -1) {
-				$scope.runeSearch.tags.splice(idx, 1);
-			} else {
-				$scope.runeSearch.tags.push(tag);
-			}
-
-			console.log($scope.runeSearch);
-		};
-
-		$scope.runeFilterEnabled = function(tag) {
-			return ($scope.runeSearch.tags.indexOf(tag) > -1);
-		};
-
 		//timeout para calcular novos stats
 		$scope.$watchGroup(['data.level','data.selectedChampion'], function(newValues, oldValues, scope) {
 			if ($scope.data.timer !== null){
@@ -253,29 +236,3 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		});
 	}
 ]);
-
-angular.module('builds').filter('filterRunes', function() {
-	return function(input, filters) {
-		var newArray = [];
-
-		for (var r = 0; r < input.length; r++) {
-			var rune = input[r];
-			var accept = true;
-
-			for (var i = 0; i < filters.tags.length; i++) {
-				if (rune.tags.indexOf(filters.tags[i]) === -1) {
-					accept = false;
-					break;
-				}
-			}
-
-			if(accept && (rune.name.indexOf(filters.name) > -1)) {
-				newArray.push(rune);
-			}
-
-			//console.log(filters);
-		}
-
-		return newArray;
-	};
-});
