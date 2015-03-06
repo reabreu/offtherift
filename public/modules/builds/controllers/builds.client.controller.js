@@ -8,35 +8,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.init = function(){
 			//info que temos na view a uma dada altura
 			$scope.data = {
+				currentSnapshot		: 0,
 				timer				: null,
 				champions 			: [],
 				items 				: [],
 				runes 				: [],
 				masteries 			: [],
-				level 				: 1,
 				patches 			: Repository.getCachedPatches(),
 				selectedPatch 		: Repository.getSelectedPatch(),
 				selectedChampion 	: null,
-				calculatedStats 	: {
-					hp:'n/a',
-					mp:'n/a',
-					hpregen:'n/a',
-					mpregen:'n/a',
-					attackdamage:'n/a',
-					abilitypower:'n/a',
-					armorpenetration:'n/a',
-					magicpenetration:'n/a',
-					lifesteal:'n/a',
-					spellvamp:'n/a',
-					attackspeed:'n/a',
-					cooldownreduction:'n/a',
-					critchance:'n/a',
-					armor:'n/a',
-					attackrange:'n/a',
-					spellblock:'n/a',
-					movespeed:'n/a',
-					tenacity:'n/a'
-				}
 			};
 
 			$scope.runeSearch = {
@@ -46,22 +26,50 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				]
 			};
 
-			//objeto build a guardar na base de dados
+			//objeto build que sera vazio no caso de estarmos a criar uma nova build
 			$scope.build = {
-				public: 		false,
-				name: 			'',
-				champion_id: 	''
+				visible: 		false,
+				name: 			null,
+				champion_id: 	null,
+				version: 		null,
+				snapshot: 		[
+					{
+						level:  1,
+						name: 	'',
+						items:  [],
+						calculatedStats 	: {
+							hp: 'n/a',
+							mp: 'n/a',
+							hpregen: 'n/a',
+							mpregen: 'n/a',
+							attackdamage: 'n/a',
+							abilitypower: 'n/a',
+							armorpenetration: 'n/a',
+							magicpenetration: 'n/a',
+							lifesteal: 'n/a',
+							spellvamp: 'n/a',
+							attackspeed: 'n/a',
+							cooldownreduction: 'n/a',
+							critchance: 'n/a',
+							armor: 'n/a',
+							attackrange: 'n/a',
+							spellblock: 'n/a',
+							movespeed: 'n/a',
+							tenacity: 'n/a'
+						}
+					}
+				]
 			}
-
 
 			if (!$scope.data.patches.length) {
 				ngProgress.start();
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
-					$scope.data.selectedPatch 	= $scope.data.patches[0].version;
+					$scope.build.version 		= $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 					$scope.getPatchInfo();
 				});
 			}
+
 		}
 
 		// Create new Build
@@ -135,7 +143,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @param {[type]}
 		 */
 		$scope.setLevel = function (level) {
-			$scope.data.level = level;
+			$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 		}
 
 		/**
@@ -145,7 +153,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.getPatchInfo = function(){
 			Repository.setSelectedPatch($scope.data.selectedPatch);
 
-			var params = {version: $scope.data.selectedPatch };
+			var params = {version: $scope.data.selectedPatch, build: true };
 
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.champions 			= data.champions;
@@ -203,14 +211,18 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.calculate = function(){
+
+			if($scope.build.snapshot[$scope.data.currentSnapshot].level === null || $scope.data.selectedChampion === null) return;
+
 			var request = {
-				level: $scope.data.level,
+				level: $scope.build.snapshot[$scope.data.currentSnapshot].level,
 				stats: $scope.data.selectedChampion.stats,
 				effects: []
 			};
+
 			ngProgress.start();
 			Calculate.save(request).$promise.then(function(data) {
-				$scope.data.calculatedStats = data;
+				$scope.build.snapshot[$scope.data.currentSnapshot].calculatedStats = data;
 				ngProgress.complete();
 			});
 		};

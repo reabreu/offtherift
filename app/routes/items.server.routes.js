@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 	// Items Routes
 
-	app.route('/items').get(items.list);
+	app.route('/items').get(users.hasRole(['admin']),items.list);
 
 	app.route('/items/:itemId')
 		.get(items.read)

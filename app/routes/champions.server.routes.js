@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 	// Champions Routes
 	app.route('/champions')
-		.get(champions.list);
+		.get(users.hasRole(['admin']),champions.list);
 
 	app.route('/champions/:championId')
 		.get(champions.read)

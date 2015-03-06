@@ -80,6 +80,8 @@ exports.list = function(req, res) {
 	var name 		= req.param('name');
 	var enabled 	= req.param('enabled');
 	var riotId 		= req.param('riotId');
+	var build 		= req.param('build');
+	var select 		= '';
 
 	var options = {
 		skip: 		skip,
@@ -88,19 +90,28 @@ exports.list = function(req, res) {
 
 	var query = {};
 
-	if( version != undefined && version != '')
+	if (!res.isAdmin) {
+        query.enabled = true;
+        query.synched = true;
+    }
+
+    if(build){
+    	select = 'id name image version description plaintext gold customEffect';
+	}
+
+	if(version != undefined && version != '')
 		query.version = version;
 
-	if( name != undefined)
+	if(name != undefined)
 		query.name = { "$regex": name, "$options": "i" };
 
-	if( enabled != undefined)
+	if(enabled != undefined)
 		query.enabled = enabled;
 
-	if( riotId != undefined)
+	if(riotId != undefined)
 		query.id = riotId;
-	
-	Item.find(query,null,options).sort('name').exec(function(err, items) {
+
+	Item.find(query,select,options).sort('name').exec(function(err, items) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -114,7 +125,7 @@ exports.list = function(req, res) {
 /**
  * Item middleware
  */
-exports.itemByID = function(req, res, next, id) { 
+exports.itemByID = function(req, res, next, id) {
 	Item.findById(id).populate('user', 'displayName').exec(function(err, item) {
 		if (err) return next(err);
 		if (! item) return next(new Error('Failed to load Item ' + id));

@@ -82,10 +82,21 @@ exports.list = function(req, res) {
     var name        = req.param('name');
     var enabled     = req.param('enabled');
     var riotId      = req.param('riotId');
+    var build       = req.param('build');
+    var select      = '';
 
     var options = {
         skip:       skip,
         limit:      limit
+    }
+
+    if (!res.isAdmin) {
+        query.enabled = true;
+        query.synched = true;
+    }
+
+    if(build){
+        select = 'id key title image stats passive name version spells';
     }
 
     var query       = {};
@@ -102,7 +113,7 @@ exports.list = function(req, res) {
     if( riotId != undefined)
         query.id = riotId;
 
-    Champion.find(query, null, options).sort('name').exec(function(err, champions) {
+    Champion.find(query, select, options).sort('name').exec(function(err, champions) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
