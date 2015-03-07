@@ -44,13 +44,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group" ng-switch="data.selectedChampion.image.full==undefined">
+			<div class="form-group" ng-switch="!!data.selectedChampion">
 				<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
 					<div class="row">
 						<div class="col-xs-4">
 							<div class="champ-avatar" ng-click="openModal(data.champions)">
 								<div class="overlay"></div>
 								<img
+									ng-class="{'undefined-champion' : data.selectedChampion == null}"
 									style="cursor:pointer;width:80px;height:80px;"
 									class="avatar pull-left"
 									alt=""
@@ -63,63 +64,63 @@
 							<h3 style="margin:0px;">{{data.selectedChampion.title}}</h3>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" ng-switch-when="true">
 						<div class="col-xs-12">
 							<table class="table table-condensed mt10 mb0 table-stats" style="font-weight:200">
 								<tbody>
 									<tr>
 										<td>Hitpoints</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.hp}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].hp}}</strong></td>
 										<td>Mana</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.mp}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].mp}}</strong></td>
 									</tr>
 									<tr>
 										<td>HP Regen per 5</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.hpregen}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].hpregen}}</strong></td>
 										<td>Mana Regen per 5</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.mpregen}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].mpregen}}</strong></td>
 									</tr>
 									<tr>
 										<td>Attack Damage</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.attackdamage}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackdamage}}</strong></td>
 										<td>Ability Power</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.abilitypower}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].abilitypower}}</strong></td>
 									</tr>
 									<tr>
 										<td>Armor Pen</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.armorpenetration | doubleStat}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].armorpenetration | doubleStat}}</strong></td>
 										<td>Magic Pen</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.magicpenetration | doubleStat}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].magicpenetration | doubleStat}}</strong></td>
 									</tr>
 									<tr>
 										<td>Lifesteal</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.lifesteal}} %</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].lifesteal}} %</strong></td>
 										<td>Spell Vamp</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.spellvamp}} %</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].spellvamp}} %</strong></td>
 									</tr>
 									<tr>
 										<td>Attack Speed</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.attackspeed}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackspeed}}</strong></td>
 										<td>Cooldown Red</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.cooldownreduction}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}}</strong></td>
 									</tr>
 									<tr>
 										<td>Crit Chance</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.critchance}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].critchance}}</strong></td>
 										<td>Armor</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.armor}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].armor}}</strong></td>
 									</tr>
 									<tr>
 										<td>Range</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.attackrange}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackrange}}</strong></td>
 										<td>Magic Resist</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.spellblock}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].spellblock}}</strong></td>
 									</tr>
 									<tr>
 										<td>Movement Speed</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.movespeed}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].movespeed}}</strong></td>
 										<td>Tenacity</td>
-										<td><strong>{{build.snapshot[data.currentSnapshot].calculatedStats.tenacity}} %</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].tenacity}} %</strong></td>
 									</tr>
 								</tbody>
 							</table>
@@ -129,10 +130,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
+				<div ng-switch-when="true" class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
                     <div id="accordionB" class="accordion-group">
                         <div class="panel accordion-item">
-                            <item-section build="build" data="data"></item-section>
+                            <item-section build="build" data="data" calculate="calculate()"></item-section>
                         </div>
                         <div class="panel accordion-item">
                            <runes-section runeSearch="runeSearch"></runes-section>

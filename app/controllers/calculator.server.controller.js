@@ -16,7 +16,7 @@ exports.calculate = function(req, res) {
 exports.processStats = function(request) {
 
 	// @TODO Validate request
-	
+
 	// growth per lvl: (nextLevel * 3.5) + 65
 	var growth = {
 		"1" 	: 0.0000,
@@ -303,6 +303,7 @@ exports.processStats = function(request) {
 	var effectCount = request.effects.length;
 	for (var i = 0; i < effectCount; i++) {
 		var effect = request.effects[i];
+		effect.value = parseFloat(effect.value);
 
 		// If the effect has dependencies, save it for later.
 		if (effect.src != "") {
@@ -348,7 +349,7 @@ exports.processStats = function(request) {
 
 		response[stat.name] = calculateStatValue(stat, response);
 	}
-	
+
 	// Format stats according to the in-game stats window.
 	for (var key in response) {
 		switch (key) {
@@ -407,7 +408,7 @@ function calculateStatValue(stat, resStats) {
 	var statModifier		= calculateModifier(stat.name, runesModifier, masteriesModifier, itemsModifier, abilitiesModifier);
 	var bonusModifier		= calculateBonusModifier(stat.name, stat.modifiers.bonusmodifier);
 	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
-	
+
 	var converted = statModifier.toFixed(3);
 	statModifier = parseFloat(converted);
 
@@ -423,10 +424,10 @@ function calculateStatValue(stat, resStats) {
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
 			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
-			
+
 			// DEBUG
 			//console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
-			
+
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 			return stat.base + statBonus * (1 + bonusModifier);

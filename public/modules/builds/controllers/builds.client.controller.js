@@ -28,37 +28,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			//objeto build que sera vazio no caso de estarmos a criar uma nova build
 			$scope.build = {
-				visible: 		false,
-				name: 			null,
-				champion_id: 	null,
-				version: 		null,
-				snapshot: 		[
-					{
-						level:  1,
-						name: 	'',
-						items:  [],
-						calculatedStats 	: {
-							hp: 'n/a',
-							mp: 'n/a',
-							hpregen: 'n/a',
-							mpregen: 'n/a',
-							attackdamage: 'n/a',
-							abilitypower: 'n/a',
-							armorpenetration: 'n/a',
-							magicpenetration: 'n/a',
-							lifesteal: 'n/a',
-							spellvamp: 'n/a',
-							attackspeed: 'n/a',
-							cooldownreduction: 'n/a',
-							critchance: 'n/a',
-							armor: 'n/a',
-							attackrange: 'n/a',
-							spellblock: 'n/a',
-							movespeed: 'n/a',
-							tenacity: 'n/a'
-						}
-					}
-				]
+				visible: 			false,
+				name: 				null,
+				champion_id: 		null,
+				version: 			null,
+				snapshot: 			[],
+				calculatedStats: 	[]
 			}
 
 			if (!$scope.data.patches.length) {
@@ -69,7 +44,34 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					$scope.getPatchInfo();
 				});
 			}
+		}
 
+		/**
+		 * [getPatchInfo Load patch information needed for build]
+		 * @return {[type]}
+		 */
+		$scope.getPatchInfo = function(){
+			Repository.setSelectedPatch($scope.data.selectedPatch);
+			var params = {version: $scope.data.selectedPatch, build: true };
+
+			Repository.getChampions(params).then(function(data) {
+				$scope.data.champions 			= data.champions;
+				//$scope.data.selectedChampion 	= data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
+
+				Repository.getItems(params).then(function(data) {
+					$scope.data.items 		= data.items;
+
+					Repository.getRunes(params).then(function(data) {
+						$scope.data.runes 		= data.runes;
+
+						Repository.getMasteries(params).then(function(data) {
+							$scope.data.masteries 	= data.masteries;
+						});
+					});
+				});
+			});
+
+			ngProgress.complete();
 		}
 
 		// Create new Build
@@ -146,29 +148,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 		}
 
-		/**
-		 * [getPatchInfo Load patch information needed for build]
-		 * @return {[type]}
-		 */
-		$scope.getPatchInfo = function(){
-			Repository.setSelectedPatch($scope.data.selectedPatch);
-
-			var params = {version: $scope.data.selectedPatch, build: true };
-
-			Repository.getChampions(params).then(function(data) {
-				$scope.data.champions 			= data.champions;
-				$scope.data.selectedChampion 	= data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
-			});
-			Repository.getItems(params).then(function(data) {
-				$scope.data.items 		= data.items;
-			});
-			Repository.getRunes(params).then(function(data) {
-				$scope.data.runes 		= data.runes;
-			});
-			Repository.getMasteries(params).then(function(data) {
-				$scope.data.masteries 	= data.masteries;
-			});
-		}
 
 		/**
 		 * [openModal Open modal]
@@ -203,7 +182,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @param {[type]}
 		 */
 		$scope.setSelectedChampion = function(champion){
-			$scope.data.selectedChampion = champion;
+			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
+			ngProgress.start();
+			Repository.getChampions(params).then(function(data) {
+				$scope.data.selectedChampion 	= data.champions[0];
+				ngProgress.complete();
+			});
 		};
 
 		/**
@@ -211,28 +195,43 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.calculate = function(){
-
-			if($scope.build.snapshot[$scope.data.currentSnapshot].level === null || $scope.data.selectedChampion === null) return;
-
 			var request = {
 				level: $scope.build.snapshot[$scope.data.currentSnapshot].level,
 				stats: $scope.data.selectedChampion.stats,
 				effects: []
 			};
 
+			//popular com os efeitos dos items
+			angular.forEach($scope.build.snapshot[$scope.data.currentSnapshot].items, function(value, key) {
+				request.effects = request.effects.concat(value.customEffect);
+			});
+
 			ngProgress.start();
 			Calculate.save(request).$promise.then(function(data) {
-				$scope.build.snapshot[$scope.data.currentSnapshot].calculatedStats = data;
+				$scope.build.calculatedStats[$scope.data.currentSnapshot] = data;
 				ngProgress.complete();
 			});
 		};
 
-		//timeout para calcular novos stats
-		$scope.$watchGroup(['data.level','data.selectedChampion'], function(newValues, oldValues, scope) {
-			if ($scope.data.timer !== null){
-				$timeout.cancel($scope.data.timer);
+		//Watchers para fazer o pedido
+		$scope.evaluateStatsRequest = function(){
+
+			if ($scope.data.selectedChampion === null) {
+				return;
 			}
-			$scope.data.timer = $timeout($scope.calculate,1000);
-		});
+
+			$timeout.cancel($scope.data.timer);
+			$scope.data.timer = $timeout($scope.calculate,1500);
+		};
+
+		$scope.$watchGroup(['build.champion_id','build.version'],
+			function(newValues, oldValues, scope) {
+				$scope.evaluateStatsRequest();
+			}
+		);
+
+		$scope.$watch('build.snapshot', function (newVal) {
+			$scope.evaluateStatsRequest();
+		}, true);
 	}
 ]);

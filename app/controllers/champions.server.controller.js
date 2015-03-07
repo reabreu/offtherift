@@ -83,6 +83,7 @@ exports.list = function(req, res) {
     var enabled     = req.param('enabled');
     var riotId      = req.param('riotId');
     var build       = req.param('build');
+    var data        = req.param('data');
     var select      = '';
 
     var options = {
@@ -92,11 +93,14 @@ exports.list = function(req, res) {
 
     if (!res.isAdmin) {
         query.enabled = true;
-        query.synched = true;
     }
 
-    if(build){
-        select = 'id key title image stats passive name version spells';
+    if (build) {
+        select = 'id key title image name version';
+    }
+
+    if (data) {
+        select = 'id key title image stats name version';
     }
 
     var query       = {};

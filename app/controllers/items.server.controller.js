@@ -92,7 +92,6 @@ exports.list = function(req, res) {
 
 	if (!res.isAdmin) {
         query.enabled = true;
-        query.synched = true;
     }
 
     if(build){

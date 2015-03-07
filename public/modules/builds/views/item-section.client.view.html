@@ -1,5 +1,5 @@
 <a href="#collapseItems" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Items</h2></a>
-<div  id="collapseItems"> <!--class="collapse"-->
+<div  id="collapseItems" ng-init="init()"> <!--class="collapse"-->
     <div class="accordion-body">
         <div class="row">
             <div class="col-sm-12">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-4" ng-repeat="n in range(1,6) track by $index">
-                        <img class="avatar" ng-click="removeItem($index)" title="" alt="Slot {{$index+1}}" ng-src="{{ build.snapshot[data.currentSnapshot].items[$index] | ddragon: build.version:'item'}}">
+                        <img class="avatar" ng-click="removeItem($index)" title="" alt="Slot {{$index+1}}" ng-src="{{ build.snapshot[data.currentSnapshot].items[$index].id | ddragon: build.version:'item'}}">
                         <div ng-if="$index + 1 % 4 == 0" class="clearfix"></div>
                     </div>
                 </div>

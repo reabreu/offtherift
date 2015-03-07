@@ -7,42 +7,53 @@ angular.module('builds').directive('itemSection', [
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'='
+				build: 	'=',
+				calculate: 	'&'
 			},
-			controller: function($scope, $element){
+			controller: function($scope, $element, $timeout){
+
+
+				$scope.init = function(){
+					if ($scope.build.snapshot.length == 0)
+						$scope.addSnapshot();
+				}
 
 				$scope.search = {
 					name: null
 				}
 
 				$scope.addSnapshot = function(){
-					var snap = {
+					var statTmp =  {
+						hp: 'n/a',
+						mp: 'n/a',
+						hpregen: 'n/a',
+						mpregen: 'n/a',
+						attackdamage: 'n/a',
+						abilitypower: 'n/a',
+						armorpenetration: ['n/a','n/a'],
+						magicpenetration:  ['n/a','n/a'],
+						lifesteal: 'n/a',
+						spellvamp: 'n/a',
+						attackspeed: 'n/a',
+						cooldownreduction: 'n/a',
+						critchance: 'n/a',
+						armor: 'n/a',
+						attackrange: 'n/a',
+						spellblock: 'n/a',
+						movespeed: 'n/a',
+						tenacity: 'n/a'
+					}
+
+					var snapTmp = {
 						level: 	1,
 						items:  [],
-						name: 	'',
-						calculatedStats 	: {
-							hp: 'n/a',
-							mp: 'n/a',
-							hpregen: 'n/a',
-							mpregen: 'n/a',
-							attackdamage: 'n/a',
-							abilitypower: 'n/a',
-							armorpenetration: 'n/a',
-							magicpenetration: 'n/a',
-							lifesteal: 'n/a',
-							spellvamp: 'n/a',
-							attackspeed: 'n/a',
-							cooldownreduction: 'n/a',
-							critchance: 'n/a',
-							armor: 'n/a',
-							attackrange: 'n/a',
-							spellblock: 'n/a',
-							movespeed: 'n/a',
-							tenacity: 'n/a'
-						}
+						name: 	''
 					};
-					$scope.build.snapshot.push(snap);
-					$scope.setCurrentSnap($scope.build.snapshot.length-1);
+
+					$scope.build.snapshot.push(snapTmp);
+					$scope.build.calculatedStats.push(statTmp);
+					var length = $scope.build.snapshot.length-1;
+					$scope.setCurrentSnap(length);
 				}
 
 				$scope.setCurrentSnap = function(index){
@@ -51,7 +62,7 @@ angular.module('builds').directive('itemSection', [
 
 				$scope.addItem = function(item){
 					if ( $scope.build.snapshot[$scope.data.currentSnapshot].items.length < 6) {
-						$scope.build.snapshot[$scope.data.currentSnapshot].items.push(item.id);
+						$scope.build.snapshot[$scope.data.currentSnapshot].items.push({id:item.id, customEffect: item.customEffect});
 					}
 				}
 
