@@ -1,116 +1,78 @@
-<a href="#collapseRunes" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Runes</h2></a>
-<div class="collapse" id="collapseRunes">
-	<div class="accordion-body">
-		<div class="row">
-			<!-- Rune page layout -->
-			<div class="col-md-7">
-				<img style="width: 100%;" alt="Runes Page" src="http://img4.wikia.nocookie.net/__cb20090905013602/leagueoflegends/images/1/1a/Runebook.png" />
-			</div>
-			<!-- Rune selection bar -->
-			<div class="col-md-5">
-				<div class="panel panel-default">
-					<div class="panel-header">
-						<div class="panel-ctrls">
-							<div class="input-group panel-ctrls-left-sm input-group-sm">
+<div>
+	<a href="#collapseRunes" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Runes</h2></a>
+	<div class="collapse" id="collapseRunes">
+		<div class="accordion-body">
+			<div class="row">
+				<div class="col-sm-12">
+					<!-- Rune page layout -->
+					<div class="col-sm-6">
+						<div class="row">
+							<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
 								<div class="row">
-									<div class="col-md-4">
-										<span class="input-group-addon">Magic</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-magic-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('magic', runeSearch)"
-										ng-click	= "toggleRuneTag('magic', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Flat</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('flat', runeSearch)"
-										ng-click	= "toggleRuneTag('flat', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Defense</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('defense', runeSearch)"
-										ng-click	= "toggleRuneTag('defense', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">PerLevel</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('perLevel', runeSearch)"
-										ng-click	= "toggleRuneTag('perLevel', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Mark</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('mark', runeSearch)"
-										ng-click	= "toggleRuneTag('mark', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Glyph</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('glyph', runeSearch)"
-										ng-click	= "toggleRuneTag('glyph', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Attack Damage</span>
-										<input
-										type		= "checkbox"
-										id			= "runes-flat-filter"
-										class       = "form-control input-sm"
-										ng-checked	= "runeFilterEnabled('physicalAttack', runeSearch)"
-										ng-click	= "toggleRuneTag('physicalAttack', runeSearch)"
-										style		= "font-size: 8;"
-										>
-									</div>
-									<div class="col-md-4">
-										<span class="input-group-addon">Name</span>
-										<input
-										type        = "text"
-										id          = "focusedinput"
-										class       = "form-control input-sm"
-										ng-model    = "runeSearch.name",
-										placeholder = "search..."
-										>
-									</div>
+									<span class="col-sm-12">{{value}}</span>
+									<ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
+										<li ng-repeat="rune in build.runes[key] | unique:rune.id">
+											<img class="avatar col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
+											{{runeCount[rune.id]}}
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
+					</div>
 
-					</div> <!-- panel-header -->
+					<!-- Rune selection bar -->
+					<div class="col-md-6">
+						<div class="panel panel-default">
+							<div class="panel-header">
+								<ul class="demo-btns">
+									<li ng-repeat="(key, value) in runeTypes">
+										<a class="btn btn-default" ng-click="setCurrentType(key)">{{value}}</a>
+									</li>
+								</ul>
+								<form class="form-horizontal">
+									<div class="form-group">
+										<div class="col-sm-12">
+											<input
+											type        = "text"
+											id          = "focusedinput"
+											class       = "form-control input-sm"
+											ng-model    = "runeSearch.name",
+											placeholder = "Rune Name"
+											>
+										</div>
+									</div>
+								</form>
+								<!-- 
+								<div class="col-sm-6">
+									<label>
+									<input
+									type		= "checkbox"
+									id			= "runes-magic-filter"
+									ng-checked	= "runeFilterEnabled('perLevel')"
+									ng-click	= "toggleRuneTag('perLevel')"
+									> PerLevel </label>
+								</div> -->
 
-					<div class="panel-body panel-scroll" style="height: 238px;">
-						<div ng-model="runeSearch" ng-repeat="rune in data.runes | filterRunes:runeSearch" >
-							{{rune.name}}
+							</div>
+							<!-- <div class=" panel-scroll" style="height: 238px;"> -->
+							<ul ng-model="currentType" class="panel-body mailbox-msg-list" style="max-height:276px;overflow-y:scroll;">
+								<li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
+									<a
+										tooltip-html-unsafe="TESTE"
+										class="mailbox-msg-list-item"
+										href="#"
+										ng-click="addRune(rune);$event.preventDefault(); $event.stopPropagation();"
+									>
+										<!-- <span class="time">{{item.gold.base}} Gold</span> -->
+										<img  title="" alt="avatar" ng-src="{{ rune.image.full | ddragon:rune.version:'rune'}}">
+										<div><span class="name">{{rune.name}}</span><span class="msg">{{rune.plaintext}}</span></div>
+									</a>
+								</li>
+							</ul>
+							<!-- </div> --> <!-- panel-body -->
 						</div>
-					</div> <!-- panel-body -->
+					</div>
 				</div>
 			</div>
 		</div>

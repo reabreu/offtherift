@@ -18,20 +18,14 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedPatch 		: Repository.getSelectedPatch(),
 				selectedChampion 	: null,
 			};
-
-			$scope.runeSearch = {
-				name : "",
-				tags : ['magic',
-						'flat'
-				]
-			};
-
+			
 			//objeto build que sera vazio no caso de estarmos a criar uma nova build
 			$scope.build = {
 				visible: 			false,
 				name: 				null,
 				champion_id: 		null,
 				version: 			null,
+				runes: 				{},
 				snapshot: 			[],
 				calculatedStats: 	[]
 			}
@@ -206,6 +200,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				request.effects = request.effects.concat(value.customEffect);
 			});
 
+			//popular com os efeitos das runes
+			angular.forEach($scope.build.runes, function(runes, tipo) {
+				angular.forEach(runes, function(rune, index) {
+					request.effects = request.effects.concat(rune.customEffect);
+				});
+			});
+
 			ngProgress.start();
 			Calculate.save(request).$promise.then(function(data) {
 				$scope.build.calculatedStats[$scope.data.currentSnapshot] = data;
@@ -224,13 +225,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.data.timer = $timeout($scope.calculate,1500);
 		};
 
-		$scope.$watchGroup(['build.champion_id','build.version'],
-			function(newValues, oldValues, scope) {
-				$scope.evaluateStatsRequest();
-			}
-		);
-
 		$scope.$watch('build.snapshot', function (newVal) {
+			$scope.evaluateStatsRequest();
+		}, true);
+
+		$scope.$watch('build.runes', function (newVal) {
 			$scope.evaluateStatsRequest();
 		}, true);
 	}

@@ -126,17 +126,17 @@
 							</table>
 						</div>
 						<div class="col-xs-12">
-							{{}}
+
 						</div>
 					</div>
 				</div>
 				<div ng-switch-when="true" class="col-lg-8 col-md-7 col-sm-6 col-xs-12">
                     <div id="accordionB" class="accordion-group">
                         <div class="panel accordion-item">
-                            <item-section build="build" data="data" calculate="calculate()"></item-section>
+                            <item-section build="build" data="data"></item-section>
                         </div>
                         <div class="panel accordion-item">
-                           <runes-section runeSearch="runeSearch"></runes-section>
+                           	<runes-section build="build" data="data"></runes-section>
                         </div>
                     </div>
 				</div>
