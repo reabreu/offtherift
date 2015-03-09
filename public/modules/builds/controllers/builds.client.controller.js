@@ -18,7 +18,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedPatch 		: Repository.getSelectedPatch(),
 				selectedChampion 	: null,
 			};
-			
+
 			//objeto build que sera vazio no caso de estarmos a criar uma nova build
 			$scope.build = {
 				visible: 			false,
@@ -26,6 +26,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				champion_id: 		null,
 				version: 			null,
 				runes: 				{},
+				masteries: 			[],
 				snapshot: 			[],
 				calculatedStats: 	[]
 			}
@@ -60,6 +61,19 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 						Repository.getMasteries(params).then(function(data) {
 							$scope.data.masteries 	= data.masteries;
+
+							for (var i = 0; i<$scope.data.masteries.length; i++) {
+								$scope.data.masteries[i].points = 0;
+							};
+							$scope.data.masteries.push({id:4153, masteryTree:'Offense'});
+							$scope.data.masteries.push({id:4161, masteryTree:'Offense'});
+							$scope.data.masteries.push({id:4223, masteryTree:'Defense'});
+							$scope.data.masteries.push({id:4254, masteryTree:'Defense'});
+							$scope.data.masteries.push({id:4261, masteryTree:'Defense'});
+							$scope.data.masteries.push({id:4321, masteryTree:'Utility'});
+							$scope.data.masteries.push({id:4351, masteryTree:'Utility'});
+							$scope.data.masteries.push({id:4354, masteryTree:'Utility'});
+							$scope.data.masteries.push({id:4361, masteryTree:'Utility'});
 						});
 					});
 				});
@@ -207,6 +221,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				});
 			});
 
+			//popular com os efeitos das masteries
+			angular.forEach($scope.build.masteries, function(masterie, index) {
+				request.effects = request.effects.concat(masterie.customEffect);
+			});
+
 			ngProgress.start();
 			Calculate.save(request).$promise.then(function(data) {
 				$scope.build.calculatedStats[$scope.data.currentSnapshot] = data;
@@ -230,6 +249,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		}, true);
 
 		$scope.$watch('build.runes', function (newVal) {
+			$scope.evaluateStatsRequest();
+		}, true);
+
+		$scope.$watch('build.masteries', function (newVal) {
 			$scope.evaluateStatsRequest();
 		}, true);
 	}

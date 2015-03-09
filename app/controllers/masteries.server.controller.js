@@ -79,24 +79,27 @@ exports.list = function(req, res) {
     var name        = req.param('name');
     var enabled     = req.param('enabled');
     var riotId      = req.param('riotId');
+    var build       = req.param('build');
+    var query       = {};
 
     var options = {
         skip:       skip,
         limit:      limit
     }
 
-    var query       = {};
+    if (!res.isAdmin)
+        query.enabled = true;
 
-    if( version != undefined && version != '')
+    if (version != undefined && version != '')
         query.version = version;
 
-    if( name != undefined)
+    if (name != undefined)
         query.name = { "$regex": name, "$options": "i" };
 
-    if( enabled != undefined)
+    if (enabled != undefined)
         query.enabled = enabled;
 
-    if( riotId != undefined)
+    if (riotId != undefined)
         query.id = riotId;
 
 	Masterie.find(query, null, options).sort('name').exec(function(err, masteries) {

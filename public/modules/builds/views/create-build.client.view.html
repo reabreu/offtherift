@@ -102,7 +102,7 @@
 										<td>Attack Speed</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackspeed}}</strong></td>
 										<td>Cooldown Red</td>
-										<td><strong>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}} %</strong></td>
 									</tr>
 									<tr>
 										<td>Crit Chance</td>
@@ -126,7 +126,6 @@
 							</table>
 						</div>
 						<div class="col-xs-12">
-
 						</div>
 					</div>
 				</div>
@@ -137,6 +136,9 @@
                         </div>
                         <div class="panel accordion-item">
                            	<runes-section build="build" data="data"></runes-section>
+                        </div>
+                        <div class="panel accordion-item">
+                           	<masteries-section build="build" data="data"></masteries-section>
                         </div>
                     </div>
 				</div>

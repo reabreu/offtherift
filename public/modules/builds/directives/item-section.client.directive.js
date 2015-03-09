@@ -7,10 +7,9 @@ angular.module('builds').directive('itemSection', [
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'=',
-				calculate: 	'&'
+				build: 	'='
 			},
-			controller: function($scope, $element, $timeout){
+			controller: function($scope, $element){
 
 
 				$scope.init = function(){

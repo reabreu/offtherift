@@ -5,8 +5,7 @@ module.exports = function(app) {
 	var masteries = require('../../app/controllers/masteries.server.controller');
 
 	// Masteries Routes
-	app.route('/masteries')
-		.get(masteries.list);
+	app.route('/masteries').get(users.hasRole(['admin']),masteries.list);
 
 	app.route('/masteries/:masterieId')
 		.get(masteries.read)
