@@ -7,15 +7,18 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 exports.calculate = function(req, res) {
-	res.jsonp(module.exports.processStats(req.body));
+	res.jsonp(module.exports.processStats(req.body, res.isAdmin));
 }
 
 /**
  * Calculate
  */
-exports.processStats = function(request) {
-
-	// @TODO Validate request
+exports.processStats = function(request, admin) {
+	var errors = validate(request);
+	
+	if(admin && errors.length) {
+		console.log(errors);
+	};
 
 	// growth per lvl: (nextLevel * 3.5) + 65
 	var growth = {
@@ -610,4 +613,77 @@ function isValidEffect(effect) {
 	return (("dest" in effect) && ("value" in effect) && ("type" in effect) &&
 		("name" in effect) && ("src" in effect) && ("unique" in effect) &&
 		("perlevel" in effect));
+}
+
+/**
+ * Check if the data is well formated.
+ * @param data {json} JSON containing champion information and effects.
+ * @return {Array} Errors found.
+ */
+function validate(data) {
+	var errors = [];
+
+	if (!('level' in data)) {
+		errors.push("Missing champion level!");
+	}
+
+	if (!('stats' in data)) {
+		return "Missing base stats!";
+	} else {
+		if (!(data.stats instanceof Object)) {
+			errors.push("Effects should be of type Object");
+		} else {
+			var stats = [
+				'armor',
+				'armorperlevel',
+				'attackdamage',
+				'attackdamageperlevel',
+				'attackrange',
+				'attackspeedoffset',
+				'attackspeedperlevel',
+				'crit',
+				'critperlevel',
+				'hp',
+				'hpperlevel',
+				'hpregen',
+				'hpregenperlevel',
+				'movespeed',
+				'mp',
+				'mpperlevel',
+				'mpregen',
+				'mpregenperlevel',
+				'spellblock',
+				'spellblockperlevel'];
+
+			// check the structure of all the effects in the array
+			for (var i = data.stats.length - 1; i >= 0; i--) {
+				for (var k = stats.length - 1; k >= 0; k--) {
+					if (!(stats[k] in data.stats[i])) {
+						errors.push("Missing '" + stats[k] + "' stat!");
+					}
+				};
+			};
+		}
+	}
+
+	if (!('effects' in data)) {
+		errors.push("Missing effects array!");
+	} else {
+		if (!(data.effects instanceof Array)) {
+			errors.push("Effects should be of type Array");
+		} else {
+			var effectKeys = ['dest', 'value', 'type', 'unique', 'name', 'src', 'perlevel'];
+
+			// check the structure of all the effects in the array
+			for (var i = data.effects.length - 1; i >= 0; i--) {
+				for (var k = effectKeys.length - 1; k >= 0; k--) {
+					if (!(effectKeys[k] in data.effects[i])) {
+						errors.push("Effect at " + i + " missing " + effectKeys[k] + " key!");
+					}
+				};
+			};
+		}
+	}
+
+	return errors;
 }
