@@ -333,7 +333,7 @@ exports.processStats = function(request, admin) {
 		}
 	}
 
-	var response = {};
+	var response = {data: {}};
 
 	// Calculate independent stats first.
 	for (var key in stats) {
@@ -341,7 +341,7 @@ exports.processStats = function(request, admin) {
 
 		if (stat.dependencies.length) continue; // skip dependencies
 
-		response[stat.name] = calculateStatValue(stat, response);
+		response.data[stat.name] = calculateStatValue(stat, response.data);
 	}
 
 	// Calculate dependent stats.
@@ -350,40 +350,40 @@ exports.processStats = function(request, admin) {
 
 		if (!stat.dependencies.length) continue; // skip independent stats
 
-		response[stat.name] = calculateStatValue(stat, response);
+		response.data[stat.name] = calculateStatValue(stat, response.data);
 	}
 
 	// Format stats according to the in-game stats window.
-	for (var key in response) {
+	for (var key in response.data) {
 		switch (key) {
 			case "hp":
-				response[key] = Math.ceil(response[key]);
+				response.data[key] = Math.ceil(response.data[key]);
 				break;
 			case "mp":
-				response[key] = Math.floor(response[key]);
+				response.data[key] = Math.floor(response.data[key]);
 				break;
 			case "attackspeed":
-				response[key] = Math.min(response[key], 2.5);
-				response[key] = parseFloat(response[key].toFixed(2));
+				response.data[key] = Math.min(response.data[key], 2.5);
+				response.data[key] = parseFloat(response.data[key].toFixed(2));
 				break;
 			case "cooldownreduction":
-				response[key] = Math.min(response[key], 40);
-				response[key] = parseFloat(response[key].toFixed(2));
+				response.data[key] = Math.min(response.data[key], 40);
+				response.data[key] = parseFloat(response.data[key].toFixed(2));
 				break;
 			case "critchance":
-				response[key] = Math.min(response[key], 100);
-				response[key] = Math.round(response[key]);
+				response.data[key] = Math.min(response.data[key], 100);
+				response.data[key] = Math.round(response.data[key]);
 				break;
 			case "movespeed":
-				var secondCap = Math.max((response[key] - 490), 0) * 0.5;
-				var firstCap  = (Math.max(Math.min(response[key] - 490, 415) - 415), 0) * 0.8;
-				response[key] = secondCap + firstCap + Math.min(response[key], 415);
+				var secondCap = Math.max((response.data[key] - 490), 0) * 0.5;
+				var firstCap  = (Math.max(Math.min(response.data[key] - 490, 415) - 415), 0) * 0.8;
+				response.data[key] = secondCap + firstCap + Math.min(response.data[key], 415);
 				break;
 			case "armorpenetration":
 			case "magicpenetration":
 				break;
 			default:
-				response[key] = Math.round(response[key]);
+				response.data[key] = Math.round(response.data[key]);
 				break;
 		}
 	}
