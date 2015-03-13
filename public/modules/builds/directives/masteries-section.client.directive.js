@@ -43,6 +43,13 @@ angular.module('builds').directive('masteriesSection', [
 
 					if(elem.hasClass('mastery-disabled')) return;
 
+					//verificar se esta masterie é uma depedencia de outra e se essa outra tem pontos
+					for (var i = 0; i < $scope.data.masteries.length; i++) {
+						if( $scope.data.masteries[i].prereq == masterie.id.toString() &&  $scope.data.masteries[i].points > 0){
+							return;
+						}
+					}
+
 					if(masterie.points > 0){
 						$scope.points[masterie.masteryTree.toLowerCase()]--;
 						masterie.points--;
@@ -70,6 +77,20 @@ angular.module('builds').directive('masteriesSection', [
 							break;
 						}
 					}
+				}
+
+				$scope.checkDependecy = function(masterie){
+					if (masterie.prereq == "0"){
+						return true;
+					} else {
+						//verificar se a masterie em questao tem o rank total
+						for (var i = 0; i < $scope.data.masteries.length; i++) {
+							if( $scope.data.masteries[i].id.toString() == masterie.prereq && $scope.data.masteries[i].points == $scope.data.masteries[i].ranks){
+								return true;
+							}
+						}
+					}
+					return false;
 				}
 			}
 		};

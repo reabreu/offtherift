@@ -7,7 +7,7 @@
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.offense-1}"
+                        ng-class="{'mastery-disabled': $index > enabled.offense-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"
