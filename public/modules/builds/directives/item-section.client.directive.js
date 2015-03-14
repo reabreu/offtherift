@@ -21,6 +21,11 @@ angular.module('builds').directive('itemSection', [
 					name: null
 				}
 
+				$scope.itemSearch = {
+					name: "",
+					tags: []
+				};
+
 				$scope.addSnapshot = function(){
 					var statTmp =  {
 						hp: 'n/a',
@@ -68,6 +73,21 @@ angular.module('builds').directive('itemSection', [
 				$scope.removeItem = function(index){
 					$scope.build.snapshot[$scope.data.currentSnapshot].items.splice(index,1);
 				}
+
+				$scope.toggleItemTag = function(tag) {
+					var idx = $scope.itemSearch.tags.indexOf(tag);
+
+					// is currently selected
+					if (idx > -1) {
+						$scope.itemSearch.tags.splice(idx, 1);
+					} else {
+						$scope.itemSearch.tags.push(tag);
+					}
+				};
+
+				$scope.itemFilterEnabled = function(tag) {
+					return ($scope.itemSearch.tags.indexOf(tag) > -1);
+				};
 
 				$scope.range = function(min, max, step){
 					step = step || 1;
