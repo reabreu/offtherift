@@ -10,7 +10,6 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				build: '='
 			},
 			controller: function($scope) {
-				$scope.runeCount = {};
 
 				$scope.currentType = 'mark';
 
@@ -19,13 +18,6 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					'glyph': 'Glyphs',
 					'seal': 'Seals',
 					'quintessence': 'Quintessences'
-				};
-
-				$scope.runesByType = {
-					mark: 			[],
-					glyph: 			[],
-					seal: 			[],
-					quintessence: 	[]
 				};
 
 				$scope.runeSearch = {
@@ -39,11 +31,12 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					seal: 9,
 					quintessence: 3
 				}
-
-				$scope.build.runes['mark'] 			= [];
-				$scope.build.runes['glyph'] 		= [];
-				$scope.build.runes['seal'] 			= [];
-				$scope.build.runes['quintessence'] 	= [];
+				$scope.runesByType = {
+					mark: 			[],
+					glyph: 			[],
+					seal: 			[],
+					quintessence: 	[]
+				};
 
 				$scope.init = function() {
 					var runesLength = $scope.data.runes.length;
@@ -90,10 +83,10 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 							if ($scope.build.runes[tag].length < $scope.runeLimits[tag]) {
 								$scope.build.runes[tag].push({'id' : rune.id, 'image' : rune.image.full, 'customEffect' : rune.customEffect});
 
-								if (rune.id in $scope.runeCount) {
-									$scope.runeCount[rune.id]++;
+								if (rune.id in $scope.build.runes_aux.runeCount) {
+									$scope.build.runes_aux.runeCount[rune.id]++;
 								} else {
-									$scope.runeCount[rune.id] = 1;
+									$scope.build.runes_aux.runeCount[rune.id] = 1;
 								}
 							}
 							break;
@@ -105,7 +98,7 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					for (var i = $scope.build.runes[tag].length - 1; i >= 0; i--) {
 						if ($scope.build.runes[tag][i].id === id) {
 							$scope.build.runes[tag].splice(i, 1);
-							$scope.runeCount[id]--;
+							$scope.build.runes_aux.runeCount[id]--;
 							break;
 						}
 					};

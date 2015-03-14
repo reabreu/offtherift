@@ -7,15 +7,18 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 exports.calculate = function(req, res) {
-	res.jsonp(module.exports.processStats(req.body));
+	res.jsonp(module.exports.processStats(req.body, res.isAdmin));
 }
 
 /**
  * Calculate
  */
-exports.processStats = function(request) {
-
-	// @TODO Validate request
+exports.processStats = function(request, admin) {
+	var errors = validate(request);
+	
+	if(admin && errors.length) {
+		console.log(errors);
+	};
 
 	// growth per lvl: (nextLevel * 3.5) + 65
 	var growth = {
@@ -330,7 +333,7 @@ exports.processStats = function(request) {
 		}
 	}
 
-	var response = {};
+	var response = {data: {}};
 
 	// Calculate independent stats first.
 	for (var key in stats) {
@@ -338,7 +341,7 @@ exports.processStats = function(request) {
 
 		if (stat.dependencies.length) continue; // skip dependencies
 
-		response[stat.name] = calculateStatValue(stat, response);
+		response.data[stat.name] = calculateStatValue(stat, response.data);
 	}
 
 	// Calculate dependent stats.
@@ -347,40 +350,40 @@ exports.processStats = function(request) {
 
 		if (!stat.dependencies.length) continue; // skip independent stats
 
-		response[stat.name] = calculateStatValue(stat, response);
+		response.data[stat.name] = calculateStatValue(stat, response.data);
 	}
 
 	// Format stats according to the in-game stats window.
-	for (var key in response) {
+	for (var key in response.data) {
 		switch (key) {
 			case "hp":
-				response[key] = Math.ceil(response[key]);
+				response.data[key] = Math.ceil(response.data[key]);
 				break;
 			case "mp":
-				response[key] = Math.floor(response[key]);
+				response.data[key] = Math.floor(response.data[key]);
 				break;
 			case "attackspeed":
-				response[key] = Math.min(response[key], 2.5);
-				response[key] = parseFloat(response[key].toFixed(2));
+				response.data[key] = Math.min(response.data[key], 2.5);
+				response.data[key] = parseFloat(response.data[key].toFixed(2));
 				break;
 			case "cooldownreduction":
-				response[key] = Math.min(response[key], 40);
-				response[key] = parseFloat(response[key].toFixed(2));
+				response.data[key] = Math.min(response.data[key], 40);
+				response.data[key] = parseFloat(response.data[key].toFixed(2));
 				break;
 			case "critchance":
-				response[key] = Math.min(response[key], 100);
-				response[key] = Math.round(response[key]);
+				response.data[key] = Math.min(response.data[key], 100);
+				response.data[key] = Math.round(response.data[key]);
 				break;
 			case "movespeed":
-				var secondCap = Math.max((response[key] - 490), 0) * 0.5;
-				var firstCap  = (Math.max(Math.min(response[key] - 490, 415) - 415), 0) * 0.8;
-				response[key] = secondCap + firstCap + Math.min(response[key], 415);
+				var secondCap = Math.max((response.data[key] - 490), 0) * 0.5;
+				var firstCap  = (Math.max(Math.min(response.data[key] - 490, 415) - 415), 0) * 0.8;
+				response.data[key] = secondCap + firstCap + Math.min(response.data[key], 415);
 				break;
 			case "armorpenetration":
 			case "magicpenetration":
 				break;
 			default:
-				response[key] = Math.round(response[key]);
+				response.data[key] = Math.round(response.data[key]);
 				break;
 		}
 	}
@@ -610,4 +613,77 @@ function isValidEffect(effect) {
 	return (("dest" in effect) && ("value" in effect) && ("type" in effect) &&
 		("name" in effect) && ("src" in effect) && ("unique" in effect) &&
 		("perlevel" in effect));
+}
+
+/**
+ * Check if the data is well formated.
+ * @param data {json} JSON containing champion information and effects.
+ * @return {Array} Errors found.
+ */
+function validate(data) {
+	var errors = [];
+
+	if (!('level' in data)) {
+		errors.push("Missing champion level!");
+	}
+
+	if (!('stats' in data)) {
+		return "Missing base stats!";
+	} else {
+		if (!(data.stats instanceof Object)) {
+			errors.push("Effects should be of type Object");
+		} else {
+			var stats = [
+				'armor',
+				'armorperlevel',
+				'attackdamage',
+				'attackdamageperlevel',
+				'attackrange',
+				'attackspeedoffset',
+				'attackspeedperlevel',
+				'crit',
+				'critperlevel',
+				'hp',
+				'hpperlevel',
+				'hpregen',
+				'hpregenperlevel',
+				'movespeed',
+				'mp',
+				'mpperlevel',
+				'mpregen',
+				'mpregenperlevel',
+				'spellblock',
+				'spellblockperlevel'];
+
+			// check the structure of all the effects in the array
+			for (var i = data.stats.length - 1; i >= 0; i--) {
+				for (var k = stats.length - 1; k >= 0; k--) {
+					if (!(stats[k] in data.stats[i])) {
+						errors.push("Missing '" + stats[k] + "' stat!");
+					}
+				};
+			};
+		}
+	}
+
+	if (!('effects' in data)) {
+		errors.push("Missing effects array!");
+	} else {
+		if (!(data.effects instanceof Array)) {
+			errors.push("Effects should be of type Array");
+		} else {
+			var effectKeys = ['dest', 'value', 'type', 'unique', 'name', 'src', 'perlevel'];
+
+			// check the structure of all the effects in the array
+			for (var i = data.effects.length - 1; i >= 0; i--) {
+				for (var k = effectKeys.length - 1; k >= 0; k--) {
+					if (!(effectKeys[k] in data.effects[i])) {
+						errors.push("Effect at " + i + " missing " + effectKeys[k] + " key!");
+					}
+				};
+			};
+		}
+	}
+
+	return errors;
 }

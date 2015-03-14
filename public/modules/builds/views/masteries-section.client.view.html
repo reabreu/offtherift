@@ -1,14 +1,14 @@
 <a href="#collapseMasteries" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Masteries</h2></a>
 <div  id="collapseMasteries" class="collapse" ng-init="init()">
     <div class="accordion-body">
-        <h2>Avaliable Points : {{avaliable_points}}</h2>
+        <h2>Avaliable Points : {{build.masteries_aux.avaliable_points}}</h2>
         <div class="col-sm-4">
-            <h3 style="text-align:center">Offense {{points.offense}}</h3>
+            <h3 style="text-align:center">Offense {{build.masteries_aux.points.offense}}</h3>
             <div ng-switch="masterie.enabled==undefined" class="col-xs-3" ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}">
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.offense-1 || !checkDependecy(masterie)}"
+                        ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.offense-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"
@@ -22,12 +22,12 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <h3 style="text-align:center">Defense {{points.defense}}</h3>
+            <h3 style="text-align:center">Defense {{build.masteries_aux.points.defense}}</h3>
             <div ng-switch="masterie.enabled==undefined" class="col-sm-3" ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}">
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.defense-1 || !checkDependecy(masterie)}"
+                        ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.defense-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"
@@ -41,12 +41,12 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <h3 style="text-align:center">Utility {{points.utility}}</h3>
+            <h3 style="text-align:center">Utility {{build.masteries_aux.points.utility}}</h3>
             <div ng-switch="masterie.enabled==undefined" class="col-sm-3" ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}">
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.utility-1 || !checkDependecy(masterie)}"
+                        ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.utility-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"

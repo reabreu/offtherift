@@ -14,7 +14,7 @@ if (files.length != 0) {
 	// For each file, there will be a test.
 	for (var i = 0; i < files.length; i++) {
 		var testCase = require(versionPath + files[i]);
-		var result = calculator.processStats(testCase.test);
+		var result = calculator.processStats(testCase.test).data;
 		var expected = testCase.expected;
 
 		describe(testCase.description, function() {

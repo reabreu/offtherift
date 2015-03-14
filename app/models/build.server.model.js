@@ -43,9 +43,11 @@ var BuildSchema = new Schema({
 		seal: [],
 		quintessence: []
 	},
+	runes_aux: 			{},
 	masteries: 			[],
-	snapshot: 			[]/*,
-	calculatedStats: 	[]*/
+	masteries_aux: 		{},
+	snapshot: 			[],
+	calculatedStats: 	[]
 });
 
 mongoose.model('Build', BuildSchema);

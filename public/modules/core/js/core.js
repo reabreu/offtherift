@@ -55,10 +55,10 @@ var Utility = {
         }
     },
     keepHeaderFixed: function () {
-        if ($header.is(':visible') && $('body').scrollTop() > offset.top){
+        if (!$('header').hasClass('ng-hide') && $('body').scrollTop() > offset.top){
             $('body').addClass('header-fixed-top');
         } else {
-             $('body').removeClass('header-fixed-top');
+            $('body').removeClass('header-fixed-top');
         }
     }
 };

@@ -11,41 +11,27 @@ angular.module('builds').directive('masteriesSection', [
 			},
 			controller: function($scope, $element){
 
-				$scope.avaliable_points = 30;
-
-				$scope.points = {
-					offense: 0,
-					defense: 0,
-					utility:  0
-				};
-
-				$scope.enabled = {
-					offense: 4,
-					defense: 4,
-					utility:  4
-				}
-
 				$scope.addRank = function($event, masterie){
 					var elem = angular.element($event.currentTarget);
 
-					if(elem.hasClass('mastery-disabled') || $scope.avaliable_points == 0) return;
+					if(elem.hasClass('mastery-disabled') || $scope.build.masteries_aux.avaliable_points == 0) return;
 
 					if(masterie.points < masterie.ranks){
-						$scope.points[masterie.masteryTree.toLowerCase()]++;
+						$scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()]++;
 						masterie.points++;
-						$scope.avaliable_points--;
+						$scope.build.masteries_aux.avaliable_points--;
 
 						$scope.updateBuild(masterie);
 
-						if ($scope.points[masterie.masteryTree.toLowerCase()] % 4 == 0)
-							$scope.enabled[masterie.masteryTree.toLowerCase()] += 4;
+						if ($scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()] % 4 == 0)
+							$scope.build.masteries_aux.enabled[masterie.masteryTree.toLowerCase()] += 4;
 					}
 				}
 
 				$scope.removeRank = function($event, masterie){
 					var elem = angular.element($event.currentTarget);
 
-					if(elem.hasClass('mastery-disabled') || $scope.avaliable_points == 0) return;
+					if(elem.hasClass('mastery-disabled') || $scope.build.masteries_aux.avaliable_points == 0) return;
 
 					//verificar se esta masterie é uma depedencia de outra e se essa outra tem pontos
 					for (var i = 0; i < $scope.data.masteries.length; i++) {
@@ -55,14 +41,14 @@ angular.module('builds').directive('masteriesSection', [
 					}
 
 					if(masterie.points > 0){
-						$scope.points[masterie.masteryTree.toLowerCase()]--;
+						$scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()]--;
 						masterie.points--;
-						$scope.avaliable_points++;
+						$scope.build.masteries_aux.avaliable_points++;
 
 						$scope.updateBuild(masterie);
 
-						if ($scope.points[masterie.masteryTree.toLowerCase()] % 4 == 3)
-							$scope.enabled[masterie.masteryTree.toLowerCase()] -= 4;
+						if ($scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()] % 4 == 3)
+							$scope.build.masteries_aux.enabled[masterie.masteryTree.toLowerCase()] -= 4;
 					}
 				}
 

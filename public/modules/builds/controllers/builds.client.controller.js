@@ -4,21 +4,39 @@
 angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state',
 	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state) {
 		$scope.authentication 	= Authentication;
-		$scope.build 			= {
-			visible: 			false,
-			name: 				null,
-			champion_id: 		null,
-			version: 			null,
-			runes: 				{},
-			masteries: 			[],
-			snapshot: 			[],
-			calculatedStats: 	[]
-		};
 
 		$scope.init = function(){
-			$scope.enabledView = false;
-
-			ngProgress.start();
+			$scope.build 			= {
+				visible: 			false,
+				name: 				null,
+				champion_id: 		null,
+				version: 			null,
+				runes: 				{
+					mark : 			[],
+					glyph : 		[],
+					quintessence: 	[],
+					seal: 			[]
+				},
+				runes_aux: {
+					runeCount: {}
+				},
+				masteries: 			[],
+				masteries_aux: 		{
+					avaliable_points: 30,
+					points : {
+						offense:  0,
+						defense:  0,
+						utility:  0
+					},
+					enabled: 	{
+						offense: 4,
+						defense: 4,
+						utility:  4
+					}
+				},
+				snapshot: 			[],
+				calculatedStats: 	[]
+			};
 
 			// Data
 			$scope.data = {
@@ -33,6 +51,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedChampion 	: null,
 			};
 
+			$scope.enabledView = false;
+
+			ngProgress.start();
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
@@ -41,13 +62,29 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			} else {
 				$scope.initBuild();
 			}
+
+			$scope.$watch('build.snapshot', function (newVal) {
+				$scope.evaluateStatsRequest();
+			}, true);
+
+			$scope.$watch('build.runes', function (newVal) {
+				$scope.evaluateStatsRequest();
+			}, true);
+
+			$scope.$watch('build.masteries', function (newVal) {
+				$scope.evaluateStatsRequest();
+			}, true);
+
+			$scope.$watch('build.champion_id', function (newVal) {
+				$scope.evaluateStatsRequest();
+			}, true);
 		}
 
 		$scope.initBuild = function() {
 			if ($state.current.name == "editBuild") {
 				$scope.findOne();
 			} else {
-				$scope.data.selectedPatch 	= $scope.data.patches[0].version;
+				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
 		}
@@ -57,13 +94,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 
 				$scope.build 				= data.data;
-				$scope.data.selectedPatch 	= $scope.build.version;
-				var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
+				if ($state.current.name != "viewBuild") {
+					$scope.data.selectedPatch 	= $scope.build.version;
+					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
 
-				Repository.getChampions(params).then(function(data) {
-					$scope.data.selectedChampion 	= data.champions[0];
-					$scope.getPatchInfo();
-				});
+					Repository.getChampions(params).then(function(data) {
+						$scope.data.selectedChampion 	= data.champions[0];
+						$scope.getPatchInfo();
+					});
+				}
 			});
 		};
 
@@ -261,8 +300,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			ngProgress.start();
-			Calculate.save(request).$promise.then(function(data) {
-				$scope.build.calculatedStats[$scope.data.currentSnapshot] = data;
+			Calculate.save(request).$promise.then(function(response) {
+				$scope.build.calculatedStats[$scope.data.currentSnapshot] = response.data;
 				ngProgress.complete();
 			});
 		};
@@ -277,17 +316,5 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$timeout.cancel($scope.data.timer);
 			$scope.data.timer = $timeout($scope.calculate,1500);
 		};
-
-		$scope.$watch('build.snapshot', function (newVal) {
-			$scope.evaluateStatsRequest();
-		}, true);
-
-		$scope.$watch('build.runes', function (newVal) {
-			$scope.evaluateStatsRequest();
-		}, true);
-
-		$scope.$watch('build.masteries', function (newVal) {
-			$scope.evaluateStatsRequest();
-		}, true);
 	}
 ]);
