@@ -6,6 +6,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.authentication 	= Authentication;
 
 		$scope.init = function(){
+			$scope.enabledView = false;
+
 			$scope.build 			= {
 				visible: 			false,
 				name: 				null,
