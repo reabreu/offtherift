@@ -1,12 +1,26 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout) {
-		$scope.authentication = Authentication;
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state) {
+		$scope.authentication 	= Authentication;
+		$scope.build 			= {
+			visible: 			false,
+			name: 				null,
+			champion_id: 		null,
+			version: 			null,
+			runes: 				{},
+			masteries: 			[],
+			snapshot: 			[],
+			calculatedStats: 	[]
+		};
 
 		$scope.init = function(){
-			//info que temos na view a uma dada altura
+			$scope.enabledView = false;
+
+			ngProgress.start();
+
+			// Data
 			$scope.data = {
 				currentSnapshot		: 0,
 				timer				: null,
@@ -15,35 +29,46 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				runes 				: [],
 				masteries 			: [],
 				patches 			: Repository.getCachedPatches(),
-				selectedPatch 		: Repository.getSelectedPatch(),
+				selectedPatch 		: null,
 				selectedChampion 	: null,
 			};
 
-			//objeto build que sera vazio no caso de estarmos a criar uma nova build
-			$scope.build = {
-				visible: 			false,
-				name: 				null,
-				champion_id: 		null,
-				version: 			null,
-				runes: 				{},
-				masteries: 			[],
-				snapshot: 			[],
-				calculatedStats: 	[]
-			}
-
 			if (!$scope.data.patches.length) {
-				ngProgress.start();
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
-					$scope.build.version 		= $scope.data.selectedPatch 	= $scope.data.patches[0].version;
-					$scope.getPatchInfo();
+					$scope.initBuild();
 				});
+			} else {
+				$scope.initBuild();
 			}
 		}
 
+		$scope.initBuild = function() {
+			if ($state.current.name == "editBuild") {
+				$scope.findOne();
+			} else {
+				$scope.data.selectedPatch 	= $scope.data.patches[0].version;
+				$scope.getPatchInfo();
+			}
+		}
+
+		// Find existing Build
+		$scope.findOne = function() {
+			Builds.get({buildId: $stateParams.buildId}, function(data) {
+
+				$scope.build 				= data.data;
+				$scope.data.selectedPatch 	= $scope.build.version;
+				var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
+
+				Repository.getChampions(params).then(function(data) {
+					$scope.data.selectedChampion 	= data.champions[0];
+					$scope.getPatchInfo();
+				});
+			});
+		};
+
 		/**
-		 * [getPatchInfo Load patch information needed for build]
-		 * @return {[type]}
+		 * Load patch information needed for build
 		 */
 		$scope.getPatchInfo = function(){
 			Repository.setSelectedPatch($scope.data.selectedPatch);
@@ -51,7 +76,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.champions 			= data.champions;
-				//$scope.data.selectedChampion 	= data.champions[parseInt(Math.random() * ($scope.data.champions.length))];
 
 				Repository.getItems(params).then(function(data) {
 					$scope.data.items 		= data.items;
@@ -62,9 +86,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						Repository.getMasteries(params).then(function(data) {
 							$scope.data.masteries 	= data.masteries;
 
-							for (var i = 0; i<$scope.data.masteries.length; i++) {
-								$scope.data.masteries[i].points = 0;
-							};
+							//Prego do Ruben
 							$scope.data.masteries.push({id:4153, masteryTree:'Offense'});
 							$scope.data.masteries.push({id:4161, masteryTree:'Offense'});
 							$scope.data.masteries.push({id:4223, masteryTree:'Defense'});
@@ -74,12 +96,36 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							$scope.data.masteries.push({id:4351, masteryTree:'Utility'});
 							$scope.data.masteries.push({id:4354, masteryTree:'Utility'});
 							$scope.data.masteries.push({id:4361, masteryTree:'Utility'});
+
+							angular.forEach($scope.data.masteries, function(masterie, index) {
+								masterie.points = 0;
+							});
+
+							if ($state.current.name == "editBuild") {
+								//popular as masteires com os pontos atribuidos na build
+								for (var i = 0; i <  $scope.build.masteries.length; i++ ) {
+									for (var z = 0; z <  $scope.data.masteries.length; z++ ) {
+										if ($scope.build.masteries[i].id == $scope.data.masteries[z].id){
+											$scope.data.masteries[z].points = parseInt($scope.build.masteries[i].customEffect.rank);
+											break;
+										}
+									}
+								}
+							}
+
+							$scope.enabledView = true;
+							ngProgress.complete();
 						});
 					});
 				});
 			});
 
 			ngProgress.complete();
+		}
+
+		$scope.evaluateBuildStatus = function(){
+			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined) return false;
+			return true;
 		}
 
 		// Create new Build
@@ -127,19 +173,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.builds = Builds.query();
 		};
 
-		// Find existing Build
-		$scope.findOne = function() {
-			$scope.build = Builds.get({
-				buildId: $stateParams.buildId
-			});
-		};
-
 		/**
-		 * [range Generate an array of number to loop with ng-repeat]
-		 * @param  {[type]}
-		 * @param  {[type]}
-		 * @param  {[type]}
-		 * @return {[type]}
+		 * Generate an array of number to loop with ng-repeat
 		 */
 		$scope.range = function(min, max, step){
 			step = step || 1;
@@ -155,7 +190,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.setLevel = function (level) {
 			$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 		}
-
 
 		/**
 		 * [openModal Open modal]
@@ -187,13 +221,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		/**
 		 * [setSelectedChampion setCurrentSelectedChammpion]
-		 * @param {[type]}
 		 */
 		$scope.setSelectedChampion = function(champion){
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
 			ngProgress.start();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.selectedChampion 	= data.champions[0];
+				$scope.build.champion_id = champion.id;
 				ngProgress.complete();
 			});
 		};

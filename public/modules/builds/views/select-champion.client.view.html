@@ -21,7 +21,10 @@
             </form>
             <hr>
             <div class="row">
-                <div data-ng-repeat="champion in data.champions | filter:search track by champion.id">
+                <div
+                    class='fx-fade-down fx-speed-1000 fx-trigger fx-easing-strong'
+                    data-ng-repeat="champion in data.champions | filter:search track by champion.id"
+                >
                     <div ng-if="$index + 1 % 6 == 0" class="clearfix"></div>
                     <div class="col-sm-2">
                         <img

@@ -1,9 +1,10 @@
 <a href="#collapseMasteries" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Masteries</h2></a>
 <div  id="collapseMasteries" class="collapse" ng-init="init()">
     <div class="accordion-body">
+        <h2>Avaliable Points : {{avaliable_points}}</h2>
         <div class="col-sm-4">
             <h3 style="text-align:center">Offense {{points.offense}}</h3>
-            <div ng-switch="masterie.enabled==undefined" class="col-sm-3" ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}">
+            <div ng-switch="masterie.enabled==undefined" class="col-xs-3" ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}">
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
@@ -26,7 +27,7 @@
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.defense-1}"
+                        ng-class="{'mastery-disabled': $index > enabled.defense-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"
@@ -45,7 +46,7 @@
                 <span ng-switch-when="false">
                     <img
                         ng-right-click="removeRank($event,masterie)"
-                        ng-class="{'mastery-disabled': $index > enabled.utility-1}"
+                        ng-class="{'mastery-disabled': $index > enabled.utility-1 || !checkDependecy(masterie)}"
                         class="avatar"
                         title=""
                         alt="masterie"

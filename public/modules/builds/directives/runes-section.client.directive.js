@@ -62,7 +62,7 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 						}
 					};
 				}
-				
+
 				$scope.toggleRuneTag = function(tag) {
 					var idx = $scope.runeSearch.tags.indexOf(tag);
 
@@ -84,12 +84,12 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					// Check rune limit by tag
 					for (var i = rune.tags.length - 1; i >= 0; i--) {
 						var tag = rune.tags[i];
-						
+
 						// if tag has limit and has been reached, can't add rune
 						if (tag in $scope.runeLimits) {
 							if ($scope.build.runes[tag].length < $scope.runeLimits[tag]) {
 								$scope.build.runes[tag].push({'id' : rune.id, 'image' : rune.image.full, 'customEffect' : rune.customEffect});
-								
+
 								if (rune.id in $scope.runeCount) {
 									$scope.runeCount[rune.id]++;
 								} else {

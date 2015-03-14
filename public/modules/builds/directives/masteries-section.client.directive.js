@@ -10,6 +10,9 @@ angular.module('builds').directive('masteriesSection', [
 				build: 	'='
 			},
 			controller: function($scope, $element){
+
+				$scope.avaliable_points = 30;
+
 				$scope.points = {
 					offense: 0,
 					defense: 0,
@@ -25,11 +28,12 @@ angular.module('builds').directive('masteriesSection', [
 				$scope.addRank = function($event, masterie){
 					var elem = angular.element($event.currentTarget);
 
-					if(elem.hasClass('mastery-disabled')) return;
+					if(elem.hasClass('mastery-disabled') || $scope.avaliable_points == 0) return;
 
 					if(masterie.points < masterie.ranks){
 						$scope.points[masterie.masteryTree.toLowerCase()]++;
 						masterie.points++;
+						$scope.avaliable_points--;
 
 						$scope.updateBuild(masterie);
 
@@ -41,7 +45,7 @@ angular.module('builds').directive('masteriesSection', [
 				$scope.removeRank = function($event, masterie){
 					var elem = angular.element($event.currentTarget);
 
-					if(elem.hasClass('mastery-disabled')) return;
+					if(elem.hasClass('mastery-disabled') || $scope.avaliable_points == 0) return;
 
 					//verificar se esta masterie é uma depedencia de outra e se essa outra tem pontos
 					for (var i = 0; i < $scope.data.masteries.length; i++) {
@@ -53,6 +57,7 @@ angular.module('builds').directive('masteriesSection', [
 					if(masterie.points > 0){
 						$scope.points[masterie.masteryTree.toLowerCase()]--;
 						masterie.points--;
+						$scope.avaliable_points++;
 
 						$scope.updateBuild(masterie);
 

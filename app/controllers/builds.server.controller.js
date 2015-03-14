@@ -30,7 +30,7 @@ exports.create = function(req, res) {
  * Show the current Build
  */
 exports.read = function(req, res) {
-	res.jsonp(req.build);
+	res.jsonp({data:req.build});
 };
 
 /**
@@ -72,7 +72,7 @@ exports.delete = function(req, res) {
 /**
  * List of Builds
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
 	Build.find().sort('-created').populate('user', 'displayName').exec(function(err, builds) {
 		if (err) {
 			return res.status(400).send({
@@ -87,7 +87,7 @@ exports.list = function(req, res) {
 /**
  * Build middleware
  */
-exports.buildByID = function(req, res, next, id) { 
+exports.buildByID = function(req, res, next, id) {
 	Build.findById(id).populate('user', 'displayName').exec(function(err, build) {
 		if (err) return next(err);
 		if (! build) return next(new Error('Failed to load Build ' + id));

@@ -12,7 +12,7 @@
 									<span class="col-sm-12">{{value}}</span>
 									<ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
 										<li ng-repeat="rune in build.runes[key] | unique:rune.id">
-											<img class="avatar col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
+											<img class="col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
 											{{runeCount[rune.id]}}
 										</li>
 									</ul>
@@ -43,7 +43,7 @@
 										</div>
 									</div>
 								</form>
-								<!-- 
+								<!--
 								<div class="col-sm-6">
 									<label>
 									<input
