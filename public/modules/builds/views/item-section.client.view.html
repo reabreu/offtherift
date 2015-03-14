@@ -10,7 +10,7 @@
                             <input
                             type        = "text"
                             class       = "form-control input-sm"
-                            ng-model    = 'search.name'
+                            ng-model    = "itemSearch.name"
                             placeholder = "Item Name"
                             >
                         </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="col-sm-7">
                 <ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
-                    <li ng-repeat = "item in data.items | filter: filterFunction">
+                    <li ng-repeat = "item in data.items | filterItems:itemSearch">
                         <a
                             tooltip-html-unsafe="TESTE"
                             class="mailbox-msg-list-item"
