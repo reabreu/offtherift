@@ -85,6 +85,7 @@ exports.list = function(req, res) {
     var build       = req.param('build');
     var data        = req.param('data');
     var select      = '';
+    var query       = {};
 
     var options = {
         skip:       skip,
@@ -102,8 +103,6 @@ exports.list = function(req, res) {
     if (data) {
         select = 'id key title image stats name version';
     }
-
-    var query       = {};
 
     if( version != undefined && version != '')
         query.version = version;

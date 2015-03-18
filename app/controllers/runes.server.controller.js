@@ -86,6 +86,9 @@ exports.list = function(req, res) {
 
 	var query = {};
 
+	if (!res.isAdmin)
+        query.enabled = true;
+
 	if( version != undefined && version != '')
 		query.version = version;
 

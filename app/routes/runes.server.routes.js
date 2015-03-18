@@ -6,7 +6,7 @@ module.exports = function(app) {
 
 	// Runes Routes
 	app.route('/runes')
-		.get(runes.list);
+		.get(users.hasRole(['admin']),runes.list);
 
 	app.route('/runes/:runeId')
 		.get(runes.read)

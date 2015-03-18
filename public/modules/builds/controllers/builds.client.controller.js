@@ -84,8 +84,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.initBuild = function() {
 			if ($state.current.name == "editBuild") {
+				$scope.Buildmode="edit";
 				$scope.findOne();
 			} else {
+				$scope.Buildmode="create";
 				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
@@ -202,8 +204,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		// Update existing Build
 		$scope.update = function() {
 			var buildService = new Builds ($scope.build);
-			$scope.build.$update(function() {
-				$location.path('builds/' + build._id + '/edit');
+
+			buildService.$update(function() {
+				$location.path('builds/' + $scope.build._id + '/edit');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

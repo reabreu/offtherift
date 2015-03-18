@@ -6,25 +6,11 @@
 					<input type="text" data-ng-model="build.name" id="name" class="form-control build-title" placeholder="Enter Build Name" required>
 				</div>
 				<div class="col-xs-6">
-					<div class="row mt10">
-						<!--<label class="col-xs-2">
-							Status
-						</label>
-						<div class="col-xs-2">
-							<span class="badge badge-success">Saved</span>
-						</div>
-						<label class="col-xs-2">Public</label>
-						<div class="col-xs-4">
-							<input
-								bs-switch
-								type            = "checkbox"
-								ng-model        = "build.public"
-								type            = "checkbox"
-								switch-size     = "mini"
-								ng-change       = "toggleEnabled(build)"
-							/>
-						</div>-->
+					<div class="row" ng-show="Buildmode == 'create'">
 						<a class="btn btn-success" href="#" ng-click="create()" ng-show="enabledView && evaluateBuildStatus()">Save this build!</a>
+					</div>
+					<div class="row" ng-show="Buildmode == 'edit'">
+						<a class="btn btn-success" href="#" ng-click="update()" ng-show="enabledView && evaluateBuildStatus()">Update this build!</a>
 					</div>
 				</div>
 			</div>
@@ -37,7 +23,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-xs-12">
+				<div class="col-xs-8 col-xs-offset-4">
 					<div style="width:5.5%;display:inline-block" ng-repeat="n in range(1,18)">
 						<span ng-click="setLevel(n)" ng-class="{'badge-info': build.snapshot[data.currentSnapshot].level == n}" class="badge" style="width:90%;cursor:pointer;">{{n}}</span>
 					</div>
@@ -68,43 +54,43 @@
 							<table class="table table-condensed mt10 mb0 table-stats" style="font-weight:200">
 								<tbody>
 									<tr>
-										<td>Hitpoints</td>
+										<td>HP</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].hp}}</strong></td>
-										<td>Mana</td>
+										<td>Mp</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].mp}}</strong></td>
 									</tr>
 									<tr>
-										<td>HP Regen per 5</td>
+										<td>Hp5</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].hpregen}}</strong></td>
-										<td>Mana Regen per 5</td>
+										<td>Mp5</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].mpregen}}</strong></td>
 									</tr>
 									<tr>
-										<td>Attack Damage</td>
+										<td>AD</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackdamage}}</strong></td>
-										<td>Ability Power</td>
+										<td>AP</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].abilitypower}}</strong></td>
 									</tr>
 									<tr>
-										<td>Armor Pen</td>
+										<td>ArPen</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].armorpenetration | doubleStat}}</strong></td>
-										<td>Magic Pen</td>
+										<td>MPen</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].magicpenetration | doubleStat}}</strong></td>
 									</tr>
 									<tr>
-										<td>Lifesteal</td>
+										<td>LS</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].lifesteal}} %</strong></td>
-										<td>Spell Vamp</td>
+										<td>SV</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].spellvamp}} %</strong></td>
 									</tr>
 									<tr>
-										<td>Attack Speed</td>
+										<td>AS</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackspeed}}</strong></td>
-										<td>Cooldown Red</td>
+										<td>CDR</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}} %</strong></td>
 									</tr>
 									<tr>
-										<td>Crit Chance</td>
+										<td>Crit</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].critchance}}</strong></td>
 										<td>Armor</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].armor}}</strong></td>
@@ -112,11 +98,11 @@
 									<tr>
 										<td>Range</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].attackrange}}</strong></td>
-										<td>Magic Resist</td>
+										<td>MR</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].spellblock}}</strong></td>
 									</tr>
 									<tr>
-										<td>Movement Speed</td>
+										<td>MS</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].movespeed}}</strong></td>
 										<td>Tenacity</td>
 										<td><strong>{{build.calculatedStats[data.currentSnapshot].tenacity}} %</strong></td>
@@ -144,4 +130,5 @@
 			</div>
 		</form>
 	 </div>
+	 <div>{{$scope.build | json}}</div>
 </section>
