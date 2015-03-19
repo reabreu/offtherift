@@ -28,6 +28,11 @@ var RuneSchema = new Schema({
 		type: 		Number,
 		required: 	'Please fill id'
 	},
+	version : {
+		type: 		String,
+		required: 	'Please fill version name',
+		trim: 		true
+	},
 	customEffect: []
 },{ strict: false });
 
