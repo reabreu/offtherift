@@ -102,8 +102,6 @@ exports.list = function(req, res) {
 	if (riotId != undefined)
     	query.id = riotId;
 
-    console.log(query);
-
 	Rune.find(query,null,options).sort('name').exec(function(err, runes) {
 		if (err) {
 			return res.status(400).send({
