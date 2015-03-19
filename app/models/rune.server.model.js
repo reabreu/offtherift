@@ -24,6 +24,10 @@ var RuneSchema = new Schema({
 		type: Boolean,
 		default: false,
 	},
+	id: {
+		type: 		Number,
+		required: 	'Please fill id'
+	},
 	customEffect: []
 },{ strict: false });
 

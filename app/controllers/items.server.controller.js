@@ -110,6 +110,8 @@ exports.list = function(req, res) {
 	if(riotId != undefined)
 		query.id = riotId;
 
+	console.log(query);
+
 	Item.find(query,select,options).sort('name').exec(function(err, items) {
 		if (err) {
 			return res.status(400).send({
