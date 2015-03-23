@@ -60,6 +60,15 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					},
 					{ 	value 		: 'movespeed',
 						label  		: 'Movement Speed'
+					},
+					{ 	value 		: 'energy',
+						label  		: 'Energy'
+					},
+					{ 	value 		: 'energyregen',
+						label  		: 'Energy Regeneration'
+					},
+					{ 	value 		: 'tenacity',
+						label  		: 'Tenacity'
 					}
 				];
 
@@ -67,13 +76,13 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'flat',
 						label		: 'Flat'
 					},
-					{ 	value 		: 'rune',
+					{ 	value 		: 'runes',
 						label		: 'Rune'
 					},
-					{ 	value 		: 'masterie',
+					{ 	value 		: 'masteries',
 						label		: 'Masterie'
 					},
-					{ 	value 		: 'item',
+					{ 	value 		: 'items',
 						label		: 'Item'
 					},
 					{ 	value 		: 'abilities',

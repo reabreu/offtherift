@@ -282,9 +282,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 */
 		$scope.calculate = function(){
 			var request = {
-				level: $scope.build.snapshot[$scope.data.currentSnapshot].level,
-				stats: $scope.data.selectedChampion.stats,
-				effects: []
+				partype: 	$scope.data.selectedChampion.partype,
+				level: 		$scope.build.snapshot[$scope.data.currentSnapshot].level,
+				stats: 		$scope.data.selectedChampion.stats,
+				effects: 	[]
 			};
 
 			//popular com os efeitos dos items

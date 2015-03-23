@@ -30,7 +30,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					glyph: 9,
 					seal: 9,
 					quintessence: 3
-				}
+				};
+
 				$scope.runesByType = {
 					mark: 			[],
 					glyph: 			[],
@@ -81,6 +82,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 						// if tag has limit and has been reached, can't add rune
 						if (tag in $scope.runeLimits) {
 							if ($scope.build.runes[tag].length < $scope.runeLimits[tag]) {
+								if(!rune.customEffect.length) continue;
+
 								$scope.build.runes[tag].push({'id' : rune.id, 'image' : rune.image.full, 'customEffect' : rune.customEffect});
 
 								if (rune.id in $scope.build.runes_aux.runeCount) {

@@ -101,7 +101,7 @@ exports.list = function(req, res) {
     }
 
     if (data) {
-        select = 'id key title image stats name version';
+        select = 'id key title image stats name version partype';
     }
 
     if( version != undefined && version != '')

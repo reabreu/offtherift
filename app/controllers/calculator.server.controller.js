@@ -15,7 +15,7 @@ exports.calculate = function(req, res) {
  */
 exports.processStats = function(request, admin) {
 	var errors = validate(request);
-	
+
 	if(admin && errors.length) {
 		console.log(errors);
 	};
