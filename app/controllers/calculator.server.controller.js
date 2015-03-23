@@ -42,6 +42,8 @@ exports.processStats = function(request, admin) {
 		"18"	: 17.000
 	};
 
+	// Structure to control allowed effects
+	var partymap = {energy: "Energy", energyregen: "Energy", mp: "Mana", mpregen: "Mana"};
 	// Structure of the stats with all the necessary components to
 	// calculate each stat's value
 	var stats = {
@@ -307,6 +309,15 @@ exports.processStats = function(request, admin) {
 	for (var i = 0; i < effectCount; i++) {
 		var effect = request.effects[i];
 		effect.value = parseFloat(effect.value);
+
+		if ( effect.dest in partymap && partymap[effect.dest] != request.partype) {
+			console.log("ignorando!");
+			continue;
+		}
+
+		//Mini vergalhada XD
+		if(effect.dest == "energy")		 effect.dest = "mp";
+		if(effect.dest == "energyregen") effect.dest = "mpregen";
 
 		// If the effect has dependencies, save it for later.
 		if (effect.src != "") {
