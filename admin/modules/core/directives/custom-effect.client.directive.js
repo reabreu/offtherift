@@ -40,7 +40,7 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 					{ 	value 		: 'lifesteal',
 						label  		: 'Life Steal'
 					},
-					{ 	value 		: 'spellVamp',
+					{ 	value 		: 'spellvamp',
 						label  		: 'Spell Vamp'
 					},
 					{ 	value 		: 'attackspeed',
