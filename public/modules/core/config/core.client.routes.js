@@ -37,6 +37,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('contactus', {
 			url: '/contact-us',
 			templateUrl: 'modules/core/views/pages/contact-us.client.view.html'
+		}).
+		state('activation', {
+			url: '/account/activation/:hash',
+			templateUrl: 'modules/core/views/pages/user-activation.client.view.html'
 		});
 
 	}

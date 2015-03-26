@@ -64,7 +64,8 @@ module.exports = {
 					'admin/modules/runes/runes.client.module.js',
 					'admin/modules/runes/services/runes.client.service.js',
 					'admin/modules/masteries/masteries.client.module.js',
-					'admin/modules/masteries/services/masteries.client.service.js'
+					'admin/modules/masteries/services/masteries.client.service.js',
+					'admin/modules/users/services/hashes.client.service.js'
 				],
 				tests: [
 					'public/lib/angular-mocks/angular-mocks.js',

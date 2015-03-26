@@ -7,16 +7,26 @@ var passport = require('passport'),
 	url = require('url'),
 	FacebookStrategy = require('passport-facebook').Strategy,
 	config = require('../config'),
-	users = require('../../app/controllers/users.server.controller');
+	users = require('../../app/controllers/users.server.controller'),
+	_ = require('lodash');
 
-module.exports = function() {
+/**
+ * Configure Facebook Strategy
+ * @param  {object} options Options
+ */
+module.exports = function(options) {
+
+	var options = options || {};
+
+	var facebookOptions = _.extend({
+		clientID: config.facebook.clientID,
+		clientSecret: config.facebook.clientSecret,
+		callbackURL: config.facebook.callbackURL,
+		passReqToCallback: true
+	}, options);
+
 	// Use facebook strategy
-	passport.use(new FacebookStrategy({
-			clientID: config.facebook.clientID,
-			clientSecret: config.facebook.clientSecret,
-			callbackURL: config.facebook.callbackURL,
-			passReqToCallback: true
-		},
+	passport.use(new FacebookStrategy(facebookOptions,
 		function(req, accessToken, refreshToken, profile, done) {
 			// Set the provider data and include tokens
 			var providerData = profile._json;

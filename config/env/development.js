@@ -12,13 +12,13 @@ module.exports = {
 		}
 	},
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || 'APP_ID',
-		clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
+		clientID: process.env.FACEBOOK_ID || '671726556258325',
+		clientSecret: process.env.FACEBOOK_SECRET || '618e4ac3c109ed7e355da58b3cac3e51',
 		callbackURL: '/auth/facebook/callback'
 	},
 	twitter: {
-		clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
-		clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
+		clientID: process.env.TWITTER_KEY || 'a098XpS0YtwADvALiOulQqQhg',
+		clientSecret: process.env.TWITTER_SECRET || 'CF4tZyT6m7IYk9vP4wipvyZdIO9zu9ftuCMrbT6WsIjPYL32y4',
 		callbackURL: '/auth/twitter/callback'
 	},
 	google: {
@@ -37,13 +37,23 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		service: 'gmail',
+		auth: {
+			user: process.env.MAILER_EMAIL_ID || 'GMAIL_USER',
+			pass: process.env.MAILER_PASSWORD || 'GMAIL_PASSWORD'
+		}
+		/*
+		from: process.env.MAILER_FROM || 'Inviter <inviter@offtherift.com>',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			host: process.env.MAILER_SERVICE_PROVIDER || 'mail.offtherift.com',
+			port: 465,
+            secure: true,
+            tls: { rejectUnauthorized: false },
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: process.env.MAILER_EMAIL_ID || 'noreply@offtherift.com',
+				pass: process.env.MAILER_PASSWORD || '3e27W3L0o9gZ'
 			}
 		}
+		*/
 	}
 };
