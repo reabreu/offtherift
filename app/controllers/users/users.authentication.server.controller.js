@@ -24,7 +24,7 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
+	// Then save the user
 	user.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -82,17 +82,33 @@ exports.signout = function(req, res) {
  */
 exports.oauthCallback = function(strategy) {
 	return function(req, res, next) {
-		passport.authenticate(strategy, function(err, user, redirectURL) {
-			if (err || !user) {
-				return res.redirect('/#!/signin');
-			}
-			req.login(user, function(err) {
-				if (err) {
-					return res.redirect('/#!/signin');
-				}
 
-				return res.redirect(redirectURL || '/');
-			});
+		var loginUrl  = '/#!/login';
+
+		passport.authenticate(strategy, function(err, user, redirectURL) {
+
+			if (err || !user) {
+				return res.redirect(loginUrl);
+			}
+
+			// user is not activated
+			if (!user.activated) {
+
+				return res.send({ message: "Thank's for your registration. As we are testing our beta version we will keep your data and contact you later when we open need beta users or launch our full application features." });
+
+			} else { // activated
+
+				req.login(user, function(err) {
+					if (err) {
+						return res.redirect(loginUrl);
+					}
+
+					return res.redirect(redirectURL || '/');
+				});
+
+			}
+
+
 		})(req, res, next);
 	};
 };

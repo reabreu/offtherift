@@ -9,7 +9,7 @@
 // Variables
 // ------------------------------
 
-// AutoCollapse 
+// AutoCollapse
 // Doesn't matter how many items you many have in the header, it stays responsive :3
 // Just hardcode the height of the header
 var headerHeight = 50; // Also have the same height in @navbar-height in variables.less
@@ -86,7 +86,7 @@ var Utility = {
             }
 
             if (c < v) {
-                $("#wrapper").height(v-h+f-20);
+                // $("#wrapper").height(v-h+f-20);
             }
        }
 
@@ -103,7 +103,7 @@ var Utility = {
             'warning':      '#f1c40f',
             'danger':       '#e74c3c',
             'info':         '#1abcaf',
-            
+
             'brown':        '#c0392b',
             'indigo':       '#9b59b6',
             'orange':       '#e67e22',
@@ -125,7 +125,7 @@ var Utility = {
     },
     toggle_leftbar: function() {
         var menuCollapsed = localStorage.getItem('collapsed_menu');
-        
+
         try {
             vFSLayout.toggle('west');
         } catch (e) {
@@ -136,7 +136,7 @@ var Utility = {
             localStorage.setItem('collapsed_menu', "false");
         else if (menuCollapsed == "false")
             localStorage.setItem('collapsed_menu', "true");
-        
+
         setTimeout(function(){                  // wait 500ms before calling resize
             $(window).trigger('resize');        // so toggle happens faster instead of
         }, 500);                                // sticking out
@@ -215,7 +215,7 @@ var Utility = {
             navbar.append(menu.detach());
         }
     }
-    
+
 };
 // ------------------------------
 // =/U
@@ -340,7 +340,7 @@ var Utility = {
 
         plugin.init = function() {
             plugin.settings = $.extend({}, defaults, options);
-            
+
             try {
                 fullHeightResizer();
             } catch(e) {
@@ -351,8 +351,8 @@ var Utility = {
         var fullHeightResizer = function() {
             var t = Utility.getViewPort().height - $('.full-height-content').offset().top;
             var f = ($('footer').height() + parseInt($('.static-content').css('margin-bottom').replace('px', '')));
-            
-            if ($('.full-height-content').parent('.panel-body').size() === 1) { 
+
+            if ($('.full-height-content').parent('.panel-body').size() === 1) {
                 $('.full-height-content').height(t-f-41); //if full-height-panel
             } else {
                 $('.full-height-content').height(t-f+10); //if full-height-body
@@ -414,7 +414,7 @@ $(document).ready(function () {
                 //small
                 vFSLayout.close('west');
                 vFSLayout.close('east');
-            },  
+            },
             unmatch : function() {
                 //big
                 vFSLayout.open('west');
@@ -441,13 +441,13 @@ $(document).ready(function () {
 
     // ------------------------------
     // Megamenu
-    // This code will prevent unexpected menu close 
+    // This code will prevent unexpected menu close
     // when using some components (like accordion, forms, etc)
     // ------------------------------
     $('body').on('click', '.yamm .dropdown-menu, .dropdown-menu-form', function(e) {
       e.stopPropagation()
     })
-    
+
     // -------------------------------
     // For tabs inside dropdowns
     // -------------------------------
@@ -456,9 +456,9 @@ $(document).ready(function () {
         $(this).tab('show');
         $(this).siblings().removeClass('active');
         $(this).addClass('active');
-        $(this).closest('.dropdown').removeClass('active');        
+        $(this).closest('.dropdown').removeClass('active');
     });
-    
+
     // -------------------------------
     // For tooltips
     // -------------------------------
@@ -608,7 +608,7 @@ $(document).keyup(function(e) {
 // ------------------------------
 // DOM Loaded
 // ------------------------------
-$(window).bind("load", function() { 
+$(window).bind("load", function() {
     $('body').scrollSidebar();
     $(window).trigger('resize');
 });

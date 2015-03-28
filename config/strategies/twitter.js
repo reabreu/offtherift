@@ -7,16 +7,26 @@ var passport = require('passport'),
 	url = require('url'),
 	TwitterStrategy = require('passport-twitter').Strategy,
 	config = require('../config'),
-	users = require('../../app/controllers/users.server.controller');
+	users = require('../../app/controllers/users.server.controller'),
+	_ = require('lodash');
 
-module.exports = function() {
+/**
+ * Configure Twitter Strategy
+ * @param  {object} options Options
+ */
+module.exports = function(options) {
+
+	var options = options || {};
+
+	var twitterOptions = _.extend({
+		consumerKey: config.twitter.clientID,
+		consumerSecret: config.twitter.clientSecret,
+		callbackURL: config.twitter.callbackURL,
+		passReqToCallback: true
+	}, options);
+
 	// Use twitter strategy
-	passport.use(new TwitterStrategy({
-			consumerKey: config.twitter.clientID,
-			consumerSecret: config.twitter.clientSecret,
-			callbackURL: config.twitter.callbackURL,
-			passReqToCallback: true
-		},
+	passport.use(new TwitterStrategy(twitterOptions,
 		function(req, token, tokenSecret, profile, done) {
 			// Set the provider data and include tokens
 			var providerData = profile._json;

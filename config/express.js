@@ -155,6 +155,13 @@ module.exports = function(db) {
 		});
 	});
 
+	// Assume 400 since no middleware responded
+	app.use(function(req, res) {
+		res.status(400).render('400', {
+			message: res.message
+		});
+	});
+
 	if (process.env.NODE_ENV === 'secure') {
 		// Log SSL usage
 		console.log('Securely using https protocol');
