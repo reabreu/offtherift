@@ -427,8 +427,6 @@ function calculateStatValue(stat, resStats) {
 	statModifier = parseFloat(converted);
 
 	switch (stat.name) {
-		case "tenacity":
-			return statModifier;
 		case "attackspeed":
 			return stat.base * (1 + statModifier);
 		case "armorpenetration":
