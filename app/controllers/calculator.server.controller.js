@@ -427,8 +427,6 @@ function calculateStatValue(stat, resStats) {
 	statModifier = parseFloat(converted);
 
 	switch (stat.name) {
-		case "tenacity":
-			return statModifier;
 		case "attackspeed":
 			return stat.base * (1 + statModifier);
 		case "armorpenetration":
@@ -563,12 +561,6 @@ function calculateItemsModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "tenacity":
-			bonus = 1;
-			for (var i = 0; i < modifiers.length; i++) {
-				bonus *= (1 + modifiers[i]);
-			}
-			return (bonus - 1);
 		default:
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
