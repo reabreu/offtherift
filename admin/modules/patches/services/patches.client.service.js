@@ -11,7 +11,8 @@ angular.module('patches').factory('Patches', ['$resource',
 				}
 			}),
 			checkPatches: 		$resource('/patches/sync'),
-			sincronizePatch: 	$resource('/patches/syncPatch/:patchVersion', { patchVersion: '@version' })
+			sincronizePatch: 	$resource('/patches/syncPatch/:patchVersion', { patchVersion: '@version' }),
+			copyPatch: 			$resource('/patches/copyPatch/:srcPatch/:destPatch',{ srcPatch: '@srcPatch', destPatch:'@destPatch'})
 		};
 	}
 ]);

@@ -311,7 +311,6 @@ exports.processStats = function(request, admin) {
 		effect.value = parseFloat(effect.value);
 
 		if ( effect.dest in partymap && partymap[effect.dest] != request.partype) {
-			console.log("ignorando!");
 			continue;
 		}
 

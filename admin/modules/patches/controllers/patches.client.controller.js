@@ -35,12 +35,31 @@ angular.module('patches').controller('PatchesController', ['$scope', '$statePara
 				updatePatches();
 
 				for(var key in data.report){
-					report += key + ': ' + data.report[key].inserted + ' inserted and ' + data.report[key].updated + ' updated.<br>';	
+					report += key + ': ' + data.report[key].inserted + ' inserted and ' + data.report[key].updated + ' updated.<br>';
 				}
 
 				ngToast.create({
 					content: report
 				});
+			});
+		}
+
+		$scope.copyPatch = function(clickEvent){
+			var btn = $(clickEvent.currentTarget);
+			btn.button('loading');
+
+			Patches.copyPatch.get({ srcPatch: $scope.formData.srcPatch, destPatch:$scope.formData.destPatch}).$promise.then(function(data){
+				var report = '';
+
+				for(var key in data.report){
+					report += key + ': ' + data.report[key].copied + ' copied.<br>';
+				}
+
+				ngToast.create({
+					content: report
+				});
+
+				btn.button('reset');
 			});
 		}
 

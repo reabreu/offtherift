@@ -15,6 +15,9 @@ module.exports = function(app) {
 	//sync a specific patch info
 	app.route('/patches/syncPatch/:version').get(users.hasAuthorization(['admin']),patches.syncPatchData);
 
+	//copy tool endpoints
+	app.route('/patches/copyPatch/:srcPatch/:destPatch').get(users.hasAuthorization(['admin']), patches.copyPatch);
+
 	// Finish by binding the Patch middleware
 	app.param('version', patches.patchByVersion);
 	app.param('patchId', patches.patchByID);

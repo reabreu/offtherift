@@ -2,7 +2,10 @@
 
 /**/
 var _this 		= this;
-var version 	= '',
+var srcPatch    = '',
+    destPatch   = '',
+    version 	= '',
+    copyTasks   = [],
 	asyncTasks 	= [];
 
 /**
@@ -419,4 +422,129 @@ exports.syncPatchData = function(req, res){
 	  	// All tasks are done now
 	  	res.jsonp({report: send});
 	});
+}
+
+//Metodo anonimo que copia ITEMS
+copyTasks.push(function(callback){
+
+    Item.find({version: srcPatch },null,null).sort('name').exec(function(err, items) {
+        var processed   = 0;
+        var total       = items.length;
+        var copied      = 0;
+
+        for (var i = total - 1; i >= 0; i--) {
+            //get item from dest version
+            Item.findOneAndUpdate( {version: destPatch, id: items[i].id} , {customEffect: items[i].customEffect, enabled: items[i].enabled} , null, function(err,doc){
+                if (doc !== null) {
+                    ++copied;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null,{items: { copied: copied}});
+                }
+            });
+        };
+    });
+});
+
+//Metodo anonimo que copia Runes
+copyTasks.push(function(callback){
+
+    Rune.find({version: srcPatch },null,null).sort('name').exec(function(err, runes) {
+        var processed   = 0;
+        var total       = runes.length;
+        var copied      = 0;
+
+        for (var i = total - 1; i >= 0; i--) {
+            //get item from dest version
+            Rune.findOneAndUpdate( {version: destPatch, id: runes[i].id} , {customEffect: runes[i].customEffect, enabled: runes[i].enabled} , null, function(err,doc){
+                if (doc !== null) {
+                    ++copied;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null,{runes: { copied: copied}});
+                }
+            });
+        };
+    });
+});
+
+//Metodo anonimo que copia Masteries
+copyTasks.push(function(callback){
+
+    Masterie.find({version: srcPatch },null,null).sort('name').exec(function(err, masteries) {
+        var processed   = 0;
+        var total       = masteries.length;
+        var copied      = 0;
+
+        for (var i = total - 1; i >= 0; i--) {
+            //get item from dest version
+            Masterie.findOneAndUpdate( {version: destPatch, id: masteries[i].id} , {customEffect: masteries[i].customEffect, enabled: masteries[i].enabled} , null, function(err,doc){
+                if (doc !== null) {
+                    ++copied;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null,{masteries: { copied: copied}});
+                }
+            });
+        };
+    });
+});
+
+//Metodo anonimo que copia Champions
+copyTasks.push(function(callback){
+
+    Champion.find({version: srcPatch },null,null).sort('name').exec(function(err, champions) {
+        var processed   = 0;
+        var total       = champions.length;
+        var copied      = 0;
+
+        for (var i = total - 1; i >= 0; i--) {
+            //get item from dest version
+            Champion.findOneAndUpdate( {version: destPatch, id: champions[i].id} , {customEffect: champions[i].customEffect, enabled: champions[i].enabled} , null, function(err,doc){
+                if (doc !== null) {
+                    ++copied;
+                }
+
+                ++processed;
+
+                //when finished we call the callback function
+                if(total == processed){
+                    callback(null,{champions: { copied: copied}});
+                }
+            });
+        };
+    });
+});
+
+//Copy effects from one patch to another
+exports.copyPatch = function(req, res, next){
+    srcPatch    = req.params.srcPatch;
+    destPatch   = req.params.destPatch;
+
+    //Efetuar os pedidos para os diferentes categorias (items/champions/etc) em paralelo
+    async.parallel(copyTasks, function(err,response){
+        var send = {};
+
+        //build report object
+        for (var i = 0; i < response.length; i++) {
+            for (var key in response[i]) {
+                send[key] = response[i][key];
+            }
+        };
+
+        // All tasks are done now
+        res.jsonp({report: send});
+    });
 }
