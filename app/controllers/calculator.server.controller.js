@@ -560,12 +560,6 @@ function calculateItemsModifier(statName, modifiers) {
 	var bonus = 0;
 
 	switch (statName) {
-		case "tenacity":
-			bonus = 1;
-			for (var i = 0; i < modifiers.length; i++) {
-				bonus *= (1 + modifiers[i]);
-			}
-			return (bonus - 1);
 		default:
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
