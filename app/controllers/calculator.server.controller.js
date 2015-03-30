@@ -436,7 +436,7 @@ function calculateStatValue(stat, resStats) {
 			return stat.base * (1 + statModifier);
 		case "armorpenetration":
 		case "magicpenetration":
-			return [flatBonus, statModifier];
+			return [flatBonus, (statModifier*100)];
 		default:
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
@@ -475,7 +475,7 @@ function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 			return runeMod + masteryMod + itemMod + abilityMod;
 		case "armorpenetration":
 		case "magicpenetration":
-			return 1-((1-runeMod)(1-summonerMod)*(1-itemMod)*(1-abilityMod));
+			return 1-((1-runeMod)*(1-masteryMod)*(1-itemMod)*(1-abilityMod));
 		default:
 			var summonerMod = runeMod + masteryMod;
 
