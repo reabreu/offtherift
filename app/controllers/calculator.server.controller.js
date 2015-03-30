@@ -326,6 +326,12 @@ exports.processStats = function(request, admin) {
 
 		// Add flat bonus from normal or unprocessed uniques.
 		if ( !effect.unique  || (effect.unique && (uniques.indexOf(effect.name)) == -1) ) {
+
+			// If the effect is unique, get highest unique
+			if (effect.unique) {
+				effect.value = getHighestEffectValue(request.effects,effect.name);
+			}
+
 			// If the value is applied per level, set value to appropriate level.
 			if (effect.perlevel) {
 				effect.value *= request.level;
@@ -435,12 +441,12 @@ function calculateStatValue(stat, resStats) {
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
 			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
-
 			// DEBUG
 			//console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
 
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
+
 			return stat.base + statBonus * (1 + bonusModifier);
 	}
 }
@@ -688,4 +694,25 @@ function validate(data) {
 	}
 
 	return errors;
+}
+
+/**
+ * Given an array of effects, take max value for a named effect
+ * @param  Object Array Effects
+ * @param  String name Name of effect to get max value
+ * @return value of effect
+ */
+function getHighestEffectValue(effects, name){
+
+	var highest 	= 0.0;
+	var effectCount = effects.length;
+
+	for (var i = 0; i < effectCount; i++) {
+		if (effects[i].name != name) continue;
+
+		if (highest == 0 || effects[i].value > highest)
+			highest = parseFloat(effects[i].value);
+	}
+
+	return highest;
 }

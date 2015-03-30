@@ -54,18 +54,17 @@ angular.module('builds').directive('masteriesSection', [
 
 				$scope.updateBuild = function(masterie){
 					//limpa build
-					for (var i =0; i < $scope.build.masteries.length; i++) {
+					for (var i = $scope.build.masteries.length - 1; i >= 0; i--) {
 						if( masterie.id == $scope.build.masteries[i].id){
 							$scope.build.masteries.splice(i,1);
-							break;
 						}
-					}
+					};
 
+					var length = masterie.customEffect.length;
 					//retirar efeitos que queremos adicionar
-					for (var i =0; i < masterie.customEffect.length; i++) {
+					for (var i =0; i < length; i++) {
 						if( masterie.customEffect[i].rank == masterie.points){
 							$scope.build.masteries.push({id: masterie.id, customEffect: masterie.customEffect[i]});
-							break;
 						}
 					}
 				}
