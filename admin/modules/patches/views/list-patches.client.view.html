@@ -4,6 +4,42 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
+            <h2>Patch copy tool</h2>
+        </div>
+        <div class="panel-body">
+             <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label label-input-sm pull-left" for="selector1">From</label>
+                    <div class="col-sm-4">
+                        <select
+                        ng-model    = "formData.srcPatch"
+                        class       = "form-control input-sm"
+                        >
+                        <option value=""></option>
+                        <option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label label-input-sm" for="focusedinput">To</label>
+                    <div class="col-sm-4">
+                        <select
+                        ng-model    = "formData.destPatch"
+                        class       = "form-control input-sm"
+                        >
+                        <option value=""></option>
+                        <option ng-repeat="patch in patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+                        </select>
+                    </div>
+                    <button
+                    class               = "btn btn-midnightblue btn-sm"
+                    ng-click            = "copyPatch($event)"
+                    data-loading-text   = "Copying..."
+                    ><i class="fa fa-refresh"></i> Copy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <h2>Avaliable Patches</h2>
             <div class="options pull-right">
                 <button
