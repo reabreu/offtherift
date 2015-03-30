@@ -27,6 +27,11 @@ var ItemSchema = new Schema({
 		required: 	'Please fill item name',
 		trim: 		true
 	},
+	group : {
+		type: 		String,
+		required: 	"Please fill item group",
+		trim: 		true
+	},
 	customEffect : []
 },{ strict: false });
 

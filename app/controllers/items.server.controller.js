@@ -95,7 +95,7 @@ exports.list = function(req, res) {
     }
 
     if(build){
-    	select = 'id name image version description plaintext gold customEffect';
+    	select = 'id name image version description plaintext gold customEffect group requiredChampion';
 	}
 
 	if(version != undefined && version != '')
