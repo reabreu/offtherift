@@ -473,6 +473,9 @@ function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 		case "cooldownreduction":
 		case "critchance":
 			return runeMod + masteryMod + itemMod + abilityMod;
+		case "armorpenetration":
+		case "magicpenetration":
+			return 1-((1-runeMod)(1-summonerMod)*(1-itemMod)*(1-abilityMod));
 		default:
 			var summonerMod = runeMod + masteryMod;
 
