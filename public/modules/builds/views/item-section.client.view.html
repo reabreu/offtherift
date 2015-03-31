@@ -46,6 +46,11 @@
                         <div ng-if="$index + 1 % 4 == 0" class="clearfix"></div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img ng-model="build.snapshot[data.currentSnapshot].trinket" class="avatar" ng-click="removeItem(7)" title="" alt="Trinket" ng-src="{{ build.snapshot[data.currentSnapshot].trinket.id | ddragon: build.version:'item'}}">
+                    </div>
+                </div>
             </div>
             <div class="col-sm-7">
                 <ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">

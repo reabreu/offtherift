@@ -293,6 +293,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				request.effects = request.effects.concat(value.customEffect);
 			});
 
+            // adicionar efeito do trinket
+            var trinket = $scope.build.snapshot[$scope.data.currentSnapshot].trinket;
+            if (trinket != null) {
+                request.effects = request.effects.concat(trinket.customEffect);
+            }
+
 			//popular com os efeitos das runes
 			angular.forEach($scope.build.runes, function(runes, tipo) {
 				angular.forEach(runes, function(rune, index) {
