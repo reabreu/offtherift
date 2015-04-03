@@ -106,6 +106,7 @@ angular.module('core').directive('customEffect', ['Repository','$timeout',
 						type 	: 'flat',
 						unique 	: false,
 						perlevel: false,
+                        global  : false,
 						src 	: '',
 						name 	: '',
 						rank	: ''

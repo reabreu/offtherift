@@ -50,7 +50,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				masteries 			: [],
 				patches 			: Repository.getCachedPatches(),
 				selectedPatch 		: null,
-				selectedChampion 	: null,
+				selectedChampion 	: null
 			};
 
 			$scope.enabledView = false;

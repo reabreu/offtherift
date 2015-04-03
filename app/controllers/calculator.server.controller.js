@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
 
 exports.calculate = function(req, res) {
 	res.jsonp(module.exports.processStats(req.body, res.isAdmin));
-}
+};
 
 /**
  * Calculate
@@ -44,6 +44,7 @@ exports.processStats = function(request, admin) {
 
 	// Structure to control allowed effects
 	var partymap = {energy: "Energy", energyregen: "Energy", mp: "Mana", mpregen: "Mana"};
+
 	// Structure of the stats with all the necessary components to
 	// calculate each stat's value
 	var stats = {
@@ -53,12 +54,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [], // {name: source, coef: percentValue}
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		mp: {
@@ -67,12 +70,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		hpregen: {
@@ -81,12 +86,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		mpregen: {
@@ -95,12 +102,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		attackdamage: {
@@ -109,12 +118,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		abilitypower: {
@@ -123,12 +134,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		armorpenetration: {
@@ -137,12 +150,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		magicpenetration: {
@@ -151,12 +166,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		lifesteal: {
@@ -165,12 +182,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		spellvamp: {
@@ -179,12 +198,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		attackspeed: {
@@ -193,12 +214,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel * 0.01]
+				abilities: 		[growth[request.level] * request.stats.attackspeedperlevel * 0.01],
+                globalmodifiers:[]
 			}
 		},
 		cooldownreduction: {
@@ -207,12 +230,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		critchance: {
@@ -221,12 +246,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		armor: {
@@ -235,12 +262,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		attackrange: {
@@ -249,12 +278,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		spellblock: {
@@ -263,12 +294,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		movespeed: {
@@ -277,12 +310,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		},
 		tenacity: {
@@ -291,12 +326,14 @@ exports.processStats = function(request, admin) {
 			dependencies: [],
 			modifiers: {
 				flat: 			0.0,
+                globalCoef:         0.0,
 				bonusmodifier: 	[],
 				basemodifier: 	[],
 				runes: 			[],
 				masteries : 	[],
 				items: 			[],
-				abilities: 		[]
+				abilities: 		[],
+                globalmodifiers:[]
 			}
 		}
 	};
@@ -341,8 +378,14 @@ exports.processStats = function(request, admin) {
 			if (effect.type === "flat") {
 				stats[effect.dest].modifiers.flat += effect.value;
 			}
-			else {
-				stats[effect.dest].modifiers[effect.type].push(effect.value);
+            else {
+                if (effect.global) {
+                    stats[effect.dest].modifiers.globalCoef += effect.value;
+                } else {
+                    stats[effect.dest].modifiers['globalmodifiers'].push(effect.value);
+                }
+
+                stats[effect.dest].modifiers[effect.type].push(effect.value);
 			}
 
 			if (effect.unique) uniques.push(effect.name);
@@ -400,6 +443,7 @@ exports.processStats = function(request, admin) {
 				break;
 			default:
 				response.data[key] = Math.round(response.data[key]);
+
 				break;
 		}
 	}
@@ -427,6 +471,7 @@ function calculateStatValue(stat, resStats) {
 	var statModifier		= calculateModifier(stat.name, runesModifier, masteriesModifier, itemsModifier, abilitiesModifier);
 	var bonusModifier		= calculateBonusModifier(stat.name, stat.modifiers.bonusmodifier);
 	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
+    var globalCoef          = calculateGlobalCoef(stat.name, stat.modifiers.globalCoef, stat.modifiers.globalmodifiers);
 
 	var converted = statModifier.toFixed(3);
 	statModifier = parseFloat(converted);
@@ -447,8 +492,32 @@ function calculateStatValue(stat, resStats) {
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 
-			return stat.base + statBonus * (1 + bonusModifier);
+            return (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
 	}
+}
+
+function calculateGlobalCoef(name, globalCoef, globalModifiers) {
+    if (globalCoef == 0) return 1;
+
+    var bonus = 1.0;
+    var precision = 0.00001;
+    var totalModifier = 1;
+
+    // Calculate the cumulative bonus from the modifiers (multiplicative).
+    for (var i = globalModifiers.length-1; i >= 0; i--) {
+        totalModifier *= globalModifiers[i];
+    }
+
+    var k = 1;
+    var lastIteration = 0.0;
+    do {
+        lastIteration = Math.pow(globalCoef, k) * totalModifier;
+        bonus += lastIteration;
+
+        k++;
+    } while (lastIteration > precision);
+
+    return bonus;
 }
 
 /**
@@ -463,7 +532,7 @@ function calculateStatValue(stat, resStats) {
  * 				Cumulative modifier from the items.
  * @param  {[type]}
  * 				Cumulative modifier from the abilities.
- * @return {[type]}
+ * @return {float}
  * 				Cumulative modifier for the given stat.
  */
 function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
@@ -610,7 +679,6 @@ function calculateFlatBonus(dependencies, resStats) {
 
 		bonus += resStats[dep.name] * dep.coef;
 	}
-
 	return bonus;
 }
 
