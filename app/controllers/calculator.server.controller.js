@@ -473,8 +473,8 @@ function calculateStatValue(stat, resStats) {
 	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
     var globalCoef          = calculateGlobalCoef(stat.name, stat.modifiers.globalCoef, stat.modifiers.globalmodifiers);
 
-	var converted = statModifier.toFixed(3);
-	statModifier = parseFloat(converted);
+	var converted 			= statModifier.toFixed(3);
+	statModifier 			= parseFloat(converted);
 
 	switch (stat.name) {
 		case "attackspeed":
@@ -482,6 +482,8 @@ function calculateStatValue(stat, resStats) {
 		case "armorpenetration":
 		case "magicpenetration":
 			return [flatBonus, (statModifier*100)];
+		case "tenacity":
+			return statModifier*100;
 		default:
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
@@ -544,6 +546,7 @@ function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 			return runeMod + masteryMod + itemMod + abilityMod;
 		case "armorpenetration":
 		case "magicpenetration":
+		case "tenacity":
 			return 1-((1-runeMod)*(1-masteryMod)*(1-itemMod)*(1-abilityMod));
 		default:
 			var summonerMod = runeMod + masteryMod;
