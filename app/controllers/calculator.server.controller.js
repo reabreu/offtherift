@@ -497,10 +497,10 @@ function calculateStatValue(stat, resStats) {
 }
 
 function calculateGlobalCoef(name, globalCoef, globalModifiers) {
-    if (globalCoef == 0) return 1;
+    if (globalCoef == 0 || globalModifiers.length == 0) return 1;
 
     var bonus = 1.0;
-    var precision = 0.00001;
+    var precision = 0.00000001;
     var totalModifier = 1;
 
     // Calculate the cumulative bonus from the modifiers (multiplicative).
