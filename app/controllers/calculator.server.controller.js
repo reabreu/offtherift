@@ -434,9 +434,9 @@ exports.processStats = function(request, admin) {
 				response.data[key] = Math.round(response.data[key]);
 				break;
 			case "movespeed":
-				var secondCap = Math.max((response.data[key] - 490), 0) * 0.5;
-				var firstCap  = (Math.max(Math.min(response.data[key] - 490, 415) - 415), 0) * 0.8;
-				response.data[key] = secondCap + firstCap + Math.min(response.data[key], 415);
+				var secondCap 		= Math.max((response.data[key] - 490), 0) * 0.5;
+				var firstCap  		= Math.min(parseFloat(Math.max(response.data[key] - 415, 0)), 75) * 0.8;
+				response.data[key] 	= secondCap + firstCap + Math.min(response.data[key], 415);
 				break;
 			case "armorpenetration":
 			case "magicpenetration":
@@ -473,7 +473,7 @@ function calculateStatValue(stat, resStats) {
 	var baseModifier 		= calculateBaseModifier(stat.name, stat.modifiers.basemodifier);
     var globalCoef          = calculateGlobalCoef(stat.name, stat.modifiers.globalCoef, stat.modifiers.globalmodifiers);
 
-	var converted 			= statModifier.toFixed(3);
+	var converted 			= statModifier.toFixed(5);
 	statModifier 			= parseFloat(converted);
 
 	switch (stat.name) {
@@ -484,6 +484,8 @@ function calculateStatValue(stat, resStats) {
 			return [flatBonus, (statModifier*100)];
 		case "tenacity":
 			return statModifier*100;
+		case "movespeed":
+			return (stat.base+flatBonus)*(itemsModifier+abilitiesModifier) + (stat.base+flatBonus)*(statModifier+1);
 		default:
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
@@ -548,6 +550,11 @@ function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 		case "magicpenetration":
 		case "tenacity":
 			return 1-((1-runeMod)*(1-masteryMod)*(1-itemMod)*(1-abilityMod));
+		case "movespeed":
+			masteryMod 		= 1 + masteryMod;
+			runeMod 		= 1 + runeMod;
+
+			return masteryMod*runeMod-1;
 		default:
 			var summonerMod = runeMod + masteryMod;
 
