@@ -496,13 +496,6 @@ function calculateStatValue(stat, resStats) {
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 
-			if (stat.name === "hpregen"){
-				console.log(baseCoef);
-				console.log(flatBonus);
-				console.log(maxStat);
-				console.log(statModifier);
-			}
-
             var val = (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
 
            	if (stat.name === "mpregen" || stat.name === "hpregen"){
