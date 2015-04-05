@@ -61,9 +61,9 @@
 									</tr>
 									<tr>
 										<td>Hp5</td>
-										<td><strong>{{build.calculatedStats[data.currentSnapshot].hpregen}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].hpregen | regenStat }}</strong></td>
 										<td>{{data.selectedChampion.partype}} per 5</td>
-										<td><strong>{{build.calculatedStats[data.currentSnapshot].mpregen}}</strong></td>
+										<td><strong>{{build.calculatedStats[data.currentSnapshot].mpregen | regenStat }}</strong></td>
 									</tr>
 									<tr>
 										<td>AD</td>

@@ -440,6 +440,8 @@ exports.processStats = function(request, admin) {
 				break;
 			case "armorpenetration":
 			case "magicpenetration":
+			case "hpregen":
+			case "mpregen":
 				break;
 			default:
 				response.data[key] = Math.round(response.data[key]);
@@ -490,13 +492,24 @@ function calculateStatValue(stat, resStats) {
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
 			var statBonus 	= baseCoef + flatBonus + maxStat * statModifier;
-			// DEBUG
-			//console.log(stat.name + "\nstatModifier : " + statModifier + "\nmaxStat : " + maxStat);
 
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 
-            return (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
+			if (stat.name === "hpregen"){
+				console.log(baseCoef);
+				console.log(flatBonus);
+				console.log(maxStat);
+				console.log(statModifier);
+			}
+
+            var val = (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
+
+           	if (stat.name === "mpregen" || stat.name === "hpregen"){
+           		return [parseInt(Math.round(val)), parseInt(Math.round(stat.base))];
+           	} else {
+           		return val;
+           	}
 	}
 }
 
