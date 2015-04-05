@@ -436,14 +436,13 @@ exports.processStats = function(request, admin) {
 			case "movespeed":
 				var secondCap 		= Math.max((response.data[key] - 490), 0) * 0.5;
 				var firstCap  		= Math.min(parseFloat(Math.max(response.data[key] - 415, 0)), 75) * 0.8;
-				response.data[key] 	= secondCap + firstCap + Math.min(response.data[key], 415);
+				response.data[key] 	= parseInt(Math.round(secondCap + firstCap + Math.min(response.data[key], 415)));
 				break;
 			case "armorpenetration":
 			case "magicpenetration":
 				break;
 			default:
 				response.data[key] = Math.round(response.data[key]);
-
 				break;
 		}
 	}
@@ -485,7 +484,8 @@ function calculateStatValue(stat, resStats) {
 		case "tenacity":
 			return statModifier*100;
 		case "movespeed":
-			return (stat.base+flatBonus)*(itemsModifier+abilitiesModifier) + (stat.base+flatBonus)*(statModifier+1);
+			var totalFlat = stat.base+flatBonus;
+			return totalFlat*(itemsModifier+abilitiesModifier) + totalFlat*(statModifier);
 		default:
 			var baseCoef 	= stat.base*baseModifier;
 			var maxStat		= stat.base + baseCoef + flatBonus; // @TODO: Check if baseCoef affects maxStat
@@ -551,10 +551,7 @@ function calculateModifier(stat, runeMod, masteryMod, itemMod, abilityMod) {
 		case "tenacity":
 			return 1-((1-runeMod)*(1-masteryMod)*(1-itemMod)*(1-abilityMod));
 		case "movespeed":
-			masteryMod 		= 1 + masteryMod;
-			runeMod 		= 1 + runeMod;
-
-			return masteryMod*runeMod-1;
+			return masteryMod*runeMod;
 		default:
 			var summonerMod = runeMod + masteryMod;
 
@@ -609,10 +606,15 @@ function calculateBaseModifier(statName, modifiers) {
  * @return {[type]}
  */
 function calculateRunesModifier(statName, modifiers) {
-	var bonus = 0;
-
 	switch (statName) {
+		case "movespeed":
+			var bonus = 1;
+			for (var i = 0; i < modifiers.length; i++) {
+				bonus *= (1+modifiers[i]);
+			}
+			return bonus;
 		default:
+			var bonus = 0;
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
@@ -627,10 +629,15 @@ function calculateRunesModifier(statName, modifiers) {
  * @return {[type]}
  */
 function calculateMasteriesModifier(statName, modifiers) {
-	var bonus = 0;
-
 	switch (statName) {
+		case "movespeed":
+			var bonus = 1;
+			for (var i = 0; i < modifiers.length; i++) {
+				bonus *= (1+modifiers[i]);
+			}
+			return bonus;
 		default:
+			var bonus = 0;
 			for (var i = 0; i < modifiers.length; i++) {
 				bonus += modifiers[i];
 			}
