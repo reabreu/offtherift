@@ -88,8 +88,6 @@ exports.generateRegistrationHashes = function (req, res, next) {
         number = input;
     }
 
-    console.log(number);
-
     // number
     if (number) {
 
@@ -318,55 +316,7 @@ exports.subscribeEmail = function (req, res, next) {
                 }
             });
         },
-        // Lookup for hash
-        function(email, done) {
-            RegistrationHash.findOne({
-                email: { $exists: false },
-                activated: { $exists: false },
-            }, function(err, hash) {
-                if (!hash) {
-
-                    var newHash = new RegistrationHash({ email: email });
-
-                    newHash.save(function (err) {
-                        if (!err) {
-                            return res.json({
-                                message: 'Sorry! There are no more hashes available for today. We will keep your email so we can contact you later.'
-                            });
-                        }
-
-                    });
-
-                } else {
-                    hash.email = email;
-
-                    hash.save(function(err) {
-                        if (err) {
-                            res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        } else {
-                            done(err, email, hash.hash);
-                        }
-                    });
-                }
-            });
-        },
-        function(email, hash, done) {
-            res.render('templates/invite-email', {
-                email: email,
-                appName: config.app.title,
-                url: 'http://' + req.headers.host + '/account/activation/' + hash
-            }, function(err, html) {
-
-                done(err, {
-                    email: email,
-                    html : html
-                });
-
-            });
-        },
-        mailer.sendEmail,
+        _this.emailHashRegistration,
         function (result, options, done) {
             if (result) {
                 return res.json({
@@ -492,3 +442,61 @@ exports.generateHashes = function (number, email) {
 
     return hashes;
 }
+
+/**
+ * Regists an email with a hash (used on async.waterfall)
+ * @param  {string}   email User Email
+ * @param  {Function} done  Async done callback
+ */
+exports.emailHashRegistration = function (email, done) {
+    RegistrationHash.findOne({
+        email: { $exists: false },
+        activated: { $exists: false },
+    }, function(err, hash) {
+        if (!hash) {
+
+            var newHash = new RegistrationHash({ email: email });
+
+            newHash.save(function (err) {
+                done(err);
+            });
+
+        } else {
+            hash.email = email;
+
+            hash.save(function(err) {
+                if (err) {
+                    res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else {
+
+                    // sends activation email
+                    async.waterfall([
+                        function(email, hash, aDone) {
+                            res.render('templates/invite-email', {
+                                email: email,
+                                appName: config.app.title,
+                                url: 'http://' + req.headers.host + '/account/activation/' + hash
+                            }, function(err, html) {
+
+                                aDone(err, {
+                                    email: email,
+                                    html : html
+                                });
+
+                            });
+                        },
+                        mailer.sendEmail,
+                        function (result, options, done) {
+                            done(err, result, options);
+                        }
+                    ], function(err) {
+                        if (err) return next(err);
+                    });
+
+                }
+            });
+        }
+    });
+};

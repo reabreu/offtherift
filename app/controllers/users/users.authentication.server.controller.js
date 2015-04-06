@@ -7,7 +7,10 @@ var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	async = require('async'),
+    RegistrationHash = mongoose.model('RegistrationHash'),
+    hashes = require('./users.hashes.server.controller');
 
 /**
  * Signup
@@ -91,22 +94,13 @@ exports.oauthCallback = function(strategy) {
 				return res.redirect(loginUrl);
 			}
 
-			// user is not activated
-			if (!user.activated) {
+			req.login(user, function(err) {
+				if (err) {
+					return res.redirect(loginUrl);
+				}
 
-				return res.send({ message: "Thank's for your registration. As we are testing our beta version we will keep your data and contact you later when we open need beta users or launch our full application features." });
-
-			} else { // activated
-
-				req.login(user, function(err) {
-					if (err) {
-						return res.redirect(loginUrl);
-					}
-
-					return res.redirect(redirectURL || '/');
-				});
-
-			}
+				return res.redirect(redirectURL || '/');
+			});
 
 
 		})(req, res, next);
@@ -136,34 +130,78 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 			$or: [mainProviderSearchQuery, additionalProviderSearchQuery]
 		};
 
-		User.findOne(searchQuery, function(err, user) {
-			if (err) {
-				return done(err);
-			} else {
-				if (!user) {
-					var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
+		async.waterfall([
+            function (aDone) { // find user with social account email
+                User.findOne(searchQuery, function(err, user) {
+                	if (err) {
+                		return done(err);
+                	} else {
+                		aDone(err, user);
+                	}
+                });
+            },
+            function (user, aDone, err) { // creates a need user with social data
+                if (!user) {
+                	var possibleUsername = providerUserProfile.username || ((providerUserProfile.email) ? providerUserProfile.email.split('@')[0] : '');
 
-					User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
-						user = new User({
-							firstName: providerUserProfile.firstName,
-							lastName: providerUserProfile.lastName,
-							username: availableUsername,
-							displayName: providerUserProfile.displayName,
-							email: providerUserProfile.email,
-							provider: providerUserProfile.provider,
-							providerData: providerUserProfile.providerData
-						});
+                	User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
+                		user = new User({
+                			firstName: providerUserProfile.firstName,
+                			lastName: providerUserProfile.lastName,
+                			username: availableUsername,
+                			displayName: providerUserProfile.displayName,
+                			email: providerUserProfile.email,
+                			provider: providerUserProfile.provider,
+                			providerData: providerUserProfile.providerData
+                		});
 
-						// And save the user
-						user.save(function(err) {
-							return done(err, user);
-						});
-					});
-				} else {
-					return done(err, user);
-				}
-			}
-		});
+                		// And save the user and creates user session cookie
+                		user.save(function(err) {
+                			aDone(err, user);
+                		});
+                	});
+                } else { // creates user session cookie
+                	aDone(err, user);
+                }
+            },
+            function (user, aDone, err) { // verifies if user is activated
+                if (user) {
+                	var query = {
+                		email: user.email
+                	};
+
+                	RegistrationHash.findOne(query, null, function(err, userHash) {
+                		if (userHash) {
+                			console.log(userHash);
+                			if (userHash.hash &&
+                				userHash.activated) { // user registered and activated
+                				console.log('SUCCESS');
+                				done(err, user);
+                			} else if (userHash.hash &&
+                				!userHash.activated) { // user needs to activate his account
+                				console.log('NEEDS_ACTIVATION');
+                			} else if (!userHash.hash) { // user needs a hash
+                				console.log('NEEDS_HASH');
+                			}
+                		} else { // user hash not found
+                			aDone(err, user.email);
+                		}
+                	});
+
+                } else {
+                	console.log('ERROR');
+                	done(err);
+                }
+            },
+            hashes.emailHashRegistration,
+            function (result, options, aDone) {
+            	console.log(result);
+            	// 'Sorry! There are no more hashes available for today. We will keep your email so we can contact you later.'
+            },
+        ], function(err) {
+	        if (err) return next(err);
+	    });
+
 	} else {
 		// User is already logged in, join the provider data to the existing user
 		var user = req.user;

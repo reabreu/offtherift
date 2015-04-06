@@ -67,8 +67,8 @@
                             <td ng-class="{ 'text-success': hash.activated, 'text-warning': !hash.activated  }" >{{hash.activated ? hash.activated : 'No' | date : 'fullDate'}}</td>
                             <td>
                                 <span>{{hash.created | date : 'fullDate'}}</span>
-                                <a class="pull-right" data-ng-click="remove(hash._id)"><i class="glyphicon glyphicon-trash"></i></a>&nbsp;&nbsp;&nbsp;
-                                <a href="/account/activation/{{hash.hash}}" target="_blank" class="pull-right" data-ng-if="!hash.activated && hash.hash && hash.email"><i class="glyphicon glyphicon-ok"></i></a>
+                                <a class="btn btn-default btn-sm pull-right" data-ng-click="remove(hash._id)"><i class="glyphicon glyphicon-trash"></i></a>&nbsp;&nbsp;&nbsp;
+                                <a href="/account/activation/{{hash.hash}}" target="_blank" class="btn btn-default btn-sm pull-right" data-ng-if="!hash.activated && hash.hash && hash.email"><i class="glyphicon glyphicon-ok"></i></a>
                             </td>
                     </tr>
                     <tr ng-show = "!hashes.length && !busy" style="text-align:center">
