@@ -35,9 +35,15 @@ exports.sendEmail = function (options, done) {
     };
     emailTransport.sendMail(mailOptions, function(err, info) {
         if (!err) {
-            return done(err, true, options);
+            return done(err, {
+                success: true,
+                options: options,
+            });
         }
 
-        done(err, false, options);
+        done(err, {
+            success: false,
+            options: options,
+        });
     });
 };

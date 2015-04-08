@@ -317,14 +317,14 @@ exports.subscribeEmail = function (req, res, next) {
             });
         },
         _this.emailHashRegistration,
-        function (result, options, done) {
-            if (result) {
+        function (options, done) {
+            if (!_.isEmpty(options)) {
                 return res.json({
                     message: 'An email has been sent to ' + options.email + ' with further instructions.'
                 });
             }
 
-            done();
+            done(null);
         }
     ], function(err) {
         if (err) return next(err);
@@ -458,7 +458,7 @@ exports.emailHashRegistration = function (email, done) {
             var newHash = new RegistrationHash({ email: email });
 
             newHash.save(function (err) {
-                done(err);
+                done(err, {});
             });
 
         } else {
@@ -488,8 +488,8 @@ exports.emailHashRegistration = function (email, done) {
                             });
                         },
                         mailer.sendEmail,
-                        function (result, options, done) {
-                            done(err, result, options);
+                        function (response, done) {
+                            done(err, response);
                         }
                     ], function(err) {
                         if (err) return next(err);
