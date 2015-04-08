@@ -496,7 +496,16 @@ function calculateStatValue(stat, resStats) {
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 
-            var val = (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
+            console.log("Bonus " + stat.name + ": +" + bonusModifier*100 + "% (+" + statBonus * bonusModifier +")");
+            console.log("GlobalCoef " + stat.name + ": " + globalCoef);
+
+            var val = 0;
+            if (stat.name == "hp") {
+                statBonus 	= maxStat - stat.base;
+                val = (stat.base + statBonus * (1 + bonusModifier)) * globalCoef * (1+runesModifier+masteriesModifier);
+            } else {
+                val = (stat.base + statBonus * (1 + bonusModifier)) * globalCoef;
+            }
 
            	if (stat.name === "mpregen" || stat.name === "hpregen"){
            		return [parseInt(Math.round(val)), parseInt(Math.round(stat.base))];
