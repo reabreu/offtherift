@@ -29,6 +29,7 @@
     "angular-translate": "~2.6.0",
     "angular-translate-loader-url": "~2.6.0",
     "ngprogress": "~1.0.7",
-    "ng-modal": "*"
+    "ng-modal": "*",
+    "ng-mobile-menu": "~0.2.0"
   }
 }

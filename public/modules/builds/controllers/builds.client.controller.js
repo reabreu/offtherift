@@ -96,8 +96,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		// Find existing Build
 		$scope.findOne = function() {
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
-
-				$scope.build 				= data.data;
+				$scope.build = data.data;
 				if ($state.current.name != "viewBuild") {
 					$scope.data.selectedPatch 	= $scope.build.version;
 					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };

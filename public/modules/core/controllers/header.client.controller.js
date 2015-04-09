@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus',
-	function($scope, Authentication, Menus) {
+angular.module('core').controller('HeaderController', ['$scope', 'Authentication', 'Menus','$spMenu',
+	function($scope, Authentication, Menus, $spMenu) {
 		$scope.authentication = Authentication;
 		$scope.isCollapsed = false;
 		$scope.menu = Menus.getMenu('topnav');
@@ -9,10 +9,5 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 		$scope.toggleCollapsibleMenu = function() {
 			$scope.isCollapsed = !$scope.isCollapsed;
 		};
-
-		// Collapsing the menu after navigation
-		$scope.$on('$stateChangeSuccess', function() {
-			$scope.isCollapsed = false;
-		});
 	}
 ]);

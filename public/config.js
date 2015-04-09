@@ -18,7 +18,8 @@ var ApplicationConfiguration = (function() {
 		'ngToast',
 		'ngFx',
 		'pascalprecht.translate',
-		'ngProgress'
+		'ngProgress',
+		'shoppinpal.mobile-menu'
 	];
 
 	// Add a new vertical module

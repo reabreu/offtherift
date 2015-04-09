@@ -31,8 +31,7 @@
     <meta name="twitter:url" content="{{url}}">
     <meta name="twitter:image" content="/img/brand/logo.png">
 
-<!--     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700' rel='stylesheet' type='text/css'>
- -->
+    <!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700' rel='stylesheet' type='text/css'>-->
     <!-- Fav Icon -->
     <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
 
@@ -46,21 +45,24 @@
 </head>
 
 <body class="ng-cloak">
-
-    <section id="wrapper">
-
-        <header data-ng-controller="HeaderController" data-ng-include="'/modules/core/views/header.client.view.html'" id="headernav" class="navbar-default" role="banner" ng-show="authentication.user"></header>
-
-        <article class="page-content">
-            {% block content %}{% endblock %}
-        </article>
-
-        <footer
-            data-ng-controller="HeaderController"
-            class="footer-inverse"
-            data-ng-include="authentication.user && '/modules/core/views/footer.client.view.html' || '/modules/core/views/teaser-footer.client.view.html'" ng-class="{ 'p0': !authentication.user }"></footer>
-
-    </section>
+    <div id="sp-nav">
+        <div data-ng-include="'/modules/core/views/menu.client.view.html'"></div>
+    </div>
+    <div id="sp-page">
+        <header
+                data-ng-controller  = "HeaderController"
+                data-ng-include     = "'/modules/core/views/header.client.view.html'"
+                id                  = "headernav"
+                class               = "navbar-default"
+                role                = "banner"
+                ng-show             = "authentication.user">
+        </header>
+        <section id="wrapper">
+            <article class="page-content" style="margin-top:100px;">
+                    {% block content %}{% endblock %}
+            </article>
+        </section>
+    </div>
 
     <!--Embedding The User Object-->
     <script type="text/javascript">
