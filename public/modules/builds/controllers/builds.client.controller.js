@@ -327,5 +327,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$timeout.cancel($scope.data.timer);
 			$scope.data.timer = $timeout($scope.calculate,1500);
 		};
+
+		$scope.initBuildBrowsing = function(){
+			Repository.getPatches().then(function(data){
+				$scope.data.patches 		= data.patches;
+			});
+
+			Repository.getChampions(params).then(function(data) {
+				$scope.data.champions 			= data.champions;
+			});
+		}
 	}
 ]);

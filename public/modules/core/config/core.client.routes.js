@@ -16,10 +16,9 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 				load: ['$q', 'Authentication', '$location', function($q, Authentication, $location) {
 					var deferred = $q.defer();
 
-					if (angular.isDefined(Authentication) &&
-						Authentication.user) {
-        				deferred.resolve();
-        				return deferred.promise;
+					if (angular.isDefined(Authentication) && Authentication.user) {
+						deferred.resolve();
+						return deferred.promise;
 					}
 
 					$location.path('/teaser');

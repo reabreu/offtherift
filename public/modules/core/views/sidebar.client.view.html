@@ -1,32 +1,29 @@
 <section data-ng-controller="SidebarController">
-    <div class="widget">
-        <div class="widget-body welcome-box tabular">
-            <div class="tabular-row">
-                <div class="tabular-cell welcome-avatar">
-                    <a href="/#!/dashboard">
-                        <img ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar">
-                        <img ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar">
-                    </a>
-                </div>
-                <div class="tabular-cell welcome-options">
-                    <span class="welcome-text">Welcome,</span>
-                    <a href="/#!/dashboard" class="name" data-ng-bind="authentication.user.displayName"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="widget" id="widget-sidebar">
-        <span class="widget-heading">Explore</span>
-        <nav class="widget-body" role="navigation">
-            <ul class="acc-menu" data-ng-if="menu.shouldRender(authentication.user);">
-                <li ui-sref-active="active"><a ui-sref="dashboard"><i class="fa fa-home"></i><span>Profile</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="listPatches"><i class="fa fa-columns"></i><span>Patch</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="listItems"><i class="fa fa-flask"></i><span>Item</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="listRunes"><i class="fa fa-sitemap"></i><span>Rune</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="listChampions"><i class="fa fa-cogs"></i><span>Champions</span></a></li>
-                <li ui-sref-active="active"><a ui-sref="build"><i class="fa fa-cubes"></i><span>Build</span></a></li>
-            </ul>
-        </nav>
-    </div>
+    <ul>
+        <li ng-click="closeMenu()" ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
+            <a href="/admin/">
+                <span>Admin</span>
+            </a>
+        </li>
+        <li ng-click="closeMenu()" ui-sref-active="dashboard">
+            <a ui-sref="dashboard">
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li ng-click="closeMenu()" ui-sref-active="createBuild">
+            <a ui-sref="createBuild">
+                <span>Build</span>
+            </a>
+        </li>
+        <li ng-click="closeMenu()" ui-sref-active="listBuilds">
+            <a ui-sref="listBuilds">
+                <span>Browse</span>
+            </a>
+        </li>
+        <li ng-click="closeMenu()" ui-sref-active="listBuilds">
+            <a ui-sref="listBuilds">
+                <span>About us</span>
+            </a>
+        </li>
+    </ul>
 </section>
