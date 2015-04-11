@@ -48,19 +48,24 @@
         </div>
         <div id="sp-page">
             <header
-                data-ng-controller  = "HeaderController"
-                data-ng-include     = "'/modules/core/views/header.client.view.html'"
-                id                  = "headernav"
-                class               = "navbar-default"
-                role                = "banner"
-                ng-show             = "authentication.user">
+                    data-ng-controller  = "HeaderController"
+                    data-ng-include     = "'/modules/core/views/header.client.view.html'"
+                    id                  = "headernav"
+                    class               = "navbar-default"
+                    role                = "banner"
+                    ng-show             = "authentication.user">
             </header>
             <section id="wrapper">
-                <article class="page-content" style="margin-top:100px;">
+                <article class="page-content">
                         {% block content %}{% endblock %}
                 </article>
             </section>
         </div>
+
+        <!--Embedding The User Object-->
+        <script type="text/javascript">
+            var user = {{ user | json | safe }};
+        </script>
 
         <!--Embedding The User Object-->
         <script type="text/javascript">
