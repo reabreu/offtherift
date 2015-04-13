@@ -43,11 +43,19 @@ var BuildSchema = new Schema({
 		seal: [],
 		quintessence: []
 	},
+	displayName: {
+		type: String,
+		required: 'Please fill in displayName'
+	},
 	runes_aux: 			{},
 	masteries: 			[],
 	masteries_aux: 		{},
 	snapshot: 			[],
 	calculatedStats: 	[]
+},
+{
+	strict: 	false,
+	minimize: 	false
 });
 
 mongoose.model('Build', BuildSchema);
