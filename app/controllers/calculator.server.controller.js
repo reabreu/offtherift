@@ -496,8 +496,8 @@ function calculateStatValue(stat, resStats) {
 			// if (stat.name === "abilitypower")
 			// 	console.log(stat);
 
-            console.log("Bonus " + stat.name + ": +" + bonusModifier*100 + "% (+" + statBonus * bonusModifier +")");
-            console.log("GlobalCoef " + stat.name + ": " + globalCoef);
+            //console.log("Bonus " + stat.name + ": +" + bonusModifier*100 + "% (+" + statBonus * bonusModifier +")");
+            //console.log("GlobalCoef " + stat.name + ": " + globalCoef);
 
             var val = 0;
             if (stat.name == "hp") {

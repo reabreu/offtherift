@@ -1,20 +1,43 @@
-<section data-ng-controller="BuildsController"> <!--  data-ng-init="initBuildBrowsing()" -->
+<section data-ng-controller="BuildsController" data-ng-init="initBuildBrowsing()"> <!--   -->
     <div class="container-fluid">
         <div class="page-header">
             <h1>Builds</h1>
         </div>
-        <div class="row">
-            <form>
+        <form>
+            <div class="row">
                 <div class="form-group">
-                    <label class="col-sm-3">Author</label>
-                    <div class="col-sm-9"><input ng-model="search.author" name="author" value="" id="author"></div>
+                    <label class="col-sm-3">Mode</label>
+                    <select class="col-sm-3" ng-model = "search.group">
+                        <option value="mine">Mine</option>
+                        <option value="public">Public</option>
+                    </select>
                 </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-3">Patch</label>
+                    <select class="col-sm-3" ng-model = "search.version">
+                        <option value=""></option>
+                        <option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
                 <div class="form-group">
                     <label class="col-sm-3">Champion</label>
-                    <div class="col-sm-9"><input ng-model="search.champion" name="champion" value="" id="champion"></div>
+                    <select class="col-sm-3" ng-model = "search.champion_id">
+                        <option value=""></option>
+                        <option ng-repeat="champion in data.champions" value="{{champion.id}}">{{champion.name}}</option>
+                    </select>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="row" ng-show="search.group == 'public'">
+                <div class="form-group">
+                    <label class="col-sm-3">Author</label>
+                    <div class="col-sm-3"><input ng-model="search.author" name="author" value="" id="author"></div>
+                </div>
+            </div>
+        </form>
         <div class="list-group">
             <a data-ng-repeat="build in builds" data-ng-href="#!/builds/{{build._id}}" class="list-group-item">
                 <small class="list-group-item-text">

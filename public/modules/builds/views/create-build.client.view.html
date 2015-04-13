@@ -1,21 +1,21 @@
-<section data-ng-controller="BuildsController" data-ng-init="init()" class="build-wrapper" ng-switch="enabledView">
+<section data-ng-controller="BuildsController" data-ng-init="initBuild()" class="build-wrapper" ng-switch="enabledView">
 	<div class="container-fluid" ng-switch-when="true">
 		<form class="form-horizontal" data-ng-submit="create()" novalidate id="build">
 			<div class="form-group">
 				<div class="col-xs-6">
 					<input type="text" data-ng-model="build.name" id="name" class="form-control build-title" placeholder="Enter Build Name" required>
 				</div>
-				<div class="col-xs-6">
+				<div class="col-xs-6" ng-show="evaluateBuildStatus()">
 					<div class="row" ng-show="Buildmode == 'create'">
-						<a class="btn btn-success" href="#" ng-click="create()" ng-show="enabledView && evaluateBuildStatus()">Save this build!</a>
+						<a class="btn btn-success" href="#" ng-click="create()" ng-show="enabledView">Save this build!</a>
 					</div>
 					<div class="row" ng-show="Buildmode == 'edit'">
-						<a class="btn btn-success" href="#" ng-click="update()" ng-show="enabledView && evaluateBuildStatus()">Update this build!</a>
+						<a class="btn btn-success" href="#" ng-click="update()" ng-show="enabledView">Update this build!</a>
 					</div>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-xs-1">Patch</label>
+				<label class="col-xs-1">Patch {{data.selectedPatch}}</label>
 				<div class="col-xs-5">
 					<select style="width:100%" ng-model = "data.selectedPatch" ng-change="getPatchInfo()" >
 						<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>

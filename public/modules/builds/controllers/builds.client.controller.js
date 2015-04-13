@@ -5,7 +5,25 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state) {
 		$scope.authentication 	= Authentication;
 
-		$scope.init = function(){
+		// Find existing Build
+		$scope.findOne = function() {
+			Builds.get({buildId: $stateParams.buildId}, function(data) {
+				$scope.build = data.data;
+				if ($state.current.name != "viewBuild") {
+					$scope.data.selectedPatch 	= $scope.build.version;
+					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
+					Repository.getChampions(params).then(function(data) {
+						$scope.data.selectedChampion 	= data.champions[0];
+						$scope.getPatchInfo();
+					});
+				}
+			});
+		};
+
+		/**************************
+		* Build Creation/Editing  *
+		* ************************/
+		$scope.initBuild = function(){
 			$scope.enabledView = false;
 
 			$scope.build 			= {
@@ -20,7 +38,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					seal: 			[]
 				},
 				runes_aux: {
-					runeCount: {}
+					runeCount: {
+
+					}
 				},
 				masteries: 			[],
 				masteries_aux: 		{
@@ -53,16 +73,14 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedChampion 	: null
 			};
 
-			$scope.enabledView = false;
-
 			ngProgress.start();
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
-					$scope.initBuild();
+					$scope.setBuildMode();
 				});
 			} else {
-				$scope.initBuild();
+				$scope.setBuildMode();
 			}
 
 			$scope.$watch('build.snapshot', function (newVal) {
@@ -82,7 +100,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			}, true);
 		}
 
-		$scope.initBuild = function() {
+		$scope.setBuildMode = function() {
 			if ($state.current.name == "editBuild") {
 				$scope.Buildmode="edit";
 				$scope.findOne();
@@ -93,27 +111,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			}
 		}
 
-		// Find existing Build
-		$scope.findOne = function() {
-			Builds.get({buildId: $stateParams.buildId}, function(data) {
-				$scope.build = data.data;
-				if ($state.current.name != "viewBuild") {
-					$scope.data.selectedPatch 	= $scope.build.version;
-					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
-
-					Repository.getChampions(params).then(function(data) {
-						$scope.data.selectedChampion 	= data.champions[0];
-						$scope.getPatchInfo();
-					});
-				}
-			});
-		};
-
 		/**
 		 * Load patch information needed for build
 		 */
 		$scope.getPatchInfo = function(){
+			$scope.build.version = $scope.data.selectedPatch;
 			Repository.setSelectedPatch($scope.data.selectedPatch);
+
 			var params = {version: $scope.data.selectedPatch, build: true };
 
 			Repository.getChampions(params).then(function(data) {
@@ -165,6 +169,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			ngProgress.complete();
 		}
 
+		/**
+		 * Method responsible for checking whether a build can be savec
+		 * @return Boolean
+		 */
 		$scope.evaluateBuildStatus = function(){
 			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined) return false;
 			return true;
@@ -183,23 +191,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		};
 
-		// Remove existing Build
-		$scope.remove = function(build) {
-			if ( build ) {
-				build.$remove();
-
-				for (var i in $scope.builds) {
-					if ($scope.builds [i] === build) {
-						$scope.builds.splice(i, 1);
-					}
-				}
-			} else {
-				$scope.build.$remove(function() {
-					$location.path('builds');
-				});
-			}
-		};
-
 		// Update existing Build
 		$scope.update = function() {
 			var buildService = new Builds ($scope.build);
@@ -209,11 +200,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
-		};
-
-		// Find a list of Builds
-		$scope.find = function() {
-			$scope.builds = Builds.query();
 		};
 
 		/**
@@ -227,8 +213,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
-		 * [setLevel Set current build level]
-		 * @param {[type]}
+		 * Set current build level
 		 */
 		$scope.setLevel = function (level) {
 			$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
@@ -328,14 +313,75 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.data.timer = $timeout($scope.calculate,1500);
 		};
 
-		$scope.initBuildBrowsing = function(){
-			Repository.getPatches().then(function(data){
-				$scope.data.patches 		= data.patches;
-			});
 
-			Repository.getChampions(params).then(function(data) {
-				$scope.data.champions 			= data.champions;
+		/**************************
+		* Build Listing  		  *
+		* ************************/
+		// Remove existing Build
+		$scope.remove = function(build) {
+			if ( build ) {
+				build.$remove();
+
+				for (var i in $scope.builds) {
+					if ($scope.builds [i] === build) {
+						$scope.builds.splice(i, 1);
+					}
+				}
+			} else {
+				$scope.build.$remove(function() {
+					$location.path('builds');
+				});
+			}
+		};
+
+		$scope.initBuildBrowsing = function(){
+			$scope.data 	= {
+				patches: Repository.getCachedPatches()
+			};
+
+			$scope.search 	= {
+				group : "mine",
+				author: ""
+			};
+
+			if (!$scope.data.patches.length) {
+				Repository.getPatches().then(function(data){
+					$scope.data.patches = data.patches;
+					Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
+						$scope.data.champions = data.champions;
+					});
+				});
+			} else {
+				Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
+					$scope.data.champions = data.champions;
+				});
+			}
+
+			$scope.searchBuilds();
+
+			//Registar watcher para os parametros de pesquisa
+			$scope.$watch('search', function (newVal) {
+				$scope.evaluateSearchRequest();
+			}, true);
+		};
+
+		//Watchers para fazer o pedido
+		$scope.evaluateSearchRequest = function(){
+			$timeout.cancel($scope.data.timer);
+			$scope.data.timer = $timeout($scope.searchBuilds,1500);
+		};
+
+		$scope.searchBuilds = function(){
+			ngProgress.start();
+			Builds.query($scope.search).$promise.then(function(data){
+				$scope.builds = data;
+				ngProgress.complete();
 			});
-		}
+		};
+
+		// Find a list of Builds
+		$scope.find = function() {
+			$scope.builds = Builds.query();
+		};
 	}
 ]);
