@@ -45,7 +45,7 @@ var BuildSchema = new Schema({
 	},
 	displayName: {
 		type: String,
-		required: 'Please fill in version'
+		required: 'Please fill in displayName'
 	},
 	runes_aux: 			{},
 	masteries: 			[],
