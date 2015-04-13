@@ -17,7 +17,7 @@ if (files.length != 0) {
 		var result = calculator.processStats(testCase.test).data;
 		var expected = testCase.expected;
 
-		describe(testCase.description, function() {
+        describe(testCase.description, function() {
 			for (var key in result) {
 				statTest(key, result[key], expected[key]);
 			}

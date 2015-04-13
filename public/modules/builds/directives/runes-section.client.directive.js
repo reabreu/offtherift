@@ -104,7 +104,7 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 							$scope.build.runes_aux.runeCount[id]--;
 							break;
 						}
-					};
+					}
 				};
 
 				$scope.$watch('data.runes', function(newVal) {

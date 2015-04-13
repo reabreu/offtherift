@@ -66,8 +66,8 @@
 	"expected" : {
 		"hp": 678,
 		"mp": 272,
-		"hpregen": 11,
-		"mpregen": 7,
+		"hpregen": [11, 9],
+		"mpregen": [7, 7],
 		"attackdamage": 61,
 		"abilitypower": 0,
 		"armorpenetration": [0,	0],
