@@ -51,7 +51,25 @@ var BuildSchema = new Schema({
 	masteries: 			[],
 	masteries_aux: 		{},
 	snapshot: 			[],
-	calculatedStats: 	[]
+	calculatedStats: 	[],
+    facebook:           {
+        like_count: {
+            type:       Number,
+            default:    0
+        },
+        share_count: {
+            type:       Number,
+            default:    0
+        },
+        comment_count: {
+            type:       Number,
+            default:    0
+        }
+    },
+    lastFacebookUpdate: {
+        type: Date,
+        default: Date.now
+    }
 },
 {
 	strict: 	false,

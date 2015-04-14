@@ -1,21 +1,58 @@
 <section data-ng-controller="BuildsController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="build.name"></h1>
-	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
-		<a class="btn btn-primary" href="/#!/builds/{{build._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="build.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="build.user.displayName"></span>
-		</em>
-	</small>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=377391485788485";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <div class="container">
+        <!--Build Title-->
+        <div class="row">
+            <div class="page-header">
+                <h1 data-ng-bind="build.name"></h1>
+            </div>
+        </div>
+
+        <!--Build information-->
+        <div class="row">
+            <div class="row">
+                <div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
+                    <a class="btn btn-primary" href="/#!/builds/{{build._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn btn-primary" data-ng-click="remove();">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </div>
+                <small>
+                    <em class="text-muted">
+                        Posted on
+                        <span data-ng-bind="build.created | date:'mediumDate'"></span>
+                        by
+                        <span data-ng-bind="build.user.displayName"></span>
+                    </em>
+                </small>
+            </div>
+            <div class="row" ng-if="absUrl">
+                <div class="fb-like"
+                     data-href="{{absUrl}}"
+                     data-layout="standard"
+                     data-action="like"
+                     data-show-faces="false"
+                     data-share="true">
+                </div>
+            </div>
+        </div>
+        <!--Comments Section-->
+        <div class="row" ng-if="absUrl">
+            <div class="fb-comments"
+                 data-href="{{absUrl}}"
+                 data-numposts="5"
+                 data-colorscheme="light">
+            </div>
+        </div>
+    </div>
 </section>

@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Build = mongoose.model('Build'),
+    http = require('http'),
 	_ = require('lodash');
 
 /**
@@ -31,7 +32,62 @@ exports.create = function(req, res) {
  * Show the current Build
  */
 exports.read = function(req, res) {
-	res.jsonp({data:req.build});
+    var build = req.build;
+
+    var now = new Date();
+    var updateDate = new Date(build.lastFacebookUpdate);
+    updateDate.setMinutes(updateDate.getMinutes() + 5);
+
+    // Check if an update is needed
+    if (updateDate <= now) {
+        // Url from which we pretend to extract the like/share/comment count
+        var url = res.locals.url;
+
+        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url + '&format=json';
+
+        // Get facebook counts for the current build.
+        http.get(facebookApi, function(info) {
+            var body = "";
+
+            info.on('data', function (chunk) {
+                body += chunk;
+            });
+
+            info.on('end', function () {
+                body = JSON.parse(body)[0];
+
+                // Only update if we have valid facebook info.
+                if (body &&
+                    "share_count" in body &&
+                    "like_count" in body &&
+                    "comment_count" in body) {
+
+                    // update build information
+                    build.facebook.share_count   = body.share_count;
+                    build.facebook.like_count    = body.like_count;
+                    build.facebook.comment_count = body.comment_count;
+                    build.lastFacebookUpdate     = now;
+
+                    build.save(function(err) {
+                        if (err) {
+                            return res.status(400).send({
+                                message: errorHandler.getErrorMessage(err)
+                            });
+                        } else {
+                            res.jsonp({data: build});
+                        }
+                    });
+                }
+                else
+                    res.jsonp({data: build});
+            });
+        }).on('error', function(err) {
+            console.log( err.message);
+        });
+    }
+    else {
+        res.jsonp({data: build});
+    }
 };
 
 /**
