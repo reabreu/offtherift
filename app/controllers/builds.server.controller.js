@@ -40,11 +40,11 @@ exports.read = function(req, res) {
     updateDate.setMinutes(updateDate.getMinutes() + 5);
 
     // Check if an update is needed
-    if (updateDate <= now) {
+    if (updateDate <= now || res.isAdmin) {
         // Url from which we pretend to extract the like/share/comment count
         var url = res.locals.url;
 
-        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url + '&format=json';
+        var facebookApi = encodeURI('http://api.facebook.com/method/links.getStats?urls=' + url + '&format=json');
 
         // Get facebook counts for the current build.
         http.get(facebookApi, function(info) {
@@ -56,6 +56,7 @@ exports.read = function(req, res) {
 
             info.on('end', function () {
                 body = JSON.parse(body)[0];
+                console.log(body);
 
                 // Only update if we have valid facebook info.
                 if (body &&
