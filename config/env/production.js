@@ -2,7 +2,16 @@
 
 module.exports = {
 	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || '52.17.3.23') + '/offtherift',
-	/**
+    app: {
+        title: 'Off the Rift',
+        api: {
+            version: 	'/v1.2',
+            region: 	'/euw',
+            endpoint: 	'https://global.api.pvp.net/api/lol/static-data',
+            api_key: 	'api_key=02d31520-47fc-4e61-a721-5d84a913229c'
+        }
+    },
+    /**
 	 * Environment Include Files
 	 * @type {Object}
 	 */
