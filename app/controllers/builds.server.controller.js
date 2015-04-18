@@ -33,6 +33,7 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
     var build = req.build;
+    build.view_count++;
 
     var now = new Date();
     var updateDate = new Date(build.lastFacebookUpdate);
@@ -68,27 +69,27 @@ exports.read = function(req, res) {
                     build.facebook.comment_count = body.comment_count;
                     build.lastFacebookUpdate     = now;
 
-                    build.save(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        } else {
-                            res.jsonp({data: build});
-                        }
-                    });
+                    saveAndReturn(res, build);
                 }
-                else
-                    res.jsonp({data: build});
             });
         }).on('error', function(err) {
             console.log( err.message);
         });
-    }
-    else {
-        res.jsonp({data: build});
+    } else {
+        saveAndReturn(res, build);
     }
 };
+
+function saveAndReturn(res, build) {
+    build.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+    });
+    res.jsonp({data: build});
+}
 
 /**
  * Update a Build
