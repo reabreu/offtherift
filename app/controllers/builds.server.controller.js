@@ -56,19 +56,18 @@ exports.read = function(req, res) {
 
             info.on('end', function () {
                 body = JSON.parse(body)[0];
-                console.log(body);
 
                 // Only update if we have valid facebook info.
                 if (body &&
                     "share_count" in body &&
                     "like_count" in body &&
                     "comment_count" in body &&
-                    "commentbox_count" in body) {
+                    "commentsbox_count" in body) {
 
                     // update build information
                     build.facebook.share_count   = body.share_count;
                     build.facebook.like_count    = body.like_count;
-                    build.facebook.comment_count = body.comment_count + body.commentbox_count;
+                    build.facebook.comment_count = body.comment_count + body.commentsbox_count;
                     build.lastFacebookUpdate     = now;
 
                     saveAndReturn(res, build);
