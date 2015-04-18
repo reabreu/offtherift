@@ -44,7 +44,7 @@ exports.read = function(req, res) {
         // Url from which we pretend to extract the like/share/comment count
         var url = res.locals.url;
 
-        var facebookApi = encodeURI('http://api.facebook.com/method/links.getStats?urls=' + url + '&format=json');
+        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url.replace("/builds", "/%23!/builds")+ '&format=json';
 
         // Get facebook counts for the current build.
         http.get(facebookApi, function(info) {
@@ -62,12 +62,13 @@ exports.read = function(req, res) {
                 if (body &&
                     "share_count" in body &&
                     "like_count" in body &&
-                    "comment_count" in body) {
+                    "comment_count" in body &&
+                    "commentbox_count" in body) {
 
                     // update build information
                     build.facebook.share_count   = body.share_count;
                     build.facebook.like_count    = body.like_count;
-                    build.facebook.comment_count = body.comment_count;
+                    build.facebook.comment_count = body.comment_count + body.commentbox_count;
                     build.lastFacebookUpdate     = now;
 
                     saveAndReturn(res, build);
