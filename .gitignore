@@ -9,3 +9,4 @@ app/tests/coverage/
 *.sublime-*
 **/lib
 **/modules/**/**/*.min.css
+**/dist
