@@ -33,17 +33,18 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
     var build = req.build;
+    build.view_count++;
 
     var now = new Date();
     var updateDate = new Date(build.lastFacebookUpdate);
     updateDate.setMinutes(updateDate.getMinutes() + 5);
 
     // Check if an update is needed
-    if (updateDate <= now) {
+    if (updateDate <= now || res.isAdmin) {
         // Url from which we pretend to extract the like/share/comment count
         var url = res.locals.url;
 
-        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url + '&format=json';
+        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url.replace("/builds", "/%23!/builds")+ '&format=json';
 
         // Get facebook counts for the current build.
         http.get(facebookApi, function(info) {
@@ -60,35 +61,36 @@ exports.read = function(req, res) {
                 if (body &&
                     "share_count" in body &&
                     "like_count" in body &&
-                    "comment_count" in body) {
+                    "comment_count" in body &&
+                    "commentsbox_count" in body) {
 
                     // update build information
                     build.facebook.share_count   = body.share_count;
                     build.facebook.like_count    = body.like_count;
-                    build.facebook.comment_count = body.comment_count;
+                    build.facebook.comment_count = body.comment_count + body.commentsbox_count;
                     build.lastFacebookUpdate     = now;
 
-                    build.save(function(err) {
-                        if (err) {
-                            return res.status(400).send({
-                                message: errorHandler.getErrorMessage(err)
-                            });
-                        } else {
-                            res.jsonp({data: build});
-                        }
-                    });
+                    saveAndReturn(res, build);
                 }
-                else
-                    res.jsonp({data: build});
             });
         }).on('error', function(err) {
             console.log( err.message);
         });
-    }
-    else {
-        res.jsonp({data: build});
+    } else {
+        saveAndReturn(res, build);
     }
 };
+
+function saveAndReturn(res, build) {
+    build.save(function(err) {
+        if (err) {
+            return res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        }
+    });
+    res.jsonp({data: build});
+}
 
 /**
  * Update a Build

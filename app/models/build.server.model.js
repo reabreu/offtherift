@@ -73,6 +73,10 @@ var BuildSchema = new Schema({
     lastFacebookUpdate: {
         type: Date,
         default: Date.now
+    },
+    view_count: {
+        type: Number,
+        default: 0
     }
 },
 {

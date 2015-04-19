@@ -10,7 +10,7 @@ module.exports = function(app) {
 		.post(users.requiresLogin, builds.create);
 
 	app.route('/builds/:buildId')
-		.get(builds.read)
+		.get(users.hasRole(['admin']), builds.read)
 		.put(users.requiresLogin, builds.hasAuthorization, builds.update)
 		.delete(users.requiresLogin, builds.hasAuthorization, builds.delete);
 

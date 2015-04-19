@@ -79,14 +79,16 @@ module.exports = function(grunt) {
 					mangle: false
 				},
 				files: {
-					'admin/dist/application.min.js': 'admin/dist/application.js'
+					'admin/dist/application.min.js': 'admin/dist/application.js',
+					'public/dist/application.min.js': 'public/dist/application.js',
 				}
 			}
 		},
 		cssmin: {
 			combine: {
 				files: {
-					'admin/dist/application.min.css': '<%= applicationCSSFiles %>'
+					'admin/dist/application.min.css': '<%= adminCSSFiles %>',
+					'public/dist/application.min.css': '<%= publicCSSFiles %>',
 				}
 			}
 		},
@@ -116,7 +118,8 @@ module.exports = function(grunt) {
 		ngAnnotate: {
 			production: {
 				files: {
-					'admin/dist/application.js': '<%= applicationJavaScriptFiles %>'
+					'admin/dist/application.js': '<%= adminJavaScriptFiles %>',
+					'public/dist/application.js': '<%= publicJavaScriptFiles %>',
 				}
 			}
 		},
@@ -151,7 +154,7 @@ module.exports = function(grunt) {
 		less: {
 			development: {
 				options: {
-					paths: ['admin/modules'],
+					paths: ['admin/modules', 'public/modules'],
 					compress: true,
 					cleancss: true
 				},
@@ -172,6 +175,25 @@ module.exports = function(grunt) {
 					{ src: 'public/modules/users/less/**/styles.less', 	dest: 'public/modules/users/css/users.min.css' },
 					{ src: 'public/modules/builds/less/**/styles.less', 	dest: 'public/modules/builds/css/build.min.css' },
 				],
+			},
+			production: {
+				options: {
+					paths: ['admin/modules', 'public/modules'],
+					compress: true,
+					cleancss: true
+				},
+				files: [
+					/**
+					 * Admin LESS Files
+					 * @type {String}
+					 */
+					{ src: 'admin/modules/**/less/**/styles.less',   dest: 'admin/modules/core/css/core.min.css'  },
+					/**
+					 * Public LESS Files
+					 * @type {String}
+					 */
+					{ src: 'public/modules/**/less/**/styles.less',   dest: 'public/modules/dist/css/core.min.css'  },
+				],
 			}
 		}
 	});
@@ -190,8 +212,11 @@ module.exports = function(grunt) {
 		var init = require('./config/init')();
 		var config = require('./config/config');
 
-		grunt.config.set('applicationJavaScriptFiles', config.assets.js);
-		grunt.config.set('applicationCSSFiles', config.assets.css);
+		grunt.config.set('publicJavaScriptFiles', config.assets.env.public.js);
+		grunt.config.set('publicCSSFiles', config.assets.env.public.css);
+
+		grunt.config.set('adminJavaScriptFiles', config.assets.env.admin.js);
+		grunt.config.set('adminCSSFiles', config.assets.env.admin.css);
 	});
 
 	// Default task(s).
@@ -207,7 +232,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin', 'less']);
+	grunt.registerTask('build', ['loadConfig', 'ngAnnotate', 'uglify', 'less:production', 'cssmin']);
 
 	// Test task.
 	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
