@@ -30,6 +30,9 @@
         <meta name="twitter:url" content="{{url}}">
         <meta name="twitter:image" content="/img/brand/logo.png">
 
+        <!-- ROBOTO -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700' rel='stylesheet' type='text/css'>
+
         <!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700' rel='stylesheet' type='text/css'>-->
         <!-- Fav Icon -->
         <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
@@ -43,23 +46,28 @@
         <![endif]-->
     </head>
     <body class="ng-cloak">
-        <div id="sp-nav">
-            <div data-ng-include="'/modules/core/views/sidebar.client.view.html'"></div>
-        </div>
-        <div id="sp-page">
-            <header
-                    data-ng-controller  = "HeaderController"
-                    data-ng-include     = "'/modules/core/views/header.client.view.html'"
-                    id                  = "headernav"
-                    class               = "navbar-default"
-                    role                = "banner"
-                    ng-show             = "authentication.user">
-            </header>
-            <section id="wrapper">
-                <article class="page-content">
-                        {% block content %}{% endblock %}
-                </article>
-            </section>
+        <div class="fill-screen champion-splash"></div>
+        <div class="fill-screen background-overlay"></div>
+        <div class="fill-screen front-layer">
+            <div id="sp-nav">
+                <div data-ng-include="'/modules/core/views/sidebar.client.view.html'"></div>
+            </div>
+
+            <div id="sp-page">
+                <header
+                        data-ng-controller  = "HeaderController"
+                        data-ng-include     = "'/modules/core/views/header.client.view.html'"
+                        id                  = "headernav"
+                        role                = "banner"
+                        ng-show             = "authentication.user"
+                        class               = "top-menu">
+                </header>
+                <section id="wrapper" class = "content-wrapper">
+                    <article class="page-content">
+                            {% block content %}{% endblock %}
+                    </article>
+                </section>
+            </div>
         </div>
 
         <!--Embedding The User Object-->

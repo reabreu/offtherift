@@ -1,51 +1,92 @@
-<section data-ng-controller="ProfileController">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-profile panel-midnightblue">
-				<div class="panel-body">
-
-					<div class="row">
-						<div class="col-md-6">
-	                        <img ng-if="authentication.user.providerData.picture" ng-src="{{ authentication.user.providerData.picture }}" alt="Profile Photo" class="avatar pull-left" style="margin: 0 20px 20px 0">
-	                        <img ng-if="!authentication.user.providerData.picture" src="/modules/users/img/nophoto.png" alt="Profile Photo" class="avatar pull-left" style="margin: 0 20px 20px 0">
-							<div class="table-responsive table-userinfo">
-								<h3 class="mt0" data-ng-bind="authentication.user.displayName"></h3><table class="table table-condensed">
-									<tbody>
-										<tr>
-											<td>First Name</td>
-											<td data-ng-bind="authentication.user.firstName"></td>
-										</tr>
-										<tr>
-											<td>Last Name</td>
-											<td data-ng-bind="authentication.user.lastName"></td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td><a href="#" data-ng-bind="authentication.user.email"></a></td>
-										</tr>
-										<tr>
-											<td>Social</td>
-											<td>
-												<a href="#" class="btn btn-social btn-skype btn-xs"><i class="fa fa-skype"></i></a>
-												<a href="#" class="btn btn-social btn-facebook btn-xs"><i class="fa fa-facebook"></i></a>
-												<a href="#" class="btn btn-social btn-twitter btn-xs"><i class="fa fa-twitter"></i></a>
-												<a href="#" class="btn btn-social btn-googleplus btn-xs"><i class="fa fa-google-plus"></i></a>
-												<a href="#" class="btn btn-social btn-flickr btn-xs"><i class="fa fa-flickr"></i></a>
-												<a href="#" class="btn btn-social btn-linkedin btn-xs"><i class="fa fa-linkedin"></i></a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+<section data-ng-controller="ProfileController" ng-init="initDashboard()">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="statistics">
+					<li>Builds 123</li>
+					<li>Likes 123</li>
+					<li>Shares 123</li>
+					<li>Comments 123</li>
+					<li>Views 123</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 dashboard-wrapper">
+				<div class="row row-no-padding build-portrait-left">
+					<div class="col-md-2 col-xs-3">
+						<div class="build-wrapper">
+							<div class="teste skew-left dashboard-row-label"></div>
+							<div class="build-info skew-left">
+								<div class="build-label-container">
+									<div class="skew-right ">
+										<label class="build-title-label">MY LATEST</label>
+										<label class="build-author-label">BUILDS</label>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<h3 class="mt0">About</h3>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores in eveniet sapiente error fuga tenetur ex ea dignissimos voluptas ab molestiae eos totam quo dolorem maxime illo neque quia itaque. Asperiores in eveniet sapiente error fuga tenetur ex ea dignissimos voluptas ab molestiae eos totam quo dolorem maxime illo neque quia itaque.
-							</p>
-							<p>
-								Dsperiores in eveniet sapiente error fuga tenetur ex ea dignissimos voluptas ab molestiae eos totam quo dolorem maxime illo neque quia itaque.
-							</p>
+					</div>
+					<div
+						ng-repeat = "build in builds"
+						class = "col-md-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+						ng-class="{'hidden-xs hidden-sm': $index > 2}"
+					>
+						<div class="build-wrapper">
+							<img
+							class="build-portrait img-responsive"
+							ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{build.champion.name}}_0.jpg"
+
+							>
+							<div class="build-info">
+								<label class="build-title">{{build.name}}</label>
+								<label class="build-author">by {{build.displayName}}</label>
+								<ul class="build-stats">
+									<li>SHARES: 123</li>
+									<li>COMMENTS: 123</li>
+									<li>LIKES: 123</li>
+									<li>VIEWS: 123</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row row-no-padding build-portrait-right">
+			<div class="col-xs-12 dashboard-wrapper">
+				<div class="col-md-2 col-xs-3">
+					<div class="build-wrapper">
+						<div class="teste skew-right dashboard-row-label"></div>
+						<div class="build-info skew-right">
+							<div class="build-label-container">
+								<div class="skew-left ">
+									<label class="build-title-label">POPULAR</label>
+									<label class="build-author-label">BUILDS</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+					ng-repeat="build in popularBuilds"
+					class="col-md-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+					ng-class= "{'hidden-xs hidden-sm': $index > 2}"
+				>
+					<div class="build-wrapper">
+						<img
+							class = "build-portrait img-responsive"
+							ng-src = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{build.champion.name}}_0.jpg"
+						>
+						<div class="build-info">
+							<label class="build-title">{{build.name}}</label>
+							<label class="build-author">by {{build.displayName}}</label>
+							<ul class="build-stats">
+								<li>SHARE: 123</li>
+								<li>COMMENTS: 123</li>
+								<li>LIKES: 123</li>
+								<li>VIEWS: 123</li>
+							</ul>
 						</div>
 					</div>
 				</div>

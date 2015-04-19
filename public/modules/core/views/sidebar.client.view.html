@@ -1,28 +1,28 @@
 <section data-ng-controller="SidebarController">
-    <ul>
+    <ul class="side-menu">
         <li ng-click="closeMenu()" ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
             <a href="/admin/">
-                <span>Admin</span>
+                Admin
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="dashboard">
             <a ui-sref="dashboard">
-                <span>Dashboard</span>
+                Dashboard
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="createBuild">
             <a ui-sref="createBuild">
-                <span>Build</span>
+                Build
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="listBuilds">
             <a ui-sref="listBuilds">
-                <span>Browse</span>
+                Browse
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="listBuilds">
             <a ui-sref="listBuilds">
-                <span>About us</span>
+                About us
             </a>
         </li>
     </ul>

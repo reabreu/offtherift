@@ -32,6 +32,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				visible: 			false,
 				name: 				null,
 				champion_id: 		null,
+				champion: 			null,
 				version: 			null,
 				runes: 				{
 					mark : 			[],
@@ -257,7 +258,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			ngProgress.start();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.selectedChampion 	= data.champions[0];
-				$scope.build.champion_id = champion.id;
+				$scope.build.champion_id 		= champion.id;
+				$scope.build.champion 			= $scope.data.selectedChampion._id;
 				ngProgress.complete();
 			});
 		};

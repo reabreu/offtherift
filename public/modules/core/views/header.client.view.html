@@ -1,16 +1,27 @@
-<section data-ng-controller="SidebarController">
-    <nav class="navbar">
+<section data-ng-controller="SidebarController" class="full-height">
+    <nav class="top-menu-nav full-height">
         <div class="container-fluid">
-            <div class="col-xs-2">
-                <button class="pull-left" menu-control>Menu</button>
-            </div>
-            <div class="col-xs-9">
-                <a class="navbar-brand" ui-sref="dashboard">OfftheRift</a>
+            <div class="col-xs-4">
+                <button class="pull-left menu" menu-control></button>
             </div>
             <div class="col-xs-1">
-                <a href="/auth/signout" class="no-subline">
-                    <span>Signout</span>
-                </a>
+                <div class="device-xs visible-xs">xs</div>
+                <div class="device-sm visible-sm">sm</div>
+                <div class="device-md visible-md">md</div>
+                <div class="device-lg visible-lg">lg</div>
+            </div>
+            <div class="col-xs-2">
+                <a class="platform-title" ui-sref="dashboard">OfftheRift</a>
+            </div>
+            <div class="col-xs-5">
+                <ul>
+                    <li>
+                        <label class="user-label">{{authentication.user.firstName}} {{authentication.user.lastName}}</label>
+                    </li>
+                    <li>
+                        <a href="/auth/signout" class="logout">Signout</a>
+                    </li>
+                </ul>
             </div>
          </div>
     </nav>

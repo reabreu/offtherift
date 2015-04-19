@@ -28,6 +28,10 @@ var BuildSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
+    champion: {
+        type: Schema.ObjectId,
+        ref: 'Champion'
+    },
 	champion_id: {
 		type: Number,
 		required: 'Please fill champion number'

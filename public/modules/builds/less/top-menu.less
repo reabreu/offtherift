@@ -1,0 +1,51 @@
+.top-menu-nav{
+    background-color:   @top-menu-background;
+    opacity:            0.9;
+
+    a{
+        display: block;
+    }
+
+    ul{
+        width: auto;
+        list-style-type: none;
+        float: right;
+        margin-bottom: 0px;
+
+        li{
+            background-clip: content-box;
+            display: inline-block;
+            padding: 3px 10px;
+            &:not(:last-child){
+                border-right: 1px solid white;
+            }
+        }
+    }
+}
+
+.logout{
+    padding: 10px 0px;
+    &:hover{
+        color: black;
+    }
+}
+
+.user-label{
+    margin: 0px;
+}
+
+.menu{
+    background-image: url('/modules/core/img/menu.png');
+    background-size: 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 35px;
+    border: 0px;
+    margin-top: 10px;
+}
+
+.platform-title{
+    text-align: center;
+    padding: 10px 5px;
+}

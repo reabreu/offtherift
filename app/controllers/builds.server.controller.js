@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
  * Create a Build
  */
 exports.create = function(req, res) {
-	var build = new Build(req.body);
+	var build           = new Build(req.body);
 	build.user 			= req.user;
 	build.displayName 	= req.user.displayName;
 
@@ -144,7 +144,7 @@ exports.list = function(req, res) {
 	}
 
 	//displayName
-	var populateQuery = [{path:'user', select:'displayName'}];
+	var populateQuery       = [{path:'user', select:'displayName'}, {path:'champion', select:'name'}];
 
 	if(version != undefined && version != "")
 		query.version = version;

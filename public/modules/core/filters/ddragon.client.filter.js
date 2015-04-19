@@ -10,7 +10,6 @@ angular.module('core').filter('ddragon', [
 		 * @return {string}         Url parsed
 		 */
 		return function(key, version, type) {
-
 			if(key === undefined) return '#';
 
 			key = key.toString();
