@@ -10,12 +10,12 @@ angular.module('core').directive('otrSrc', [
 				var loadImage = function (src) {
 					element[0].src = "/modules/core/img/loaders/loader.svg";
 
-					element.bind('load', function(e) {
+					element.off('load').on('load', function(e) {
 						e.preventDefault();
 
-						if (this.src !== srcImage) {
+						if (this.src !== src) {
 							element.fadeOut(function () {
-			                	this.src = srcImage;
+			                	this.src = src;
 			                	element.fadeIn();
 		                	});
 						}
