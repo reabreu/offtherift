@@ -5,6 +5,19 @@
     color:          white;
 }
 
+button:focus,
+input:focus{
+    outline: none;
+}
+
+.light{
+    font-weight: 300;
+}
+
+.heavy{
+    font-weight: 600;
+}
+
 a{
     text-decoration: none;
     color: white;
@@ -15,6 +28,8 @@ a{
 
 body{
     overflow-x: scroll;
+    background-color: @water-blue;
+    min-width:  @screen-sm;
 }
 
 body,
@@ -23,12 +38,11 @@ html,
     height: 100%;
 }
 
-.fill-screen{
+.fixed-top-element{
     height:     100%;
     width:      100%;
-    position:   absolute;
+    position:   fixed;
     top:        0px;
-    min-width:  @screen-sm;
 }
 
 .champion-splash{
@@ -39,6 +53,7 @@ html,
     background-repeat:      no-repeat;
     background-size:        cover;
     z-index:                0;
+    background-attachment: fixed;
 }
 
 .background-overlay{
@@ -47,28 +62,8 @@ html,
     z-index:            1;
 }
 
-.front-layer{
-    z-index:        2;
-    overflow-y:     scroll;
-}
-
-#sp-nav{
-    display: none;
-}
-
-#sp-page{
-    height: 99%;
-}
-
-.top-menu{
-    height: 45px;
-}
-
 .content-wrapper{
     width:          100%;
-    height:         95%;
-    overflow-y:     scroll;
-    overflow-x:     hidden;
 }
 
 .text-right{
@@ -97,4 +92,16 @@ html,
 .dashboard-wrapper{
     width:          90%;
     margin-left:    5%;
+}
+
+#sp-page{
+    height: auto;
+}
+
+.table{
+    display:table;
+}
+
+.table-cell{
+    display: table-cell;
 }

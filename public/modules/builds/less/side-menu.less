@@ -3,17 +3,29 @@
     padding: 0px;
 
     li{
-        cursor: pointer;
-        padding: 10px 15px;
+        a{
+            cursor: pointer;
+            padding: 10px 15px;
+            display: block;
+        }
         &:hover{
             a{
-                color: black;
+                 color: black;
             }
         }
     }
 }
 
 #sp-nav{
+    left: -20%;
+    -webkit-transition-duration:0.3s;
+    transition-duration:0.3s;
     background-color: @side-menu-background;
     opacity: 0.9;
+    &.show{
+        -webkit-transition-duration:0.3s;
+        transition-duration:0.3s;
+        transform: translateX(0%);
+        z-index:        2;
+    }
 }

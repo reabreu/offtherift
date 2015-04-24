@@ -1,8 +1,8 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window) {
 		$scope.authentication 	= Authentication;
 
 		// Find existing Build
@@ -339,13 +339,19 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
+			$scope.busy 	= false;
+
+			$scope.builds   = [];
+
 			$scope.data 	= {
 				patches: Repository.getCachedPatches()
 			};
 
 			$scope.search 	= {
-				group : "mine",
-				author: ""
+				group : "Mine",
+				author: "",
+				limit: 18,
+				skip: 0
 			};
 
 			if (!$scope.data.patches.length) {
@@ -361,13 +367,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				});
 			}
 
-			$scope.searchBuilds();
-
 			//Registar watcher para os parametros de pesquisa
-			$scope.$watch('search', function (newVal) {
+			/*$scope.$watch('search', function (newVal) {
 				$scope.evaluateSearchRequest();
-			}, true);
+			}, true);*/
 		};
+
+		$scope.setGroup = function($event){
+			$scope.search.group = $event.target.value;
+		}
 
 		//Watchers para fazer o pedido
 		$scope.evaluateSearchRequest = function(){
@@ -375,10 +383,28 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.data.timer = $timeout($scope.searchBuilds,1500);
 		};
 
+		$scope.loadMore = function() {
+			if ($scope.busy) return;
+    		$scope.searchBuilds();
+		}
+
 		$scope.searchBuilds = function(){
 			ngProgress.start();
+			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
-				$scope.builds = data;
+				var counter = 0;
+                angular.forEach(data, function(build, index){
+                    $timeout($scope.addBuild(build,$scope.builds), index * 100);
+                });
+
+                $scope.$on('fade-right:enter', function(){
+                	counter++;
+                	if(counter == data.length && data.length > 0){
+                		$scope.busy 	= false;
+                	}
+			    });
+
+                $scope.search.skip += $scope.search.limit;
 				ngProgress.complete();
 			});
 		};
@@ -387,5 +413,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.find = function() {
 			$scope.builds = Builds.query();
 		};
+
+		$scope.addBuild = function(elem, container){
+            return function(){
+                container.push(elem);
+            }
+        };
 	}
 ]);

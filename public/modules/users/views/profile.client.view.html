@@ -3,89 +3,88 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="statistics">
-					<li>Builds 123</li>
-					<li>Likes 123</li>
-					<li>Shares 123</li>
-					<li>Comments 123</li>
-					<li>Views 123</li>
+					<li><span class="stat-number">123</span> <span class="stat-description">Builds</span></li>
+					<li><span class="stat-number">123</span> <span class="stat-description">Likes</span></li>
+					<li><span class="stat-number">123</span> <span class="stat-description">Shares</span></li>
+					<li><span class="stat-number">123</span> <span class="stat-description">Comments</span></li>
+					<li><span class="stat-number">123</span> <span class="stat-description">Views</span></li>
 				</ul>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-12 dashboard-wrapper">
-				<div class="row row-no-padding build-portrait-left">
-					<div class="col-md-2 col-xs-3">
-						<div class="build-wrapper">
-							<div class="teste skew-left dashboard-row-label"></div>
-							<div class="build-info skew-left">
-								<div class="build-label-container">
-									<div class="skew-right ">
-										<label class="build-title-label">MY LATEST</label>
-										<label class="build-author-label">BUILDS</label>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div
-						ng-repeat = "build in builds"
-						class = "col-md-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
-						ng-class="{'hidden-xs hidden-sm': $index > 2}"
-					>
-						<div class="build-wrapper">
-							<img
-							class="build-portrait img-responsive"
-							ng-src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{build.champion.name}}_0.jpg"
-
-							>
-							<div class="build-info">
-								<label class="build-title">{{build.name}}</label>
-								<label class="build-author">by {{build.displayName}}</label>
-								<ul class="build-stats">
-									<li>SHARES: 123</li>
-									<li>COMMENTS: 123</li>
-									<li>LIKES: 123</li>
-									<li>VIEWS: 123</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row row-no-padding build-portrait-right">
-			<div class="col-xs-12 dashboard-wrapper">
-				<div class="col-md-2 col-xs-3">
+		<div class="dashboard-container">
+			<div class="row row-no-padding build-portrait-left">
+				<div class="build-portrait-column col-lg-2 col-xs-3">
 					<div class="build-wrapper">
-						<div class="teste skew-right dashboard-row-label"></div>
-						<div class="build-info skew-right">
-							<div class="build-label-container">
-								<div class="skew-left ">
-									<label class="build-title-label">POPULAR</label>
-									<label class="build-author-label">BUILDS</label>
+						<div class="label-portrait"></div>
+						<div class="build-info">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label">MY LATEST</label>
+									<label class="build-sub-title-label">BUILDS</label>
 								</div>
+								<div class="limiter"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div
-					ng-repeat="build in popularBuilds"
-					class="col-md-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
-					ng-class= "{'hidden-xs hidden-sm': $index > 2}"
-				>
+					ng-repeat = "build in builds"
+					class = "build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+					ng-class="{'hidden-xs hidden-sm hidden-md': $index > 2}">
 					<div class="build-wrapper">
 						<img
-							class = "build-portrait img-responsive"
-							ng-src = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{build.champion.name}}_0.jpg"
+						class="build-portrait img-responsive"
+						ng-src="{{build.champion.name | ddUnversioned}}"
 						>
 						<div class="build-info">
 							<label class="build-title">{{build.name}}</label>
 							<label class="build-author">by {{build.displayName}}</label>
 							<ul class="build-stats">
-								<li>SHARE: 123</li>
-								<li>COMMENTS: 123</li>
-								<li>LIKES: 123</li>
-								<li>VIEWS: 123</li>
+								<li><span class="light">Shares: </span><span class="heavy">123</span></li>
+								<li><span class="light">Comments: </span><span class="heavy">123</span></li>
+								<li><span class="light">Likes: </span><span class="heavy">123</span></li>
+								<li><span class="light">Views: </span><span class="heavy">123</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row row-no-padding build-portrait-right">
+				<div class="col-lg-2 col-xs-3">
+					<div class="build-wrapper">
+						<div class="label-portrait"></div>
+						<div class="limiter"></div>
+						<div class="build-info ">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label build-title-label-big">POPULAR</label>
+									<label class="build-sub-title-label">BUILDS</label>
+								</div>
+								<div class="limiter"></div>
+							</div>
+						</div>
+						<div class="limiter"></div>
+					</div>
+				</div>
+				<div
+					ng-repeat="build in popularBuilds"
+					class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+					ng-class= "{'hidden-xs hidden-sm hidden-md': $index > 2}">
+					<div class="build-wrapper">
+						<img
+							class = "build-portrait img-responsive"
+							ng-src="{{build.champion.name | ddUnversioned}}"
+						>
+						<div class="build-info">
+							<label class="build-title">{{build.name}}</label>
+							<label class="build-author">by {{build.displayName}}</label>
+							<ul class="build-stats">
+								<li><span class="light">Shares: </span><span class="heavy" >123</span></li>
+								<li><span class="light">Comments: </span><span class="heavy" >123</span></li>
+								<li><span class="light">Likes: </span><span class="heavy" >123</span></li>
+								<li><span class="light">Views: </span><span class="heavy" >123</span></li>
 							</ul>
 						</div>
 					</div>

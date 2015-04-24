@@ -14,12 +14,17 @@
                 <a class="platform-title" ui-sref="dashboard">OfftheRift</a>
             </div>
             <div class="col-xs-5">
-                <ul>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <img class="avatar" src="http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
+                    </li>
                     <li>
                         <label class="user-label">{{authentication.user.firstName}} {{authentication.user.lastName}}</label>
                     </li>
-                    <li>
-                        <a href="/auth/signout" class="logout">Signout</a>
+                    <li style="border-left: 1px solid white;">
+                        <a href="/auth/signout" class="no-subline signout">
+                            Signout
+                        </a>
                     </li>
                 </ul>
             </div>

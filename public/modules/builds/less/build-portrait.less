@@ -1,83 +1,74 @@
+.skew-left{
+    transform:          skew(10deg);
+    -webkit-transform:  skew(10deg);
+    -moz-transform:     skew(10deg);
+    -o-transform:       skew(10deg);
+    -ms-transform:      skew(10deg);
+}
+.skew-right{
+    transform:          skew(-10deg);
+    -webkit-transform:  skew(-10deg);
+    -moz-transform:     skew(-10deg);
+    -o-transform:       skew(-10deg);
+    -ms-transform:      skew(-10deg);
+}
+
 @media(min-width: 50px){
-    .skew-left{
-        transform:          skew(10deg);
-        -webkit-transform:  skew(10deg);
-        -moz-transform:     skew(10deg);
-        -o-transform:       skew(10deg);
-        -ms-transform:      skew(10deg);
-    }
-    .skew-right{
-        transform:          skew(-10deg);
-        -webkit-transform:  skew(-10deg);
-        -moz-transform:     skew(-10deg);
-        -o-transform:       skew(-10deg);
-        -ms-transform:      skew(-10deg);
+
+    .limiter{
+        border-bottom: 1px solid @water-blue;
+        margin: 2px 0px;
     }
 
-    .dashboard-row-label{
+    .label-portrait {
+        height: 0;
+        padding-top: 181%; /* (img-height / img-width * width) */
+        opacity: 0.6;
         background-color: @dashboard-row-label;
     }
 
-    .teste{
-        height: 0;
-        padding-top: 172.3%; /* (img-height / img-width * width) */
-        opacity: 0.6;
-        max-width: 97%;
+    .build-portrait {
+        -webkit-filter:         brightness(45%);
+        filter:                 brightness(45%);
+        margin:                 auto;
+        background-position:    center center;
+        background-repeat:      no-repeat;
+        background-size:        contain;
     }
 
     .build-wrapper{
+        width:95%;
+
+        label{
+            width: 100%;
+        }
+
+        .label-wrapper{
+            width:              90%;
+            margin-left:        5%;
+        }
+
         .build-info{
             -webkit-filter:     brightness(70%);
             filter:             brightness(70%);
             position:           absolute;
             top:                0px;
             height:             100%;
-            width:              90%;
-            color:              white;
+            width:              95%;
             text-align:         center;
-            left:               10px;
 
             .build-title{
-                width: 90%;
-                margin-top:         20%;
+                margin-top:         19%;
                 margin-bottom:      0%;
-                font-size:          14px;
-                width: 100%;
-                text-align: center;
-            }
-
-            .build-label-container{
-                margin-top: 50%;
-                border-top: 3px solid @water-blue;
-                border-bottom: 3px solid @water-blue;
-                padding: 20px 0px;
-                width: 100%;
-
-                .build-title-label{
-                    color: @water-blue;
-                    font-weight: 600;
-                    font-size: 18px;
-                }
-
-
-                .build-author-label{
-                    color: @water-blue;
-                    font-weight: 400;
-                    font-size: 24px;
-                }
-                label{
-                    width: 100%;
-                    text-align: center;
-                }
+                font-size:          26px;
             }
 
             .build-author{
-                font-size:          10px;
-                margin-bottom:      15%;
-                position:           relative;
-                top:                -5px;
-                width: 100%;
-                text-align: center;
+                font-size:          14px;
+                margin-bottom:      10%;
+                position:       relative;
+                top: -10px;
+                .light;
             }
 
             .build-stats{
@@ -85,11 +76,36 @@
                 list-style-type:    none;
                 border-top:         1px solid white;
                 border-bottom:      1px solid white;
-                width:              93%;
-                position:           relative;
+                width:              70%;
+                margin-left:        15%;
 
                 li{
                     text-align: center;
+                }
+            }
+
+            .build-label-container{
+                border-top: 3px solid @water-blue;
+                border-bottom: 3px solid @water-blue;
+                padding: 30px 0px 0px 0px;
+
+                .build-title-label{
+                    &.build-title-label-big{
+                        font-size: 28px;
+                    }
+                    color: @water-blue;
+                    font-weight: 600;
+                    font-size: 24px;
+                    .heavy;
+                }
+
+                .build-sub-title-label{
+                    color: @water-blue;
+                    font-weight: 400;
+                    font-size: 37px;
+                    .light;
+                    position: relative;
+                    top: -20px;
                 }
             }
         }
@@ -102,37 +118,33 @@
         }
     }
 
-    .build-portrait {
-        -webkit-filter:         brightness(40%);
-        filter:                 brightness(40%);
-        margin:                 auto;
-        background-image:       url("http://ddragon.leagueoflegends.com/cdn/img/champion/loading/Jinx_2.jpg");
-        background-position:    center center;
-        background-repeat:      no-repeat;
-        background-size:        contain;
-        max-width:              95%;
+    .build-portrait-left,
+    .build-portrait-right{
+        margin-bottom: 6px;
     }
+}
 
+@media(min-width: @screen-md-min){
     .build-portrait-left{
-        margin-bottom: 8px;
 
+        .label-portrait,
         .build-portrait{
             .skew-left;
         }
+
+        .build-label-container{
+            label{
+                .skew-right;
+            }
+        }
+
         .build-info{
-            margin-left: 5%;
-
-            .build-label-container{
-                margin-left: -8%;
+            .skew-left;
+            label{
+              .skew-right;
             }
-
-            .build-title,
-            .build-author{
-                margin-left: -35%;
-            }
-
+            label,
             .build-stats{
-                .skew-left;
                 li{
                     .skew-right;
                 }
@@ -141,23 +153,25 @@
     }
 
     .build-portrait-right{
+
+        .label-portrait,
         .build-portrait{
             .skew-right;
         }
+
+        .build-label-container{
+            label{
+                .skew-left;
+            }
+        }
+
         .build-info{
-            margin-right: 5%;
-
-            .build-label-container{
-                margin-left: -2%;
+            label{
+              .skew-left;
             }
-
-            .build-title,
-            .build-author{
-                margin-right: -25%;
-            }
-
+            .skew-right;
+            label,
             .build-stats{
-                .skew-right;
                 li{
                     .skew-left;
                 }
@@ -165,41 +179,3 @@
         }
     }
 }
-
-@media(min-width: @screen-sm-min){
-    .build-wrapper{
-        .build-info{
-            .build-title{
-             font-size: 17px;
-            }
-        }
-    }
-
-    .build-wrapper{
-        .build-info{
-            .build-author{
-                font-size: 11px;
-            }
-        }
-    }
-}
-
-@media(min-width: @screen-md-min){
-    .build-wrapper{
-        .build-info{
-            .build-title{
-                font-size: 22px;
-            }
-        }
-    }
-
-    .build-wrapper{
-        .build-info{
-            .build-author{
-                font-size: 14px;
-            }
-        }
-    }
-}
-
-@media(min-width: @screen-lg-min){}

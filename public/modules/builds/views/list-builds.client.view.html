@@ -1,44 +1,69 @@
 <section data-ng-controller="BuildsController" data-ng-init="initBuildBrowsing()">
-    <div class="container-fluid">
-        <div class="page-header">
-            <h1>Builds</h1>
-        </div>
+    <div class="container">
         <form>
-            <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-3">Mode</label>
-                    <select class="col-sm-3" ng-model = "search.group">
-                        <option value="mine">Mine</option>
-                        <option value="public">Public</option>
-                    </select>
+            <div class="row row-no-padding">
+                <div class="search-header">
+                    <div class="col-sm-1">
+                        <label class="search-title ">Search by</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="button" ng-class="{'selected-group': search.group  == 'Mine'}" ng-click="setGroup($event)" value="Mine"></input>
+                        <input type="button" ng-class="{'selected-group': search.group  == 'Public'}" ng-click="setGroup($event)"  value="Public"></input>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-3">Patch</label>
-                    <select class="col-sm-3" ng-model = "search.version">
+                <div class="search-body">
+                    <label class="col-sm-1">Patch</label>
+                    <select class="col-sm-2" ng-model = "search.version">
                         <option value=""></option>
                         <option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
                     </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <label class="col-sm-3">Champion</label>
-                    <select class="col-sm-3" ng-model = "search.champion_id">
+                    <label class="col-sm-1">Champion</label>
+                    <select class="col-sm-2" ng-model = "search.champion_id">
                         <option value=""></option>
                         <option ng-repeat="champion in data.champions" value="{{champion.id}}">{{champion.name}}</option>
                     </select>
-                </div>
-            </div>
-            <div class="row" ng-show="search.group == 'public'">
-                <div class="form-group">
-                    <label class="col-sm-3">Author</label>
-                    <div class="col-sm-3"><input ng-model="search.author" name="author" value="" id="author"></div>
+                    <div ng-show="search.group == 'Public'">
+                        <div class="col-sm-2"><input placeholder = "Author" ng-model="search.author" name="author" value="" id="author"></div>
+                    </div>
                 </div>
             </div>
         </form>
-        <div class="list-group">
+        <div
+            class                           = "browsing-container"
+            infinite-scroll                 = "loadMore();$event.stopPropagation()"
+            infinite-scroll-disabled        = "busy"
+            infinite-scroll-immediate-check = "true"
+            infinite-scroll-distance        = "1"
+        >
+            <div class="row row-no-padding" >
+                <div
+                    ng-repeat = "build in builds"
+                    class     = "col-xs-4 col-md-2 fx-fade-right fx-trigger"
+                    ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
+                    <div>
+                        <div class="build-wrapper">
+                            <img
+                            class="build-portrait img-responsive"
+                            ng-src="{{build.champion.name | ddUnversioned}}"
+                            >
+                            <div class="build-info">
+                                <label class="build-title">{{build.name}}</label>
+                                <label class="build-author">by {{build.displayName}}</label>
+                                <ul class="build-stats">
+                                    <li>SHARES: 123</li>
+                                    <li>COMMENTS: 123</li>
+                                    <li>LIKES: 123</li>
+                                    <li>VIEWS: 123</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="list-group">
             <a data-ng-repeat="build in builds" data-ng-href="#!/builds/{{build._id}}" class="list-group-item">
                 <small class="list-group-item-text">
                     Posted on
@@ -48,9 +73,9 @@
                 </small>
                 <h4 class="list-group-item-heading" data-ng-bind="build.name"></h4>
             </a>
-        </div>
-        <div class="alert alert-warning text-center" data-ng-hide="!builds.$resolved || builds.length">
+        </div>-->
+        <!--<div class="alert alert-warning text-center" data-ng-hide="!builds.$resolved || builds.length">
             No Builds yet, why don't you <a href="/#!/builds/create">create one</a>?
-        </div>
+        </div>-->
     </div>
 </section>
