@@ -1,0 +1,48 @@
+.stat-wrapper{
+    margin-bottom: 5px;
+    width: 100%;
+    overflow: hidden;
+
+    &.stat-wrapper-left{
+        text-align: left;
+        .stat-value-wrapper{
+            float: right;
+        }
+    }
+
+    &.stat-wrapper-right{
+        text-align: right;
+        .stat-value-wrapper{
+            float: left;
+        }
+    }
+
+    .stat-designation{
+        display: inline-block;
+        overflow: auto;
+        border-bottom: 1px solid white;
+        width: 50%;
+        font-weight: 300;
+        margin-top: 5%;
+    }
+
+    .stat-value-wrapper{
+        display: inline-block;
+        background-color: white;
+        border-radius: 50%;
+        height: 0;
+        width:45%;
+        padding-bottom: 43%;
+
+        .stat-value{
+            margin-top: 17%;
+            label{
+                font-size: 18px;
+                width: 100%;
+                text-align: center;
+                color: @water-blue;
+                font-weight: 700;
+            }
+        }
+    }
+}

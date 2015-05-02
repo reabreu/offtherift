@@ -204,6 +204,13 @@ angular.module('builds').directive('itemSection', [
 						}
 					}
 				});
+
+				/**
+				 * Set current build level
+				 */
+				$scope.setLevel = function (level) {
+					$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
+				}
 			}
 		};
 	}

@@ -1,63 +1,60 @@
-<a href="#collapseMasteries" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Masteries</h2></a>
-<div  id="collapseMasteries" class="collapse" ng-init="init()">
-    <div class="accordion-body">
-        <h2>Avaliable Points : {{build.masteries_aux.avaliable_points}}</h2>
-        <div class="col-sm-4">
-            <h3 style="text-align:center">Offense {{build.masteries_aux.points.offense}}</h3>
-            <div ng-switch="masterie.enabled==undefined" class="col-xs-3" ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}">
-                <span ng-switch-when="false">
+<h2 class="medium-centered-title">Avaliable Points : <span class="avaliable-numbers">{{build.masteries_aux.avaliable_points}}</span></h2>
+<div class="mastery-wrapper">
+    <div class="mastery-column">
+        <h3 class="mastery-title mastery-red" >Offense <span class="avaliable-numbers">{{build.masteries_aux.points.offense}}</span></h3>
+        <ul class="mastery-container  mastery-border-red">
+            <li class="mastery-item"
+                ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}"
+                ng-switch="masterie.enabled || false">
+                <span ng-switch-when="true">
                     <img
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.offense-1 || !checkDependecy(masterie)}"
-                        class="avatar"
                         title=""
                         alt="masterie"
                         ng-click="addRank($event,masterie)"
-                        ng-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}"
-                    >
-                    <label>{{masterie.points}}/{{masterie.ranks}}</label>
+                        otr-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}">
+                    <label >{{masterie.points}}/{{masterie.ranks}}</label>
                 </span>
-                <span ng-switch-when="true" style="display:inline-block;height:70px;width:40px">&nbsp;</span>
-                <div ng-if="$index + 1 % 3 == 0" class="clearfix"></div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <h3 style="text-align:center">Defense {{build.masteries_aux.points.defense}}</h3>
-            <div ng-switch="masterie.enabled==undefined" class="col-sm-3" ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}">
-                <span ng-switch-when="false">
+            </li>
+        </ul>
+    </div>
+    <div class="mastery-column">
+        <h3 class="mastery-title mastery-blue" >Defense <span class="avaliable-numbers">{{build.masteries_aux.points.defense}}</span></h3>
+        <ul class="mastery-container  mastery-border-blue">
+            <li class="mastery-item"
+                ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}"
+                ng-switch="masterie.enabled || false">
+                <span ng-switch-when="true">
                     <img
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.defense-1 || !checkDependecy(masterie)}"
-                        class="avatar"
                         title=""
                         alt="masterie"
                         ng-click="addRank($event,masterie)"
-                        ng-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}"
-                    >
+                        otr-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}">
                     <label>{{masterie.points}}/{{masterie.ranks}}</label>
                 </span>
-                <div ng-if="$index + 1 % 3 == 0" class="clearfix"></div>
-                <span ng-switch-when="true" style="display:inline-block;height:70px;width:40px">&nbsp;</span>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <h3 style="text-align:center">Utility {{build.masteries_aux.points.utility}}</h3>
-            <div ng-switch="masterie.enabled==undefined" class="col-sm-3" ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}">
-                <span ng-switch-when="false">
+            </li>
+        </ul>
+    </div>
+    <div class="mastery-column">
+        <h3 class="mastery-title mastery-green">Utility <span class="avaliable-numbers">{{build.masteries_aux.points.utility}}</span></h3>
+        <ul class="mastery-container  mastery-border-blue">
+            <li class="mastery-item"
+                ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}"
+                ng-switch="masterie.enabled || false">
+                <span ng-switch-when="true">
                     <img
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.utility-1 || !checkDependecy(masterie)}"
-                        class="avatar"
                         title=""
                         alt="masterie"
                         ng-click="addRank($event,masterie)"
-                        ng-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}"
-                    >
+                        otr-src="{{ masterie.id | ddragon: masterie.version:'mastery'}}">
                     <label>{{masterie.points}}/{{masterie.ranks}}</label>
                 </span>
-                <span ng-switch-when="true" style="display:inline-block;height:70px;width:40px">&nbsp;</span>
-                <div ng-if="$index + 1 % 3 == 0" class="clearfix"></div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>

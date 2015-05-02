@@ -5,17 +5,26 @@
     color:          white;
 }
 
-button:focus,
-input:focus{
-    outline: none;
+input, select, textarea{
+    color: white;
+    width: 100%;
 }
 
-.light{
-    font-weight: 300;
+/* do not group these rules */
+*::-webkit-input-placeholder {
+    color: white;
 }
-
-.heavy{
-    font-weight: 600;
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: white;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: white;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: white;
 }
 
 a{
@@ -36,6 +45,19 @@ body,
 html,
 .full-height{
     height: 100%;
+}
+
+button:focus,
+input:focus{
+    outline: none;
+}
+
+.light{
+    font-weight: 300;
+}
+
+.heavy{
+    font-weight: 600;
 }
 
 .fixed-top-element{
@@ -104,4 +126,29 @@ html,
 
 .table-cell{
     display: table-cell;
+}
+
+.front-layer{
+    z-index: 2;
+}
+
+.builder-wrapper{
+    margin-top: 15px;
+}
+
+.width-80{
+    width: 80px;
+}
+
+.width-40{
+    width: 40px;
+}
+
+.inline-block{
+    display: inline-block;
+}
+
+.absolute-top{
+    position: absolute;
+    top: 0px;
 }

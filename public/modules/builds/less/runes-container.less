@@ -1,0 +1,97 @@
+.runes-builder-container{
+    background-color: rgba(255,255,255,0.4);
+    height: 300px;
+    border-radius: 15px;
+}
+
+.rune-collumn{
+    padding: 0px 5px;
+    border-radius: 2px;
+    height: 300px;
+    background-color: rgba(255,255,255,0.5);
+    background-clip: content-box;
+    overflow-y: scroll;
+}
+
+.rune-col-title{
+    text-align: center;
+    background-color: rgba(255,255,255,0.5);
+    height:45px;
+    border-radius: 90px 90px 0 0;
+    -moz-border-radius: 90px 90px 0 0;
+    -webkit-border-radius: 90px 90px 0 0;
+    position: relative;
+    left: -10px;
+
+    span{
+        line-height: 45px;
+        color: @water-blue;
+    }
+}
+
+.rune-column-item{
+    overflow: hidden;
+    width: 55px;
+    margin: 5px auto;
+    img{
+        padding: 0px;
+        width: 45px;
+        height: 45px;
+    }
+    span{
+        background: @water-blue;
+        font-weight: 700;
+        border: 1px solid white;
+        border-radius: 50%;
+        display: block;
+        width: 23px;
+        height: 23px;
+        position: absolute;
+        left:60px;
+        text-align: center;
+    }
+}
+
+.runes-wrapper{
+    margin-top: 20px;
+}
+
+.runes-title-container{
+    overflow-y: hidden;
+    text-align: center;
+}
+
+@media(min-width: 50px){
+    .runes-title-container,
+    .runes-builder-container{
+        width: 400px;
+        padding: 0px 20px;
+        display: table;
+        margin: 0 auto;
+    }
+    .rune-col-title{
+        width:80px;
+    }
+}
+
+@media(min-width: @screen-md-min){
+    .runes-title-container,
+    .runes-builder-container{
+        width: 380px;
+        padding: 0px 5px;
+    }
+    .rune-col-title{
+        width:82px;
+    }
+}
+
+@media(min-width: @screen-lg-min){
+    .runes-title-container,
+    .runes-builder-container{
+        width: 450px;
+        padding: 0px 20px;
+    }
+    .rune-col-title{
+        width:92px;
+    }
+}

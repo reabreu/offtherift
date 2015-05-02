@@ -1,79 +1,74 @@
-<div>
-	<a href="#collapseRunes" data-parent="#accordionB" data-toggle="collapse" class="accordion-title"><h2>Runes</h2></a>
-	<div class="collapse" id="collapseRunes">
-		<div class="accordion-body">
-			<div class="row">
-				<div class="col-sm-12">
-					<!-- Rune page layout -->
-					<div class="col-sm-6">
-						<div class="row">
-							<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
-								<div class="row">
-									<span class="col-sm-12">{{value}}</span>
-									<ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
-										<li ng-repeat="rune in build.runes[key] | unique:rune.id">
-											<img class="col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
-											{{build.runes_aux.runeCount[rune.id]}}
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Rune selection bar -->
-					<div class="col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-header">
-								<ul class="demo-btns">
-									<li ng-repeat="(key, value) in runeTypes">
-										<a class="btn btn-default" ng-click="setCurrentType(key)">{{value}}</a>
-									</li>
-								</ul>
-								<form class="form-horizontal">
-									<div class="form-group">
-										<div class="col-sm-12">
-											<input
-											type        = "text"
-											id          = "focusedinput"
-											class       = "form-control input-sm"
-											ng-model    = "runeSearch.name",
-											placeholder = "Rune Name"
-											>
-										</div>
-									</div>
-								</form>
-								<!--
-								<div class="col-sm-6">
-									<label>
-									<input
-									type		= "checkbox"
-									id			= "runes-magic-filter"
-									ng-checked	= "runeFilterEnabled('perLevel')"
-									ng-click	= "toggleRuneTag('perLevel')"
-									> PerLevel </label>
-								</div> -->
-
-							</div>
-							<!-- <div class=" panel-scroll" style="height: 238px;"> -->
-							<ul ng-model="currentType" class="panel-body mailbox-msg-list" style="max-height:276px;overflow-y:scroll;">
-								<li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
-									<a
-										tooltip-html-unsafe="TESTE"
-										class="mailbox-msg-list-item"
-										href="#"
-										ng-click="addRune(rune);$event.preventDefault(); $event.stopPropagation();"
-									>
-										<!-- <span class="time">{{item.gold.base}} Gold</span> -->
-										<img  title="" alt="avatar" ng-src="{{ rune.image.full | ddragon:rune.version:'rune'}}">
-										<div><span class="name">{{rune.name}}</span><span class="msg">{{rune.plaintext}}</span></div>
-									</a>
-								</li>
-							</ul>
-						</div>
+<div class="row">
+	<div class="col-md-5 col-md-push-7">
+		<div class="row">
+			<div class="col-sm-12">
+				<ul class="aligned-button-li">
+					<li ng-repeat="(key, value) in runeTypes">
+						<a class="btn btn-default"
+						ng-click="setCurrentType(key)"
+						ng-class="{'btn-rune-selected': key == currentType}"
+						>{{value}}</a>
+					</li>
+				</ul>
+				<input
+				type        = "text"
+				id          = "focusedinput"
+				class       = "build-input"
+				ng-model    = "runeSearch.name",
+				placeholder = "Rune Name"
+				>
+				<ul class="item-listing">
+	                <li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
+	                        <a
+	                        tooltip-html-unsafe="{{rune.description}}"
+	                        tooltip-trigger="mouseenter"
+	                        tooltip-placement="left"
+	                        tooltip-popup-delay = "600"
+	                        href="#"
+	                        ng-click="addRune(rune);$event.preventDefault(); $event.stopPropagation();">
+	                        <div class="item-container">
+	                            <img  title="" alt="avatar" otr-src="{{ rune.image.full | ddragon:rune.version:'rune'}}">
+	                        </div>
+	                        <div class="item-description">
+	                            <span class="title">{{rune.name}}</span>
+	                            <span class="description">{{rune.description}}</span>
+	                        </div>
+	                    </a>
+	                </li>
+	            </ul>
+            </div>
+		</div>
+	</div>
+	<div class="col-md-7 col-md-pull-5">
+		<div class="runes-wrapper">
+			<div class="runes-title-container">
+				<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
+					<div class="rune-col-title"><span>{{value.substring(0,5)}}<span></div>
+				</div>
+			</div>
+			<div class="runes-builder-container">
+				<div class="col-sm-3 rune-collumn" ng-repeat="(key, value) in runeTypes">
+					<div class="rune-column-item" ng-repeat="rune in build.runes[key] | unique:rune.id">
+						<img class="col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
+						<span>{{build.runes_aux.runeCount[rune.id]}}</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!--
+<div class="col-sm-6">
+	<div class="row">
+		<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
+			<div class="row">
+				<span class="col-sm-12">{{value}}</span>
+				<ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+-->

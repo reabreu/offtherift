@@ -7,7 +7,7 @@ angular.module('builds').filter('doubleStat', [
 			// ...
             if(input === null || input === undefined) return 'n/a';
 
-			return input[0] + ' | ' + input[1] + ' %';
+			return input[0] + '|' + input[1] + '%';
 		};
 	}
 ]);

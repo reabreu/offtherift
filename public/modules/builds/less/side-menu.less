@@ -17,7 +17,6 @@
 }
 
 #sp-nav{
-    left: -20%;
     -webkit-transition-duration:0.3s;
     transition-duration:0.3s;
     background-color: @side-menu-background;
@@ -25,7 +24,29 @@
     &.show{
         -webkit-transition-duration:0.3s;
         transition-duration:0.3s;
-        transform: translateX(0%);
         z-index:        2;
     }
+}
+
+#sp-nav, #sp-nav.wide{
+    width: 30%;
+    left: -30%;
+}
+
+#sp-nav{
+    width: 20%;
+    left: -20%;
+}
+
+#sp-page{
+    overflow-x: scroll;
+    min-width:  @screen-sm;
+}
+
+#sp-nav.show.wide+#sp-page{
+    transform: translateX(30%)
+}
+
+#sp-nav.show+#sp-page{
+    transform: translateX(20%)
 }

@@ -1,0 +1,55 @@
+.aligned-button-li{
+    list-style-type: none;
+    margin: 10px 5px;
+    padding-left: 0px;
+
+    li{
+        width: auto;
+        display: inline-block;
+
+        a{
+            background-color:  transparent;
+            padding: 5px 20px;
+            display: block;
+            border: 1px solid @gold;
+            color: @gold;
+            margin-left: 5px;
+
+            &.btn-rune-selected,
+            &:hover{
+                background-color: @gold;
+                color: @water-blue;
+            }
+        }
+    }
+}
+
+@media(min-width: 50px){
+    .aligned-button-li{
+        li{
+            a{
+                padding: 5px 20px;
+            }
+        }
+    }
+}
+
+@media(min-width: @screen-md-min){
+    .aligned-button-li{
+        li{
+            a{
+                padding: 5px 5px;
+            }
+        }
+    }
+}
+
+@media(min-width: @screen-lg-min){
+    .aligned-button-li{
+        li{
+            a{
+                padding: 5px 20px;
+            }
+        }
+    }
+}

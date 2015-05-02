@@ -59,7 +59,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						utility:  4
 					}
 				},
-				snapshot: 			[],
+				snapshot: 			[
+
+				],
 				calculatedStats: 	[]
 			};
 
@@ -216,13 +218,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
-		 * Set current build level
-		 */
-		$scope.setLevel = function (level) {
-			$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
-		}
-
-		/**
 		 * [openModal Open modal]
 		 * @param  {[type]}
 		 * @return {[type]}
@@ -339,7 +334,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
-			$scope.busy 	= false;
+			$scope.busy 	 = false;
 
 			$scope.builds   = [];
 
@@ -348,7 +343,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			};
 
 			$scope.search 	= {
-				group : "Mine",
+				group : "mine",
 				author: "",
 				limit: 18,
 				skip: 0
@@ -366,26 +361,21 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					$scope.data.champions = data.champions;
 				});
 			}
-
-			//Registar watcher para os parametros de pesquisa
-			/*$scope.$watch('search', function (newVal) {
-				$scope.evaluateSearchRequest();
-			}, true);*/
 		};
 
 		$scope.setGroup = function($event){
 			$scope.search.group = $event.target.value;
 		}
 
-		//Watchers para fazer o pedido
-		$scope.evaluateSearchRequest = function(){
-			$timeout.cancel($scope.data.timer);
-			$scope.data.timer = $timeout($scope.searchBuilds,1500);
-		};
-
 		$scope.loadMore = function() {
 			if ($scope.busy) return;
     		$scope.searchBuilds();
+		}
+
+		$scope.resetAndSearchBuilds = function(){
+			$scope.builds = [];
+			$scope.search.skip = 0;
+			$scope.searchBuilds();
 		}
 
 		$scope.searchBuilds = function(){

@@ -5,7 +5,7 @@ angular.module('builds').filter('regenStat', [
 		return function(input) {
 			if(input === null || input === undefined) return 'n/a';
 
-            return input[0] + ' | (' + input[1] + ')';
+            return input[0] + '(' + input[1] + ')';
 		};
 	}
 ]);

@@ -35,7 +35,7 @@
 					<div class="build-wrapper">
 						<img
 						class="build-portrait img-responsive"
-						ng-src="{{build.champion.name | ddUnversioned}}"
+						otr-src="{{build.champion.name | ddUnversioned}}"
 						>
 						<div class="build-info">
 							<label class="build-title">{{build.name}}</label>
@@ -48,6 +48,14 @@
 							</ul>
 						</div>
 					</div>
+				</div>
+				<div class="build-portrait-column col-lg-2 col-xs-3" ng-repeat = "build in emptyBuilds">
+					<a ui-sref="createBuild">
+						<div class="build-wrapper">
+							<div class="label-portrait new-build-portrait"></div>
+							<div class="build-info"><div class="build-plus"></div></div>
+						</div>
+					</a>
 				</div>
 			</div>
 			<div class="row row-no-padding build-portrait-right">
@@ -75,7 +83,7 @@
 					<div class="build-wrapper">
 						<img
 							class = "build-portrait img-responsive"
-							ng-src="{{build.champion.name | ddUnversioned}}"
+							otr-src="{{build.champion.name | ddUnversioned}}"
 						>
 						<div class="build-info">
 							<label class="build-title">{{build.name}}</label>

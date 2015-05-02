@@ -1,0 +1,38 @@
+.level-wrapper{
+    display: table;
+    margin: 15px auto;
+    text-align: center;
+}
+
+.level-container{
+    display: inline-block;
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.level-badge{
+    width: 25px;
+    height: 25px;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: transparent;
+    margin: 0 auto;
+    color: white;
+    cursor:pointer;
+    display: block;
+    line-height: 25px;
+    text-align: center;
+    font-weight: 300;
+
+    &:hover{
+        background-color: white;
+        color: @water-blue;
+        font-weight: 700;
+    }
+}
+
+.selected-level{
+    background-color: white;
+    color: @water-blue;
+    font-weight: 700;
+}
