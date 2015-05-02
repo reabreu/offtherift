@@ -1,0 +1,27 @@
+.snapshot-container{
+    list-style-type: none;
+    padding-left: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    position: relative;
+    top: 1px;
+    width: 96%;
+    li{
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border: 1px solid white;
+        display: inline-block;
+        width: 10%;
+        text-align: center;
+
+        &:hover,
+        &.selected-snap{
+            background-color: rgba(255,255,255,.15);
+        }
+
+        &.add-snap{
+            width: 70px;
+            text-align: center;
+        }
+    }
+}

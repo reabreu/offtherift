@@ -200,7 +200,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.calculatedStats[data.currentSnapshot].hp != 'n/a'">
+		<div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.champion_id != null">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-4">
@@ -212,16 +212,29 @@
 							<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
 						</select>
 					</div>
-					<div class="col-xs-3">
-
-					</div>
 				</div>
 			</div>
-			<div class="fx-fade-down fx-speed-1000 container-fluid" ng-show="build.calculatedStats[data.currentSnapshot].hp != null">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-12">
 						<label class="build-title">ITEMS</label>
 					</div>
+					<div class="row">
+				        <div class="col-sm-12" >
+				        	<ul class="snapshot-container">
+				        		<li
+				        			ng-repeat="snap in build.snapshot track by $index"
+				        			ng-click="setCurrentSnap($index)"
+				        			ng-class="{'selected-snap': data.currentSnapshot == $index}">
+				        			{{$index+1}}
+				        		</li>
+				        		<li
+				        		class="add-snap"
+				        		ng-show="build.snapshot.length < 5"
+				        		ng-click="addSnapshot()"> + </li>
+				        	</ul>
+				        </div>
+				    </div>
 					<div class="col-sm-12">
 						<div class="build-config-panel">
 							<item-section build="build" data="data"></item-section>

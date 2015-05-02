@@ -12,8 +12,6 @@ angular.module('builds').directive('itemSection', [
 			controller: function($scope){
 
 				$scope.init = function(){
-					if ($scope.build.snapshot.length == 0)
-						$scope.addSnapshot();
 
 					// Control var to check if goldPer item has been set.
 					$scope.data.goldPer = {
@@ -33,45 +31,6 @@ angular.module('builds').directive('itemSection', [
 				$scope.itemSearch = {
 					name: "",
 					tags: []
-				};
-
-				$scope.addSnapshot = function(){
-					var statTmp =  {
-						hp: 'n/a',
-						mp: 'n/a',
-						hpregen: 'n/a',
-						mpregen: 'n/a',
-						attackdamage: 'n/a',
-						abilitypower: 'n/a',
-						armorpenetration: ['n/a','n/a'],
-						magicpenetration:  ['n/a','n/a'],
-						lifesteal: 'n/a',
-						spellvamp: 'n/a',
-						attackspeed: 'n/a',
-						cooldownreduction: 'n/a',
-						critchance: 'n/a',
-						armor: 'n/a',
-						attackrange: 'n/a',
-						spellblock: 'n/a',
-						movespeed: 'n/a',
-						tenacity: 'n/a'
-					};
-
-					var snapTmp = {
-						level: 	 1,
-						items:   [],
-						trinket: null,
-						name: 	 ''
-					};
-
-					$scope.build.snapshot.push(snapTmp);
-					$scope.build.calculatedStats.push(statTmp);
-					var length = $scope.build.snapshot.length-1;
-					$scope.setCurrentSnap(length);
-				};
-
-				$scope.setCurrentSnap = function(index){
-					$scope.data.currentSnapshot = index;
 				};
 
 				$scope.addItem = function(item){

@@ -82,6 +82,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			};
 
 			$scope.blockBuilder();
+
+			if ($scope.build.snapshot.length == 0)
+				$scope.addSnapshot();
+
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
@@ -333,9 +337,44 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		    angular.element('.stat-value-wrapper').removeClass('affected');
 		};
 
-		/*angular.element('.item-slot').bind('mouseenter', function() {
-            console.log('teste');
-        });*/
+		$scope.addSnapshot = function(){
+			var statTmp =  {
+				hp: 'n/a',
+				mp: 'n/a',
+				hpregen: 'n/a',
+				mpregen: 'n/a',
+				attackdamage: 'n/a',
+				abilitypower: 'n/a',
+				armorpenetration: ['n/a','n/a'],
+				magicpenetration:  ['n/a','n/a'],
+				lifesteal: 'n/a',
+				spellvamp: 'n/a',
+				attackspeed: 'n/a',
+				cooldownreduction: 'n/a',
+				critchance: 'n/a',
+				armor: 'n/a',
+				attackrange: 'n/a',
+				spellblock: 'n/a',
+				movespeed: 'n/a',
+				tenacity: 'n/a'
+			};
+
+			var snapTmp = {
+				level: 	 1,
+				items:   [],
+				trinket: null,
+				name: 	 ''
+			};
+
+			$scope.build.snapshot.push(snapTmp);
+			$scope.build.calculatedStats.push(statTmp);
+			var length = $scope.build.snapshot.length-1;
+			$scope.setCurrentSnap(length);
+		};
+
+		$scope.setCurrentSnap = function(index){
+			$scope.data.currentSnapshot = index;
+		};
 
 		/**************************
 		* Build Listing  		  *
