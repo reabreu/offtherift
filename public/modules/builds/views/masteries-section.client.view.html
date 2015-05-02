@@ -32,7 +32,9 @@
         <ul class="mastery-container  mastery-border-blue">
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}"
-                ng-switch="masterie.enabled || false">
+                ng-switch="masterie.enabled || false"
+                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseleave="$parent.$parent.hoverOut()">
                 <span ng-switch-when="true">
                     <img
                         tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
@@ -55,7 +57,9 @@
         <ul class="mastery-container  mastery-border-blue">
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}"
-                ng-switch="masterie.enabled || false">
+                ng-switch="masterie.enabled || false"
+                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseleave="$parent.$parent.hoverOut()">
                 <span ng-switch-when="true">
                     <img
                         tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"

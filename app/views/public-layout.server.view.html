@@ -24,6 +24,7 @@
         <meta property="og:image" content="/img/brand/logo.png">
         <meta property="og:type" content="website">
 
+
         <!-- Twitter META -->
         <meta name="twitter:title" content="{{title}}">
         <meta name="twitter:description" content="{{description}}">
@@ -46,6 +47,16 @@
         <![endif]-->
     </head>
     <body class="ng-cloak">
+        <!-- FACEBOOK PLUGIN -->
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId={{facebookAppId}}";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
         <div class="fixed-top-element champion-splash"></div>
         <div class="fixed-top-element background-overlay"></div>
         <div class="full-height front-layer">
@@ -69,11 +80,6 @@
                 </section>
             </div>
         </div>
-
-        <!--Embedding The User Object-->
-        <script type="text/javascript">
-            var user = {{ user | json | safe }};
-        </script>
 
         <!--Embedding The User Object-->
         <script type="text/javascript">

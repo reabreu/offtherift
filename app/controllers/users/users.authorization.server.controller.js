@@ -66,4 +66,4 @@ exports.hasRole = function(roles){
 			return next();
 		});
 	};
-}
+};

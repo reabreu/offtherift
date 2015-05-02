@@ -20,6 +20,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						$scope.data.selectedChampion 	= data.champions[0];
 						$scope.getPatchInfo();
 					});
+				} else {
+					FB.XFBML.parse();
 				}
 			});
 		};
@@ -95,22 +97,22 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.setBuildMode();
 			}
 
-			$scope.$watch('build.snapshot', function (newVal) {
+			$scope.$watch('build.snapshot', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
 
-			$scope.$watch('build.runes', function (newVal) {
+			$scope.$watch('build.runes', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
 
-			$scope.$watch('build.masteries', function (newVal) {
+			$scope.$watch('build.masteries', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
 
-			$scope.$watch('build.champion_id', function (newVal) {
+			$scope.$watch('build.champion_id', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
-		}
+		};
 
 		$scope.setBuildMode = function() {
 			if ($state.current.name == "editBuild") {
@@ -121,7 +123,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
-		}
+		};
 
 		/**
 		 * Load patch information needed for build
@@ -179,7 +181,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			$scope.unblockBuilder();
-		}
+		};
 
 		/**
 		 * Method responsible for checking whether a build can be savec
@@ -188,7 +190,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.evaluateBuildStatus = function(){
 			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined ) return false;
 			return true;
-		}
+		};
 
 		// Create new Build
 		$scope.create = function() {

@@ -29,7 +29,7 @@ exports.getRegistrationHashes = function(req, res, next) {
     var options = {
         skip:       skip,
         limit:      limit
-    }
+    };
 
     var query = {};
 
@@ -229,7 +229,7 @@ exports.activateRegistrationHash = function (req, res, next) {
 
     RegistrationHash.findOne({
         hash : hash,
-        email: { $exists: true },
+        email: { $exists: true }
     }, function(err, hash) {
         if (hash) {
             if (typeof hash.activated !== "undefined") { // already activated
@@ -262,7 +262,7 @@ exports.activateRegistrationHash = function (req, res, next) {
 exports.hasUnsedHashes = function (req, res, next) {
     var query = {
         email: { $exists: false },
-        activated: { $exists: false },
+        activated: { $exists: false }
     };
 
     RegistrationHash.count(query).exec(function(err, count) {
@@ -301,7 +301,7 @@ exports.subscribeEmail = function (req, res, next) {
         // Lookup email if is already registered
         function(email, done) {
             RegistrationHash.findOne({
-                email: { $regex: email, $options: 'i' },
+                email: { $regex: email, $options: 'i' }
             }, function(err, hash) {
                 if (!hash) {
 
@@ -441,7 +441,7 @@ exports.generateHashes = function (number, email) {
     }
 
     return hashes;
-}
+};
 
 /**
  * Regists an email with a hash (used on async.waterfall)
@@ -451,7 +451,7 @@ exports.generateHashes = function (number, email) {
 exports.emailHashRegistration = function (email, done) {
     RegistrationHash.findOne({
         email: { $exists: false },
-        activated: { $exists: false },
+        activated: { $exists: false }
     }, function(err, hash) {
         if (!hash) {
 
