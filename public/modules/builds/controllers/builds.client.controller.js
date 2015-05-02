@@ -1,9 +1,11 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI) {
 		$scope.authentication 	= Authentication;
+		ngProgress.height('3px');
+		ngProgress.color('#89cff0');
 
 		// Find existing Build
 		$scope.findOne = function() {
@@ -26,6 +28,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
+			$scope.blockSnapshot = false;
 			$scope.enabledView = false;
 
 			$scope.build 			= {
@@ -78,7 +81,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedChampion 	: null
 			};
 
-			ngProgress.start();
+			$scope.blockBuilder();
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
@@ -165,13 +168,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							}
 
 							$scope.enabledView = true;
-							ngProgress.complete();
+							$scope.unblockBuilder();
 						});
 					});
 				});
 			});
 
-			ngProgress.complete();
+			$scope.unblockBuilder();
 		}
 
 		/**
@@ -250,12 +253,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 */
 		$scope.setSelectedChampion = function(champion){
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
-			ngProgress.start();
+			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.selectedChampion 	= data.champions[0];
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
-				ngProgress.complete();
+				$scope.unblockBuilder();
 			});
 		};
 
@@ -264,6 +267,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.calculate = function(){
+			$scope.blockBuilder();
 			var request = {
 				partype: 	$scope.data.selectedChampion.partype,
 				level: 		$scope.build.snapshot[$scope.data.currentSnapshot].level,
@@ -294,24 +298,44 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				request.effects = request.effects.concat(masterie.customEffect);
 			});
 
-			ngProgress.start();
 			Calculate.save(request).$promise.then(function(response) {
 				$scope.build.calculatedStats[$scope.data.currentSnapshot] = response.data;
-				ngProgress.complete();
+				$scope.unblockBuilder();
+				$scope.blockSnapshot = false;
 			});
 		};
 
 		//Watchers para fazer o pedido
 		$scope.evaluateStatsRequest = function(){
-
 			if ($scope.data.selectedChampion === null) {
 				return;
 			}
 
+			$scope.blockSnapshot = true;
+
 			$timeout.cancel($scope.data.timer);
-			$scope.data.timer = $timeout($scope.calculate,1500);
+			$scope.data.timer = $timeout($scope.calculate,1000);
 		};
 
+		$scope.hoverIn = function( object ){
+
+			if( typeof(object.points) !== "undefined" && object.points == 0)
+				return;
+
+			angular.element('.stat-value-wrapper').addClass('stat-not-affected');
+			angular.forEach(object.customEffect, function(effect, index){
+				angular.element('.stat-value-' + effect.dest).addClass('affected');
+			});
+		};
+
+		$scope.hoverOut = function(){
+		    angular.element('.stat-value-wrapper').removeClass('stat-not-affected');
+		    angular.element('.stat-value-wrapper').removeClass('affected');
+		};
+
+		/*angular.element('.item-slot').bind('mouseenter', function() {
+            console.log('teste');
+        });*/
 
 		/**************************
 		* Build Listing  		  *
@@ -379,7 +403,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		}
 
 		$scope.searchBuilds = function(){
-			ngProgress.start();
+			$scope.blockBuilder();
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;
@@ -395,7 +419,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			    });
 
                 $scope.search.skip += $scope.search.limit;
-				ngProgress.complete();
+				$scope.unblockBuilder();
 			});
 		};
 
@@ -409,5 +433,24 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
                 container.push(elem);
             }
         };
+
+        /**
+         * Metodo responsavel por bloquear o builder
+         * @return {[type]} [description]
+         */
+        $scope.blockBuilder = function(){
+        	blockUI.start();
+			ngProgress.start();
+        }
+
+        /**
+         * Metodo responsavel por debloquear o builder
+         * @return {[type]} [description]
+         */
+
+        $scope.unblockBuilder = function(){
+        	ngProgress.complete();
+			blockUI.stop();
+        }
 	}
 ]);

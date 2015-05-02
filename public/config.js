@@ -19,7 +19,8 @@ var ApplicationConfiguration = (function() {
 		'ngFx',
 		'pascalprecht.translate',
 		'ngProgress',
-		'shoppinpal.mobile-menu'
+		'shoppinpal.mobile-menu',
+		'blockUI'
 	];
 
 	// Add a new vertical module

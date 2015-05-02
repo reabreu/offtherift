@@ -6,17 +6,15 @@
 					<li ng-repeat="(key, value) in runeTypes">
 						<a class="btn btn-default"
 						ng-click="setCurrentType(key)"
-						ng-class="{'btn-rune-selected': key == currentType}"
-						>{{value}}</a>
+						ng-class="{'btn-rune-selected': key == currentType}">{{value}}</a>
 					</li>
 				</ul>
 				<input
 				type        = "text"
 				id          = "focusedinput"
 				class       = "build-input"
-				ng-model    = "runeSearch.name",
-				placeholder = "Rune Name"
-				>
+				ng-model    = "runeSearch.name"
+				placeholder = "Rune Name">
 				<ul class="item-listing">
 	                <li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
 	                        <a
@@ -49,7 +47,14 @@
 			<div class="runes-builder-container">
 				<div class="col-sm-3 rune-collumn" ng-repeat="(key, value) in runeTypes">
 					<div class="rune-column-item" ng-repeat="rune in build.runes[key] | unique:rune.id">
-						<img class="col-sm-12" ng-click="removeRune(key, rune.id)" title="" alt="Slot {{$index+1}}" ng-src="{{ rune.image | ddragon: build.version:'rune'}}">
+						<img
+							class="col-sm-12"
+							ng-click="removeRune(key, rune.id)"
+							title="" alt="Slot {{$index+1}}"
+							ng-src="{{ rune.image | ddragon: build.version:'rune'}}"
+							ng-mouseenter="$parent.$parent.$parent.hoverIn(rune);"
+                            ng-mouseleave="$parent.$parent.$parent.hoverOut()"
+						>
 						<span>{{build.runes_aux.runeCount[rune.id]}}</span>
 					</div>
 				</div>
@@ -57,18 +62,3 @@
 		</div>
 	</div>
 </div>
-
-<!--
-<div class="col-sm-6">
-	<div class="row">
-		<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
-			<div class="row">
-				<span class="col-sm-12">{{value}}</span>
-				<ul class="mailbox-msg-list" style="height:350px;overflow-y:scroll;border:1px solid black;">
-
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
--->

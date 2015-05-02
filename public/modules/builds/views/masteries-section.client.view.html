@@ -5,11 +5,19 @@
         <ul class="mastery-container  mastery-border-red">
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}"
-                ng-switch="masterie.enabled || false">
-                <span ng-switch-when="true">
+                ng-switch="masterie.enabled || false"
+                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseleave="$parent.$parent.hoverOut()">
+                <span ng-switch-when="true"
+                        >
                     <img
+                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-trigger="mouseenter"
+                        tooltip-placement="top"
+                        tooltip-popup-delay = "600"
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.offense-1 || !checkDependecy(masterie)}"
+
                         title=""
                         alt="masterie"
                         ng-click="addRank($event,masterie)"
@@ -27,6 +35,10 @@
                 ng-switch="masterie.enabled || false">
                 <span ng-switch-when="true">
                     <img
+                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-trigger="mouseenter"
+                        tooltip-placement="top"
+                        tooltip-popup-delay = "600"
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.defense-1 || !checkDependecy(masterie)}"
                         title=""
@@ -46,6 +58,10 @@
                 ng-switch="masterie.enabled || false">
                 <span ng-switch-when="true">
                     <img
+                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-trigger="mouseenter"
+                        tooltip-placement="top"
+                        tooltip-popup-delay = "600"
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.utility-1 || !checkDependecy(masterie)}"
                         title=""
