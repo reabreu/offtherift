@@ -10,4 +10,4 @@ exports.getLang = function(req, res) {
         }
         res.jsonp(JSON.parse(data));
     });
-}
+};

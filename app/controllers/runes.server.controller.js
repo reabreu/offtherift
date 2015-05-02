@@ -83,7 +83,7 @@ exports.list = function(req, res) {
 	var options = {
 		skip: 		skip,
 		limit: 		limit
-	}
+	};
 
 	var query = {};
 

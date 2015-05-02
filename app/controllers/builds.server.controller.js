@@ -146,7 +146,7 @@ exports.list = function(req, res) {
 	var options 	= {
 		skip: 		skip,
 		limit: 		limit
-	}
+	};
 
 	//displayName
 	var populateQuery       = [{path:'user', select:'displayName'}, {path:'champion', select:'name'}];

@@ -81,7 +81,7 @@ exports.list = function(req, res) {
 	var options = {
 		skip: skip,
 		limit: limit
-	}
+	};
 
     if (!res.isAdmin) {
         query.enabled = true;
@@ -153,7 +153,7 @@ exports.checkPatches = function(req,res){
     		$setOnInsert: {
 				created: new Date().toISOString()
 			}
-    	}
+    	};
 
     	for (var i = 0; i < patches_response.length; i++) {
     		Patch.findOneAndUpdate({version: patches_response[i] }, update , options, function(err, doc){
@@ -176,7 +176,7 @@ exports.checkPatches = function(req,res){
 	}, function(e) {
         console.log('Got error: ', e);
     });
-}
+};
 
 //Metodo anonimo que sincroniza ITEMS
 asyncTasks.push(function(callback){
@@ -206,7 +206,7 @@ asyncTasks.push(function(callback){
 			var conditions = {
 				version: 	items.data[key].version,
 				id: 		items.data[key].id
-			}
+			};
 
     		Item.findOneAndUpdate( conditions, items.data[key], options, function(err, doc){
 
@@ -325,7 +325,7 @@ asyncTasks.push(function(callback){
 			var conditions = {
 				version: 	runes.data[key].version,
 				id: 		runes.data[key].id
-			}
+			};
 
     		Rune.findOneAndUpdate( conditions, runes.data[key], options, function(err, doc){
 
@@ -377,7 +377,7 @@ asyncTasks.push(function(callback){
             var conditions = {
                 version:    masteries.data[key].version,
                 id:         masteries.data[key].id
-            }
+            };
 
             Masterie.findOneAndUpdate( conditions, masteries.data[key], options, function(err, doc){
 
@@ -422,7 +422,7 @@ exports.syncPatchData = function(req, res){
 	  	// All tasks are done now
 	  	res.jsonp({report: send});
 	});
-}
+};
 
 //Metodo anonimo que copia ITEMS
 copyTasks.push(function(callback){
@@ -551,4 +551,4 @@ exports.copyPatch = function(req, res, next){
         // All tasks are done now
         res.jsonp({report: send});
     });
-}
+};

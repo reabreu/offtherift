@@ -134,7 +134,7 @@ module.exports = {
 					'admin/modules/*/tests/*.js'
 				]
 			}
-		},
+		}
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || '671726556258325',
