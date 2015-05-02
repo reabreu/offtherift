@@ -186,7 +186,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return Boolean
 		 */
 		$scope.evaluateBuildStatus = function(){
-			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined) return false;
+			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined ) return false;
 			return true;
 		}
 
@@ -442,7 +442,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		}
 
 		$scope.searchBuilds = function(){
-			$scope.blockBuilder();
+			ngProgress.start();
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;
@@ -458,7 +458,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			    });
 
                 $scope.search.skip += $scope.search.limit;
-				$scope.unblockBuilder();
+				ngProgress.complete();
 			});
 		};
 
