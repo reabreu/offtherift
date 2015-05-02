@@ -72,12 +72,15 @@ exports.read = function(req, res) {
 
                     saveAndReturn(res, build);
                 }
+				else {
+					res.jsonp({data: build});
+				}
             });
         }).on('error', function(err) {
             console.log( err.message);
         });
     } else {
-        saveAndReturn(res, build);
+		res.jsonp({data: build});
     }
 };
 

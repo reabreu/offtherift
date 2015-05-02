@@ -7,7 +7,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Find existing Build
 		$scope.findOne = function() {
-            $scope.absUrl = $location.absUrl();
+			$scope.absUrl = $location.absUrl();
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
@@ -18,6 +18,17 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						$scope.data.selectedChampion 	= data.champions[0];
 						$scope.getPatchInfo();
 					});
+				} else {
+					FB.XFBML.parse();
+					//FB.init({appId: '671726556258325', status: true, xfbml: false});
+
+					/*(function(d, s, id) {
+						var js, fjs = d.getElementById(s);
+						if (d.getElementById(id)) return;
+						js = d.createElement(s); js.id = id;
+						js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.2&appId=671726556258325";
+						fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'fb-script', 'facebook-jssdk'));*/
 				}
 			});
 		};
@@ -103,7 +114,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.$watch('build.champion_id', function (newVal) {
 				$scope.evaluateStatsRequest();
 			}, true);
-		}
+		};
 
 		$scope.setBuildMode = function() {
 			if ($state.current.name == "editBuild") {
@@ -114,7 +125,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
-		}
+		};
 
 		/**
 		 * Load patch information needed for build
@@ -172,7 +183,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			ngProgress.complete();
-		}
+		};
 
 		/**
 		 * Method responsible for checking whether a build can be savec
@@ -181,7 +192,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.evaluateBuildStatus = function(){
 			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined) return false;
 			return true;
-		}
+		};
 
 		// Create new Build
 		$scope.create = function() {
@@ -365,18 +376,18 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setGroup = function($event){
 			$scope.search.group = $event.target.value;
-		}
+		};
 
 		$scope.loadMore = function() {
 			if ($scope.busy) return;
     		$scope.searchBuilds();
-		}
+		};
 
 		$scope.resetAndSearchBuilds = function(){
 			$scope.builds = [];
 			$scope.search.skip = 0;
 			$scope.searchBuilds();
-		}
+		};
 
 		$scope.searchBuilds = function(){
 			ngProgress.start();

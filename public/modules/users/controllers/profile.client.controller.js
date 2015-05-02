@@ -17,7 +17,6 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
             };
 
             Builds.query($scope.search).$promise.then(function(data){
-                console.log(data);
                 $scope.builds   = [];
                 $scope.emptyBuilds   = [];
 

@@ -1,13 +1,4 @@
 <section data-ng-controller="BuildsController" data-ng-init="findOne()">
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-
     <div class="container">
         <!--Build Title-->
         <div class="row">
@@ -36,22 +27,23 @@
                     </em>
                 </small>
             </div>
-            <div class="row" ng-if="absUrl">
-                <div class="fb-like"
-                     data-href="{{absUrl}}"
-                     data-layout="standard"
-                     data-action="like"
-                     data-show-faces="false"
-                     data-share="true">
-                </div>
+            <!--Like & Share-->
+            <div class='fb-parse'>
+                <fb:like data-href="{{absUrl}}"
+                         data-layout="standard"
+                         data-action="like"
+                         data-show-faces="false"
+                         data-share="true">
+                </fb:like>
             </div>
         </div>
         <!--Comments Section-->
-        <div class="row" ng-if="absUrl">
-            <div class="fb-comments"
-                 data-href="{{absUrl}}"
-                 data-numposts="5"
-                 data-colorscheme="light">
+        <div class="row">
+            <div class="fb-parse">
+                <fb:comments data-href="{{absUrl}}"
+                             data-numposts="5"
+                             data-colorscheme="light">
+                </fb:comments>
             </div>
         </div>
     </div>
