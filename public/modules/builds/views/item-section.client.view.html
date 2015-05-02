@@ -1,15 +1,5 @@
 <div ng-init="init()">
     <div class="row">
-        <div class="col-sm-1" ng-repeat="snap in build.snapshot track by $index">
-            <span ng-click="setCurrentSnap($index)" ng-class="{'selected-snap': data.currentSnapshot == $index}" class="badge">
-                {{$index+1}}
-            </span>
-        </div>
-        <div class="col-sm-1">
-            <span ng-click="addSnapshot()" class="badge badge-dark" style="cursor:pointer;">+</span>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-12">
             <div class="level-wrapper">
                 <div class="level-container" ng-repeat="n in range(1,18)">
@@ -52,6 +42,8 @@
                     <ul class="item-wrapper">
                         <li class="item-slot" ng-repeat="n in range(1,6) track by $index">
                             <img
+                                ng-mouseenter="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index]);"
+                                ng-mouseleave="$parent.$parent.hoverOut()"
                                 ng-hide="build.snapshot[data.currentSnapshot].items[$index].id==null"
                                 ng-click="removeItem($index)"
                                 title=""
@@ -60,6 +52,8 @@
                         </li>
                         <li class="item-slot">
                             <img
+                                ng-mouseenter="$parent.hoverIn();"
+                                ng-mouseleave="$parent.$parent.hoverOut()"
                                 ng-hide="build.snapshot[data.currentSnapshot].trinket==null"
                                 ng-model="build.snapshot[data.currentSnapshot].trinket"
                                 ng-click="removeItem(7)"

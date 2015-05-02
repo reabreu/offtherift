@@ -1,13 +1,15 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI) {
 		$scope.authentication 	= Authentication;
+		ngProgress.height('3px');
+		ngProgress.color('#89cff0');
 
 		// Find existing Build
 		$scope.findOne = function() {
-			$scope.absUrl = $location.absUrl();
+            $scope.absUrl = $location.absUrl();
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
@@ -18,17 +20,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						$scope.data.selectedChampion 	= data.champions[0];
 						$scope.getPatchInfo();
 					});
-				} else {
-					FB.XFBML.parse();
-					//FB.init({appId: '671726556258325', status: true, xfbml: false});
-
-					/*(function(d, s, id) {
-						var js, fjs = d.getElementById(s);
-						if (d.getElementById(id)) return;
-						js = d.createElement(s); js.id = id;
-						js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.2&appId=671726556258325";
-						fjs.parentNode.insertBefore(js, fjs);
-					}(document, 'fb-script', 'facebook-jssdk'));*/
 				}
 			});
 		};
@@ -37,6 +28,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
+			$scope.blockSnapshot = false;
 			$scope.enabledView = false;
 
 			$scope.build 			= {
@@ -89,7 +81,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedChampion 	: null
 			};
 
-			ngProgress.start();
+			$scope.blockBuilder();
+
+			if ($scope.build.snapshot.length == 0)
+				$scope.addSnapshot();
+
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
@@ -114,7 +110,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.$watch('build.champion_id', function (newVal) {
 				$scope.evaluateStatsRequest();
 			}, true);
-		};
+		}
 
 		$scope.setBuildMode = function() {
 			if ($state.current.name == "editBuild") {
@@ -125,7 +121,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
-		};
+		}
 
 		/**
 		 * Load patch information needed for build
@@ -176,14 +172,14 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							}
 
 							$scope.enabledView = true;
-							ngProgress.complete();
+							$scope.unblockBuilder();
 						});
 					});
 				});
 			});
 
-			ngProgress.complete();
-		};
+			$scope.unblockBuilder();
+		}
 
 		/**
 		 * Method responsible for checking whether a build can be savec
@@ -192,7 +188,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.evaluateBuildStatus = function(){
 			if ($scope.build.champion_id === null || $scope.build.version === null || $scope.build.name === null || $scope.build.name === undefined) return false;
 			return true;
-		};
+		}
 
 		// Create new Build
 		$scope.create = function() {
@@ -261,12 +257,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 */
 		$scope.setSelectedChampion = function(champion){
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
-			ngProgress.start();
+			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.selectedChampion 	= data.champions[0];
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
-				ngProgress.complete();
+				$scope.unblockBuilder();
 			});
 		};
 
@@ -275,6 +271,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.calculate = function(){
+			$scope.blockBuilder();
 			var request = {
 				partype: 	$scope.data.selectedChampion.partype,
 				level: 		$scope.build.snapshot[$scope.data.currentSnapshot].level,
@@ -305,24 +302,79 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				request.effects = request.effects.concat(masterie.customEffect);
 			});
 
-			ngProgress.start();
 			Calculate.save(request).$promise.then(function(response) {
 				$scope.build.calculatedStats[$scope.data.currentSnapshot] = response.data;
-				ngProgress.complete();
+				$scope.unblockBuilder();
+				$scope.blockSnapshot = false;
 			});
 		};
 
 		//Watchers para fazer o pedido
 		$scope.evaluateStatsRequest = function(){
-
 			if ($scope.data.selectedChampion === null) {
 				return;
 			}
 
+			$scope.blockSnapshot = true;
+
 			$timeout.cancel($scope.data.timer);
-			$scope.data.timer = $timeout($scope.calculate,1500);
+			$scope.data.timer = $timeout($scope.calculate,1000);
 		};
 
+		$scope.hoverIn = function( object ){
+
+			if( typeof(object.points) !== "undefined" && object.points == 0)
+				return;
+
+			angular.element('.stat-value-wrapper').addClass('stat-not-affected');
+			angular.forEach(object.customEffect, function(effect, index){
+				angular.element('.stat-value-' + effect.dest).addClass('affected');
+			});
+		};
+
+		$scope.hoverOut = function(){
+		    angular.element('.stat-value-wrapper').removeClass('stat-not-affected');
+		    angular.element('.stat-value-wrapper').removeClass('affected');
+		};
+
+		$scope.addSnapshot = function(){
+			var statTmp =  {
+				hp: 'n/a',
+				mp: 'n/a',
+				hpregen: 'n/a',
+				mpregen: 'n/a',
+				attackdamage: 'n/a',
+				abilitypower: 'n/a',
+				armorpenetration: ['n/a','n/a'],
+				magicpenetration:  ['n/a','n/a'],
+				lifesteal: 'n/a',
+				spellvamp: 'n/a',
+				attackspeed: 'n/a',
+				cooldownreduction: 'n/a',
+				critchance: 'n/a',
+				armor: 'n/a',
+				attackrange: 'n/a',
+				spellblock: 'n/a',
+				movespeed: 'n/a',
+				tenacity: 'n/a'
+			};
+
+			var snapTmp = {
+				level: 	 1,
+				items:   [],
+				trinket: null,
+				name: 	 ''
+			};
+
+			$scope.build.snapshot.push(snapTmp);
+			$scope.build.calculatedStats.push(statTmp);
+			var length = $scope.build.snapshot.length-1;
+			$scope.setCurrentSnap(length);
+		};
+
+		$scope.setCurrentSnap = function(index){
+			$scope.data.currentSnapshot = index;
+		};
 
 		/**************************
 		* Build Listing  		  *
@@ -376,21 +428,21 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setGroup = function($event){
 			$scope.search.group = $event.target.value;
-		};
+		}
 
 		$scope.loadMore = function() {
 			if ($scope.busy) return;
     		$scope.searchBuilds();
-		};
+		}
 
 		$scope.resetAndSearchBuilds = function(){
 			$scope.builds = [];
 			$scope.search.skip = 0;
 			$scope.searchBuilds();
-		};
+		}
 
 		$scope.searchBuilds = function(){
-			ngProgress.start();
+			$scope.blockBuilder();
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;
@@ -406,7 +458,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			    });
 
                 $scope.search.skip += $scope.search.limit;
-				ngProgress.complete();
+				$scope.unblockBuilder();
 			});
 		};
 
@@ -420,5 +472,24 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
                 container.push(elem);
             }
         };
+
+        /**
+         * Metodo responsavel por bloquear o builder
+         * @return {[type]} [description]
+         */
+        $scope.blockBuilder = function(){
+        	blockUI.start();
+			ngProgress.start();
+        }
+
+        /**
+         * Metodo responsavel por debloquear o builder
+         * @return {[type]} [description]
+         */
+
+        $scope.unblockBuilder = function(){
+        	ngProgress.complete();
+			blockUI.stop();
+        }
 	}
 ]);

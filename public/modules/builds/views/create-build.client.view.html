@@ -18,180 +18,180 @@
 				</div>
 			</div>
 			<div class="row stats-container fx-fade-down fx-speed-1000" ng-show="build.calculatedStats[data.currentSnapshot].hp != 'n/a'">
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">HP</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-hp">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].hp}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">{{data.selectedChampion.partype}}</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-mp">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].mp}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">Hp5</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-hpregen">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].hpregen | regenStat }}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">{{data.selectedChampion.partype}}p5</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-mpregen">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].mpregen | regenStat }}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">AD</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-attackdamage">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].attackdamage}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">AP</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-abilitypower">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].abilitypower}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">ArPen</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-armorpenetration">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].armorpenetration | doubleStat}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">MPen</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-magicpenetration">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].magicpenetration | doubleStat}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">LS</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-lifesteal">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].lifesteal}}%</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">SV</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-spellvamp">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].spellvamp}}%</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">AS</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-attackspeed">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].attackspeed}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">CDR</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-cooldownreduction">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}}%</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">Crit</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-critchance">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].critchance}}%</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">Armor</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-armor">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].armor}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">Range</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-attackrange">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].attackrange}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">MR</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-spellblock">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].spellblock}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-left">
 						<div class="stat-designation">MS</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-movespeed">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].movespeed}}</label>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div class="stat-wrapper stat-wrapper-right">
 						<div class="stat-designation">Tenacity</div>
-						<div class="stat-value-wrapper">
+						<div class="stat-value-wrapper stat-value-tenacity">
 							<div class="stat-value">
 								<label>{{build.calculatedStats[data.currentSnapshot].tenacity}}%</label>
 							</div>
@@ -200,7 +200,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="stats-configuration-wrapper" ng-show="data.selectedChampion != null">
+		<div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.champion_id != null">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-4">
@@ -212,16 +212,29 @@
 							<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
 						</select>
 					</div>
-					<div class="col-xs-3">
-
-					</div>
 				</div>
 			</div>
-			<div class="fx-fade-down fx-speed-1000 container-fluid" ng-show="build.calculatedStats[data.currentSnapshot].hp != null">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-12">
 						<label class="build-title">ITEMS</label>
 					</div>
+					<div class="row">
+				        <div class="col-sm-12" >
+				        	<ul class="snapshot-container">
+				        		<li
+				        			ng-repeat="snap in build.snapshot track by $index"
+				        			ng-click="setCurrentSnap($index)"
+				        			ng-class="{'selected-snap': data.currentSnapshot == $index}">
+				        			{{$index+1}}
+				        		</li>
+				        		<li
+				        		class="add-snap"
+				        		ng-show="build.snapshot.length < 5"
+				        		ng-click="addSnapshot()"> + </li>
+				        	</ul>
+				        </div>
+				    </div>
 					<div class="col-sm-12">
 						<div class="build-config-panel">
 							<item-section build="build" data="data"></item-section>

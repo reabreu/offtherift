@@ -30,6 +30,7 @@
     "angular-translate-loader-url": "~2.6.0",
     "ngprogress": "~1.0.7",
     "ng-modal": "*",
-    "ng-mobile-menu": "~0.2.0"
+    "ng-mobile-menu": "~0.2.0",
+    "angular-block-ui": "~0.2.0"
   }
 }

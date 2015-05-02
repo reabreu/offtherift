@@ -28,7 +28,8 @@ module.exports = {
 						'public/lib/ngtoast/dist/ngToast.min.css',
 						'public/lib/yamm3/yamm/yamm.css',
 						'public/lib/ngprogress/ngProgress.css',
-						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.css'
+						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.css',
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.css'
 					],
 					js: [
 						'public/lib/jquery/dist/jquery.min.js',
@@ -54,7 +55,8 @@ module.exports = {
 						'public/lib/angular-translate/angular-translate.min.js',
 						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js',
 						'public/lib/ngprogress/build/ngProgress.min.js',
-						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.js'
+						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.js',
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.js'
 					]
 				},
 				css: [
