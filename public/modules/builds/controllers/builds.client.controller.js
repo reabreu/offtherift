@@ -30,8 +30,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
-			$scope.blockSnapshot = false;
-			$scope.enabledView = false;
+			$scope.blockSnapshot 	= false;
+			$scope.enabledView 		= false;
+			$scope.buildChanged 	= false;
 
 			$scope.build 			= {
 				visible: 			false,
@@ -64,9 +65,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						utility:  4
 					}
 				},
-				snapshot: 			[
-
-				],
+				snapshot: 			[],
 				calculatedStats: 	[]
 			};
 
@@ -114,16 +113,24 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			}, true);
 		};
 
+		$scope.setVisibleMode = function(mode){
+			$scope.build.visible = mode;
+		}
+
 		$scope.setBuildMode = function() {
 			if ($state.current.name == "editBuild") {
-				$scope.Buildmode="edit";
+				$scope.buildMode="edit";
 				$scope.findOne();
 			} else {
-				$scope.Buildmode="create";
+				$scope.buildMode="create";
 				$scope.build.version =  $scope.data.selectedPatch 	= $scope.data.patches[0].version;
 				$scope.getPatchInfo();
 			}
 		};
+
+		$scope.setBuildChanged = function(mode){
+			$scope.buildChanged = mode;
+		}
 
 		/**
 		 * Load patch information needed for build
@@ -207,10 +214,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Update existing Build
 		$scope.update = function() {
+			$scope.blockBuilder();
 			var buildService = new Builds ($scope.build);
 
 			buildService.$update(function() {
+				$scope.buildChanged = false;
 				$location.path('builds/' + $scope.build._id + '/edit');
+				$scope.unblockBuilder();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -307,6 +317,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Calculate.save(request).$promise.then(function(response) {
 				$scope.build.calculatedStats[$scope.data.currentSnapshot] = response.data;
 				$scope.unblockBuilder();
+				$scope.hoverOut();
 				$scope.blockSnapshot = false;
 			});
 		};
@@ -317,7 +328,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				return;
 			}
 
-			$scope.blockSnapshot = true;
+			$scope.buildChanged 	= true;
+			$scope.blockSnapshot	= true;
 
 			$timeout.cancel($scope.data.timer);
 			$scope.data.timer = $timeout($scope.calculate,1000);

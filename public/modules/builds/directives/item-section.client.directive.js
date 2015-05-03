@@ -69,12 +69,14 @@ angular.module('builds').directive('itemSection', [
                             // Adding another trinket will replace the previous one.
                             $scope.build.snapshot[$scope.data.currentSnapshot].trinket = {
 								id: item.id,
-								customEffect: item.customEffect
+								customEffect: item.customEffect,
+								name: item.name
 							}
 						} else {
 							$scope.build.snapshot[$scope.data.currentSnapshot].items.push({
 								id: item.id,
-								customEffect: item.customEffect
+								customEffect: item.customEffect,
+								name: item.name
 							});
 						}
 					}

@@ -2,8 +2,8 @@
 
 angular.module('builds').filter('masterieDescription', [
 	function() {
-		return function(input) {
-			return input.toString().replace(/,/g,",<br/>");
+		return function(masterie) {
+			return '<h3>' + masterie.name + '</h3>' + masterie.sanitizedDescription.toString().replace(/,/g,",<br/>");
 		};
 	}
 ]);

@@ -51,3 +51,50 @@
     color: @water-blue;
     cursor:pointer;
 }
+
+
+.btn-build-action{
+    font-weight: 300;
+    border-radius: 15px;
+    padding: 2px 10px;
+    display: block;
+    text-align: center;
+    width: 125px;
+    float: right;
+}
+
+.btn-build-action-yellow{
+    border: 1px solid rgb(255,204,0);
+    background-color: rgba(255,204,0,0.5);
+}
+
+.btn-build-action-green{
+    border: 1px solid rgb(0,255,0);
+    background-color: rgba(0,255,0,0.5);
+}
+
+.btn-build-mode{
+    width: 98px;
+    display: inline-block;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: 300;
+    border: 1px solid white;
+    background-color: transparent;
+
+    &:hover,
+    &.active{
+        background-color: white;
+        color: @water-blue;
+        font-weight: 700;
+    }
+
+    &:nth-child(2){
+        position: relative;
+        left: -25px;
+    }
+}
+
+.build-general-settings{
+    margin-bottom: 15px;
+}

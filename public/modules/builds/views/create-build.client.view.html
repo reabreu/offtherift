@@ -202,27 +202,54 @@
 		</div>
 		<div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.champion_id != null">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xs-4">
-						<input type="text" data-ng-model="build.name" id="name" class="form-control build-input" placeholder="Build Name" required>
+				<div class="row build-general-settings">
+					<div class="col-md-3">
+						<input type="text" ng-change="setBuildChanged(true)" data-ng-model="build.name" id="name" class="form-control build-input" placeholder="Build Name">
 					</div>
-					<div class="col-xs-2">
+					<div class="col-md-3">
 						<label class="width-40" for="selectedPatch">Patch</label>
 						<select class="select-input width-80" ng-model = "data.selectedPatch" ng-change="initBuild()" name="selectedPatch" id ="selectedPatch">
 							<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
 						</select>
 					</div>
-					<div class="col-xs-4">
-						<div class="row" ng-show="Buildmode == 'create'">
-							<a class="btn btn-success" href="#" ng-click="create()" ng-show="enabledView">Save this build!</a>
+					<div class="col-md-4">
+						<a
+							class="btn-build-mode"
+							href="#"
+							ng-click="setVisibleMode(false);setBuildChanged(true)"
+							ng-class="{'active': !build.visible}">
+							Private
+						</a>
+						<a
+							class="btn-build-mode"
+							href="#"
+							ng-click="setVisibleMode(true);setBuildChanged(true)"
+							ng-class="{'active': build.visible}">
+							Public
+						</a>
+					</div>
+					<div class="col-md-2">
+						<div ng-show="buildMode == 'create'">
+							<a
+								class="btn-build-action btn-build-action-yellow"
+								href="#" ng-click="create()">
+								Save build
+							</a>
 						</div>
-						<div class="row" ng-show="Buildmode == 'edit'">
-							<a class="btn btn-success" href="#" ng-click="update()" ng-show="enabledView">Update this build!</a>
+						<div ng-show="buildMode == 'edit'">
+							<a
+								class="btn-build-action btn-build-action-yellow"
+								href="#"
+								ng-click="update()"
+								ng-show="enabledView"
+								ng-class="{'btn-build-action-yellow' : buildChanged, 'btn-build-action-green' : !buildChanged}">
+								{{buildChanged ? 'Save changes' : 'Build up to date'}}
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="container-fluid">
+			<div class="container-fluid configuration-wrapper">
 				<div class="row">
 					<div class="col-sm-12">
 						<label class="build-title">ITEMS</label>

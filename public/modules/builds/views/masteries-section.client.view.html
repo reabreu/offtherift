@@ -6,12 +6,12 @@
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseover="$parent.$parent.hoverIn(masterie);"
                 ng-mouseleave="$parent.$parent.hoverOut()">
                 <span ng-switch-when="true"
                         >
                     <img
-                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-html-unsafe="{{masterie | masterieDescription}}"
                         tooltip-trigger="mouseenter"
                         tooltip-placement="top"
                         tooltip-popup-delay = "600"
@@ -33,11 +33,11 @@
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseover="$parent.$parent.hoverIn(masterie);"
                 ng-mouseleave="$parent.$parent.hoverOut()">
                 <span ng-switch-when="true">
                     <img
-                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-html-unsafe="{{masterie | masterieDescription}}"
                         tooltip-trigger="mouseenter"
                         tooltip-placement="top"
                         tooltip-popup-delay = "600"
@@ -54,15 +54,15 @@
     </div>
     <div class="mastery-column">
         <h3 class="mastery-title mastery-green">Utility <span class="avaliable-numbers">{{build.masteries_aux.points.utility}}</span></h3>
-        <ul class="mastery-container  mastery-border-blue">
+        <ul class="mastery-container  mastery-border-green">
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseenter="$parent.$parent.hoverIn(masterie);"
+                ng-mouseover="$parent.$parent.hoverIn(masterie);"
                 ng-mouseleave="$parent.$parent.hoverOut()">
                 <span ng-switch-when="true">
                     <img
-                        tooltip-html-unsafe="{{masterie.sanitizedDescription | masterieDescription}}"
+                        tooltip-html-unsafe="{{masterie | masterieDescription}}"
                         tooltip-trigger="mouseenter"
                         tooltip-placement="top"
                         tooltip-popup-delay = "600"

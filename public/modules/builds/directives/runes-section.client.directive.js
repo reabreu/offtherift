@@ -84,7 +84,7 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 							if ($scope.build.runes[tag].length < $scope.runeLimits[tag]) {
 								if(!rune.customEffect.length) continue;
 
-								$scope.build.runes[tag].push({'id' : rune.id, 'image' : rune.image.full, 'customEffect' : rune.customEffect});
+								$scope.build.runes[tag].push({'id' : rune.id, 'image' : rune.image.full, 'customEffect' : rune.customEffect, 'name': rune.name});
 
 								if (rune.id in $scope.build.runes_aux.runeCount) {
 									$scope.build.runes_aux.runeCount[rune.id]++;
