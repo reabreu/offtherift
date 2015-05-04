@@ -46,7 +46,7 @@
                     <img
                         tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].items[$index].name}}"
                         tooltip-trigger="mouseenter"
-                        tooltip-placement="right"
+                        tooltip-placement="top"
                         tooltip-popup-delay = "600"
                         ng-hide="build.snapshot[data.currentSnapshot].items[$index].id==null"
                         ng-click="removeItem($index)"
@@ -60,7 +60,7 @@
                     <img
                         tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].trinket.name}}"
                         tooltip-trigger="mouseenter"
-                        tooltip-placement="right"
+                        tooltip-placement="top"
                         tooltip-popup-delay = "600"
                         ng-hide="build.snapshot[data.currentSnapshot].trinket==null"
                         ng-model="build.snapshot[data.currentSnapshot].trinket"
