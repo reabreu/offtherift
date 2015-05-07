@@ -2,7 +2,7 @@
 <div class="mastery-wrapper">
     <div class="mastery-column">
         <h3 class="mastery-title mastery-red" >Offense <span class="avaliable-numbers">{{build.masteries_aux.points.offense}}</span></h3>
-        <ul class="mastery-container  mastery-border-red">
+        <ul class="mastery-container"> <!-- mastery-border-red-->
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}"
                 ng-switch="masterie.enabled || false"
@@ -17,7 +17,6 @@
                         tooltip-popup-delay = "600"
                         ng-right-click="removeRank($event,masterie)"
                         ng-class="{'mastery-disabled': $index > build.masteries_aux.enabled.offense-1 || !checkDependecy(masterie)}"
-
                         title=""
                         alt="masterie"
                         ng-click="addRank($event,masterie)"
@@ -29,7 +28,7 @@
     </div>
     <div class="mastery-column">
         <h3 class="mastery-title mastery-blue" >Defense <span class="avaliable-numbers">{{build.masteries_aux.points.defense}}</span></h3>
-        <ul class="mastery-container  mastery-border-blue">
+        <ul class="mastery-container"> <!-- mastery-border-blue-->
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}"
                 ng-switch="masterie.enabled || false"
@@ -54,7 +53,7 @@
     </div>
     <div class="mastery-column">
         <h3 class="mastery-title mastery-green">Utility <span class="avaliable-numbers">{{build.masteries_aux.points.utility}}</span></h3>
-        <ul class="mastery-container  mastery-border-green">
+        <ul class="mastery-container"> <!-- mastery-border-green-->
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}"
                 ng-switch="masterie.enabled || false"

@@ -1,8 +1,14 @@
+.stat-column{
+    width: 44%;
+    display: inline-block;
+}
+
 .stat-wrapper{
     width: 100%;
     overflow: hidden;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-top: 1px;
 
     &.stat-wrapper-left{
         text-align: left;
@@ -24,25 +30,26 @@
         display: inline-block;
         overflow: auto;
         border-bottom: 1px solid white;
-        width: 48%;
+        width: 58%;
         font-weight: 300;
-        margin-top: 5%;
+        height: 19px;
+        /*margin-top: 5%;*/
     }
 
     .stat-value-wrapper{
         display: inline-block;
         background-color: white;
         border-radius: 50%;
-        height: 50px;
-        width:50px;
+        height: 40px;
+        width: 40px;
         opacity: 1;
         -webkit-transition-duration:0.5s;
         transition-duration:0.5s;
 
         .stat-value{
-            margin-top: 17%;
+            margin-top: 22%;
             label{
-                font-size: 18px;
+                font-size: 15px;
                 width: 100%;
                 text-align: center;
                 color: @water-blue;
@@ -54,22 +61,22 @@
             opacity: 0.3;
             -webkit-transition-duration:0.5s;
             transition-duration:0.5s;
-            transform: scale(0.9);
+            /*transform: scale(0.9);
             -webkit-transform: scale(0.9);
             -moz-transform: scale(0.9);
             -o-transform: scale(0.9);
-            -ms-transform: scale(0.9);
+            -ms-transform: scale(0.9);*/
         }
 
         &.affected{
             opacity: 1;
             -webkit-transition-duration:0.5s;
             transition-duration:0.5s;
-            transform: scale(1.1);
+            /*transform: scale(1.1);
             -webkit-transform: scale(1.1);
             -moz-transform: scale(1.1);
             -o-transform: scale(1.1);
-            -ms-transform: scale(1.1);
+            -ms-transform: scale(1.1);*/
             overflow: hidden;
             position: relative;
         }

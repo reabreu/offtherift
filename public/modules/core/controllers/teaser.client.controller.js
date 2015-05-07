@@ -6,7 +6,6 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $scope.already = typeof $location.search().already !== "undefined";
 
         $scope.errorMessage = "Hello World";
-        $scope.teaserEmail  = "paulocaldeira17@gmail.com";
 
         /**
          * Subscribe with specific email

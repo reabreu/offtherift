@@ -83,19 +83,30 @@
     margin: auto auto;
 }
 
-.mastery-column{
-    display: inline-block;
-}
-
 .mastery-disabled{
     opacity: .3;
 }
 
+@media(min-width: 50px){
+    .mastery-column{
+        display: block;
+        margin: 10px auto;
+    }
+    .mastery-wrapper{
+        width: 280px;
+    }
+}
+
 @media(min-width: @screen-sm-min){
     .mastery-column{
-        width: 230px;
-        margin: 10px;
+        width: 260px;
     }
+    .mastery-wrapper{
+        width: 565px;
+    }
+}
+
+@media(min-width: @screen-md-min){
     .mastery-wrapper{
         width: 700px;
     }
@@ -105,6 +116,7 @@
     .mastery-column{
         width: 265px;
         margin: 10px;
+        display: inline-block;
     }
     .mastery-wrapper{
         width: 865px;

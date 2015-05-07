@@ -2,11 +2,11 @@
 	<div class="col-md-5 col-md-push-7">
 		<div class="row">
 			<div class="col-sm-12">
-				<ul class="aligned-button-li">
+				<ul class="aligned-button-li li-runes">
 					<li ng-repeat="(key, value) in runeTypes">
 						<a class="btn btn-default"
 						ng-click="setCurrentType(key)"
-						ng-class="{'btn-rune-selected': key == currentType}">{{value}}</a>
+						ng-class="{'btn-rune-selected': key == currentType}">{{value.substring(0,5)}}</a>
 					</li>
 				</ul>
 				<input
@@ -40,12 +40,12 @@
 	<div class="col-md-7 col-md-pull-5">
 		<div class="runes-wrapper">
 			<div class="runes-title-container">
-				<div class="col-sm-3" ng-repeat="(key, value) in runeTypes">
+				<div class="col-xs-3" ng-repeat="(key, value) in runeTypes">
 					<div class="rune-col-title"><span>{{value.substring(0,5)}}</span></div>
 				</div>
 			</div>
 			<div class="runes-builder-container">
-				<div class="col-sm-3 rune-collumn" ng-repeat="(key, value) in runeTypes">
+				<div class="col-xs-3 rune-collumn" ng-repeat="(key, value) in runeTypes">
 					<div class="rune-column-item" ng-repeat="rune in build.runes[key] | unique:rune.id"
 							ng-mouseover="$parent.$parent.$parent.hoverIn(rune);"
                             ng-mouseleave="$parent.$parent.$parent.hoverOut()">
@@ -54,7 +54,7 @@
 	                        tooltip-trigger="mouseenter"
 	                        tooltip-placement="right"
 	                        tooltip-popup-delay = "600"
-							class="col-sm-12"
+							class="col-xs-12"
 							ng-click="removeRune(key, rune.id)"
 							title="" alt="Slot {{$index+1}}"
 							ng-src="{{ rune.image | ddragon: build.version:'rune'}}"

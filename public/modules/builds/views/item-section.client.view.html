@@ -15,7 +15,10 @@
                 class       = "build-input col-sm-12"
                 ng-model    = "itemSearch.name"
                 placeholder = "Search Item">
-
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 col-md-push-7">
             <ul class="item-listing">
                 <li ng-repeat = "item in data.items | filterItems:itemSearch">
                         <a

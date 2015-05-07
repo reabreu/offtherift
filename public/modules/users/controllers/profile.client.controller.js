@@ -12,7 +12,7 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
 
         $scope.initDashboard = function(){
             $scope.search = {
-                limit: 5,
+                limit: 4,
                 group: 'mine'
             };
 
