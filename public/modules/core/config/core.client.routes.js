@@ -5,11 +5,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider) {
 
 		// Redirect to home view when route not found
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/dashboard');
 
 		// Home state routing
 		$stateProvider.
-		state('home', {
+		/*state('home', {
 			url: '/',
 			templateUrl: 'modules/core/views/pages/home.client.view.html',
 			resolve: {
@@ -24,7 +24,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 					$location.path('/teaser');
 				}]
 			}
-		}).
+		}).*/
 		state('teaser', {
 			url: '/teaser',
 			templateUrl: 'modules/core/views/pages/teaser.client.view.html'

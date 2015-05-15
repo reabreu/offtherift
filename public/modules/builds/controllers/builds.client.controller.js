@@ -386,6 +386,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.setCurrentSnap(length);
 		};
 
+		$scope.removeSnapshot = function(index){
+
+			if(index == $scope.data.currentSnapshot)
+				$scope.data.currentSnapshot = 0;
+
+			$scope.build.snapshot.splice(index, 1);
+			$scope.build.calculatedStats.splice(index,1);
+		}
+
 		$scope.setCurrentSnap = function(index){
 			$scope.data.currentSnapshot = index;
 		};

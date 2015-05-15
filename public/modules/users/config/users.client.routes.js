@@ -7,7 +7,19 @@ angular.module('users').config(['$stateProvider',
 		$stateProvider.
 		state('dashboard', {
 			url: '/dashboard',
-			templateUrl: 'modules/users/views/profile.client.view.html'
+			templateUrl: 'modules/users/views/profile.client.view.html',
+			resolve: {
+				load: ['$q', 'Authentication', '$location', function($q, Authentication, $location) {
+					var deferred = $q.defer();
+
+					if (angular.isDefined(Authentication) && Authentication.user) {
+						deferred.resolve();
+						return deferred.promise;
+					}
+
+					$location.path('/teaser');
+				}]
+			}
 		}).
 		state('profile', {
 			url: '/settings/profile',

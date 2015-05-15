@@ -4,14 +4,44 @@
 
     li{
         a{
+            margin-left: 5%;
+            width: 90%;
             cursor: pointer;
-            padding: 10px 15px;
+            padding: 15px 15px;
             display: block;
+            border-bottom: 1px solid white;
+            &:hover{
+                color: white;
+            }
+
+            .menu-icon{
+                width: 25px;
+                height: 27px;
+                background-size: 100%;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                display: inline-block;
+            }
+
+            .menu-admin{
+                background-image: url('/modules/core/img/sidebar/admin.png');
+            }
+
+            .menu-aboutus{
+                background-image: url('/modules/core/img/sidebar/aboutus.png');
+            }
+
+            .menu-browse{
+                background-image: url('/modules/core/img/sidebar/browse.png');
+            }
+
+            .menu-build{
+                background-image: url('/modules/core/img/sidebar/build.png');
+            }
+
         }
         &:hover{
-            a{
-                 color: black;
-            }
+            background-color: @water-blue;
         }
     }
 }

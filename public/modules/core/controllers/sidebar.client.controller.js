@@ -2,6 +2,7 @@
 
 angular.module('core').controller('SidebarController', ['$scope', 'Authentication', 'Menus','$spMenu',
 	function($scope, Authentication, Menus, $spMenu) {
+		$scope.authentication = Authentication;
 		$scope.isCollapsed 		= true;
 
 		// Collapsing the menu after navigation

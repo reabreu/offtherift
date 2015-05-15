@@ -38,7 +38,6 @@
 }
 
 .build-config-panel{
-    border-top: 1px solid white;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.15);
     color: white;
@@ -46,12 +45,9 @@
     overflow-y: hidden;
 }
 
-.selected-snap{
-    background-color: white;
-    color: @water-blue;
-    cursor:pointer;
+.build-config-panel:not(.item-config-panel){
+    border-top: 1px solid white;
 }
-
 
 .btn-build-action{
     font-weight: 300;

@@ -1,5 +1,37 @@
-<section class="row" data-ng-controller="AuthenticationController">
-    <div class="page-heading">
+<section data-ng-controller="AuthenticationController">
+    <div class="container login-wrapper">
+        <div class="col-xs-6">
+            <h1>LOGIN</h1>
+            <p>Please keep in mind that we're a indie project and we support server costs on ads, if you don't disable adBlock we can't maintain offtherift online.</p>
+            <p>To participate in the closed beta, save and share builds, you'll need to login with facebook.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="/auth/facebook" class="btn btn-label btn-social btn-facebook mb20">
+                        <i class="fa fa-fw fa-facebook"></i>Connect with Facebook
+                    </a>
+                </div>
+                <!--<div class="col-md-6">
+                    <a href="/auth/twitter" class="btn btn-label btn-social btn-twitter mb20"><i class="fa fa-fw fa-twitter"></i>Connect with Twitter</a><br>
+                </div>-->
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="inviter-login-container">
+                <div class="inviter-login-content">
+                    <p>If you received an invitational account, please login below</p>
+                    <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
+                        <input type="text" id="username" name="username" class="input-login" data-ng-model="credentials.username" placeholder="Username">
+                        <input type="password" id="password" name="password" class="input-login" data-ng-model="credentials.password" placeholder="Password">
+                        <button type="submit" class="btn-login">Login</button>
+                    </form>
+                    <div data-ng-show="error" class="text-center text-danger mb10">
+                        <strong data-ng-bind="error"></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <!-- <div class="page-heading">
         <div class="container clearfix">
             <h1 class="pull-left">Login</h1>
         </div>
@@ -14,14 +46,7 @@
                     <p>We use your info only to create a user profile for us, we won't ever share any personal info.</p>
                 </div>
                 <div class="row mb40">
-                    <div class="col-md-6">
-                        <a href="/auth/facebook" class="btn btn-label btn-social btn-facebook mb20">
-                            <i class="fa fa-fw fa-facebook"></i>Connect with Facebook
-                        </a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="/auth/twitter" class="btn btn-label btn-social btn-twitter mb20"><i class="fa fa-fw fa-twitter"></i>Connect with Twitter</a><br>
-                    </div>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -35,8 +60,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-user"></i>
                                 </span>
-                                <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
-                            </div>
+                                </div>
                         </div>
                     </div>
 
@@ -46,8 +70,7 @@
                                 <span class="input-group-addon">
                                     <i class="fa fa-key"></i>
                                 </span>
-                                <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
-                            </div>
+                                </div>
                         </div>
                     </div>
 
@@ -55,16 +78,14 @@
                         <div class="col-xs-12">
                             <a href="/#!/password/forgot" class="pull-left">Forgot password?</a>
                         </div>
-                    </div>-->
-
-                    <div data-ng-show="error" class="text-center text-danger mb10">
-                        <strong data-ng-bind="error"></strong>
                     </div>
+
+
 
                     <div class="panel-footer">
                         <div class="clearfix">
                             <a href="/#!/registration" class="btn btn-default pull-left">Register</a>
-                            <button type="submit" class="btn btn-primary pull-right">Login</button>
+
                         </div>
                     </div>
                 </form>
@@ -72,5 +93,5 @@
             </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </section>

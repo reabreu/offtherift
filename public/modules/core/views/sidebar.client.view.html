@@ -3,26 +3,31 @@
         <li ng-click="closeMenu()" ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
             <a href="/admin/">
                 Admin
+                <span class="menu-icon menu-admin pull-right"></span>
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="dashboard">
             <a ui-sref="dashboard">
                 Dashboard
+                <span class="menu-icon menu-admin pull-right"></span>
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="createBuild">
             <a ui-sref="createBuild">
                 Build
+                <span class="menu-icon menu-build pull-right"></span>
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="listBuilds">
             <a ui-sref="listBuilds">
                 Browse
+                <span class="menu-icon menu-browse pull-right"></span>
             </a>
         </li>
         <li ng-click="closeMenu()" ui-sref-active="listBuilds">
             <a ui-sref="listBuilds">
                 About us
+                <span class="menu-icon menu-aboutus pull-right"></span>
             </a>
         </li>
     </ul>

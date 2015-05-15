@@ -255,23 +255,30 @@
 						<label class="build-title">ITEMS</label>
 					</div>
 					<div class="row">
-				        <div class="col-sm-12" >
+				        <div class="col-sm-12">
 				        	<ul class="snapshot-container">
 				        		<li
 				        			ng-repeat="snap in build.snapshot track by $index"
 				        			ng-click="setCurrentSnap($index)"
 				        			ng-class="{'selected-snap': data.currentSnapshot == $index}">
-				        			{{$index+1}}
+				        			<input
+				        				placeholder="Set {{$index +1}}"
+				        				ng-model="build.snapshot[$index].name">
+				        			<span ng-show="$index !== 0" href="#" class="remove-tab" ng-click="removeSnapshot($index)"> - </span>
 				        		</li>
 				        		<li
 				        		class="add-snap"
 				        		ng-show="build.snapshot.length < 5"
-				        		ng-click="addSnapshot()"> + </li>
+				        		ng-click="addSnapshot()">+</li>
+				        		<li
+				        			class="filler-tab"
+				        			ng-repeat="n in range(1, 4 - build.snapshot.length)">
+				        		</li>
 				        	</ul>
 				        </div>
 				    </div>
 					<div class="col-sm-12">
-						<div class="build-config-panel">
+						<div class="build-config-panel item-config-panel">
 							<item-section build="build" data="data"></item-section>
 						</div>
 					</div>

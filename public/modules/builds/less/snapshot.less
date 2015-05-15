@@ -3,25 +3,42 @@
     padding-left: 0px;
     margin-bottom: 0px;
     margin-left: 20px;
-    position: relative;
-    top: 1px;
-    width: 96%;
+
     li{
         border-top-right-radius: 5px;
         border-top-left-radius: 5px;
         border: 1px solid white;
-        display: inline-block;
-        width: 10%;
+        width: 19.55%;
         text-align: center;
+        overflow: hidden;
+        height: 25px;
+        float: left;
+        display: block;
+        cursor: pointer;
 
-        &:hover,
-        &.selected-snap{
-            background-color: rgba(255,255,255,.15);
+        input{
+            border: 0px;
+            background-color: transparent;
+            color: white;
+            padding: 5px 10px;
+            font-size: 13px;
+            width: 90%;
         }
 
-        &.add-snap{
-            width: 70px;
-            text-align: center;
+        &:hover:not(.filler-tab),
+        &.selected-snap{
+            background-color: rgba(255,255,255,.15);
+            color: @water-blue;
+            cursor:pointer;
+        }
+
+        &.selected-snap{
+            border-bottom: 0px;
+        }
+
+        &.filler-tab{
+            border: 0px;
+            border-bottom: 1px solid white;
         }
     }
 }
