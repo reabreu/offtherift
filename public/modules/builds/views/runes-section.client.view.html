@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row rune-row">
 	<div class="col-md-5 col-md-push-7">
 		<div class="row">
 			<div class="col-sm-12">
@@ -47,8 +47,8 @@
 			<div class="runes-builder-container">
 				<div class="col-xs-3 rune-collumn" ng-repeat="(key, value) in runeTypes">
 					<div class="rune-column-item" ng-repeat="rune in build.runes[key] | unique:rune.id"
-							ng-mouseover="$parent.$parent.$parent.hoverIn(rune);"
-                            ng-mouseleave="$parent.$parent.$parent.hoverOut()">
+							ng-mouseover="$parent.$parent.$parent.hoverIn(rune,$event);"
+                            ng-mouseleave="$parent.$parent.$parent.hoverOut($event)">
 						<img
 							tooltip-html-unsafe="{{rune.name}}"
 	                        tooltip-trigger="mouseenter"
@@ -57,7 +57,7 @@
 							class="col-xs-12"
 							ng-click="removeRune(key, rune.id)"
 							title="" alt="Slot {{$index+1}}"
-							ng-src="{{ rune.image | ddragon: build.version:'rune'}}"
+							otr-src="{{ rune.image | ddragon: build.version:'rune'}}"
 						>
 						<span>{{build.runes_aux.runeCount[rune.id]}}</span>
 					</div>

@@ -335,20 +335,33 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.data.timer = $timeout($scope.calculate,1000);
 		};
 
-		$scope.hoverIn = function( object ){
+		$scope.hoverIn = function( object, event ){
 
 			if( typeof(object.points) !== "undefined" && object.points == 0)
 				return;
 
 			angular.element('.stat-value-wrapper').addClass('stat-not-affected');
+
 			angular.forEach(object.customEffect, function(effect, index){
 				angular.element('.stat-value-' + effect.dest).addClass('affected');
 			});
+
+			angular.element('.item-slot img').addClass('stat-not-affected');
+			angular.element('.rune-column-item img').addClass('stat-not-affected');
+			angular.element('.mastery-item img').addClass('stat-not-affected');
+
+			angular.element(event.target).addClass('affected');
 		};
 
-		$scope.hoverOut = function(){
+		$scope.hoverOut = function( event ){
 		    angular.element('.stat-value-wrapper').removeClass('stat-not-affected');
 		    angular.element('.stat-value-wrapper').removeClass('affected');
+		    angular.element('.item-slot img').removeClass('stat-not-affected');
+		    angular.element('.item-slot img').removeClass('affected');
+		    angular.element('.rune-column-item img').removeClass('stat-not-affected');
+		    angular.element('.rune-column-item img').removeClass('affected');
+		    angular.element('.mastery-item img').removeClass('stat-not-affected');
+		    angular.element('.mastery-item img').removeClass('affected');
 		};
 
 		$scope.addSnapshot = function(){

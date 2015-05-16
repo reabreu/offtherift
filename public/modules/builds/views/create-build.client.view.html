@@ -10,7 +10,7 @@
 					<img
 						ng-switch-when="_undefined_"
 						class="champion-avatar inline-block"
-						src="http://static.munzee.com/images/site/blank-avatar.png">
+						otr-src="http://static.munzee.com/images/site/blank-avatar.png">
 				</div>
 				<div class="champion-name-wrapper absolute-top">
 					<label class="champion-name">{{data.selectedChampion.name || 'Summon'}}</label>
@@ -262,7 +262,7 @@
 				        			ng-click="setCurrentSnap($index)"
 				        			ng-class="{'selected-snap': data.currentSnapshot == $index}">
 				        			<input
-				        				placeholder="Set {{$index +1}}"
+				        				placeholder="Item Set {{$index +1}}"
 				        				ng-model="build.snapshot[$index].name">
 				        			<span ng-show="$index !== 0" href="#" class="remove-tab" ng-click="removeSnapshot($index)"> - </span>
 				        		</li>
