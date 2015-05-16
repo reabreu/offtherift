@@ -114,6 +114,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				$scope.setCurrentType = function(tag) {
 					$scope.currentType = tag;
 				};
+
+				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

@@ -176,6 +176,8 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
 				$scope.setLevel = function (level) {
 					$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 				}
+
+				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

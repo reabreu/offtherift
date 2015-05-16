@@ -26,11 +26,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		};
 
+		$scope.setConfigHeight = function(){
+			var windowHeight = $window.innerHeight;
+			angular.element('.configuration-wrapper').height(windowHeight - 115);
+		};
+
 		/**************************
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
-
 			$scope.blockSnapshot 	= false;
 			$scope.enabledView 		= false;
 			$scope.buildChanged 	= false;
@@ -112,6 +116,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.$watch('build.champion_id', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
+
+			var w = angular.element($window);
+
+			w.bind('resize', function () {
+				$scope.setConfigHeight();
+			});
 		};
 
 		$scope.setVisibleMode = function(mode){
