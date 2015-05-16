@@ -9,6 +9,10 @@ module.exports = function(app) {
 		.get(builds.list)
 		.post(users.requiresLogin, builds.create);
 
+	app.route('/builds/popular').get(builds.getPopularBuilds);
+
+	app.route('/builds/statistics').get(builds.getTotalStats);
+
 	app.route('/builds/:buildId')
 		.get(users.hasRole(['admin']), builds.read)
 		.put(users.requiresLogin, builds.hasAuthorization, builds.update)
