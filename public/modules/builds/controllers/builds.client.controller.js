@@ -30,6 +30,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
+
 			$scope.blockSnapshot 	= false;
 			$scope.enabledView 		= false;
 			$scope.buildChanged 	= false;
