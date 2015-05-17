@@ -433,9 +433,8 @@ copyTasks.push(function(callback){
         var copied      = 0;
 
         for (var i = total - 1; i >= 0; i--) {
-
             //get item from dest version
-            Item.findOneAndUpdate( {version: destPatch, id: items[i].id} , {customEffect: items[i].customEffect, enabled: items[i].enabled} , null, function(err,doc){
+            Item.findOneAndUpdate( {version: destPatch, id: items[i].id} , {tags: items[i].tags, customEffect: items[i].customEffect, enabled: items[i].enabled} , null, function(err,doc){
                 if (doc !== null) {
                     ++copied;
                 }
