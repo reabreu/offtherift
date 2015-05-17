@@ -84,6 +84,8 @@ angular.module('builds').directive('masteriesSection', [
 					}
 					return false;
 				}
+
+				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

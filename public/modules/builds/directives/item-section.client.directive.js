@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('builds').directive('itemSection', [
-	function() {
+angular.module('builds').directive('itemSection', [ 'ngToast',
+	function( ngToast ) {
 		return {
 			templateUrl: 'modules/builds/views/item-section.client.view.html',
 			restrict: 'E',
@@ -45,14 +45,18 @@ angular.module('builds').directive('itemSection', [
 
                         // Error messages.
 						if (limits.goldPer === false) {
-							// TODO: Warn user about using multiple gold items.
-							console.log("Only one gold item allowed!");
+							ngToast.create({
+								content: "Only one gold item allowed!",
+								dismissOnTimeout: false
+							});
 							return;
 						}
 
 						if (limits.requiredChampion === false) {
-							// TODO: Warn user about using items for the wrong champion.
-							console.log("That item can't be used on the selected champion!");
+							ngToast.create({
+								content: "That item can't be used on the selected champion!",
+								dismissOnTimeout: false
+							});
 							return;
 						}
 
@@ -176,6 +180,8 @@ angular.module('builds').directive('itemSection', [
 				$scope.setLevel = function (level) {
 					$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 				}
+
+				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

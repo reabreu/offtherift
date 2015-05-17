@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors.server.controller'),
 	Build = mongoose.model('Build'),
+    Champion   = mongoose.model('Champion'),
     http = require('http'),
 	_ = require('lodash');
 
@@ -34,6 +35,8 @@ exports.create = function(req, res) {
 exports.read = function(req, res) {
     var build = req.build;
     build.view_count++;
+
+    build.save();
 
     var now = new Date();
     var updateDate = new Date(build.lastFacebookUpdate);
@@ -200,4 +203,92 @@ exports.hasAuthorization = function(req, res, next) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
+};
+
+
+exports.getTotalStats = function(req,res,next){
+    Build.aggregate(
+        [
+            {
+                $match : { user : req.user._id }
+            },
+            {
+                $group: {
+                    _id: "$user",
+                    build_count: {$sum: 1},
+                    like_count: {$sum: "$facebook.like_count"},
+                    comment_count: {$sum: "$facebook.comment_count"},
+                    share_count: {$sum: "$facebook.share_count"},
+                    view_count: {$sum: "$view_count"}
+                }
+            }
+        ],
+        function(err,result) {
+            res.jsonp(result);
+        }
+    );
+};
+
+exports.getPopularBuilds = function(req,res,next){
+    var limit       = req.param('limit');
+    var days        = req.param('days');
+
+    if(days == undefined || days == "")
+        days = 7;
+
+    if(limit == undefined || limit == "")
+        limit = 5;
+
+    //buscar data da ultima build
+    Build.findOne().sort('-created').exec(function(err, build) {
+        var lastBuildDate   = new Date(build.created);
+        var limitDate       = new Date(lastBuildDate);
+
+        limitDate.setDate(limitDate.getDate() - days); // minus the date
+
+        var nd = new Date(limitDate);
+
+        Build.aggregate(
+            [
+                {
+                    $match : { created : {$gte: nd}, visible: true }
+                },
+                {
+                    $project: {
+                        facebook: {
+                            comment_count   : "$facebook.comment_count",
+                            share_count     : "$facebook.share_count",
+                            like_count     : "$facebook.like_count"
+                        },
+                        champion: "$champion",
+                        displayName: "$displayName",
+                        name: "$name",
+                        totalFb : { '$add' : [ "$facebook.comment_count", "$facebook.share_count", "$facebook.like_count" ] }
+                    }
+                },
+                {
+                    $sort : {totalFb: -1}
+                },
+                {   $limit : 4 }
+            ],
+            function(err,result) {
+                var i;
+                var lastUpdatedIndex = result.length - 1;
+
+                if(result.length == 0)
+                    res.jsonp([]);
+
+                for ( i = result.length - 1; i >= 0; i--) {
+                    Champion.findOne({_id: result[i].champion}).exec(function(err, champion) {
+                        result[lastUpdatedIndex].champion = { name : champion.name };
+                        lastUpdatedIndex--;
+
+                        if(lastUpdatedIndex == -1){
+                            res.jsonp(result);
+                        }
+                    });
+                };
+            }
+        );
+    });
 };

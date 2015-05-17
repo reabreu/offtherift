@@ -6,8 +6,8 @@
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id' | filter: {masteryTree: 'Offense'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseover="$parent.$parent.hoverIn(masterie);"
-                ng-mouseleave="$parent.$parent.hoverOut()">
+                ng-mouseover="$parent.$parent.hoverIn(masterie,$event);"
+                ng-mouseleave="$parent.$parent.hoverOut($event)">
                 <span ng-switch-when="true"
                         >
                     <img
@@ -32,8 +32,8 @@
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Defense'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseover="$parent.$parent.hoverIn(masterie);"
-                ng-mouseleave="$parent.$parent.hoverOut()">
+                ng-mouseover="$parent.$parent.hoverIn(masterie,$event);"
+                ng-mouseleave="$parent.$parent.hoverOut($event)">
                 <span ng-switch-when="true">
                     <img
                         tooltip-html-unsafe="{{masterie | masterieDescription}}"
@@ -57,8 +57,8 @@
             <li class="mastery-item"
                 ng-repeat="masterie in data.masteries | orderBy:'id'  | filter: {masteryTree: 'Utility'}"
                 ng-switch="masterie.enabled || false"
-                ng-mouseover="$parent.$parent.hoverIn(masterie);"
-                ng-mouseleave="$parent.$parent.hoverOut()">
+                ng-mouseover="$parent.$parent.hoverIn(masterie,$event);"
+                ng-mouseleave="$parent.$parent.hoverOut($event)">
                 <span ng-switch-when="true">
                     <img
                         tooltip-html-unsafe="{{masterie | masterieDescription}}"

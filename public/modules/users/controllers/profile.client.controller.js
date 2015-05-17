@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout',
-	function($scope, Authentication, Builds, ngProgress, $timeout) {
+angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout','popularBuilds','Statistics',
+	function($scope, Authentication, Builds, ngProgress, $timeout,popularBuilds,Statistics) {
 		$scope.authentication = Authentication;
 
         $scope.addBuild = function(elem, container){
@@ -12,7 +12,7 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
 
         $scope.initDashboard = function(){
             $scope.search = {
-                limit: 4,
+                limit: 5,
                 group: 'mine'
             };
 
@@ -29,11 +29,20 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
                 }
             });
 
-            Builds.query($scope.search).$promise.then(function(data){
+            $scope.search = {
+                limit: 5,
+                days: 80
+            };
+
+            popularBuilds.query($scope.search).$promise.then(function(data){
                 $scope.popularBuilds   = [];
                 angular.forEach(data, function(build, index){
                     $timeout($scope.addBuild(build,$scope.popularBuilds), index * 300);
                 });
+            });
+
+            Statistics.query().$promise.then(function(data){
+                $scope.statistics = data[0];
             });
         }
 

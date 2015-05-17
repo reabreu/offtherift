@@ -3,11 +3,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<ul class="statistics">
-					<li><span class="stat-number">123</span> <span class="stat-description">Builds</span></li>
-					<li><span class="stat-number">123</span> <span class="stat-description">Likes</span></li>
-					<li><span class="stat-number">123</span> <span class="stat-description">Shares</span></li>
-					<li><span class="stat-number">123</span> <span class="stat-description">Comments</span></li>
-					<li><span class="stat-number">123</span> <span class="stat-description">Views</span></li>
+					<li><span class="stat-number">{{statistics.build_count}}</span> <span class="stat-description">Builds</span></li>
+					<li><span class="stat-number">{{statistics.like_count}}</span> <span class="stat-description">Likes</span></li>
+					<li><span class="stat-number">{{statistics.share_count}}</span> <span class="stat-description">Shares</span></li>
+					<li><span class="stat-number">{{statistics.comment_count}}</span> <span class="stat-description">Comments</span></li>
+					<li><span class="stat-number">{{statistics.view_count}}</span> <span class="stat-description">Views</span></li>
 				</ul>
 			</div>
 		</div>
@@ -41,15 +41,15 @@
 							<label class="build-title">{{build.name}}</label>
 							<label class="build-author">by {{build.displayName}}</label>
 							<ul class="build-stats">
-								<li><span class="light">Shares: </span><span class="heavy">123</span></li>
-								<li><span class="light">Comments: </span><span class="heavy">123</span></li>
-								<li><span class="light">Likes: </span><span class="heavy">123</span></li>
-								<li><span class="light">Views: </span><span class="heavy">123</span></li>
+								<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+								<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+								<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+								<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
 							</ul>
 						</div>
 					</div>
 				</div>
-				<div class="build-portrait-column col-lg-2 col-xs-3" ng-repeat = "build in emptyBuilds" ng-class="{'hidden-xs hidden-sm hidden-md': builds.length > 2}">
+				<div class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad" ng-repeat = "build in emptyBuilds" ng-class="{'hidden-xs hidden-sm hidden-md': builds.length > 2}">
 					<a ui-sref="createBuild">
 						<div class="build-wrapper">
 							<div class="label-portrait new-build-portrait"></div>
@@ -89,10 +89,10 @@
 							<label class="build-title">{{build.name}}</label>
 							<label class="build-author">by {{build.displayName}}</label>
 							<ul class="build-stats">
-								<li><span class="light">Shares: </span><span class="heavy" >123</span></li>
-								<li><span class="light">Comments: </span><span class="heavy" >123</span></li>
-								<li><span class="light">Likes: </span><span class="heavy" >123</span></li>
-								<li><span class="light">Views: </span><span class="heavy" >123</span></li>
+								<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+								<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+								<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+								<li><span class="light">Views: </span><span class="heavy">123</span></li>
 							</ul>
 						</div>
 					</div>

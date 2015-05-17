@@ -15,10 +15,7 @@
                 class       = "build-input col-sm-12"
                 ng-model    = "itemSearch.name"
                 placeholder = "Search Item">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5 col-md-push-7">
+            <div class="clearfix"></div>
             <ul class="item-listing">
                 <li ng-repeat = "item in data.items | filterItems:itemSearch">
                         <a
@@ -44,7 +41,7 @@
                 <li
                     class="item-slot"
                     ng-repeat="n in range(1,6) track by $index"
-                    ng-mouseover="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index]);"
+                    ng-mouseover="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index],$event);"
                     ng-mouseleave="$parent.$parent.hoverOut()">
                     <img
                         tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].items[$index].name}}"
@@ -58,7 +55,7 @@
                         otr-src="{{ build.snapshot[data.currentSnapshot].items[$index].id | ddragon: build.version:'item'}}">
                 </li>
                 <li class="item-slot"
-                    ng-mouseover="$parent.hoverIn(build.snapshot[data.currentSnapshot].trinket);"
+                    ng-mouseover="$parent.hoverIn(build.snapshot[data.currentSnapshot].trinket,$event);"
                     ng-mouseleave="$parent.hoverOut(build.snapshot[data.currentSnapshot].trinket);">
                     <img
                         tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].trinket.name}}"
