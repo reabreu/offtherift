@@ -31,7 +31,8 @@ var ItemSchema = new Schema({
 		type: 		String,
 		trim: 		true
 	},
-	customEffect : []
+	customEffect : [],
+	tags : []
 },{ strict: false });
 
 mongoose.model('Item', ItemSchema);
