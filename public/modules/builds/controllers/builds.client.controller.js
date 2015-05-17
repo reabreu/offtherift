@@ -30,6 +30,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
+			$scope.children = {items: null, runes: null, masteries: null};
+
 			$scope.blockSnapshot 	= false;
 			$scope.enabledView 		= false;
 			$scope.buildChanged 	= false;
@@ -151,6 +153,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						$scope.data.runes 		= data.runes;
 
 						Repository.getMasteries(params).then(function(data) {
+							var oldPoints = $scope.data.masteries.slice(); // copy old values
 							$scope.data.masteries 	= data.masteries;
 
 							//Prego do Ruben
@@ -165,7 +168,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							$scope.data.masteries.push({id:4361, masteryTree:'Utility'});
 
 							angular.forEach($scope.data.masteries, function(masterie, index) {
-								masterie.points = 0;
+								if (!$scope.patchChanged) {
+									masterie.points = 0;
+								} else {
+									masterie.points = oldPoints[index].points;
+								}
 							});
 
 							if ($state.current.name == "editBuild") {
@@ -180,6 +187,15 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 								}
 							}
 
+							// Update build information with loaded patch.
+							if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
+								// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
+								$scope.updateMasteries();
+								$scope.updateRunes();
+								$scope.updateSnapshots();
+								$scope.patchChanged = false;
+							}
+
 							$scope.enabledView = true;
 							$scope.unblockBuilder();
 						});
@@ -188,6 +204,110 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			$scope.unblockBuilder();
+		};
+
+		$scope.updateMasteries = function() {
+			var buildMasteryCount = $scope.build.masteries.length;
+			for (var iter = 0; iter < buildMasteryCount; iter++) {
+				var currentMastery = $scope.build.masteries[iter];
+
+				// Get the rank of the mastery.
+				var rank = currentMastery.customEffect.rank;
+
+				// Add the effects from the current patch.
+				var masteryCount = $scope.data.masteries.length;
+				for (var masteryIter = 0; masteryIter < masteryCount; masteryIter++) {
+					if ($scope.data.masteries[masteryIter].id == currentMastery.id) {
+						var mastery = $scope.data.masteries[masteryIter];
+						if (rank <= mastery.customEffect.length && rank > 0) {
+							currentMastery.customEffect = mastery.customEffect[rank-1];
+						} else {
+							currentMastery.customEffect.value = 0;
+						}
+						break;
+					}
+				}
+			}
+		};
+
+		/**
+		 * Updates the runes from last selected patch to the new one.
+		 * @return
+		 */
+		$scope.updateRunes = function() {
+			// Iterate through all the runes in the build to update them.
+			for (var tag in $scope.build.runes) {
+				var runes = $scope.build.runes[tag];
+				var runeCount = runes.length;
+
+				// Remove each item and add it again with updated info.
+				for (var i = 0; i < runeCount; i++) {
+					var runeid = runes[i].id;
+
+					// Find the rune and add it to the build.
+					var dataRuneCount = $scope.data.runes.length;
+					for (var r = 0; r < dataRuneCount; r++) {
+						if ($scope.data.runes[r].id == runeid) {
+							// Remove the old rune.
+							$scope.children.runes.removeRune(tag, runeId);
+							// Add the new one.
+							$scope.children.runes.addRune($scope.data.runes[r]);
+							break;
+						}
+					}
+				}
+			}
+		};
+
+		/**
+		 * Updates all the snapshots from last selected patch to the new one.
+		 * @return
+		 */
+		$scope.updateSnapshots = function() {
+			// Iterate through the snapshots to update the items.
+			var snapCount = $scope.build.snapshot.length;
+			for (var snapIter =  0; snapIter < snapCount; snapIter++) {
+				var currentSnap = $scope.build.snapshot[snapIter];
+
+				// Remove all the current items and re-add them with updated information.
+				for (var counter = currentSnap.items.length - 1; counter >= 0 ; counter--) {
+					var itemId = currentSnap.items[0].id;
+
+					// Search for the item and add it if it exists.
+					var itemCount = $scope.data.items.length;
+					for (var itemIter = 0; itemIter < itemCount; itemIter++) {
+						if ($scope.data.items[itemIter].id == itemId) {
+							// Remove the information from the old item.
+							$scope.children.items.removeItem(0, snapIter);
+							// Add information from the new item.
+							$scope.children.items.addItem($scope.data.items[itemIter], snapIter);
+							break;
+						}
+					}
+				}
+
+				// Update the trinket
+				if (currentSnap.trinket != null) {
+					// Search for the item and add it if it exists.
+					var itemCount = $scope.data.items.length;
+					for (var itemIter = 0; itemIter < itemCount; itemIter++) {
+						if ($scope.data.items[itemIter].id == currentSnap.trinket.id) {
+							// Remove the information from the old item.
+							$scope.children.items.removeItem(7);
+							// Add information from the new item.
+							$scope.children.items.addItem($scope.data.items[itemIter], snapIter);
+							break;
+						}
+					}
+				}
+
+				$scope.calculate(snapIter, false);
+			}
+		};
+
+		$scope.changePatch = function() {
+			$scope.patchChanged = true;
+			$scope.getPatchInfo();
 		};
 
 		/**
@@ -279,25 +399,30 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
-		 * [calculate Calculate the stats of current build]
-		 * @return {[type]}
+		 * [calculate description]
+		 * @param  {[type]} snapshot [description]
+		 * @param  {[type]} block    Should the system be blocked?
+		 * @return {[type]}          [description]
 		 */
-		$scope.calculate = function(){
-			$scope.blockBuilder();
+		$scope.calculate = function(snapshot, block){
+			if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
+
+			if (block) $scope.blockBuilder();
+
 			var request = {
 				partype: 	$scope.data.selectedChampion.partype,
-				level: 		$scope.build.snapshot[$scope.data.currentSnapshot].level,
+				level: 		$scope.build.snapshot[snapshot].level,
 				stats: 		$scope.data.selectedChampion.stats,
 				effects: 	[]
 			};
 
 			//popular com os efeitos dos items
-			angular.forEach($scope.build.snapshot[$scope.data.currentSnapshot].items, function(value, key) {
+			angular.forEach($scope.build.snapshot[snapshot].items, function(value, key) {
 				request.effects = request.effects.concat(value.customEffect);
 			});
 
             // adicionar efeito do trinket
-            var trinket = $scope.build.snapshot[$scope.data.currentSnapshot].trinket;
+            var trinket = $scope.build.snapshot[snapshot].trinket;
             if (trinket != null) {
                 request.effects = request.effects.concat(trinket.customEffect);
             }
@@ -315,8 +440,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			Calculate.save(request).$promise.then(function(response) {
-				$scope.build.calculatedStats[$scope.data.currentSnapshot] = response.data;
-				$scope.unblockBuilder();
+				$scope.build.calculatedStats[snapshot] = response.data;
+				if (block) $scope.unblockBuilder();
 				$scope.hoverOut();
 				$scope.blockSnapshot = false;
 			});

@@ -208,7 +208,7 @@
 					</div>
 					<div class="col-md-3">
 						<label class="width-40" for="selectedPatch">Patch</label>
-						<select class="select-input width-80" ng-model = "data.selectedPatch" ng-change="initBuild()" name="selectedPatch" id ="selectedPatch">
+						<select class="select-input width-80" ng-model = "data.selectedPatch" ng-change="changePatch()" name="selectedPatch" id ="selectedPatch">
 							<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
 						</select>
 					</div>
@@ -279,7 +279,7 @@
 				    </div>
 					<div class="col-sm-12">
 						<div class="build-config-panel item-config-panel">
-							<item-section build="build" data="data"></item-section>
+							<item-section build="build" data="data" children="children"></item-section>
 						</div>
 					</div>
 				</div>
@@ -289,7 +289,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="build-config-panel">
-							<runes-section build="build" data="data"></runes-section>
+							<runes-section build="build" data="data" children="children"></runes-section>
 						</div>
 					</div>
 				</div>
@@ -299,7 +299,7 @@
 					</div>
 					<div class="col-sm-12">
 						<div class="build-config-panel">
-							<masteries-section build="build" data="data"></masteries-section>
+							<masteries-section build="build" data="data"  children="children"></masteries-section>
 						</div>
 					</div>
 				</div>

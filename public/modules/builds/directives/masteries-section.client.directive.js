@@ -7,9 +7,11 @@ angular.module('builds').directive('masteriesSection', [
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'='
+				build: 	'=',
+				children: '='
 			},
 			controller: function($scope, $element){
+				$scope.children.masteries = $scope;
 
 				$scope.addRank = function($event, masterie){
 					var elem = angular.element($event.currentTarget);

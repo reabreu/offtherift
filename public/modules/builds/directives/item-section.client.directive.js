@@ -7,21 +7,13 @@ angular.module('builds').directive('itemSection', [
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'='
+				build: 	'=',
+				children: '='
 			},
 			controller: function($scope){
 
 				$scope.init = function(){
-
-					// Control var to check if goldPer item has been set.
-					$scope.data.goldPer = {
-						id: 0,
-						isSet: false
-					};
-
-					// ID's of items that require the current champion.
-					// Must be updated if the champion changes.
-					$scope.data.championItems = [];
+					$scope.children.items = $scope;
 				};
 
 				$scope.search = {
@@ -33,13 +25,23 @@ angular.module('builds').directive('itemSection', [
 					tags: []
 				};
 
-				$scope.addItem = function(item){
+				$scope.addItem = function(item, snapshot){
+					if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
+
+					if (typeof($scope.build.snapshot[snapshot]['goldPer']) === 'undefined') {
+						$scope.build.snapshot[snapshot].goldPer = {id: 0, isSet: false};
+					}
+
+					if (typeof($scope.build.snapshot[snapshot]['championItems']) === 'undefined') {
+						$scope.build.snapshot[snapshot].championItems = [];
+					}
+
 					// Check if there is a free slot for another item.
-					if ($scope.build.snapshot[$scope.data.currentSnapshot].items.length < 6 || item.tags.indexOf('Trinket') > -1) {
+					if ($scope.build.snapshot[snapshot].items.length < 6 || item.tags.indexOf('Trinket') > -1) {
 						var limits = {};
 
-						limits.goldPer = $scope.checkGoldIncome(item);
-						limits.requiredChampion = $scope.checkRequiredChampion(item);
+						limits.goldPer = $scope.checkGoldIncome(item, snapshot);
+						limits.requiredChampion = $scope.checkRequiredChampion(item, snapshot);
 
                         // Error messages.
 						if (limits.goldPer === false) {
@@ -56,24 +58,24 @@ angular.module('builds').directive('itemSection', [
 
                         // Set control variables.
                         if (limits.goldPer) {
-                            $scope.data.goldPer.id = item.id;
-                            $scope.data.goldPer.isSet = true;
+                            $scope.build.snapshot[snapshot].goldPer.id = item.id;
+                            $scope.build.snapshot[snapshot].goldPer.isSet = true;
                         }
 
 						if (limits.requiredChampion) {
-							$scope.data.championItems.push(item.id);
+							$scope.build.snapshot[snapshot].championItems.push(item.id);
 						}
 
                         // Add item to the correct slot
-						if (item.tags.indexOf('Trinket') > -1) {
+						if (typeof(item.tags) !== 'undefined' && item.tags.indexOf('Trinket') > -1) {
                             // Adding another trinket will replace the previous one.
-                            $scope.build.snapshot[$scope.data.currentSnapshot].trinket = {
+                            $scope.build.snapshot[snapshot].trinket = {
 								id: item.id,
 								customEffect: item.customEffect,
 								name: item.name
 							}
 						} else {
-							$scope.build.snapshot[$scope.data.currentSnapshot].items.push({
+							$scope.build.snapshot[snapshot].items.push({
 								id: item.id,
 								customEffect: item.customEffect,
 								name: item.name
@@ -82,40 +84,42 @@ angular.module('builds').directive('itemSection', [
 					}
 				};
 
-				$scope.checkGoldIncome = function(item) {
-					if (item.tags.indexOf('GoldPer') > -1) {
-						return !$scope.data.goldPer.isSet;
+				$scope.checkGoldIncome = function(item, snapshot) {
+					if (typeof(item.tags) !== 'undefined' && item.tags.indexOf('GoldPer') > -1) {
+						return !$scope.build.snapshot[snapshot].goldPer.isSet;
 					}
 					return null;
 				};
 
-				$scope.checkRequiredChampion = function(item) {
+				$scope.checkRequiredChampion = function(item, snapshot) {
 					if ('requiredChampion' in item) {
-						return item.requiredChampion == $scope.data.selectedChampion.name;
+						return item.requiredChampion == $scope.build.snapshot[snapshot].selectedChampion.name;
 					}
 				};
 
-				$scope.removeItem = function(index){
+				$scope.removeItem = function(index, snapshot){
+					if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
+
 					var id;
 
                     if (index > 6) {
-                        if ($scope.build.snapshot[$scope.data.currentSnapshot].trinket == null) return;
-                        id = $scope.build.snapshot[$scope.data.currentSnapshot].trinket.id;
-                        $scope.build.snapshot[$scope.data.currentSnapshot].trinket = null;
+                        if ($scope.build.snapshot[snapshot].trinket == null) return;
+                        id = $scope.build.snapshot[snapshot].trinket.id;
+                        $scope.build.snapshot[snapshot].trinket = null;
                     } else {
-                        id = $scope.build.snapshot[$scope.data.currentSnapshot].items[index].id;
-                        $scope.build.snapshot[$scope.data.currentSnapshot].items.splice(index,1);
+                        id = $scope.build.snapshot[snapshot].items[index].id;
+                        $scope.build.snapshot[snapshot].items.splice(index,1);
                     }
 
 					// If this item is the one that set goldPer, unset goldPer.
-					if ($scope.data.goldPer.isSet && $scope.data.goldPer.id == id) {
-						$scope.data.goldPer.isSet = false;
+					if ($scope.build.snapshot[snapshot].goldPer.isSet && $scope.build.snapshot[snapshot].goldPer.id == id) {
+						$scope.build.snapshot[snapshot].goldPer.isSet = false;
 					}
 
 					// If this is a champion item, remove it from championItems
-					var itemIndex = $scope.data.championItems.indexOf(id);
+					var itemIndex = $scope.build.snapshot[snapshot].championItems.indexOf(id);
 					if (itemIndex > -1) {
-						$scope.data.championItems.splice(itemIndex, 1);
+						$scope.build.snapshot[snapshot].championItems.splice(itemIndex, 1);
 					}
 				};
 
@@ -155,13 +159,13 @@ angular.module('builds').directive('itemSection', [
 					// Remove all items related to the previous champion.
 					if (oldValue != null && newValue != null && newValue.id != oldValue.id) {
 						var items = $scope.build.snapshot[$scope.data.currentSnapshot].items;
-						for (var i = $scope.data.championItems.length - 1; i >= 0; i--) {
+						for (var i = $scope.build.snapshot[snapshot].championItems.length - 1; i >= 0; i--) {
 							for (var c = items.length-1; c >= 0; c--) {
-								if (items[c].id === $scope.data.championItems[i]) {
+								if (items[c].id === $scope.build.snapshot[snapshot].championItems[i]) {
 									items.splice(c, 1);
 								}
 							}
-							$scope.data.championItems.splice(i, 1);
+							$scope.build.snapshot[snapshot].championItems.splice(i, 1);
 						}
 					}
 				});

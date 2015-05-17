@@ -7,10 +7,10 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 			restrict: 		'E',
 			scope: {
 				data: '=',
-				build: '='
+				build: '=',
+				children: '='
 			},
 			controller: function($scope) {
-
 				$scope.currentType = 'mark';
 
 				$scope.runeTypes = {
@@ -40,6 +40,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				};
 
 				$scope.init = function() {
+					$scope.children.runes = $scope;
+
 					var runesLength = $scope.data.runes.length;
 					for (var i = 0; i < runesLength; i++) {
 						if ($scope.data.runes[i].tags.indexOf('mark') > -1) {
@@ -55,7 +57,7 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 							$scope.runesByType['quintessence'].push($scope.data.runes[i]);
 						}
 					};
-				}
+				};
 
 				$scope.toggleRuneTag = function(tag) {
 					var idx = $scope.runeSearch.tags.indexOf(tag);
@@ -72,6 +74,10 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					return ($scope.runeSearch.tags.indexOf(tag) > -1);
 				};
 
+				/**
+				 * Appends the given rune to the build.
+				 * @param Rune rune Rune to be appended to the build.
+				 */
 				$scope.addRune = function(rune) {
 					var limiterTag = null;
 
@@ -97,8 +103,14 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 					}
 				};
 
+				/**
+				 * Removes the first rune found with the given id under the given tag.
+				 * @param  string tag Rune Type
+				 * @param  number id Rune ID
+				 * @return {[type]}     [description]
+				 */
 				$scope.removeRune = function(tag, id) {
-					for (var i = $scope.build.runes[tag].length - 1; i >= 0; i--) {
+					for (var i = 0; i < $scope.build.runes[tag].length; i++) {
 						if ($scope.build.runes[tag][i].id === id) {
 							$scope.build.runes[tag].splice(i, 1);
 							$scope.build.runes_aux.runeCount[id]--;
