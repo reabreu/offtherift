@@ -452,7 +452,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			Calculate.save(request).$promise.then(function(response) {
 				$scope.build.calculatedStats[snapshot] = response.data;
+
 				if (typeof(block) === 'undefined' || block) $scope.unblockBuilder();
+
 				$scope.hoverOut();
 				$scope.blockSnapshot = false;
 			});
@@ -473,7 +475,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.hoverIn = function( object, event ){
 
-			if( typeof(object.points) !== "undefined" && object.points == 0)
+			if( typeof(object) === "undefined" || object === null) return;
+
+			if( typeof(object.points) !== "undefined" && object.points !== null && object.points == 0)
 				return;
 
 			angular.element('.stat-value-wrapper').addClass('stat-not-affected');
