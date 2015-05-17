@@ -317,7 +317,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.changePatch = function() {
-			$scope.patchChanged = true;
+			$scope.patchChanged 	= true;
+			$scope.buildChanged 	= true;
 			$scope.getPatchInfo();
 		};
 
