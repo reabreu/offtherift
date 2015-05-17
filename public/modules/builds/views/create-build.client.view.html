@@ -208,8 +208,13 @@
 					</div>
 					<div class="col-md-3">
 						<label class="width-40" for="selectedPatch">Patch</label>
-						<select class="select-input width-80" ng-model = "data.selectedPatch" ng-change="changePatch()" name="selectedPatch" id ="selectedPatch">
-							<option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+						<select
+							class="select-input width-80"
+							ng-model = "data.selectedPatch"
+							ng-change="changePatch()"
+							name="selectedPatch"
+							id ="selectedPatch"
+							ng-options="patch.version as patch.version for patch in data.patches | filter:{ synched: true }">
 						</select>
 					</div>
 					<div class="col-md-4">
