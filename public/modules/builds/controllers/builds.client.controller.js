@@ -253,12 +253,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 				// Remove each item and add it again with updated info.
 				for (var i = 0; i < runeCount; i++) {
-					var runeid = runes[i].id;
+					var runeId = runes[i].id;
 
 					// Find the rune and add it to the build.
 					var dataRuneCount = $scope.data.runes.length;
 					for (var r = 0; r < dataRuneCount; r++) {
-						if ($scope.data.runes[r].id == runeid) {
+						if ($scope.data.runes[r].id == runeId) {
 							// Remove the old rune.
 							$scope.children.runes.removeRune(tag, runeId);
 							// Add the new one.
