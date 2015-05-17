@@ -274,6 +274,10 @@ exports.getPopularBuilds = function(req,res,next){
             function(err,result) {
                 var i;
                 var lastUpdatedIndex = result.length - 1;
+
+                if(result.length == 0)
+                    res.jsonp([]);
+
                 for ( i = result.length - 1; i >= 0; i--) {
                     Champion.findOne({_id: result[i].champion}).exec(function(err, champion) {
                         result[lastUpdatedIndex].champion = { name : champion.name };
