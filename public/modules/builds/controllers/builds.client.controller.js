@@ -312,7 +312,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					}
 				}
 
-				$scope.calculate(snapIter, false);
+				$scope.calculate(snapIter, true);
 			}
 		};
 
@@ -419,7 +419,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.calculate = function(snapshot, block){
 			if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
 
-			if (block) $scope.blockBuilder();
+			if (typeof(block) === 'undefined' || block) $scope.blockBuilder();
 
 			var request = {
 				partype: 	$scope.data.selectedChampion.partype,
@@ -453,7 +453,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			Calculate.save(request).$promise.then(function(response) {
 				$scope.build.calculatedStats[snapshot] = response.data;
-				if (block ) $scope.unblockBuilder();
+
+				if (typeof(block) === 'undefined' || block) $scope.unblockBuilder();
+
 				$scope.hoverOut();
 				$scope.blockSnapshot = false;
 			});
