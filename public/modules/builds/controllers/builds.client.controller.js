@@ -1,8 +1,8 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal) {
 		$scope.authentication 	= Authentication;
 		ngProgress.height('3px');
 		ngProgress.color('#89cff0');
@@ -374,7 +374,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.openModal = function ( champions ) {
-			$scope.modal = $modal.open({
+			$scope.modal = $otrModal.open({
 				scope: $scope,
 				templateUrl: 'modules/builds/views/select-champion.client.view.html',
 				controller:  'BuildsController',
