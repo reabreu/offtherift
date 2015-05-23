@@ -1,11 +1,16 @@
 .view-build{
+    margin-top: 5px;
+
+    .build-title-wrapper{
+        margin-bottom: 10px;
+    }
 
     h1{
-        margin-top: 0px;
+        margin: 0px;
         text-align: middle;
     }
 
-    .build-title{
+    .build-designation{
         font-weight: 700;
         font-size: 35px;
     }
@@ -18,7 +23,7 @@
 
     .build-author-info{
         position: relative;
-        top: -13px;
+        top: -5px;
     }
 
     .view-btn{
@@ -32,11 +37,39 @@
 
         &:hover{
             opacity: 0.9;
+            -webkit-filter:     brightness(100%);
+            filter:             brightness(100%);
         }
     }
 
     .options-wrapper{
         position:relative;
         top: 3px;
+    }
+
+    .btn-editar{
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+    }
+
+    .build-edit{
+        background-image: url('/modules/core/img/editar.png');
+    }
+
+    .build-delete{
+        background-image: url('/modules/core/img/lixo.png');
+    }
+
+    .fb-buttons{
+        margin: 10px 0px;
+        display: inline-block;
+        width: 300px;
+        margin-left: 15px;
+    }
+
+    .fb-comments{
+        margin-top:10px;
+        padding-left: 7px;
     }
 }

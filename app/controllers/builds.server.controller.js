@@ -160,9 +160,10 @@ exports.list = function(req, res) {
 	if(champion_id != undefined && champion_id != "")
 		query.champion_id = champion_id;
 
-	if(group == "mine"){
+	if(group == "mine" && typeof(req.user) !== 'undefined'){
 	 	query.user = req.user._id;
 	}
+
 	else if (group == "public"){
 		query.user 		= { "$ne" : req.user._id };
 		query.visible 	= true;

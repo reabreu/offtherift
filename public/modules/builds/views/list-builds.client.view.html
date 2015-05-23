@@ -21,14 +21,17 @@
             <div class="row">
                 <div class="search-body">
                     <label class="col-sm-1 patch-label">Patch</label>
-                    <select class="col-sm-2" ng-model = "search.version">
-                        <option value=""></option>
-                        <option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
+
+                    <select
+                        class="col-sm-2"
+                        ng-model = "search.version"
+                        ng-options="patch.version as patch.version for patch in data.patches | filter:{ synched: true }">
                     </select>
                     <label class="col-sm-1">Champion</label>
-                    <select class="col-sm-2" ng-model = "search.champion_id">
-                        <option value=""></option>
-                        <option ng-repeat="champion in data.champions" value="{{champion.id}}">{{champion.name}}</option>
+                    <select
+                        class="col-sm-2"
+                        ng-model = "search.champion_id"
+                        ng-options="champion.id as champion.name for champion in data.champions">
                     </select>
                     <div class="col-sm-2" ng-show="search.group == 'public'">
                         <input class="build-input author-input" placeholder = "Author" ng-model="search.author" name="author" value="" id="author">
@@ -43,7 +46,7 @@
             class                           = "browsing-container"
             infinite-scroll                 = "loadMore();$event.stopPropagation()"
             infinite-scroll-disabled        = "busy"
-            infinite-scroll-immediate-check = "true"
+            infinite-scroll-immediate-check = "false"
             infinite-scroll-distance        = "1"
         >
             <div class="row row-no-padding" >

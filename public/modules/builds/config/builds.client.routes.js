@@ -6,7 +6,15 @@ angular.module('builds').config(['$stateProvider',
 		// Builds state routing
 		$stateProvider.
 		state('listBuilds', {
-			url: '/builds',
+			url: '/browse',
+			templateUrl: 'modules/builds/views/list-builds.client.view.html'
+		}).
+		state('listBuildsByVersion', {
+			url: '/browse/:version',
+			templateUrl: 'modules/builds/views/list-builds.client.view.html'
+		}).
+		state('listBuildsByVersionByChampion', {
+			url: '/browse/:version/:champion',
 			templateUrl: 'modules/builds/views/list-builds.client.view.html'
 		}).
 		state('createBuild', {

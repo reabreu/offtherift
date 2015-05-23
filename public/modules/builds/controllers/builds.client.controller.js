@@ -4,8 +4,6 @@
 angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI',
 	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI) {
 		$scope.authentication 	= Authentication;
-		ngProgress.height('3px');
-		ngProgress.color('#89cff0');
 
 		// Find existing Build
 		$scope.findOne = function() {
@@ -90,7 +88,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setConfigHeight = function(){
 			var windowHeight = $window.innerHeight;
-			angular.element('.configuration-wrapper').height(windowHeight - 115);
+			angular.element('.configuration-wrapper').height(windowHeight - 125);
 		};
 
 		/**************************
@@ -614,6 +612,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
+
 			$scope.busy 	 = false;
 
 			$scope.builds   = [];
@@ -629,19 +628,59 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				skip: 0
 			};
 
+			//Verificar se foram definido params
+			if( typeof($stateParams.version) !== 'undefined'){
+				$scope.search.version = $stateParams.version;
+			}
+
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches = data.patches;
-					Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
-						$scope.data.champions = data.champions;
-					});
+					$scope.setChampionSearchListing();
+
 				});
 			} else {
-				Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
-					$scope.data.champions = data.champions;
-				});
+				$scope.setChampionSearchListing();
 			}
 		};
+
+		$scope.setChampionSearchListing = function(){
+			$scope.cleanBadPatchSearch();
+
+			Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
+				$scope.data.champions = data.champions;
+
+				if( typeof($stateParams.champion) !== 'undefined'){
+					var exists = false;
+					for (var i = $scope.data.champions.length - 1; i >= 0; i--) {
+						if( $stateParams.champion  == $scope.data.champions[i].key){
+							$scope.search.champion_id = $scope.data.champions[i].id;
+							exists = true;
+							break;
+						}
+					};
+
+					if(!exists)
+						$scope.search.champion_id = '';
+				}
+
+				$scope.searchBuilds();
+
+			});
+		}
+
+		$scope.cleanBadPatchSearch = function(){
+			//faço reset ao patch caso nao exista
+			var exists = false;
+
+			angular.forEach($scope.data.patches, function(patch, index){
+                if( $scope.search.version == patch.version )
+                	exists = true;
+            });
+
+			if(!exists)
+				$scope.search.version = $scope.data.patches[0].version;
+		}
 
 		$scope.setGroup = function(group){
 			$scope.search.group = group;
@@ -660,6 +699,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.searchBuilds = function(){
 			ngProgress.start();
+			console.log($scope.search);
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;

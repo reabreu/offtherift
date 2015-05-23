@@ -36,9 +36,7 @@
                 </li>
             </ul>
         </div>
-        <div
-            class="col-md-7"
-            ng-class="{'col-md-pull-5': buildMode == 'createBuild' || buildMode == 'editBuild'}">
+        <div ng-class="{'col-md-pull-5 col-md-7': buildMode == 'createBuild' || buildMode == 'editBuild','col-sm-12': buildMode == 'viewBuild' }">
             <ul class="item-wrapper">
                 <li
                     class="item-slot"
