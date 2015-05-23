@@ -220,7 +220,7 @@ exports.getTotalStats = function(req,res,next){
                 $group: {
                     _id: "$user",
                     build_count: {$sum: 1},
-                    like_count: {$sum: "$facebook.like_count" + 0},
+                    like_count: {$sum: "$facebook.like_count"},
                     comment_count: {$sum: "$facebook.comment_count"},
                     share_count: {$sum: "$facebook.share_count"},
                     view_count: {$sum: "$view_count"}
