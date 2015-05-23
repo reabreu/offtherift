@@ -204,7 +204,7 @@
 			<div class="container-fluid">
 				<div class="row build-general-settings">
 					<div class="col-md-3">
-						<input type="text" ng-change="setBuildChanged(true)" data-ng-model="build.name" id="name" class="form-control build-input" placeholder="Build Name">
+						<input type="text" ng-change="setBuildChanged(true)" data-ng-model="build.name" id="name" class="build-input build-name" placeholder="Build Name">
 					</div>
 					<div class="col-md-3">
 						<label class="width-40" for="selectedPatch">Patch</label>
@@ -218,6 +218,7 @@
 						</select>
 					</div>
 					<div class="col-md-4">
+						<div class="pull-right" style="position:relative;left:25px;">
 						<a
 							class="btn-build-mode"
 							href="#"
@@ -232,6 +233,7 @@
 							ng-class="{'active': build.visible}">
 							Public
 						</a>
+						</div>
 					</div>
 					<div class="col-md-2">
 						<div ng-show="buildMode == 'create'">
@@ -269,12 +271,14 @@
 				        			<input
 				        				placeholder="Item Set {{$index +1}}"
 				        				ng-model="build.snapshot[$index].name">
-				        			<span ng-show="$index !== 0" href="#" class="remove-tab" ng-click="removeSnapshot($index)"> - </span>
+				        			<div ng-show="$index !== 0" href="#" class="remove-tab close" ng-click="removeSnapshot($index)"></div>
 				        		</li>
 				        		<li
 				        		class="add-snap"
 				        		ng-show="build.snapshot.length < 5"
-				        		ng-click="addSnapshot()">+</li>
+				        		ng-click="addSnapshot()">
+				        			<div class="plus"></div>
+				        		</li>
 				        		<li
 				        			class="filler-tab"
 				        			ng-repeat="n in range(1, 4 - build.snapshot.length)">

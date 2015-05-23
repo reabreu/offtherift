@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('builds').directive('masteriesSection', [
-	function() {
+angular.module('builds').directive('masteriesSection', ['$state',
+	function($state) {
 		return {
 			templateUrl: 'modules/builds/views/masteries-section.client.view.html',
 			restrict: 'E',
@@ -11,9 +11,15 @@ angular.module('builds').directive('masteriesSection', [
 				children: '='
 			},
 			controller: function($scope, $element){
-				$scope.children.masteries = $scope;
+
+				$scope.buildMode = $state.current.name;
+
+				if( $scope.buildMode != "viewBuild")
+					$scope.children.masteries = $scope;
 
 				$scope.addRank = function($event, masterie){
+					if( $scope.buildMode == "viewBuild") return;
+
 					var elem = angular.element($event.currentTarget);
 
 					if(elem.hasClass('mastery-disabled') || $scope.build.masteries_aux.avaliable_points == 0) return;
@@ -31,6 +37,8 @@ angular.module('builds').directive('masteriesSection', [
 				}
 
 				$scope.removeRank = function($event, masterie){
+					if( $scope.buildMode == "viewBuild") return;
+
 					var elem = angular.element($event.currentTarget);
 
 					if(elem.hasClass('mastery-disabled') || $scope.build.masteries_aux.avaliable_points == 0) return;
@@ -84,8 +92,6 @@ angular.module('builds').directive('masteriesSection', [
 					}
 					return false;
 				}
-
-				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

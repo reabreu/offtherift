@@ -4,11 +4,13 @@
         margin: 10px 0px 0px 0px;
 
         .search-title{
-            margin: 0px;
-            text-align: right;
-            margin-right: 15px;
             font-family: "Roboto Condensed";
             font-size: 20px;
+            width: 100%;
+            border-bottom: 1px solid white;
+            text-align: center;
+            position: relative;
+            top: 6px;
         }
 
         .selected-group{
@@ -30,20 +32,44 @@
     }
 
     .search-body{
-        background-color: #000000;
-        opacity: 0.58;
+        background: rgba(255,255,255,.15);
         border: 1px solid white;
+        border-top: 0px;
         padding: 25px 15px;
         overflow: hidden;
-        position: relative;
-        top: -1px;
+
+        .patch-label{
+            text-align: right;
+        }
 
         input{
-            height: 20px;
+
+            border-radius: 5px;
+
+            &.author-input{
+                width: 150px;
+                float: right;
+            }
+        }
+
+        .search-input{
+            background-color: #1f2224;
+            opacity: 0.8;
+            border: 0px;
+            font-weight: 300;
+            width: 110px;
+            float: right;
+
+            &:hover{
+                opacity: 1;
+            }
         }
 
         select, option, input{
-            color: black;
+            color: white;
+            background-color: #0A2E35;
+            opacity: 0.5;
+            height: 25px;
         }
     }
 
@@ -51,5 +77,40 @@
         width: 85%;
         margin-left: 10%;
         margin-top: 25px;
+    }
+
+    .list-builds-buttons{
+        list-style-type: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+
+        li{
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border: 1px solid white;
+            width: 16.65%;
+            text-align: center;
+            overflow: hidden;
+            height: 35px;
+            float: left;
+            display: block;
+            cursor: pointer;
+            line-height: 35px;
+
+            &:hover:not(.filler-tab),
+            &.selected-input{
+                background-color: rgba(255,255,255,.15);
+                cursor:pointer;
+            }
+
+            &.selected-input{
+                border-bottom: 0px;
+            }
+
+            &.filler-tab{
+                border: 0px;
+                border-bottom: 1px solid white;
+            }
+        }
     }
 }

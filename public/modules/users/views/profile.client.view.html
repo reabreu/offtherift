@@ -33,20 +33,23 @@
 					class = "build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
 					ng-class="{'hidden-xs hidden-sm hidden-md': $index > 2}">
 					<div class="build-wrapper">
-						<img
-						class="build-portrait img-responsive"
-						otr-src="{{build.champion.name | ddUnversioned}}"
-						>
-						<div class="build-info">
-							<label class="build-title">{{build.name}}</label>
-							<label class="build-author">by {{build.displayName}}</label>
-							<ul class="build-stats">
-								<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-								<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-								<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-								<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-							</ul>
-						</div>
+						<a href="/#!/builds/{{build._id}}">
+							<img
+							class="build-portrait img-responsive"
+							otr-src="{{build.champion.name | ddUnversioned}}"
+							>
+							<div class="build-info">
+								<label class="build-title">{{build.name}}</label>
+								<label class="build-author">by {{build.displayName}}</label>
+								<ul class="build-stats">
+									<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+									<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+									<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+									<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+								</ul>
+								<label class="build-version">{{build.version}}</label>
+							</div>
+						</a>
 					</div>
 				</div>
 				<div class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad" ng-repeat = "build in emptyBuilds" ng-class="{'hidden-xs hidden-sm hidden-md': builds.length > 2}">
@@ -81,20 +84,23 @@
 					class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
 					ng-class= "{'hidden-xs hidden-sm hidden-md': $index > 2}">
 					<div class="build-wrapper">
-						<img
-							class = "build-portrait img-responsive"
-							otr-src="{{build.champion.name | ddUnversioned}}"
-						>
-						<div class="build-info">
-							<label class="build-title">{{build.name}}</label>
-							<label class="build-author">by {{build.displayName}}</label>
-							<ul class="build-stats">
-								<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-								<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-								<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-								<li><span class="light">Views: </span><span class="heavy">123</span></li>
-							</ul>
-						</div>
+						<a href="/#!/builds/{{build._id}}">
+							<img
+								class = "build-portrait img-responsive"
+								otr-src="{{build.champion.name | ddUnversioned}}"
+							>
+							<div class="build-info">
+								<label class="build-title">{{build.name}}</label>
+								<label class="build-author">by {{build.displayName}}</label>
+								<ul class="build-stats">
+									<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+									<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+									<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+									<li><span class="light">Views: </span><span class="heavy">123</span></li>
+								</ul>
+								<label class="build-version">{{build.version}}</label>
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
