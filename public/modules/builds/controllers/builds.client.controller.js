@@ -622,11 +622,16 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			};
 
 			$scope.search 	= {
-				group : "mine",
 				author: "",
 				limit: 18,
 				skip: 0
 			};
+
+			if($scope.authentication.user == ""){
+				$scope.search.group = "public";
+			}else{
+				$scope.search.group = "mine";
+			}
 
 			//Verificar se foram definido params
 			if( typeof($stateParams.version) !== 'undefined'){

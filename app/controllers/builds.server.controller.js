@@ -165,7 +165,7 @@ exports.list = function(req, res) {
 	}
 
 	else if (group == "public"){
-		query.user 		= { "$ne" : req.user._id };
+		//query.user 		= { "$ne" : req.user._id };
 		query.visible 	= true;
 
 		if (author != undefined && author != ""){

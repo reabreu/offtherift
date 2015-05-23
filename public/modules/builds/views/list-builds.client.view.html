@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-lg-11 col-xs-10">
                         <ul class="list-builds-buttons">
-                            <li ng-click="setGroup('mine')" ng-class="{'selected-input': search.group  == 'mine'}">Mine</li>
+                            <li ng-click="setGroup('mine')" ng-class="{'selected-input': search.group  == 'mine'}" data-ng-show="authentication.user">Mine</li>
                             <li ng-click="setGroup('public')" ng-class="{'selected-input': search.group  == 'public'}">Public</li>
                             <li
                                 class="filler-tab"
