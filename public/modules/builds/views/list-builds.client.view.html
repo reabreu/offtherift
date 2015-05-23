@@ -3,18 +3,24 @@
         <form>
             <div class="row row-no-padding">
                 <div class="search-header">
-                    <div class="col-sm-1">
+                    <div class="col-lg-1 col-xs-2">
                         <label class="search-title ">Search by</label>
                     </div>
-                    <div class="col-sm-10">
-                        <input type="button" ng-class="{'selected-group': search.group  == 'mine'}" ng-click="setGroup($event)" value="mine"></input>
-                        <input type="button" ng-class="{'selected-group': search.group  == 'public'}" ng-click="setGroup($event)"  value="public"></input>
+                    <div class="col-lg-11 col-xs-10">
+                        <ul class="list-builds-buttons">
+                            <li ng-click="setGroup('mine')" ng-class="{'selected-input': search.group  == 'mine'}">Mine</li>
+                            <li ng-click="setGroup('public')" ng-class="{'selected-input': search.group  == 'public'}">Public</li>
+                            <li
+                                class="filler-tab"
+                                ng-repeat="n in range(1, 4)">
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="search-body">
-                    <label class="col-sm-1">Patch</label>
+                    <label class="col-sm-1 patch-label">Patch</label>
                     <select class="col-sm-2" ng-model = "search.version">
                         <option value=""></option>
                         <option ng-repeat="patch in data.patches | filter:{ synched: true }" value="{{patch.version}}">{{patch.version}}</option>
@@ -24,11 +30,11 @@
                         <option value=""></option>
                         <option ng-repeat="champion in data.champions" value="{{champion.id}}">{{champion.name}}</option>
                     </select>
-                    <div ng-show="search.group == 'public'">
-                        <div class="col-sm-2"><input placeholder = "Author" ng-model="search.author" name="author" value="" id="author"></div>
+                    <div class="col-sm-2" ng-show="search.group == 'public'">
+                        <input class="build-input author-input" placeholder = "Author" ng-model="search.author" name="author" value="" id="author">
                     </div>
-                    <div class="col-sm-1">
-                        <button  ng-click="resetAndSearchBuilds()">Pesquisar</button>
+                    <div class="col-sm-2">
+                        <button class="search-input" ng-click="resetAndSearchBuilds()">Pesquisar</button>
                     </div>
                 </div>
             </div>
@@ -47,20 +53,23 @@
                     ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
                     <div>
                         <div class="build-wrapper">
-                            <img
-                            class="build-portrait img-responsive"
-                            otr-src="{{build.champion.name | ddUnversioned}}"
-                            >
-                            <div class="build-info">
-                                <label class="build-title">{{build.name}}</label>
-                                <label class="build-author">by {{build.displayName}}</label>
-                                <ul class="build-stats">
-                                    <li>SHARES: {{build.facebook.share_count}}</li>
-                                    <li>COMMENTS: {{build.facebook.comment_count}}</li>
-                                    <li>LIKES: {{build.facebook.like_count}}</li>
-                                    <li>VIEWS: {{build.view_count}}</li>
-                                </ul>
-                            </div>
+                            <a href="/#!/builds/{{build._id}}">
+                                <img
+                                class="build-portrait img-responsive"
+                                otr-src="{{build.champion.name | ddUnversioned}}"
+                                >
+                                <div class="build-info">
+                                    <label class="build-title">{{build.name}}</label>
+                                    <label class="build-author">by {{build.displayName}}</label>
+                                    <ul class="build-stats">
+                                        <li>SHARES: {{build.facebook.share_count}}</li>
+                                        <li>COMMENTS: {{build.facebook.comment_count}}</li>
+                                        <li>LIKES: {{build.facebook.like_count}}</li>
+                                        <li>VIEWS: {{build.view_count}}</li>
+                                    </ul>
+                                    <label class="build-version">{{build.version}}</label>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>

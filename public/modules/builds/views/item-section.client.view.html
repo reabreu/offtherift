@@ -8,8 +8,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5 col-md-push-7">
+    <div class="row" ng-switch="$parent.showSearch(buildMode)">
+        <div class="col-md-5 col-md-push-7"  ng-switch-when="true" >
             <input
                 type        = "text"
                 class       = "build-input col-sm-12"
@@ -36,7 +36,9 @@
                 </li>
             </ul>
         </div>
-        <div class="col-md-7 col-md-pull-5">
+        <div
+            class="col-md-7"
+            ng-class="{'col-md-pull-5': buildMode == 'createBuild' || buildMode == 'editBuild'}">
             <ul class="item-wrapper">
                 <li
                     class="item-slot"

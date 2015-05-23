@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('builds').directive('runesSection', ['Repository','$timeout',
-	function(Repository,$timeout) {
+angular.module('builds').directive('runesSection', ['Repository','$timeout','$state',
+	function(Repository,$timeout,$state) {
 		return {
 			templateUrl: 	'modules/builds/views/runes-section.client.view.html',
 			restrict: 		'E',
@@ -40,6 +40,10 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				};
 
 				$scope.init = function() {
+					$scope.buildMode = $state.current.name;
+
+					if( $scope.buildMode == "viewBuild") return;
+
 					$scope.children.runes = $scope;
 
 					var runesLength = $scope.data.runes.length;
@@ -79,6 +83,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				 * @param Rune rune Rune to be appended to the build.
 				 */
 				$scope.addRune = function(rune) {
+					if( $scope.buildMode == "viewBuild") return;
+
 					var limiterTag = null;
 
 					// Check rune limit by tag
@@ -110,6 +116,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				 * @return {[type]}     [description]
 				 */
 				$scope.removeRune = function(tag, id) {
+					if( $scope.buildMode == "viewBuild") return;
+
 					for (var i = 0; i < $scope.build.runes[tag].length; i++) {
 						if ($scope.build.runes[tag][i].id === id) {
 							$scope.build.runes[tag].splice(i, 1);
@@ -126,8 +134,6 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout',
 				$scope.setCurrentType = function(tag) {
 					$scope.currentType = tag;
 				};
-
-				$scope.$parent.$parent.setConfigHeight();
 			}
 		};
 	}

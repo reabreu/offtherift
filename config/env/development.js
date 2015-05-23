@@ -3,7 +3,7 @@
 module.exports = {
 	db: 'mongodb://localhost/offtherift-dev',
 	app: {
-		title: 'Off the Rift - Development',
+		title: 'Offtherift - Development',
 		api: {
 			version: 	'/v1.2',
 			region: 	'/euw',

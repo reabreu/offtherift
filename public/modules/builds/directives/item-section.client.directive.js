@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('builds').directive('itemSection', [ 'ngToast',
-	function( ngToast ) {
+angular.module('builds').directive('itemSection', [ 'ngToast','$state',
+	function( ngToast, $state ) {
 		return {
 			templateUrl: 'modules/builds/views/item-section.client.view.html',
 			restrict: 'E',
@@ -13,7 +13,10 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
 			controller: function($scope){
 
 				$scope.init = function(){
-					$scope.children.items = $scope;
+					$scope.buildMode = $state.current.name;
+
+					if( $scope.buildMode != "viewBuild")
+						$scope.children.items = $scope;
 				};
 
 				$scope.search = {
@@ -26,6 +29,9 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
 				};
 
 				$scope.addItem = function(item, snapshot){
+
+					if( $scope.buildMode == "viewBuild") return;
+
 					if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
 
 					if (typeof($scope.build.snapshot[snapshot]['goldPer']) === 'undefined') {
@@ -46,16 +52,14 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
                         // Error messages.
 						if (limits.goldPer === false) {
 							ngToast.create({
-								content: "Only one gold item allowed!",
-								dismissOnTimeout: false
+								content: "Only one gold item allowed!"
 							});
 							return;
 						}
 
 						if (limits.requiredChampion === false) {
 							ngToast.create({
-								content: "That item can't be used on the selected champion!",
-								dismissOnTimeout: false
+								content: "That item can't be used on the selected champion!"
 							});
 							return;
 						}
@@ -102,6 +106,9 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
 				};
 
 				$scope.removeItem = function(index, snapshot){
+
+					if( $scope.buildMode == "viewBuild") return;
+
 					if (typeof(snapshot) === 'undefined') snapshot = $scope.data.currentSnapshot;
 
 					var id;
@@ -178,10 +185,12 @@ angular.module('builds').directive('itemSection', [ 'ngToast',
 				 * Set current build level
 				 */
 				$scope.setLevel = function (level) {
+					if( $scope.buildMode == "viewBuild") return;
+
 					$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 				}
 
-				$scope.$parent.$parent.setConfigHeight();
+				$scope.$parent.setConfigHeight();
 			}
 		};
 	}

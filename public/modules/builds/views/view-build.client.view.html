@@ -1,24 +1,25 @@
 <section data-ng-controller="BuildsController" data-ng-init="findOne()">
-    <div class="container">
+    <div class="container-fluid builder-wrapper view-build">
         <!--Build Title-->
         <div class="row">
-            <div class="page-header">
-                <h1 data-ng-bind="build.name"></h1>
+            <div class="col-sm-12">
+                <h1 class="build-title-wrapper">
+                    <span class="build-title">{{build.name}}</span>
+                    <span class="build-version">v{{build.version}}</span>
+                    <div class="pull-right options-wrapper" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
+                        <a class="view-btn btn-editar" href="/#!/builds/{{build._id}}/edit">
+                            <i class="glyphicon glyphicon-edit"></i>
+                        </a>
+                        <a class="view-btn btn-primary" data-ng-click="remove();">
+                            <i class="glyphicon glyphicon-trash"></i>
+                        </a>
+                    </div>
+                </h1>
             </div>
         </div>
-
-        <!--Build information-->
         <div class="row">
-            <div class="row">
-                <div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
-                    <a class="btn btn-primary" href="/#!/builds/{{build._id}}/edit">
-                        <i class="glyphicon glyphicon-edit"></i>
-                    </a>
-                    <a class="btn btn-primary" data-ng-click="remove();">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
-                </div>
-                <small>
+            <div class="col-sm-12">
+                <small class="build-author-info">
                     <em class="text-muted">
                         Posted on
                         <span data-ng-bind="build.created | date:'mediumDate'"></span>
@@ -27,24 +28,270 @@
                     </em>
                 </small>
             </div>
-            <!--Like & Share-->
-            <div class='fb-parse'>
-                <fb:like data-href="{{absUrl}}"
-                         data-layout="standard"
-                         data-action="like"
-                         data-show-faces="false"
-                         data-share="true">
-                </fb:like>
-            </div>
         </div>
-        <!--Comments Section-->
-        <div class="row">
-            <div class="fb-parse">
-                <fb:comments data-href="{{absUrl}}"
-                             data-numposts="5"
-                             data-colorscheme="light">
-                </fb:comments>
+        <div class="stats-container-wrapper">
+            <div class="champion-avatar-wrapper" ng-click="openModal(data.champions)" style="position:relative">
+                <div>
+                    <img
+                        class="champion-avatar inline-block"
+                        src="{{ build.champion.image.full | ddragon: build.champion.version:'champion'}}">
+                </div>
+                <div class="champion-name-wrapper absolute-top">
+                    <label class="champion-name">{{build.champion.name || 'Summon'}}</label>
+                    <label class="champion-title">{{build.champion.title || 'your champion'}}</label>
+                </div>
             </div>
-        </div>
+            <div class="row row-no-padding stats-container fx-fade-down fx-speed-1000" ng-show="build.calculatedStats[data.currentSnapshot].hp != 'n/a'">
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">HP</div>
+                        <div class="stat-value-wrapper stat-value-hp">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].hp}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">{{build.champion.partype}}</div>
+                        <div class="stat-value-wrapper stat-value-mp">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].mp}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">Hp5</div>
+                        <div class="stat-value-wrapper stat-value-hpregen">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].hpregen | regenStat }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">{{build.champion.partype}}p5</div>
+                        <div class="stat-value-wrapper stat-value-mpregen">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].mpregen | regenStat }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">AD</div>
+                        <div class="stat-value-wrapper stat-value-attackdamage">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].attackdamage}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">AP</div>
+                        <div class="stat-value-wrapper stat-value-abilitypower">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].abilitypower}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">ArPen</div>
+                        <div class="stat-value-wrapper stat-value-armorpenetration">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].armorpenetration | doubleStat}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">MPen</div>
+                        <div class="stat-value-wrapper stat-value-magicpenetration">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].magicpenetration | doubleStat}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">LS</div>
+                        <div class="stat-value-wrapper stat-value-lifesteal">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].lifesteal}}%</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">SV</div>
+                        <div class="stat-value-wrapper stat-value-spellvamp">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].spellvamp}}%</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">AS</div>
+                        <div class="stat-value-wrapper stat-value-attackspeed">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].attackspeed}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">CDR</div>
+                        <div class="stat-value-wrapper stat-value-cooldownreduction">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].cooldownreduction}}%</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">Crit</div>
+                        <div class="stat-value-wrapper stat-value-critchance">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].critchance}}%</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">Armor</div>
+                        <div class="stat-value-wrapper stat-value-armor">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].armor}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">Range</div>
+                        <div class="stat-value-wrapper stat-value-attackrange">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].attackrange}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">MR</div>
+                        <div class="stat-value-wrapper stat-value-spellblock">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].spellblock}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-left">
+                        <div class="stat-designation">MS</div>
+                        <div class="stat-value-wrapper stat-value-movespeed">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].movespeed}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-column">
+                    <div class="stat-wrapper stat-wrapper-right">
+                        <div class="stat-designation">Tenacity</div>
+                        <div class="stat-value-wrapper stat-value-tenacity">
+                            <div class="stat-value">
+                                <label>{{build.calculatedStats[data.currentSnapshot].tenacity}}%</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.champion_id != null">
+                    <div class="container-fluid configuration-wrapper">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>ITEMS</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <ul class="snapshot-container">
+                                        <li
+                                            ng-repeat="snap in build.snapshot track by $index"
+                                            ng-click="setCurrentSnap($index)"
+                                            ng-class="{'selected-snap': data.currentSnapshot == $index}">
+                                            {{build.snapshot[$index].name}}
+                                        </li>
+                                        <li
+                                            class="filler-tab"
+                                            ng-repeat="n in range(1, 5 - build.snapshot.length)">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="build-config-panel item-config-panel">
+                                    <item-section build="build" data="data" children="children"></item-section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>RUNES</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="build-config-panel">
+                                    <runes-section build="build" data="data" children="children"></runes-section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label>MASTERIES</label>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="build-config-panel">
+                                    <masteries-section build="build" data="data"  children="children"></masteries-section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='fb-parse'>
+                                <fb:like data-href="{{absUrl}}"
+                                         data-layout="standard"
+                                         data-action="like"
+                                         data-show-faces="false"
+                                         data-share="true">
+                                </fb:like>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="fb-parse">
+                                <fb:comments data-href="{{absUrl}}"
+                                             data-numposts="5"
+                                             data-colorscheme="light">
+                                </fb:comments>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </section>

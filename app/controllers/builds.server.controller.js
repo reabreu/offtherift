@@ -187,7 +187,10 @@ exports.list = function(req, res) {
  * Build middleware
  */
 exports.buildByID = function(req, res, next, id) {
-	Build.findById(id).populate('user', 'displayName').exec(function(err, build) {
+
+    var populateQuery       = [{path:'user', select:'displayName'}, {path:'champion', select:'name image title version partype'}];
+
+	Build.findById(id).populate(populateQuery).exec(function(err, build) {
 		if (err) return next(err);
 		if (! build) return next(new Error('Failed to load Build ' + id));
 		req.build = build ;
@@ -263,6 +266,7 @@ exports.getPopularBuilds = function(req,res,next){
                         champion: "$champion",
                         displayName: "$displayName",
                         name: "$name",
+                        version: "$version",
                         totalFb : { '$add' : [ "$facebook.comment_count", "$facebook.share_count", "$facebook.like_count" ] }
                     }
                 },

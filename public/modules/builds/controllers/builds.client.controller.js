@@ -13,6 +13,36 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
+
+				$scope.data = {
+					currentSnapshot		: 0,
+					timer				: null,
+					champions 			: [],
+					items 				: [],
+					runes 				: [],
+					masteries 			: [],
+					patches 			: Repository.getCachedPatches(),
+					selectedPatch 		: null,
+					selectedChampion 	: null
+				};
+
+				if ($state.current.name == "viewBuild") {
+					var params = {version: $scope.build.version, build: true };
+
+					Repository.getMasteries(params).then(function(data) {
+						var oldPoints = $scope.data.masteries.slice(); // copy old values
+						$scope.data.masteries 	= data.masteries;
+
+						$scope.pregoRuben();
+
+						angular.forEach($scope.data.masteries, function(masterie, index) {
+							masterie.points = 0;
+						});
+
+						$scope.populateMasteries();
+					});
+				}
+
 				if ($state.current.name != "viewBuild") {
 					$scope.data.selectedPatch 	= $scope.build.version;
 					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
@@ -25,6 +55,38 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 			});
 		};
+
+		$scope.pregoRuben = function(){
+			$scope.data.masteries.push({id:4153, masteryTree:'Offense'});
+			$scope.data.masteries.push({id:4161, masteryTree:'Offense'});
+			$scope.data.masteries.push({id:4223, masteryTree:'Defense'});
+			$scope.data.masteries.push({id:4254, masteryTree:'Defense'});
+			$scope.data.masteries.push({id:4261, masteryTree:'Defense'});
+			$scope.data.masteries.push({id:4321, masteryTree:'Utility'});
+			$scope.data.masteries.push({id:4351, masteryTree:'Utility'});
+			$scope.data.masteries.push({id:4354, masteryTree:'Utility'});
+			$scope.data.masteries.push({id:4361, masteryTree:'Utility'});
+		}
+
+		$scope.populateMasteries = function(){
+			//popular as masteires com os pontos atribuidos na build
+			for (var i = 0; i <  $scope.build.masteries.length; i++ ) {
+				for (var z = 0; z <  $scope.data.masteries.length; z++ ) {
+					if ($scope.build.masteries[i].id == $scope.data.masteries[z].id){
+						$scope.data.masteries[z].points = parseInt($scope.build.masteries[i].customEffect.rank);
+						break;
+					}
+				}
+			}
+		}
+
+		$scope.showSearch = function( buildMode ){
+			if(buildMode == 'createBuild' || buildMode == 'editBuild'){
+				return true;
+			} else {
+				return false;
+			}
+		}
 
 		$scope.setConfigHeight = function(){
 			var windowHeight = $window.innerHeight;
@@ -118,12 +180,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.$watch('build.champion_id', function () {
 				$scope.evaluateStatsRequest();
 			}, true);
-
-			var w = angular.element($window);
-
-			w.bind('resize', function () {
-				$scope.setConfigHeight();
-			});
 		};
 
 		$scope.setVisibleMode = function(mode){
@@ -168,15 +224,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							$scope.data.masteries 	= data.masteries;
 
 							//Prego do Ruben
-							$scope.data.masteries.push({id:4153, masteryTree:'Offense'});
-							$scope.data.masteries.push({id:4161, masteryTree:'Offense'});
-							$scope.data.masteries.push({id:4223, masteryTree:'Defense'});
-							$scope.data.masteries.push({id:4254, masteryTree:'Defense'});
-							$scope.data.masteries.push({id:4261, masteryTree:'Defense'});
-							$scope.data.masteries.push({id:4321, masteryTree:'Utility'});
-							$scope.data.masteries.push({id:4351, masteryTree:'Utility'});
-							$scope.data.masteries.push({id:4354, masteryTree:'Utility'});
-							$scope.data.masteries.push({id:4361, masteryTree:'Utility'});
+							$scope.pregoRuben();
 
 							angular.forEach($scope.data.masteries, function(masterie, index) {
 								if (!$scope.patchChanged) {
@@ -187,15 +235,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							});
 
 							if ($state.current.name == "editBuild") {
-								//popular as masteires com os pontos atribuidos na build
-								for (var i = 0; i <  $scope.build.masteries.length; i++ ) {
-									for (var z = 0; z <  $scope.data.masteries.length; z++ ) {
-										if ($scope.build.masteries[i].id == $scope.data.masteries[z].id){
-											$scope.data.masteries[z].points = parseInt($scope.build.masteries[i].customEffect.rank);
-											break;
-										}
-									}
-								}
+								$scope.populateMasteries();
 							}
 
 							// Update build information with loaded patch.
@@ -603,8 +643,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			}
 		};
 
-		$scope.setGroup = function($event){
-			$scope.search.group = $event.target.value;
+		$scope.setGroup = function(group){
+			$scope.search.group = group;
 		}
 
 		$scope.loadMore = function() {
@@ -668,5 +708,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
         	ngProgress.complete();
 			blockUI.stop();
         }
+
+        var w = angular.element($window);
+
+		w.bind('resize', function () {
+			$scope.setConfigHeight();
+		});
 	}
 ]);
