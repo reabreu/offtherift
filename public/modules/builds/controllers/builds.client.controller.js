@@ -699,7 +699,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.searchBuilds = function(){
 			ngProgress.start();
-			console.log($scope.search);
+
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;

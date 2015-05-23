@@ -220,7 +220,7 @@ exports.getTotalStats = function(req,res,next){
                 $group: {
                     _id: "$user",
                     build_count: {$sum: 1},
-                    like_count: {$sum: "$facebook.like_count"},
+                    like_count: {$sum: "$facebook.like_count" + 0},
                     comment_count: {$sum: "$facebook.comment_count"},
                     share_count: {$sum: "$facebook.share_count"},
                     view_count: {$sum: "$view_count"}
@@ -228,6 +228,16 @@ exports.getTotalStats = function(req,res,next){
             }
         ],
         function(err,result) {
+            console.log(result.length);
+            if(result == 0){
+                result = [{
+                    build_count: 0,
+                    like_count: 0,
+                    comment_count: 0,
+                    share_count: 0,
+                    view_count: 0
+                }];
+            }
             res.jsonp(result);
         }
     );
@@ -245,12 +255,18 @@ exports.getPopularBuilds = function(req,res,next){
 
     //buscar data da ultima build
     Build.findOne().sort('-created').exec(function(err, build) {
-        var lastBuildDate   = new Date(build.created);
-        var limitDate       = new Date(lastBuildDate);
+        var nd = null;
 
-        limitDate.setDate(limitDate.getDate() - days); // minus the date
+        if( build != null){
+            var lastBuildDate   = new Date(build.created);
+            var limitDate       = new Date(lastBuildDate);
 
-        var nd = new Date(limitDate);
+            limitDate.setDate(limitDate.getDate() - days); // minus the date
+
+            nd = new Date(limitDate);
+        } else{
+            nd = new Date();
+        }
 
         Build.aggregate(
             [
