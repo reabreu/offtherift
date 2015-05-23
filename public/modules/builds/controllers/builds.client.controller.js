@@ -647,7 +647,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.setChampionSearchListing = function(){
 			$scope.cleanBadPatchSearch();
 
-			Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
+			Repository.getChampions({version: $scope.data.patches[0].version, build: true}).then(function(data){
 				$scope.data.champions = data.champions;
 
 				if( typeof($stateParams.champion) !== 'undefined'){
