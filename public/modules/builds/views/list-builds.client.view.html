@@ -63,6 +63,7 @@
                             <div
                                 ng-repeat = "build in builds"
                                 class     = "fx-fade-right fx-trigger">
+                                <div ng-show="$index % 6 +1 == 1" style="clearfix" class="hidden-md hidden-xs hidden-sm"></div>
                                 <div class="col-xs-4 col-md-3 col-lg-2" ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
                                     <div class="build-wrapper">
                                         <a href="/#!/builds/{{build._id}}">
@@ -83,7 +84,6 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div ng-show="$index % 6 +1 == 6" style="clear:right" class="hidden-md hidden-xs hidden-sm"></div>
                             </div>
                         </div>
                     </div>
