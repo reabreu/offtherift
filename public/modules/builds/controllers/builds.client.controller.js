@@ -7,7 +7,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Find existing Build
 		$scope.findOne = function() {
-            $scope.absUrl = $location.absUrl();
+            $scope.absUrl = $location.absUrl().replace("#", "%23");
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
