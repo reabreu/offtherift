@@ -441,9 +441,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
 			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
+				var changed = $scope.data.selectedChampion != null &&
+								$scope.data.selectedChampion._id != data.champions[0]._id;
+
 				$scope.data.selectedChampion 	= data.champions[0];
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
+				if (changed) $scope.children.items.removeChampionItems();
 				$scope.unblockBuilder();
 			});
 		};
