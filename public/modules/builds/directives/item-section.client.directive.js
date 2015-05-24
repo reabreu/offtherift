@@ -101,7 +101,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state',
 
 				$scope.checkRequiredChampion = function(item, snapshot) {
 					if ('requiredChampion' in item) {
-						return item.requiredChampion == $scope.build.snapshot[snapshot].selectedChampion.name;
+						return item.requiredChampion == $scope.data.selectedChampion.name;
 					}
 				};
 
@@ -161,25 +161,25 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state',
 					return element.name.toLowerCase().indexOf($scope.search.name.toLowerCase()) > -1;
 				};
 
-				/**
-				 * Listen for any champion change and update the items when necessary.
-				 */
-				$scope.$watch('data.selectedChampion', function(newValue, oldValue) {
-					// newValue/oldValue: champion data object
-
-					// Remove all items related to the previous champion.
-					if (oldValue != null && newValue != null && newValue.id != oldValue.id) {
-						var items = $scope.build.snapshot[$scope.data.currentSnapshot].items;
+				$scope.removeChampionItems = function() {
+					var changed; // check if any item was removed
+					for (var snapshot = $scope.build.snapshot.length - 1; snapshot >= 0; snapshot--) {
+						changed = false;
+						// Remove all items related to the previous champion.
+						var items = $scope.build.snapshot[snapshot].items;
 						for (var i = $scope.build.snapshot[snapshot].championItems.length - 1; i >= 0; i--) {
 							for (var c = items.length-1; c >= 0; c--) {
 								if (items[c].id === $scope.build.snapshot[snapshot].championItems[i]) {
 									items.splice(c, 1);
+									changed = true;
 								}
 							}
 							$scope.build.snapshot[snapshot].championItems.splice(i, 1);
 						}
+
+						if (changed) $scope.$parent.calculate(snapshot, true);
 					}
-				});
+				}
 
 				/**
 				 * Set current build level
