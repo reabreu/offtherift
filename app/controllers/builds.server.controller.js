@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Build = mongoose.model('Build'),
     Champion   = mongoose.model('Champion'),
     http = require('http'),
+    async   = require("async"),
 	_ = require('lodash');
 
 /**
@@ -246,6 +247,7 @@ exports.getTotalStats = function(req,res,next){
 exports.getPopularBuilds = function(req,res,next){
     var limit       = req.param('limit');
     var days        = req.param('days');
+    var asyncTasks  = [];
 
     if(days == undefined || days == "")
         days = 7;
@@ -291,25 +293,54 @@ exports.getPopularBuilds = function(req,res,next){
                 {
                     $sort : {totalFb: -1}
                 },
-                {   $limit : 4 }
+                {   $limit : 5 }
             ],
             function(err,result) {
                 var i;
-                var lastUpdatedIndex = result.length - 1;
+                var lastUpdatedIndex = result.length-1;
 
                 if(result.length == 0)
                     res.jsonp([]);
 
-                for ( i = result.length - 1; i >= 0; i--) {
-                    Champion.findOne({_id: result[i].champion}).exec(function(err, champion) {
-                        result[lastUpdatedIndex].champion = { name : champion.name };
-                        --lastUpdatedIndex;
-
-                        if(lastUpdatedIndex == -1){
-                            res.jsonp(result);
-                        }
-                    });
-                };
+                async.waterfall([
+                    function(callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    }
+                ], function (err,result) {
+                    res.jsonp(result);
+                });
             }
         );
     });
