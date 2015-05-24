@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <div class="hidden-lg hidden-md" style="height:27px;"></div>
-                                    <button class="col-centered col-md-7 col-sm-12 col-xs-12 search-btn" ng-click="resetAndSearchBuilds()">Pesquisar {{busy}}</button>
+                                    <button class="col-centered col-md-7 col-sm-12 col-xs-12 search-btn" ng-click="resetAndSearchBuilds()">Pesquisar</button>
                                 </div>
                             </div>
                         </div>
@@ -62,25 +62,26 @@
                         <div class="row row-no-padding no-margin" >
                             <div
                                 ng-repeat = "build in builds"
-                                class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger"
-                                ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
-                                <div class="build-wrapper">
-                                    <a href="/#!/builds/{{build._id}}">
-                                        <img
-                                        class="build-portrait img-responsive"
-                                        otr-src="{{build.champion.name | ddUnversioned}}">
-                                        <div class="build-info">
-                                            <label class="build-title">{{build.name}}</label>
-                                            <label class="build-author">by {{build.displayName}}</label>
-                                            <ul class="build-stats">
-                                                <li>SHARES: {{build.facebook.share_count}}</li>
-                                                <li>COMMENTS: {{build.facebook.comment_count}}</li>
-                                                <li>LIKES: {{build.facebook.like_count}}</li>
-                                                <li>VIEWS: {{build.view_count}}</li>
-                                            </ul>
-                                            <label class="build-version">{{build.version}}</label>
-                                        </div>
-                                    </a>
+                                class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger">
+                                <div ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
+                                    <div class="build-wrapper">
+                                        <a href="/#!/builds/{{build._id}}">
+                                            <img
+                                            class="build-portrait img-responsive"
+                                            otr-src="{{build.champion.name | ddUnversioned}}">
+                                            <div class="build-info">
+                                                <label class="build-title">{{build.name}}</label>
+                                                <label class="build-author">by {{build.displayName}}</label>
+                                                <ul class="build-stats">
+                                                    <li>SHARES: {{build.facebook.share_count}}</li>
+                                                    <li>COMMENTS: {{build.facebook.comment_count}}</li>
+                                                    <li>LIKES: {{build.facebook.like_count}}</li>
+                                                    <li>VIEWS: {{build.view_count}}</li>
+                                                </ul>
+                                                <label class="build-version">{{build.version}}</label>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div ng-show="$index % 6 +1 == 6" class="clearfix hidden-sm hidden-md hidden-xs"></div>
                             </div>
