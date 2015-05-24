@@ -596,19 +596,25 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* ************************/
 		// Remove existing Build
 		$scope.remove = function(build) {
-			if ( build ) {
-				build.$remove();
 
+			$scope.blockBuilder();
+
+			if ( build ) {
 				for (var i in $scope.builds) {
 					if ($scope.builds [i] === build) {
 						$scope.builds.splice(i, 1);
+						$scope.buildService = new Builds ($scope.builds [i]);
 					}
 				}
+
 			} else {
-				$scope.build.$remove(function() {
-					$location.path('builds');
-				});
+				$scope.buildService = new Builds ($scope.build);
 			}
+
+			$scope.buildService.$remove(function() {
+				$scope.unblockBuilder();
+				$location.path('/browse');
+			});
 		};
 
 		$scope.initBuildBrowsing = function(){

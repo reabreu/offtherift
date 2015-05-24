@@ -9,7 +9,9 @@ module.exports = {
             region: 	'/euw',
             endpoint: 	'https://global.api.pvp.net/api/lol/static-data',
             api_key: 	'api_key=02d31520-47fc-4e61-a721-5d84a913229c'
-        }
+        },
+        description: 'Offtherift is a platform for creating and sharing builds for league of legends champions.',
+		keywords: 'lol, build, league of legends, gaming, champion'
     },
     /**
 	 * Environment Include Files

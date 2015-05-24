@@ -52,7 +52,10 @@
 						</a>
 					</div>
 				</div>
-				<div class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad" ng-repeat = "build in emptyBuilds" ng-class="{'hidden-xs hidden-sm hidden-md': builds.length > 2}">
+				<div
+					class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+					ng-repeat = "build in emptyBuilds"
+					ng-class="{'hidden-xs hidden-sm hidden-md': builds.length + $index > 2}">
 					<a ui-sref="createBuild">
 						<div class="build-wrapper">
 							<div class="label-portrait new-build-portrait"></div>
