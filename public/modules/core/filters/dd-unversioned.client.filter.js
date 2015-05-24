@@ -12,6 +12,8 @@ angular.module('core').filter('ddUnversioned', [
                         .replace("LeBlanc", "Leblanc")
                         .replace("Fiddlesticks","FiddleSticks")
                         .replace("VelKoz","Velkoz")
+                        .replace("Wukong","MonkeyKing")
+                        .replace("ChoGath","Chogath")
                         .replace(".", "");
 
             if (key && !key.match(/\.(png|jpg|gif|jpeg)$/)) {
