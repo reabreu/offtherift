@@ -9,15 +9,22 @@ angular.module('users').config(['$stateProvider',
 			url: '/dashboard',
 			templateUrl: 'modules/users/views/profile.client.view.html',
 			resolve: {
-				load: ['$q', 'Authentication', '$location', function($q, Authentication, $location) {
-					var deferred = $q.defer();
-
+				load: ['$q', 'Authentication', '$state','$timeout', function($q, Authentication, $state, $timeout) {
 					if (angular.isDefined(Authentication) && Authentication.user) {
-						deferred.resolve();
-						return deferred.promise;
-					}
+						// Resolve the promise successfully
+						return $q.when();
+					} else {
 
-					$location.path('/teaser');
+						// The next bit of code is asynchronously tricky.
+						$timeout(function() {
+						  // This code runs after the authentication promise has been rejected.
+						  // Go to the log-in page
+						  $state.go('teaser');
+						})
+
+						// Reject the authentication promise to prevent the state from loading
+						return $q.reject();
+					}
 				}]
 			}
 		}).

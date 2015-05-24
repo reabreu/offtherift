@@ -2,23 +2,23 @@
     <nav class="top-menu-nav full-height">
         <div class="container-fluid">
             <div class="col-xs-4">
-                <button class="pull-left menu" menu-control></button>
+                <button ng-show = "authentication.user" class="pull-left menu" menu-control></button>
             </div>
             <div class="col-xs-1">
-                <div class="device-xs visible-xs">xs</div>
+                <!--<div class="device-xs visible-xs">xs</div>
                 <div class="device-sm visible-sm">sm</div>
                 <div class="device-md visible-md">md</div>
-                <div class="device-lg visible-lg">lg</div>
+                <div class="device-lg visible-lg">lg</div>-->
             </div>
             <div class="col-xs-2">
                 <a class="platform-title" ui-sref="dashboard">OfftheRift</a>
             </div>
             <div class="col-xs-5">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" ng-show = "authentication.user">
                     <li class="active">
                         <img class="avatar"otr-src"http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
                     </li>
-                    <li>
+                    <li >
                         <label class="user-label">{{authentication.user.firstName}} {{authentication.user.lastName}}</label>
                     </li>
                     <li style="border-left: 1px solid white;">
