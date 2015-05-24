@@ -6,16 +6,19 @@ angular.module('core').directive('otrSrc', [
 			link: function(scope, element, attrs) {
 				var srcImage = attrs.otrSrc;
 
-				// Loads image
+				if(element.hasClass('build-portrait'))
+					element.addClass('label-portrait');
+
+
 				var loadImage = function (src) {
 					element[0].src = "/modules/core/img/loaders/loader.svg";
 
 					element.off('load').on('load', function(e) {
 						e.preventDefault();
-
 						if (this.src !== src) {
 							element.fadeOut(function () {
 			                	this.src = src;
+			                	element.removeClass('label-portrait');
 			                	element.fadeIn();
 		                	});
 						}
