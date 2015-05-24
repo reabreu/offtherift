@@ -284,6 +284,7 @@ exports.getPopularBuilds = function(req,res,next){
                         displayName: "$displayName",
                         name: "$name",
                         version: "$version",
+                        view_count: "$view_count",
                         totalFb : { '$add' : [ "$facebook.comment_count", "$facebook.share_count", "$facebook.like_count" ] }
                     }
                 },
