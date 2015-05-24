@@ -60,6 +60,7 @@
                         infinite-scroll-immediate-check = "false"
                         infinite-scroll-distance        = "1">
                         <div class="row row-no-padding no-margin" >
+                            <div ng-show="$index % 6 +1 == 1" style="height:5px" class="clearfix hidden-md hidden-xs hidden-sm"></div>
                             <div
                                 ng-repeat = "build in builds"
                                 class     = "fx-fade-right fx-trigger">
@@ -83,7 +84,6 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div ng-show="$index % 6 +1 == 6" style="height:5px" class="clearfix hidden-md hidden-xs hidden-sm"></div>
                             </div>
                         </div>
                     </div>
