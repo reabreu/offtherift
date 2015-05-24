@@ -1,81 +1,94 @@
 <section data-ng-controller="BuildsController" data-ng-init="initBuildBrowsing()">
-    <div class="container">
-        <form>
-            <div class="row row-no-padding">
-                <div class="search-header">
-                    <div class="col-lg-1 col-xs-2">
-                        <label class="search-title ">Search by</label>
-                    </div>
-                    <div class="col-lg-11 col-xs-10">
-                        <ul class="list-builds-buttons">
-                            <li ng-click="setGroup('mine')" ng-class="{'selected-input': search.group  == 'mine'}" data-ng-show="authentication.user">Mine</li>
-                            <li ng-click="setGroup('public')" ng-class="{'selected-input': search.group  == 'public'}">Public</li>
-                            <li
-                                class="filler-tab"
-                                ng-repeat="n in range(1, 4)">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="search-body">
-                    <label class="col-sm-1 patch-label">Patch</label>
-
-                    <select
-                        class="col-sm-2"
-                        ng-model = "search.version"
-                        ng-options="patch.version as patch.version for patch in data.patches | filter:{ synched: true }">
-                    </select>
-                    <label class="col-sm-1">Champion</label>
-                    <select
-                        class="col-sm-2"
-                        ng-model = "search.champion_id"
-                        ng-options="champion.id as champion.name for champion in data.champions">
-                    </select>
-                    <div class="col-sm-2" ng-show="search.group == 'public'">
-                        <input class="build-input author-input" placeholder = "Author" ng-model="search.author" name="author" value="" id="author">
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="search-input" ng-click="resetAndSearchBuilds()">Pesquisar</button>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div
-            class                           = "browsing-container"
-            infinite-scroll                 = "loadMore();$event.stopPropagation()"
-            infinite-scroll-disabled        = "busy"
-            infinite-scroll-immediate-check = "false"
-            infinite-scroll-distance        = "1"
-        >
-            <div class="row row-no-padding" >
-                <div
-                    ng-repeat = "build in builds"
-                    class     = "col-xs-4 col-md-2 fx-fade-right fx-trigger"
-                    ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
-                    <div>
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build._id}}">
-                                <img
-                                class="build-portrait img-responsive"
-                                otr-src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li>SHARES: {{build.facebook.share_count}}</li>
-                                        <li>COMMENTS: {{build.facebook.comment_count}}</li>
-                                        <li>LIKES: {{build.facebook.like_count}}</li>
-                                        <li>VIEWS: {{build.view_count}}</li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 col-sm-9 col-xs-8">
+                <div class="row pd-side-15 no-margin">
+                    <form>
+                        <div class="row row-no-padding ">
+                            <div class="search-header">
+                                <div class="col-lg-2 col-xs-3">
+                                    <label class="search-title ">Search by</label>
                                 </div>
-                            </a>
+                                <div class="col-lg-10 col-xs-9">
+                                    <ul class="list-builds-buttons">
+                                        <li ng-click="setGroup('mine')" ng-class="{'selected-input': search.group  == 'mine'}" data-ng-show="authentication.user">Mine</li>
+                                        <li ng-click="setGroup('public')" ng-class="{'selected-input': search.group  == 'public'}">Public</li>
+                                        <li
+                                            class="filler-tab"
+                                            ng-repeat="n in range(1, 5)">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-centered">
+                            <div class="search-body">
+                                <div class="col-xs-3">
+                                    <label class="col-md-5 col-sm-12 col-xs-12 patch-label remove-side-padd">Patch</label>
+                                    <select
+                                        class="col-md-7 col-sm-12 col-xs-12 remove-side-padd"
+                                        ng-model = "search.version"
+                                        ng-options="patch.version as patch.version for patch in data.patches | filter:{ synched: true }">
+                                    </select>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label class="col-md-5 col-sm-12 col-xs-12 patch-label remove-side-padd">Champ</label>
+                                    <select
+                                        class="col-md-7 col-sm-12 col-xs-12 remove-side-padd"
+                                        ng-model = "search.champion_id"
+                                        ng-options="champion.id as champion.name for champion in data.champions">
+                                    </select>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label class="col-md-5 col-sm-12 col-xs-12 patch-label remove-side-padd">Author</label>
+                                    <input class="col-md-7 col-sm-12 col-xs-12 remove-side-padd build-input author-input" ng-model="search.author" name="author" value="" id="author">
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="hidden-lg hidden-md" style="height:27px;"></div>
+                                    <button class="col-centered col-md-7 col-sm-12 col-xs-12 search-btn" ng-click="resetAndSearchBuilds()">Pesquisar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div
+                        class                           = "browsing-container"
+                        infinite-scroll                 = "loadMore();$event.stopPropagation()"
+                        infinite-scroll-disabled        = "busy"
+                        infinite-scroll-immediate-check = "false"
+                        infinite-scroll-distance        = "1">
+                        <div class="row row-no-padding no-margin" >
+                            <div
+                                ng-repeat = "build in builds"
+                                class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger"
+                                ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
+                                <div class="build-wrapper">
+                                    <a href="/#!/builds/{{build._id}}">
+                                        <img
+                                        class="build-portrait img-responsive"
+                                        otr-src="{{build.champion.name | ddUnversioned}}"
+                                        >
+                                        <div class="build-info">
+                                            <label class="build-title">{{build.name}}</label>
+                                            <label class="build-author">by {{build.displayName}}</label>
+                                            <ul class="build-stats">
+                                                <li>SHARES: {{build.facebook.share_count}}</li>
+                                                <li>COMMENTS: {{build.facebook.comment_count}}</li>
+                                                <li>LIKES: {{build.facebook.like_count}}</li>
+                                                <li>VIEWS: {{build.view_count}}</li>
+                                            </ul>
+                                            <label class="build-version">{{build.version}}</label>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-2 col-sm-3 col-xs-4">
+                <p style="background-color:black;">ANUNCIO</p>
             </div>
         </div>
         <!--<div class="list-group">

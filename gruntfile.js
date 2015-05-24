@@ -187,12 +187,12 @@ module.exports = function(grunt) {
 					 * Admin LESS Files
 					 * @type {String}
 					 */
-					{ src: 'admin/modules/**/less/**/styles.less',   dest: 'admin/modules/core/css/core.min.css'  },
+					//{ src: 'admin/modules/**/less/**/styles.less',   dest: 'admin/modules/core/css/core.min.css'  },
 					/**
 					 * Public LESS Files
 					 * @type {String}
 					 */
-					{ src: 'public/modules/**/less/**/styles.less',   dest: 'public/modules/dist/css/core.min.css'  },
+					//{ src: 'public/modules/**/less/**/styles.less',   dest: 'public/modules/dist/css/core.min.css'  },
 				],
 			}
 		}
