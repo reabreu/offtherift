@@ -18,8 +18,10 @@ angular.module('core').directive('otrSrc', [
 						if (this.src !== src) {
 							element.fadeOut(function () {
 			                	this.src = src;
-			                	element.removeClass('label-portrait');
-			                	element.fadeIn();
+
+			                	element.fadeIn(function(){
+			                		element.removeClass('label-portrait');
+			                	});
 		                	});
 						}
 					});

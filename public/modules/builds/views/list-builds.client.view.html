@@ -37,6 +37,7 @@
                                         class="col-md-7 col-sm-12 col-xs-12 remove-side-padd"
                                         ng-model = "search.champion_id"
                                         ng-options="champion.id as champion.name for champion in data.champions">
+                                        <option value=""></option>
                                     </select>
                                 </div>
                                 <div class="col-xs-3">
@@ -81,6 +82,9 @@
                                         </div>
                                     </a>
                                 </div>
+                                <div class="clearfix visible-ls" ng-show="{{$index % 6 == 0}}"></div>
+                                <div class="clearfix visible-md" ng-show="{{$index % 4 == 0}}"></div>
+                                <div class="clearfix visible-sm" ng-show="{{$index % 3 == 0}}"></div>
                             </div>
                         </div>
                     </div>
