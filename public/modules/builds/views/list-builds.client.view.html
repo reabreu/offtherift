@@ -60,28 +60,30 @@
                         infinite-scroll-immediate-check = "false"
                         infinite-scroll-distance        = "1">
                         <div class="row row-no-padding no-margin" >
-                            <div
-                                ng-repeat = "build in builds"
-                                class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger"
-                                ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
-                                <div class="build-wrapper">
-                                    <a href="/#!/builds/{{build._id}}">
-                                        <img
-                                        class="build-portrait img-responsive"
-                                        otr-src="{{build.champion.name | ddUnversioned}}">
-                                        <div class="build-info">
-                                            <label class="build-title">{{build.name}}</label>
-                                            <label class="build-author">by {{build.displayName}}</label>
-                                            <ul class="build-stats">
-                                                <li>SHARES: {{build.facebook.share_count}}</li>
-                                                <li>COMMENTS: {{build.facebook.comment_count}}</li>
-                                                <li>LIKES: {{build.facebook.like_count}}</li>
-                                                <li>VIEWS: {{build.view_count}}</li>
-                                            </ul>
-                                            <label class="build-version">{{build.version}}</label>
-                                        </div>
-                                    </a>
+                            <div ng-repeat = "build in builds">
+                                <div
+                                    class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger"
+                                    ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
+                                    <div class="build-wrapper">
+                                        <a href="/#!/builds/{{build._id}}">
+                                            <img
+                                            class="build-portrait img-responsive"
+                                            otr-src="{{build.champion.name | ddUnversioned}}">
+                                            <div class="build-info">
+                                                <label class="build-title">{{build.name}}</label>
+                                                <label class="build-author">by {{build.displayName}}</label>
+                                                <ul class="build-stats">
+                                                    <li>SHARES: {{build.facebook.share_count}}</li>
+                                                    <li>COMMENTS: {{build.facebook.comment_count}}</li>
+                                                    <li>LIKES: {{build.facebook.like_count}}</li>
+                                                    <li>VIEWS: {{build.view_count}}</li>
+                                                </ul>
+                                                <label class="build-version">{{build.version}}</label>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
+                                <div ng-show="$index % 6 +1 == 0" class="clearfix"></div>
                             </div>
                         </div>
                     </div>
