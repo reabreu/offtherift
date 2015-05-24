@@ -88,7 +88,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setConfigHeight = function(){
 			var windowHeight = $window.innerHeight;
-			angular.element('.configuration-wrapper').height(windowHeight - 125);
+			angular.element('.configuration-wrapper').height(windowHeight - 110);
 		};
 
 		/**************************

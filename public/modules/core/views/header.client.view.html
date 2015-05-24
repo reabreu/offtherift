@@ -1,29 +1,28 @@
 <section data-ng-controller="SidebarController" class="full-height">
     <nav class="top-menu-nav full-height">
         <div class="container-fluid">
-            <div class="col-xs-4">
-                <button class="pull-left menu" menu-control></button>
-            </div>
-            <div class="col-xs-1">
-                <div class="device-xs visible-xs">xs</div>
-                <div class="device-sm visible-sm">sm</div>
-                <div class="device-md visible-md">md</div>
-                <div class="device-lg visible-lg">lg</div>
+            <div class="col-xs-5">
+                <button ng-show = "authentication.user" class="pull-left menu" menu-control></button>
             </div>
             <div class="col-xs-2">
                 <a class="platform-title" ui-sref="dashboard">OfftheRift</a>
             </div>
             <div class="col-xs-5">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li ng-show = "authentication.user">
                         <img class="avatar"otr-src"http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
                     </li>
-                    <li>
+                    <li ng-show = "authentication.user">
                         <label class="user-label">{{authentication.user.firstName}} {{authentication.user.lastName}}</label>
                     </li>
-                    <li style="border-left: 1px solid white;">
+                    <li ng-show = "authentication.user" style="border-left: 1px solid white;">
                         <a href="/auth/signout" class="no-subline signout">
                             Signout
+                        </a>
+                    </li>
+                    <li ng-show = "!authentication.user">
+                        <a ui-sref="login" class="no-subline signout">
+                            Login
                         </a>
                     </li>
                 </ul>
@@ -31,71 +30,3 @@
          </div>
     </nav>
 </section>
-<!--<nav class="navbar-collapse navbar-collapse-header" aria-expanded="false" style="height: 1px;">
-        <div class="navbar-right yamm">
-            <ul class="nav navbar-nav smart-menu dd-menu sm" data-ng-hide="authentication.user">
-                <li ui-route="/contactus" ng-class="{active: $uiRoute}">
-                    <a href="/#!/contact-us">
-                        <span>Contact Us</span>
-                        <span class="subline">Issues & Sugestions</span>
-                    </a>
-                </li>
-                <li class="divider-vertical"></li>
-                <li ui-route="/aboutus" ng-class="{active: $uiRoute}">
-                    <a href="/#!/about-us">
-                        <span>About Us</span>
-                        <span class="subline">Company</span>
-                    </a>
-                </li>
-            </ul>
-
-        <ul class="nav navbar-nav navbar-right" data-ng-hide="authentication.user">
-            <li ui-route="/registration" ng-class="{active: $uiRoute}">
-                <a href="/#!/registration">
-                    <span>Register</span>
-                    <span class="subline">Registration Form</span>
-                </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li ui-route="/login" ng-class="{active: $uiRoute}">
-                <a href="/#!/login">
-                    <span>Login</span>
-                    <span class="subline">Login Form</span>
-                </a>
-            </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
-            <li ng-show="{{ authentication.user && 'admin' | inArray:authentication.user.roles }}">
-                <a href="/admin/">
-                    <span>Admin</span>
-                    <span class="subline">Administration</span>
-                </a>
-            </li>
-            <li ui-sref-active="createBuild">
-                <a ui-sref="createBuild">
-                    <span>Build</span>
-                    <span class="subline">Build Now</span>
-                </a>
-            </li>
-            <li ui-sref-active="listBuilds">
-                <a ui-sref="listBuilds">
-                    <span>Browse</span>
-                    <span class="subline">Builds</span>
-                </a>
-            </li>
-            <li ui-route="/settings/profile" ng-class="{active: $uiRoute}">
-                <a href="/#!/settings/profile">
-                    <span>User</span>
-                    <span class="subline">Profile</span>
-                </a>
-            </li>
-            <li class="divider-vertical"></li>
-            <li>
-                <a href="/auth/signout" class="no-subline">
-                    <span>Signout</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>-->
