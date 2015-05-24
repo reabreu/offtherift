@@ -62,15 +62,15 @@
                         <div class="row row-no-padding no-margin" >
                             <div
                                 ng-repeat = "build in builds"
-                                class     = "col-xs-4 col-md-3 col-lg-2 fx-fade-right fx-trigger">
-                                <div ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
+                                class     = "fx-fade-right fx-trigger">
+                                <div class="col-xs-4 col-md-3 col-lg-2" ng-class  = "{'build-portrait-left': $index % 12 < 6 ,'build-portrait-right': $index % 12 >= 6 }">
                                     <div class="build-wrapper">
                                         <a href="/#!/builds/{{build._id}}">
                                             <img
                                             class="build-portrait img-responsive"
                                             otr-src="{{build.champion.name | ddUnversioned}}">
                                             <div class="build-info">
-                                                <label class="build-title">{{build.name}}</label>
+                                                <label class="build-title">{{build.name}} {{$index % 6 +1}}</label>
                                                 <label class="build-author">by {{build.displayName}}</label>
                                                 <ul class="build-stats">
                                                     <li>SHARES: {{build.facebook.share_count}}</li>
