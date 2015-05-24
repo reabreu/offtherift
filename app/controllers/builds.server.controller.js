@@ -303,7 +303,7 @@ exports.getPopularBuilds = function(req,res,next){
                 for ( i = result.length - 1; i >= 0; i--) {
                     Champion.findOne({_id: result[i].champion}).exec(function(err, champion) {
                         result[lastUpdatedIndex].champion = { name : champion.name };
-                        lastUpdatedIndex--;
+                        --lastUpdatedIndex;
 
                         if(lastUpdatedIndex == -1){
                             res.jsonp(result);
