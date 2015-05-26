@@ -703,7 +703,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.search.group = group;
 		}
 
-		$scope.loadMore = function() {
+		$scope.loadMore = function() {s
 			if ($scope.busy) return;
     		$scope.searchBuilds();
 		}
