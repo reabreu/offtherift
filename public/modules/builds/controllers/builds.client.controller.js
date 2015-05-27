@@ -138,6 +138,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			// Data
 			$scope.data = {
+				firstPick 			: true,
 				currentSnapshot		: 0,
 				timer				: null,
 				champions 			: [],
@@ -438,6 +439,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * [setSelectedChampion setCurrentSelectedChammpion]
 		 */
 		$scope.setSelectedChampion = function(champion){
+			$scope.data.firstPick = false;
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
 			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
@@ -703,7 +705,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.search.group = group;
 		}
 
-		$scope.loadMore = function() {s
+		$scope.loadMore = function() {
 			if ($scope.busy) return;
     		$scope.searchBuilds();
 		}

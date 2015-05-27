@@ -25,8 +25,13 @@ var auth = function (req, res, next) {
 module.exports = function(app) {
 	// Root routing
 	var core = require('../../app/controllers/core.server.controller');
-    var users = require('../../app/controllers/users.server.controller');
+  var users = require('../../app/controllers/users.server.controller');
 
+  if( process.env.NODE_ENV === 'production' ) {
     app.route('/').get(auth,core.index);
+  } else {
+    app.route('/').get(core.index);
+  }
+
 	app.route('/admin').get(users.hasAuthorization(['admin']),users.requiresLogin, core.admin);
 };
