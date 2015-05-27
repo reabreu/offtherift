@@ -15,12 +15,27 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 		 * Loading states
 		 * @type {Object}
 		 */
-		this.loading = {
-			patches: true,
-			champions: true,
-			items: true,
-			runes: true,
-			masteries: true
+		this.state = {
+			patches: {
+				loading: true,
+				full: false
+			},
+			champions: {
+				loading: true,
+				full: false
+			},
+			items: {
+				loading: true,
+				full: false
+			},
+			runes: {
+				loading: true,
+				full: false
+			},
+			masteries: {
+				loading: true,
+				full: false
+			}
 		};
 
 		return {
@@ -28,7 +43,7 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 			 * Loading State Flag
 			 * @type {Object}
 			 */
-			loading: this.loading,
+			state: this.state,
 			setSelectedPatch: function(version){
 				selectedPatch = version;
 			},
@@ -39,49 +54,94 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 				return patches;
 			},
 			getPatches: function() {
-				this.loading.patches = true;
+				this.state.patches.loading = true;
 				var promise = Patches.data.query()
 				.$promise.then(function(data) {
 					patches = data;
-					_this.loading.patches = false;
+
+					// set loading state
+					_this.state.patches.loading = false;
+
+					// check if it's full
+					if (typeof data !== "undefined" &&
+						data.length == 0) {
+						_this.state.patches.full = true;
+					}
+
 					return { patches: data };
 			    });
 
 			    return promise;
 			},
 			getChampions: function( search_params ) {
-				this.loading.champions = true;
+				this.state.champions.loading = true;
 				return Champions.data.query(search_params)
 				.$promise.then(function(data) {
 					champions = data;
-					_this.loading.champions = false;
+
+					// set loading state
+					_this.state.champions.loading = false;
+
+					// check if it's full
+					if (typeof data !== "undefined" &&
+						data.length == 0) {
+						_this.state.champions.full = true;
+					}
+
 					return { champions: data };
 			    });
 			},
 			getItems: function( search_params ){
-				this.loading.items = true;
+				this.state.items.loading = true;
 				return Items.data.query( search_params )
 				.$promise.then(function(data) {
 					items = data;
-					_this.loading.items = false;
+
+					// set loading state
+					_this.state.items.loading = false;
+
+					// check if it's full
+					if (typeof data !== "undefined" &&
+						data.length == 0) {
+						_this.state.items.full = true;
+					}
+
 					return { items: data };
 			    });
 			},
 			getRunes: function( search_params ){
-				this.loading.runes = true;
+				this.state.runes.loading = true;
 				return Runes.data.query( search_params )
 				.$promise.then(function(data) {
 					runes = data;
-					_this.loading.runes = false;
+
+					// set loading state
+					_this.state.runes.loading = false;
+
+					// check if it's full
+					if (typeof data !== "undefined" &&
+						data.length == 0) {
+						_this.state.runes.full = true;
+					}
+
 					return { runes: data};
 			    });
 			},
 			getMasteries: function( search_params ) {
-				this.loading.masteries = true;
+				this.state.masteries.loading = true;
 				return Masteries.data.query(search_params)
 				.$promise.then(function(data) {
 					masteries = data;
-					_this.loading.masteries = false;
+
+					// set loading state
+					_this.state.masteries.loading = false;
+
+					// check if it's full
+					if (typeof data !== "undefined" &&
+						data.length == 0) {
+						_this.state.masteries.full = true;
+					}
+
 					return { masteries: data};
 			    });
 			}

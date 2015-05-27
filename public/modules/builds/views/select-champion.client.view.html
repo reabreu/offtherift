@@ -14,8 +14,8 @@
     <div class="modal-body" id="modal-body-champions">
         <div class="container-fluid">
             <div class="row"
-                infinite-scroll                 = "loadMoreChampions();$event.stopPropagation()"
-                infinite-scroll-disabled        = "busy"
+                infinite-scroll                 = "loadMoreChampions(data.champions.length);$event.stopPropagation()"
+                infinite-scroll-disabled        = "loading.champions"
                 infinite-scroll-immediate-check = "false"
                 infinite-scroll-container       = "'#modal-body-champions'">
                 <div data-ng-repeat = "champion in data.champions | filter: search track by champion.id">

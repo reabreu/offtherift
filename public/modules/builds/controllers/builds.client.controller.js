@@ -6,10 +6,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.authentication 	= Authentication;
 
 		/**
-		 * Flags to loading states
+		 * Flags to contents states
 		 * @type {Object}
 		 */
-		$scope.loading = Repository.loading;
+		$scope.state = Repository.state;
 
 		// Find existing Build
 		$scope.findOne = function() {
@@ -433,10 +433,25 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		/**
 		 * Load more champions
+		 * @param {integer} skip Query skip
 		 * @return {boolean}
 		 */
-		$scope.loadMoreChampions = function () {
-			console.log('here');
+		$scope.loadMoreChampions = function (skip) {
+			if ($scope.state.champions.loading ||
+				$scope.state.champions.full) return;
+
+			var params = {
+				version: $scope.data.selectedPatch,
+				build: true,
+				limit: 30,
+				skip: skip
+			};
+
+			Repository.getChampions(params).then(function (data) {
+				for (var i = 0; i < data.champions.length; i++) {
+					$scope.data.champions.push(data.champions[i]);
+				}
+			});
 		};
 
 		/**

@@ -12,14 +12,9 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				children: '=',
 				loading: '=',
 				query: '=',
-				scrollBox: '='
+				full: '='
 			},
 			controller: function($scope){
-				/**
-				 * Full of items flag
-				 * @type {Boolean}
-				 */
-				var isFull = false;
 				/**
 				 * Default queries
 				 * @type {Object}
@@ -223,7 +218,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 
 						if (typeof data.items !== "undefined" &&
 							data.items.length == 0) {
-							isFull = true;
+							$scope.full = true;
 						}
 
 						if (typeof $scope.data.items !== "undefined" &&
@@ -243,7 +238,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 * @return {boolean}        Result
 				 */
 				$scope.loadMoreItems = function (skip) {
-					if ($scope.loading || isFull) return;
+					if ($scope.loading || $scope.full) return;
 
 					var loadQuery = angular.extend(query, {
 						skip: skip
