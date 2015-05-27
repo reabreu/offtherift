@@ -9,7 +9,6 @@
 			<div class="champion-avatar-wrapper" ng-click="openModal(data.champions)" style="position:relative">
 				<div>
 					<img
-						ng-switch-default
 						class="champion-avatar inline-block"
 						otr-src="{{ data.selectedChampion.image.full | ddragon: data.selectedChampion.version:'champion'}}">
 				</div>
