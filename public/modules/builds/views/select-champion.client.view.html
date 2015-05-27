@@ -11,10 +11,14 @@
             <span class="glyphicon glyphicon-remove pull-right" ng-click="closeModal()"></span>
         </h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" id="modal-body-champions">
         <div class="container-fluid">
-            <div class="row">
-                <div data-ng-repeat="champion in data.champions | filter:search track by champion.id">
+            <div class="row"
+                infinite-scroll                 = "loadMoreChampions();$event.stopPropagation()"
+                infinite-scroll-disabled        = "busy"
+                infinite-scroll-immediate-check = "false"
+                infinite-scroll-container       = "'#modal-body-champions'">
+                <div data-ng-repeat = "champion in data.champions | filter: search track by champion.id">
                     <div ng-if="$index + 1 % 6 == 0" class="clearfix"></div>
                     <div class="col-sm-2">
                         <img
@@ -22,8 +26,7 @@
                             style="margin-left:27%;cursor:pointer;height:80px;width:80px;"
                             class="avatar"
                             alt="{{champion.name}}"
-                            otr-src="{{ champion.image.full | ddragon: champion.version:'champion'}}"
-                        >
+                            otr-src="{{ champion.image.full | ddragon: champion.version:'champion'}}">
                         <h3 style="text-align:center;">{{champion.name}}</h3>
                     </div>
                 </div>

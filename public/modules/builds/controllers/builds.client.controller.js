@@ -1,11 +1,17 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q) {
 		$scope.authentication 	= Authentication;
 		ngProgress.height('3px');
 		ngProgress.color('#89cff0');
+
+		/**
+		 * Flags to loading states
+		 * @type {Object}
+		 */
+		$scope.loading = Repository.loading;
 
 		// Find existing Build
 		$scope.findOne = function() {
@@ -209,49 +215,47 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Repository.setSelectedPatch($scope.data.selectedPatch);
 
 			var params = {version: $scope.data.selectedPatch, build: true };
+			var limitedParams = angular.extend({}, params, {
+				limit: 30
+			});
 
-			Repository.getChampions(params).then(function(data) {
-				$scope.data.champions 			= data.champions;
+			Repository.getChampions(limitedParams).then(function (data) {
+				$scope.data.champions = data.champions;
 
-				Repository.getItems(params).then(function(data) {
-					$scope.data.items 		= data.items;
-
-					Repository.getRunes(params).then(function(data) {
-						$scope.data.runes 		= data.runes;
-
-						Repository.getMasteries(params).then(function(data) {
-							var oldPoints = $scope.data.masteries.slice(); // copy old values
-							$scope.data.masteries 	= data.masteries;
-
-							//Prego do Ruben
-							$scope.pregoRuben();
-
-							angular.forEach($scope.data.masteries, function(masterie, index) {
-								if (!$scope.patchChanged) {
-									masterie.points = 0;
-								} else {
-									masterie.points = oldPoints[index].points;
-								}
-							});
-
-							if ($state.current.name == "editBuild") {
-								$scope.populateMasteries();
-							}
-
-							// Update build information with loaded patch.
-							if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
-								// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
-								$scope.updateMasteries();
-								$scope.updateRunes();
-								$scope.updateSnapshots();
-								$scope.patchChanged = false;
-							}
-
-							$scope.enabledView = true;
-							$scope.unblockBuilder();
-						});
-					});
+				Repository.getRunes(limitedParams).then(function (data) {
+					$scope.data.runes = data.runes;
 				});
+				Repository.getMasteries(params).then(function (data) {
+					var oldPoints = $scope.data.masteries.slice(); // copy old values
+					$scope.data.masteries = data.masteries;
+
+					//Prego do Ruben
+					$scope.pregoRuben();
+
+					angular.forEach($scope.data.masteries, function(masterie, index) {
+						if (!$scope.patchChanged) {
+							masterie.points = 0;
+						} else {
+							masterie.points = oldPoints[index].points;
+						}
+					});
+
+					if ($state.current.name == "editBuild") {
+						$scope.populateMasteries();
+					}
+				});
+
+				// Update build information with loaded patch.
+				if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
+					// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
+					$scope.updateMasteries();
+					$scope.updateRunes();
+					$scope.updateSnapshots();
+					$scope.patchChanged = false;
+				}
+
+				$scope.enabledView = true;
+				$scope.unblockBuilder();
 			});
 
 			$scope.unblockBuilder();
@@ -426,6 +430,14 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					}
 				}
 			});
+		};
+
+		/**
+		 * Load more champions
+		 * @return {boolean}
+		 */
+		$scope.loadMoreChampions = function () {
+			console.log('here');
 		};
 
 		/**
@@ -632,13 +644,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches = data.patches;
-					Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
-						$scope.data.champions = data.champions;
-					});
-				});
-			} else {
-				Repository.getChampions({version: $scope.data.patches[0].version}).then(function(data){
-					$scope.data.champions = data.champions;
 				});
 			}
 		};

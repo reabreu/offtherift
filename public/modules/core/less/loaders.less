@@ -1,3 +1,41 @@
 .spinner-loader {
     background-image: url('/modules/core/img/loaders/loader.svg');
 }
+.spinner {
+    background-image: url('/modules/core/img/loaders/loader.svg');
+
+    &.spinner-xs {
+        height: 15px;
+        width: 15px;
+    }
+    &.spinner-sm {
+        height: 30px;
+        width: 30px;
+    }
+    &.spinner-md {
+        height: 50px;
+        width: 50px;
+    }
+
+    /* Positions */
+    &.spinner-top-right {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    &.spinner-top-left {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+    &.spinner-bottom-right {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+    &.spinner-bottom-left {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+    }
+}

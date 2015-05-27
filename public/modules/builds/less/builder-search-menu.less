@@ -1,3 +1,14 @@
+.item-list {
+    position: relative;
+
+    .spinner {
+        position: absolute;
+
+        top: 10px;
+        right: 10px;
+    }
+}
+
 .item-listing{
     height:257px;
     overflow-y:scroll;
@@ -9,17 +20,22 @@
     margin: 15px 0px;
     border-radius: 15px;
 
-    li{
-        a{
-            display: block;
-            padding: 10px;
-            overflow: hidden;
+    ul {
+        margin: 0;
+        padding: 0;
 
-            &:hover{
-                background-color: rgba(255, 255, 255, 0.85);
+        li{
+            a{
+                display: block;
+                padding: 10px;
+                overflow: hidden;
+
+                &:hover{
+                    background-color: rgba(255, 255, 255, 0.85);
+                }
             }
+            border-bottom: 1px solid @water-blue;
         }
-        border-bottom: 1px solid @water-blue;
     }
 }
 

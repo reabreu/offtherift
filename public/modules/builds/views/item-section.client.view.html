@@ -8,6 +8,11 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            {{ loading | json }}
+        </div>
+    </div>
     <div class="row" ng-switch="$parent.showSearch(buildMode)">
         <div class="col-md-5 col-md-push-7"  ng-switch-when="true" >
             <input
@@ -16,25 +21,33 @@
                 ng-model    = "itemSearch.name"
                 placeholder = "Search Item">
             <div class="clearfix"></div>
-            <ul class="item-listing">
-                <li ng-repeat = "item in data.items | filterItems:itemSearch">
-                        <a
-                        tooltip-html-unsafe="{{item.description}}"
-                        tooltip-trigger="mouseenter"
-                        tooltip-placement="left"
-                        tooltip-popup-delay = "600"
-                        href="#"
-                        ng-click="addItem(item);$event.preventDefault(); $event.stopPropagation();">
-                        <div class="item-container">
-                            <img  title="" alt="avatar" otr-src="{{ item.image.full | ddragon: item.version:'item'}}">
-                        </div>
-                        <div class="item-description">
-                            <span class="title">{{item.name}}</span>
-                            <span class="description">{{item.plaintext}}</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+            <div class="item-list">
+                <div class="spinner spinner-xs" ng-show="loading"></div>
+                <div class="item-listing" id="items-list" prevent-window-scroll>
+                    <ul infinite-scroll                 = "loadMoreItems(data.items.length);$event.stopPropagation()"
+                        infinite-scroll-disabled        = "loading"
+                        infinite-scroll-immediate-check = "false"
+                        infinite-scroll-container       = "'#items-list'">
+                        <li ng-repeat = "item in data.items | filterItems:itemSearch">
+                                <a
+                                tooltip-html-unsafe="{{item.description}}"
+                                tooltip-trigger="mouseenter"
+                                tooltip-placement="left"
+                                tooltip-popup-delay = "600"
+                                href="#"
+                                ng-click="addItem(item);$event.preventDefault(); $event.stopPropagation();">
+                                <div class="item-container">
+                                    <img  title="" alt="avatar" otr-src="{{ item.image.full | ddragon: item.version:'item'}}">
+                                </div>
+                                <div class="item-description">
+                                    <span class="title">{{item.name}}</span>
+                                    <span class="description">{{item.plaintext}}</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div
             class="col-md-7"

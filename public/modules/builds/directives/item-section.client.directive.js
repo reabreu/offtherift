@@ -1,22 +1,45 @@
 'use strict';
 
-angular.module('builds').directive('itemSection', [ 'ngToast','$state',
-	function( ngToast, $state ) {
+angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Repository',
+	function( ngToast, $state, Repository ) {
 		return {
 			templateUrl: 'modules/builds/views/item-section.client.view.html',
 			restrict: 'E',
 			scope: {
 				data: 	'=',
+				version: '=',
 				build: 	'=',
-				children: '='
+				children: '=',
+				loading: '=',
+				query: '=',
+				scrollBox: '='
 			},
 			controller: function($scope){
+				/**
+				 * Full of items flag
+				 * @type {Boolean}
+				 */
+				var isFull = false;
+				/**
+				 * Default queries
+				 * @type {Object}
+				 */
+				var defaultQuery = {
+					limit: 30,
+					version: $scope.version
+				};
+
+				var query = typeof $scope.query !== "undefined" ?
+					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
 				$scope.init = function(){
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild")
 						$scope.children.items = $scope;
+
+					// get first items
+					$scope.getItems(query);
 				};
 
 				$scope.search = {
@@ -189,6 +212,45 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state',
 
 					$scope.build.snapshot[$scope.data.currentSnapshot].level = level;
 				}
+
+				/**
+				 * Get Items from Database
+				 * @param  {object}  query Mongo query object
+				 * @return {boolean}
+				 */
+				$scope.getItems = function (query) {
+					Repository.getItems(query).then(function (data) {
+
+						if (typeof data.items !== "undefined" &&
+							data.items.length == 0) {
+							isFull = true;
+						}
+
+						if (typeof $scope.data.items !== "undefined" &&
+							$scope.data.items == 0) {
+							$scope.data.items = data.items;
+						} else {
+							for (var i = 0; i < data.items.length; i++) {
+								$scope.data.items.push(data.items[i]);
+							}
+						}
+					});
+				};
+
+				/**
+				 * Loads more items using skip
+				 * @param  {integer} skip Offset
+				 * @return {boolean}        Result
+				 */
+				$scope.loadMoreItems = function (skip) {
+					if ($scope.loading || isFull) return;
+
+					var loadQuery = angular.extend(query, {
+						skip: skip
+					});
+
+					$scope.getItems(loadQuery);
+				};
 
 				$scope.$parent.setConfigHeight();
 			}
