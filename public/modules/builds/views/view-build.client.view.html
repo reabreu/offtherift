@@ -1,24 +1,31 @@
 <section data-ng-controller="BuildsController" data-ng-init="findOne()">
-    <div class="container-fluid builder-wrapper view-build">
+    <div class="container-fluid builder-wrapper view-build fx-fade-down fx-speed-1000" ng-show="build != null">
         <!--Build Title-->
         <div class="row">
-            <div class="col-sm-12">
-                <h1 class="build-title-wrapper">
-                    <span class="build-title">{{build.name}}</span>
+            <div class="col-sm-12 build-title-wrapper">
+                <h1>
+                    <span class="build-designation">{{build.name}}</span>
                     <span class="build-version">v{{build.version}}</span>
+                    <div class="fb-buttons">
+                        <div class='fb-parse' style="overflow: hidden">
+                            <fb:like data-href="{{absUrl}}"
+                                     data-layout="button_count"
+                                     data-action="like"
+                                     data-show-faces="false"
+                                     data-share="true"
+                                     data-width="300px">
+                            </fb:like>
+                        </div>
+                    </div>
                     <div class="pull-right options-wrapper" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
-                        <a class="view-btn btn-editar" href="/#!/builds/{{build._id}}/edit">
-                            <i class="glyphicon glyphicon-edit"></i>
+                        <a class="view-btn" href="/#!/builds/{{build._id}}/edit">
+                            <span class="btn-editar build-edit"></span>
                         </a>
-                        <a class="view-btn btn-primary" data-ng-click="remove();">
-                            <i class="glyphicon glyphicon-trash"></i>
+                        <a class="view-btn" data-ng-click="remove();">
+                            <span class="btn-editar build-delete"></span>
                         </a>
                     </div>
                 </h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
                 <small class="build-author-info">
                     <em class="text-muted">
                         Posted on
@@ -30,7 +37,7 @@
             </div>
         </div>
         <div class="stats-container-wrapper">
-            <div class="champion-avatar-wrapper" ng-click="openModal(data.champions)" style="position:relative">
+            <div class="champion-avatar-wrapper">
                 <div>
                     <img
                         class="champion-avatar inline-block"
@@ -228,7 +235,7 @@
                     <div class="container-fluid configuration-wrapper">
                         <div class="row">
                             <div class="col-sm-12">
-                                <label>ITEMS</label>
+                                <label class="build-title">ITEMS</label>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
@@ -254,7 +261,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <label>RUNES</label>
+                                <label class="build-title">RUNES</label>
                             </div>
                             <div class="col-sm-12">
                                 <div class="build-config-panel">
@@ -264,7 +271,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <label>MASTERIES</label>
+                                <label class="build-title">MASTERIES</label>
                             </div>
                             <div class="col-sm-12">
                                 <div class="build-config-panel">
@@ -273,21 +280,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class='fb-parse'>
-                                <fb:like data-href="{{absUrl}}"
-                                         data-layout="standard"
-                                         data-action="like"
-                                         data-show-faces="false"
-                                         data-share="true">
-                                </fb:like>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="fb-parse">
-                                <fb:comments data-href="{{absUrl}}"
-                                             data-numposts="5"
-                                             data-colorscheme="light">
-                                </fb:comments>
+                            <div class="col-sm-12 fb-comments">
+                                <div class="fb-parse">
+                                    <fb:comments data-href="{{absUrl}}"
+                                                 data-numposts="5"
+                                                 data-colorscheme="light"
+                                                 data-width="100%">
+                                    </fb:comments>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -35,30 +35,19 @@
         background: rgba(255,255,255,.15);
         border: 1px solid white;
         border-top: 0px;
-        padding: 25px 15px;
+        padding: 20px 0px;
         overflow: hidden;
 
-        .patch-label{
-            text-align: right;
+        label{
+            text-align: left;
         }
 
-        input{
-
-            border-radius: 5px;
-
-            &.author-input{
-                width: 150px;
-                float: right;
-            }
-        }
-
-        .search-input{
+        .search-btn{
             background-color: #1f2224;
             opacity: 0.8;
             border: 0px;
             font-weight: 300;
-            width: 110px;
-            float: right;
+            text-align: center;
 
             &:hover{
                 opacity: 1;
@@ -70,12 +59,13 @@
             background-color: #0A2E35;
             opacity: 0.5;
             height: 25px;
+            border-radius: 5px;
         }
     }
 
     .browsing-container{
-        width: 85%;
-        margin-left: 10%;
+        width: 90%;
+        margin-left: 5%;
         margin-top: 25px;
     }
 
@@ -111,6 +101,14 @@
                 border: 0px;
                 border-bottom: 1px solid white;
             }
+        }
+    }
+}
+
+@media(min-width: @screen-md-min){
+    .search-body{
+        label{
+            text-align: center;
         }
     }
 }

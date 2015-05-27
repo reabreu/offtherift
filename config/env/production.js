@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || '52.17.3.23') + '/offtherift',
+	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'ShellOtr:LlehsRt0@52.17.3.23:21345') + '/offtherift',
     app: {
         title: 'Offtherift',
         api: {
@@ -9,7 +9,9 @@ module.exports = {
             region: 	'/euw',
             endpoint: 	'https://global.api.pvp.net/api/lol/static-data',
             api_key: 	'api_key=02d31520-47fc-4e61-a721-5d84a913229c'
-        }
+        },
+        description: 'Offtherift is a platform for creating and sharing builds for league of legends champions.',
+		keywords: 'lol, build, league of legends, gaming, champion'
     },
     /**
 	 * Environment Include Files

@@ -1,16 +1,17 @@
 <section data-ng-controller="BuildsController" data-ng-init="initBuild()" ng-switch="enabledView">
-	<div class="container-fluid builder-wrapper" ng-switch-when="true">
+	<div ng-show="data.firstPick">
+		<h1 class="select-champion-banner-title">CHOOSE YOUR CHAMPION</h1>
+		<div class="arrow"></div>
+		<div class="urf-big fx-fade-down fx-speed-1000" ng-click="openModal(data.champions)"></div>
+	</div>
+	<div ng-show="!data.firstPick" class="container-fluid builder-wrapper" ng-switch-when="true">
 		<div class="stats-container-wrapper">
 			<div class="champion-avatar-wrapper" ng-click="openModal(data.champions)" style="position:relative">
-				<div ng-switch="data.selectedChampion.image.full || '_undefined_'">
+				<div>
 					<img
 						ng-switch-default
 						class="champion-avatar inline-block"
 						otr-src="{{ data.selectedChampion.image.full | ddragon: data.selectedChampion.version:'champion'}}">
-					<img
-						ng-switch-when="_undefined_"
-						class="champion-avatar inline-block"
-						otr-src="http://static.munzee.com/images/site/blank-avatar.png">
 				</div>
 				<div class="champion-name-wrapper absolute-top">
 					<label class="champion-name">{{data.selectedChampion.name || 'Summon'}}</label>

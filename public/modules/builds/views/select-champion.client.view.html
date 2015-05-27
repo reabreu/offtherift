@@ -23,8 +23,7 @@
                     <div class="col-sm-2">
                         <img
                             ng-click="setSelectedChampion(champion);closeModal();"
-                            style="margin-left:27%;cursor:pointer;height:80px;width:80px;"
-                            class="avatar"
+                            class="champion-avatar"
                             alt="{{champion.name}}"
                             otr-src="{{ champion.image.full | ddragon: champion.version:'champion'}}">
                         <h3 style="text-align:center;">{{champion.name}}</h3>

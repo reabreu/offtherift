@@ -24,6 +24,10 @@
         height: 0;
         padding-top: 181%; /* (img-height / img-width * width) */
         opacity: 0.6;
+    }
+
+    .grey-portrait{
+        .label-portrait;
         background-color: @dashboard-row-label;
     }
 
@@ -40,8 +44,8 @@
     }
 
     .build-portrait {
-        -webkit-filter:         brightness(45%);
-        filter:                 brightness(45%);
+        -webkit-filter:         brightness(55%);
+        filter:                 brightness(55%);
         margin:                 auto;
         background-position:    center center;
         background-repeat:      no-repeat;
@@ -70,12 +74,10 @@
             text-align:         center;
 
             .build-title{
-                margin-top:         19%;
+                margin-top:         15%;
                 margin-bottom:      0%;
                 font-size:          26px;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
+                .ellipsed;
                 padding: 0px 5px;
             }
 
@@ -98,8 +100,8 @@
                 list-style-type:    none;
                 border-top:         1px solid white;
                 border-bottom:      1px solid white;
-                width:              70%;
-                margin-left:        15%;
+                width:              80%;
+                margin-left:        10%;
 
                 li{
                     text-align: center;
@@ -146,10 +148,26 @@
     }
 }
 
-@media(min-width: @screen-md-min){
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    .clear-sm-left{
+        clear: left;
+    }
+}
+
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    .clear-md-left{
+        clear: left;
+    }
+}
+
+@media(min-width: @screen-lg-min){
+    .clear-lg-left{
+        clear: left;
+    }
+
     .build-portrait-left{
 
-        .label-portrait,
+        .grey-portrait,
         .build-portrait{
             .skew-left;
         }
@@ -177,7 +195,7 @@
 
     .build-portrait-right{
 
-        .label-portrait,
+        .grey-portrait,
         .build-portrait{
             .skew-right;
         }
@@ -203,3 +221,5 @@
         }
     }
 }
+
+

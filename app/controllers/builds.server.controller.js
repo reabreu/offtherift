@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 	Build = mongoose.model('Build'),
     Champion   = mongoose.model('Champion'),
     http = require('http'),
+    async   = require("async"),
 	_ = require('lodash');
 
 /**
@@ -160,11 +161,12 @@ exports.list = function(req, res) {
 	if(champion_id != undefined && champion_id != "")
 		query.champion_id = champion_id;
 
-	if(group == "mine"){
+	if(group == "mine" && typeof(req.user) !== 'undefined'){
 	 	query.user = req.user._id;
 	}
+
 	else if (group == "public"){
-		query.user 		= { "$ne" : req.user._id };
+		//query.user 		= { "$ne" : req.user._id };
 		query.visible 	= true;
 
 		if (author != undefined && author != ""){
@@ -227,6 +229,16 @@ exports.getTotalStats = function(req,res,next){
             }
         ],
         function(err,result) {
+            console.log(result.length);
+            if(result == 0){
+                result = [{
+                    build_count: 0,
+                    like_count: 0,
+                    comment_count: 0,
+                    share_count: 0,
+                    view_count: 0
+                }];
+            }
             res.jsonp(result);
         }
     );
@@ -235,6 +247,7 @@ exports.getTotalStats = function(req,res,next){
 exports.getPopularBuilds = function(req,res,next){
     var limit       = req.param('limit');
     var days        = req.param('days');
+    var asyncTasks  = [];
 
     if(days == undefined || days == "")
         days = 7;
@@ -244,12 +257,18 @@ exports.getPopularBuilds = function(req,res,next){
 
     //buscar data da ultima build
     Build.findOne().sort('-created').exec(function(err, build) {
-        var lastBuildDate   = new Date(build.created);
-        var limitDate       = new Date(lastBuildDate);
+        var nd = null;
 
-        limitDate.setDate(limitDate.getDate() - days); // minus the date
+        if( build != null){
+            var lastBuildDate   = new Date(build.created);
+            var limitDate       = new Date(lastBuildDate);
 
-        var nd = new Date(limitDate);
+            limitDate.setDate(limitDate.getDate() - days); // minus the date
+
+            nd = new Date(limitDate);
+        } else{
+            nd = new Date();
+        }
 
         Build.aggregate(
             [
@@ -267,31 +286,61 @@ exports.getPopularBuilds = function(req,res,next){
                         displayName: "$displayName",
                         name: "$name",
                         version: "$version",
+                        view_count: "$view_count",
                         totalFb : { '$add' : [ "$facebook.comment_count", "$facebook.share_count", "$facebook.like_count" ] }
                     }
                 },
                 {
                     $sort : {totalFb: -1}
                 },
-                {   $limit : 4 }
+                {   $limit : 5 }
             ],
             function(err,result) {
                 var i;
-                var lastUpdatedIndex = result.length - 1;
+                var lastUpdatedIndex = result.length-1;
 
                 if(result.length == 0)
                     res.jsonp([]);
 
-                for ( i = result.length - 1; i >= 0; i--) {
-                    Champion.findOne({_id: result[i].champion}).exec(function(err, champion) {
-                        result[lastUpdatedIndex].champion = { name : champion.name };
-                        lastUpdatedIndex--;
-
-                        if(lastUpdatedIndex == -1){
-                            res.jsonp(result);
-                        }
-                    });
-                };
+                async.waterfall([
+                    function(callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    },
+                    function(result, callback) {
+                        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+                            result[lastUpdatedIndex].champion = { name : champion.name };
+                            lastUpdatedIndex--;
+                            callback(null,result);
+                        });
+                    }
+                ], function (err,result) {
+                    res.jsonp(result);
+                });
             }
         );
     });

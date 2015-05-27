@@ -55,15 +55,19 @@ exports.hasAuthorization = function(roles) {
 
 exports.hasRole = function(roles){
 	var _this = this;
-
 	return function(req, res, next) {
-		_this.requiresLogin(req, res, function() {
-			if (_.intersection(req.user.roles, roles).length) {
-				res.isAdmin = true;
-			} else {
-				res.isAdmin = false;
-			}
-			return next();
-		});
+		if(typeof(req.user) !== 'undefined'){
+			_this.requiresLogin(req, res, function() {
+				if (_.intersection(req.user.roles, roles).length) {
+					res.isAdmin = true;
+				} else {
+					res.isAdmin = false;
+				}
+			});
+		}else {
+			res.isAdmin = false;
+		}
+
+		return next();
 	};
 };

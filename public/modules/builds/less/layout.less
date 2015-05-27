@@ -116,9 +116,23 @@ input:focus{
   }
 }
 
+.pd-side-15{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.no-margin{
+    margin: 0px;
+}
+
 .dashboard-wrapper{
     width:          90%;
     margin-left:    5%;
+}
+
+.remove-side-padd{
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #sp-page{
@@ -189,4 +203,24 @@ input:focus{
 
 .close:hover{
     opacity: 0.4;
+}
+
+
+.ellipsed{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
 }

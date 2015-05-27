@@ -37,7 +37,7 @@
             </div>
 		</div>
 	</div>
-	<div class="col-md-7 col-md-pull-5">
+	<div ng-class="{'col-md-pull-5 col-md-7': buildMode == 'createBuild' || buildMode == 'editBuild','col-sm-12': buildMode == 'viewBuild' }">
 		<div class="runes-wrapper">
 			<div class="runes-title-container">
 				<div class="col-xs-3" ng-repeat="(key, value) in runeTypes">

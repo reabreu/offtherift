@@ -6,7 +6,15 @@ angular.module('core').filter('ddUnversioned', [
 			if(key === undefined) return '#';
 
             //@TODO Rever o funcionamento deste filtro
-            key = key.toString().replace("'", "").replace(" ", "").replace("LeBlanc", "Leblanc").replace("Fiddlesticks","FiddleSticks").replace(".", "");
+            key = key.toString()
+                        .replace("'", "")
+                        .replace(" ", "")
+                        .replace("LeBlanc", "Leblanc")
+                        .replace("Fiddlesticks","FiddleSticks")
+                        .replace("VelKoz","Velkoz")
+                        .replace("Wukong","MonkeyKing")
+                        .replace("ChoGath","Chogath")
+                        .replace(".", "");
 
             if (key && !key.match(/\.(png|jpg|gif|jpeg)$/)) {
                 key += '_0.jpg';

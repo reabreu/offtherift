@@ -1,140 +1,21 @@
 <div id="header-unit" class="image-bg" data-ng-controller="TeaserController">
-    <div class="mask">
-        <div class="vertical-align">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-offset-4 col-md-4">
-                        <h3 class="text-danger fx-fade-normal fx-speed-800" ng-bind="showMessage"></h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
-                        <div class="input-group input-group-lg mt20">
-                            <input type="text" class="form-control input-lg" id="errsearch" placeholder="Enter your email" data-ng-model="teaserEmail" ui-keypress="{13:'subscribe()'}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success btn-lg" type="button" data-ng-click="subscribe()">Get Early Access!</button>
-                            </span>
-                        </div>
-                        <h2>OR</h2>
-                        <div class="text-center mt20">
-                            <a href="/#!/login" class="btn btn-primary btn-lg">Login</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="features" class="landing-block white-bg">
-    <div class="container">
-        <div class="text-center">
-            <h1 class="mb40">{{'TEASER_HEADLINE' | translate}}<br><small>{{'TEASER_WELCOME' | translate}}</small></h1>
-
-            <imgotr-src"http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nidalee_7.jpg" alt="" class="img-responsive featured-image">
-
-        </div>
-    </div>
-</div>
-
-<div id="features" class="landing-block white-bg">
-    <div class="container">
-        <div class="text-center">
-            <h1 class="mb40">{{'HEADER_MISSION' | translate}}<br>
-            <!--<small>With our advanced features, you'll fall in love</small></h1>-->
-        </div>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-sm-6">
-
-                <div class="content-box box-centered">
-                    <i class="fa fa-cogs fa-2x mb10 icon-focused icon-circle icon-default"></i>
-                    <h3>Real Time Builder</h3>
-                    <p>
-                    Come and check out first service to you. A champion Builder that shows you how your stats are affected by your champion's level, masteries runes and items!
-                    </p>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="input-group input-group-lg mt20">
+                    <input type="text" class="form-control input-lg" id="errsearch" placeholder="Enter your email" data-ng-model="teaserEmail" ui-keypress="{13:'subscribe()'}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-success btn-lg" type="button" data-ng-click="subscribe()">Get Early Access!</button>
+                    </span>
                 </div>
-
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="content-box box-centered">
-                    <i class="fa fa-refresh fa-2x mb10 icon-focused icon-circle icon-default"></i>
-                    <h3>Up to date</h3>
-                    <p>Our services will be updated as Riot launches new patches.</p>
+                <h2>OR</h2>
+                <div class="text-center mt20">
+                    <a href="/#!/login" class="btn btn-primary btn-lg">Login</a>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-
-                <div class="content-box box-centered">
-                    <i class="fa fa-group fa-2x mb10 icon-focused icon-circle icon-default"></i>
-                    <h3>Grow with us</h3>
-                    <p>We made this for the community. We will use your feedback to improve our app and shape it to the community needs.</p>
-                </div>
-
-            </div>
-            <div class="col-md-3 col-sm-6">
-
-                <div class="content-box box-centered">
-                    <i class="fa fa-exchange fa-2x mb10 icon-focused icon-circle icon-default"></i>
-                    <h3>Free</h3>
-                    <p>We use RIOT's API to make this platform run. Our content will always be free.</p>
-                </div>
-
-            </div>
         </div>
-    </div>
-</div>
-<div id="testimonials" class="landing-block">
-    <div class="text-center">
-        <h1 class="mb40">Follow us<br><small>Keep youself updated at our social pages OR contact us at <a href="mailto:{{ 'SUPPORT_EMAIL' | translate }}" translate>SUPPORT_EMAIL</a></small></h1>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <a class="pull-right btn btn-label btn-social btn-facebook" href="#"><i class="fa fa-facebook"></i>Join us on Facebook</a>
-            </div>
-            <div class="col-md-6">
-                <a class="btn btn-label btn-social btn-twitter" href="#"><i class="fa fa-twitter"></i>Follow us at Twitter</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="faqtable" class="landing-block">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>How can i join?</h3>
-                <p class="mb40">
-                    We are currently in closed beta.
-                    We plan to open the website to everyone soon, but first we need to test it against a smaller audience before fully releasing it into the wild.
-                    If you want to help us during our closed beta please apply in the form above!
-                </p>
-            </div>
-            <div class="col-md-6">
-                <h3>Ok I've applied. Now what?</h3>
-                <p class="mb40">
-                    Great!
-                    We will be sending random invitations to try out the website during the closed beta.
-                    Check you email everyday for the opportunity to shape the final website to the community!
-                    You can also follow us on twitter or facebook so you can now exactly when we release new invitations.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <h3>If your service is free how can you survive?</h3>
-                <p class="mb40">
-                    Our content is free, web servers are not.
-                    We plan to support server costs using Google AdSense and donations.
-                    Whould you kindly disable Adblock?  </p>
-            </div>
-            <div class="col-md-6">
-                <h3>What is this builder of yours?</h3>
-                <p class="mb40">
-                    While we do have lots of other ideia to do with RIOT's Public API.
-                    The builder was the one we choose to launch our website.
-                    It's basically a tool to check champions stats in real time, you also be able to save your builds or share them if you choose to do so!</p>
-            </div>
-        </div>
+        <a ui-sref="listBuilds">
+            Browse
+        </a>
     </div>
 </div>

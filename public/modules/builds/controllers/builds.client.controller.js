@@ -4,8 +4,6 @@
 angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q',
 	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q) {
 		$scope.authentication 	= Authentication;
-		ngProgress.height('3px');
-		ngProgress.color('#89cff0');
 
 		/**
 		 * Flags to loading states
@@ -15,7 +13,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Find existing Build
 		$scope.findOne = function() {
-            $scope.absUrl = $location.absUrl();
+            $scope.absUrl = $location.absUrl().replace("#", "%23");
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
@@ -96,7 +94,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setConfigHeight = function(){
 			var windowHeight = $window.innerHeight;
-			angular.element('.configuration-wrapper').height(windowHeight - 115);
+			angular.element('.configuration-wrapper').height(windowHeight - 110);
 		};
 
 		/**************************
@@ -146,6 +144,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			// Data
 			$scope.data = {
+				firstPick 			: true,
 				currentSnapshot		: 0,
 				timer				: null,
 				champions 			: [],
@@ -452,12 +451,17 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * [setSelectedChampion setCurrentSelectedChammpion]
 		 */
 		$scope.setSelectedChampion = function(champion){
+			$scope.data.firstPick = false;
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
 			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
+				var changed = $scope.data.selectedChampion != null &&
+								$scope.data.selectedChampion._id != data.champions[0]._id;
+
 				$scope.data.selectedChampion 	= data.champions[0];
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
+				if (changed) $scope.children.items.removeChampionItems();
 				$scope.unblockBuilder();
 			});
 		};
@@ -610,22 +614,29 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* ************************/
 		// Remove existing Build
 		$scope.remove = function(build) {
-			if ( build ) {
-				build.$remove();
 
+			$scope.blockBuilder();
+
+			if ( build ) {
 				for (var i in $scope.builds) {
 					if ($scope.builds [i] === build) {
 						$scope.builds.splice(i, 1);
+						$scope.buildService = new Builds ($scope.builds [i]);
 					}
 				}
+
 			} else {
-				$scope.build.$remove(function() {
-					$location.path('builds');
-				});
+				$scope.buildService = new Builds ($scope.build);
 			}
+
+			$scope.buildService.$remove(function() {
+				$scope.unblockBuilder();
+				$location.path('/browse');
+			});
 		};
 
 		$scope.initBuildBrowsing = function(){
+
 			$scope.busy 	 = false;
 
 			$scope.builds   = [];
@@ -635,18 +646,72 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			};
 
 			$scope.search 	= {
-				group : "mine",
 				author: "",
 				limit: 18,
 				skip: 0
 			};
 
+			if($scope.authentication.user == ""){
+				$scope.search.group = "public";
+				$scope.tablength = 5;
+			}else{
+				$scope.search.group = "mine";
+				$scope.tablength = 4;
+			}
+
+			//Verificar se foram definido params
+			if( typeof($stateParams.version) !== 'undefined'){
+				$scope.search.version = $stateParams.version;
+			}
+
 			if (!$scope.data.patches.length) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches = data.patches;
+					$scope.setChampionSearchListing();
+
 				});
+			} else {
+				$scope.setChampionSearchListing();
 			}
 		};
+
+		$scope.setChampionSearchListing = function(){
+			$scope.cleanBadPatchSearch();
+
+			Repository.getChampions({version: $scope.data.patches[0].version, build: true}).then(function(data){
+				$scope.data.champions = data.champions;
+
+				if( typeof($stateParams.champion) !== 'undefined'){
+					var exists = false;
+					for (var i = $scope.data.champions.length - 1; i >= 0; i--) {
+						if( $stateParams.champion  == $scope.data.champions[i].key){
+							$scope.search.champion_id = $scope.data.champions[i].id;
+							exists = true;
+							break;
+						}
+					};
+
+					if(!exists)
+						$scope.search.champion_id = '';
+				}
+
+				$scope.searchBuilds();
+
+			});
+		}
+
+		$scope.cleanBadPatchSearch = function(){
+			//faço reset ao patch caso nao exista
+			var exists = false;
+
+			angular.forEach($scope.data.patches, function(patch, index){
+                if( $scope.search.version == patch.version )
+                	exists = true;
+            });
+
+			if(!exists)
+				$scope.search.version = $scope.data.patches[0].version;
+		}
 
 		$scope.setGroup = function(group){
 			$scope.search.group = group;
@@ -665,6 +730,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.searchBuilds = function(){
 			ngProgress.start();
+
 			$scope.busy = true;
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;

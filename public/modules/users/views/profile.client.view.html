@@ -15,7 +15,7 @@
 			<div class="row row-no-padding build-portrait-left">
 				<div class="build-portrait-column col-lg-2 col-xs-3">
 					<div class="build-wrapper">
-						<div class="label-portrait"></div>
+						<div class="grey-portrait"></div>
 						<div class="build-info">
 							<div class="vertical-align label-wrapper">
 								<div class="limiter"></div>
@@ -52,10 +52,13 @@
 						</a>
 					</div>
 				</div>
-				<div class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad" ng-repeat = "build in emptyBuilds" ng-class="{'hidden-xs hidden-sm hidden-md': builds.length > 2}">
+				<div
+					class="build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
+					ng-repeat = "build in emptyBuilds"
+					ng-class="{'hidden-xs hidden-sm hidden-md': builds.length + $index > 2}">
 					<a ui-sref="createBuild">
 						<div class="build-wrapper">
-							<div class="label-portrait new-build-portrait"></div>
+							<div class="grey-portrait new-build-portrait"></div>
 							<div class="build-info"><div class="build-plus"></div></div>
 						</div>
 					</a>
@@ -64,7 +67,7 @@
 			<div class="row row-no-padding build-portrait-right">
 				<div class="col-lg-2 col-xs-3">
 					<div class="build-wrapper">
-						<div class="label-portrait"></div>
+						<div class="grey-portrait"></div>
 						<div class="limiter"></div>
 						<div class="build-info ">
 							<div class="vertical-align label-wrapper">
@@ -96,7 +99,7 @@
 									<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
 									<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
 									<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-									<li><span class="light">Views: </span><span class="heavy">123</span></li>
+									<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
 								</ul>
 								<label class="build-version">{{build.version}}</label>
 							</div>
