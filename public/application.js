@@ -14,12 +14,13 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
     });
 }]);
 
-angular.module(ApplicationConfiguration.applicationModuleName).config(function(blockUIConfig) {
+angular.module(ApplicationConfiguration.applicationModuleName).config(['blockUIConfig',
+	function(blockUIConfig) {
 
 	// Disable automatically blocking of the user interface
 	blockUIConfig.autoBlock = false;
 
-});
+}]);
 
 //Then define the init function for starting up the application
 angular.element(document).ready(function() {
