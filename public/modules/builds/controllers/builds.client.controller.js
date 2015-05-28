@@ -776,3 +776,10 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		});
 	}
 ]);
+
+angular.module('builds').config(function(blockUIConfig) {
+
+	// Disable automatically blocking of the user interface
+	blockUIConfig.autoBlock = false;
+
+});
