@@ -26,6 +26,12 @@
     margin-left: 15px;
 }
 
+.view-build{
+    .stats-container-wrapper{
+        margin-top: 20px;
+    }
+}
+
 .stats-configuration-wrapper{
     margin-left:250px;
     overflow: hidden;
@@ -47,6 +53,18 @@
 
 .build-config-panel:not(.item-config-panel){
     border-top: 1px solid white;
+}
+
+@media(min-width: @screen-md-min){
+    .view-build{
+        .runes-config-panel{
+            margin-top: 30px;
+        }
+
+        .item-config-panel{
+            height: 385px;
+        }
+    }
 }
 
 .btn-build-action{
@@ -130,6 +148,8 @@
     height: 288px;
     background-image: url('/modules/core/img/peixeboi.png');
     margin: 30px auto;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 50%;
 }
 
 .urf-big:hover{
