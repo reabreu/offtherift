@@ -159,9 +159,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
 					$scope.setBuildMode();
+					$scope.unblockBuilder();
 				});
 			} else {
 				$scope.setBuildMode();
+				$scope.unblockBuilder();
 			}
 
 			$scope.$watch('build.snapshot', function () {
