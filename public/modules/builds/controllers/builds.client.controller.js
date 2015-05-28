@@ -211,6 +211,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			var params = {version: $scope.data.selectedPatch, build: true };
 
+			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.champions 			= data.champions;
 
@@ -254,8 +255,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					});
 				});
 			});
-
-			$scope.unblockBuilder();
 		};
 
 		$scope.updateMasteries = function() {
