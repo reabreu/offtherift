@@ -159,9 +159,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
 					$scope.setBuildMode();
+					$scope.unblockBuilder();
 				});
 			} else {
 				$scope.setBuildMode();
+				$scope.unblockBuilder();
 			}
 
 			$scope.$watch('build.snapshot', function () {
@@ -209,6 +211,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			var params = {version: $scope.data.selectedPatch, build: true };
 
+			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
 				$scope.data.champions 			= data.champions;
 
@@ -252,8 +255,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					});
 				});
 			});
-
-			$scope.unblockBuilder();
 		};
 
 		$scope.updateMasteries = function() {
