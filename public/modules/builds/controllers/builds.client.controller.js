@@ -706,7 +706,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
             });
 
 			if(!exists)
-				$scope.search.version = $scope.data.patches[0].version;
+				$scope.search.version = "";
 		}
 
 		$scope.setGroup = function(group){
