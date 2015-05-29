@@ -37,11 +37,12 @@ angular.module('builds').directive('masteriesSection', ['$state',
 				}
 
 				$scope.removeRank = function($event, masterie){
+
 					if( $scope.buildMode == "viewBuild") return;
 
 					var elem = angular.element($event.currentTarget);
 
-					if(elem.hasClass('mastery-disabled') || $scope.build.masteries_aux.avaliable_points == 0) return;
+					if(elem.hasClass('mastery-disabled')) return;
 
 					//verificar se esta masterie é uma depedencia de outra e se essa outra tem pontos
 					for (var i = 0; i < $scope.data.masteries.length; i++) {
@@ -49,6 +50,7 @@ angular.module('builds').directive('masteriesSection', ['$state',
 							return;
 						}
 					}
+					console.log('aquiii3');
 
 					if(masterie.points > 0){
 						$scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()]--;

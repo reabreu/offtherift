@@ -165,9 +165,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				Repository.getPatches().then(function(data){
 					$scope.data.patches 		= data.patches;
 					$scope.setBuildMode();
+					$scope.unblockBuilder();
 				});
 			} else {
 				$scope.setBuildMode();
+				$scope.unblockBuilder();
 			}
 
 			$scope.$watch('build.snapshot', function () {
@@ -218,12 +220,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				limit: 30
 			});
 
-			Repository.getChampions(limitedParams).then(function (data) {
-				$scope.data.champions = data.champions;
+			$scope.blockBuilder();
+			Repository.getChampions(params).then(function(data) {
+				$scope.data.champions 			= data.champions;
 
-				Repository.getMasteries(params).then(function (data) {
+				Repository.getMasteries(params).then(function(data) {
 					var oldPoints = $scope.data.masteries.slice(); // copy old values
-					$scope.data.masteries = data.masteries;
+					$scope.data.masteries 	= data.masteries;
 
 					//Prego do Ruben
 					$scope.pregoRuben();
@@ -239,7 +242,23 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					if ($state.current.name == "editBuild") {
 						$scope.populateMasteries();
 					}
+
+					// Update build information with loaded patch.
+					if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
+						// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
+						$scope.updateMasteries();
+						$scope.updateRunes();
+						$scope.updateSnapshots();
+						$scope.patchChanged = false;
+					}
+
+					$scope.enabledView = true;
+					$scope.unblockBuilder();
 				});
+
+				if ($state.current.name == "editBuild") {
+					$scope.populateMasteries();
+				}
 
 				// Update build information with loaded patch.
 				if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
@@ -253,8 +272,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.enabledView = true;
 				$scope.unblockBuilder();
 			});
-
-			$scope.unblockBuilder();
 		};
 
 		$scope.updateMasteries = function() {
