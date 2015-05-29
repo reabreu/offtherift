@@ -1,4 +1,4 @@
-<div class="row rune-row" ng-switch="$parent.showSearch(buildMode)">
+<div class="row rune-row" ng-switch="$parent.showSearch(buildMode)" ng-init="init()">
 	<div class="col-md-5 col-md-push-7">
 		<div class="row" ng-switch-when="true">
 			<div class="col-sm-12">
@@ -15,25 +15,34 @@
 				class       = "build-input"
 				ng-model    = "runeSearch.name"
 				placeholder = "Rune Name">
-				<ul class="item-listing">
-	                <li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
-	                        <a
-	                        tooltip-html-unsafe="{{rune.description}}"
-	                        tooltip-trigger="mouseenter"
-	                        tooltip-placement="left"
-	                        tooltip-popup-delay = "600"
-	                        href="#"
-	                        ng-click="addRune(rune);$event.preventDefault(); $event.stopPropagation();">
-	                        <div class="item-container">
-	                            <img  title="" alt="avatar" otr-src="{{ rune.image.full | ddragon:rune.version:'rune'}}">
-	                        </div>
-	                        <div class="item-description">
-	                            <span class="title">{{rune.name}}</span>
-	                            <span class="description">{{rune.description}}</span>
-	                        </div>
-	                    </a>
-	                </li>
-	            </ul>
+	            <div class="clearfix"></div>
+	            <div class="item-list">
+	                <div class="spinner spinner-xs" ng-show="loading"></div>
+	                <div class="item-listing" id="runes-list" prevent-window-scroll>
+	                    <ul infinite-scroll                 = "loadMoreRunes(runesByType[currentType].length);$event.stopPropagation()"
+	                        infinite-scroll-disabled        = "loading"
+	                        infinite-scroll-immediate-check = "false"
+	                        infinite-scroll-container       = "'#runes-list'">
+			                <li ng-model="runeSearch" ng-repeat="rune in runesByType[currentType] | filterRunes:runeSearch" >
+			                        <a
+			                        tooltip-html-unsafe="{{rune.description}}"
+			                        tooltip-trigger="mouseenter"
+			                        tooltip-placement="left"
+			                        tooltip-popup-delay = "600"
+			                        href="#"
+			                        ng-click="addRune(rune);$event.preventDefault(); $event.stopPropagation();">
+			                        <div class="item-container">
+			                            <img  title="" alt="avatar" otr-src="{{ rune.image.full | ddragon:rune.version:'rune'}}">
+			                        </div>
+			                        <div class="item-description">
+			                            <span class="title">{{rune.name}}</span>
+			                            <span class="description">{{rune.description}}</span>
+			                        </div>
+			                    </a>
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
             </div>
 		</div>
 	</div>

@@ -221,9 +221,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Repository.getChampions(limitedParams).then(function (data) {
 				$scope.data.champions = data.champions;
 
-				Repository.getRunes(limitedParams).then(function (data) {
-					$scope.data.runes = data.runes;
-				});
 				Repository.getMasteries(params).then(function (data) {
 					var oldPoints = $scope.data.masteries.slice(); // copy old values
 					$scope.data.masteries = data.masteries;

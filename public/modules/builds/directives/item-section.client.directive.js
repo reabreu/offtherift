@@ -215,12 +215,6 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 */
 				$scope.getItems = function (query) {
 					Repository.getItems(query).then(function (data) {
-
-						if (typeof data.items !== "undefined" &&
-							data.items.length == 0) {
-							$scope.full = true;
-						}
-
 						if (typeof $scope.data.items !== "undefined" &&
 							$scope.data.items == 0) {
 							$scope.data.items = data.items;

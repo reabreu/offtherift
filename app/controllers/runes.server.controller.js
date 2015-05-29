@@ -79,6 +79,7 @@ exports.list = function(req, res) {
 	var name 		= req.param('name');
 	var enabled 	= req.param('enabled');
 	var riotId      = req.param('riotId');
+	var type        = req.param('type');
 
 	var options = {
 		skip: 		skip,
@@ -101,6 +102,10 @@ exports.list = function(req, res) {
 
 	if (riotId != undefined)
     	query.id = riotId;
+
+    if (type != undefined) {
+    	query.tags = { "$in" : [type] };
+    }
 
 	Rune.find(query,null,options).sort('name').exec(function(err, runes) {
 		if (err) {
