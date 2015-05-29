@@ -88,7 +88,7 @@ exports.list = function(req, res) {
         query.synched = true;
     }
 
-	Patch.find(query,null,options).sort('-version').exec(function(err, patches) {
+	Patch.find(query,null,options).sort('-_id').exec(function(err, patches) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
