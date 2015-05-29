@@ -54,6 +54,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		};
 
+
+		$scope.checkShowBigChampionSelection = function(){
+			if($state.current.name == "editBuild" || !$scope.data.firstPick)
+				return false;
+			return true;
+		}
+
 		$scope.pregoRuben = function(){
 			$scope.data.masteries.push({id:4153, masteryTree:'Offense'});
 			$scope.data.masteries.push({id:4161, masteryTree:'Offense'});
