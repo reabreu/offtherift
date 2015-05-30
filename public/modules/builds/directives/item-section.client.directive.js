@@ -217,14 +217,13 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.getItems = function (query) {
 					Repository.getItems(query).then(function (data) {
 						if (typeof $scope.data.items !== "undefined" &&
-							$scope.data.items.length == 0) {
+							$scope.data.items == 0) {
 							$scope.data.items = data.items;
 						} else {
 							for (var i = 0; i < data.items.length; i++) {
 								$scope.data.items.push(data.items[i]);
 							}
 						}
-						console.log("111");
 					});
 				};
 
