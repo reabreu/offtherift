@@ -1,22 +1,17 @@
 <div ng-init="init()">
     <div class="row">
-        <div class="col-sm-12" ng-switch="buildMode">
-            <div class="level-wrapper" ng-switch-when="!viewBuild">
+        <div class="col-sm-12" ng-switch="checkLevelSelection()">
+            <div class="level-wrapper" ng-switch-when="true">
                 <div class="level-container" ng-repeat="n in range(1,18)">
                     <span ng-click="setLevel(n)" ng-class="{'selected-level': build.snapshot[data.currentSnapshot].level == n}" class="level-badge">{{n}}</span>
                 </div>
             </div>
-            <div ng-switch-when="viewBuild">
+            <div ng-switch-when="false">
                 <p class="text-center top10">
                     <label class="light view-level-label">Level: </label>
                     <label class="strong view-level">{{build.snapshot[data.currentSnapshot].level}}</label>
                 </p>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {{ loading | json }}
         </div>
     </div>
     <div class="row" ng-switch="$parent.showSearch(buildMode)">

@@ -30,11 +30,12 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.init = function(){
 					$scope.buildMode = $state.current.name;
 
-					if( $scope.buildMode != "viewBuild")
+					if( $scope.buildMode != "viewBuild"){
 						$scope.children.items = $scope;
 
-					// get first items
-					$scope.getItems(query);
+						// get first items
+						$scope.getItems(query);
+					}
 				};
 
 				$scope.search = {
@@ -216,13 +217,14 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.getItems = function (query) {
 					Repository.getItems(query).then(function (data) {
 						if (typeof $scope.data.items !== "undefined" &&
-							$scope.data.items == 0) {
+							$scope.data.items.length == 0) {
 							$scope.data.items = data.items;
 						} else {
 							for (var i = 0; i < data.items.length; i++) {
 								$scope.data.items.push(data.items[i]);
 							}
 						}
+						console.log("111");
 					});
 				};
 
@@ -240,6 +242,12 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 
 					$scope.getItems(loadQuery);
 				};
+
+				$scope.checkLevelSelection = function() {
+					if ($scope.buildMode != "viewBuild")
+						return true;
+					return false;
+				}
 
 				$scope.$parent.setConfigHeight();
 			}
