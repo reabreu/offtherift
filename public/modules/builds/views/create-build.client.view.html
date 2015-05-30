@@ -1,5 +1,5 @@
 <section data-ng-controller="BuildsController" data-ng-init="initBuild()" ng-switch="enabledView">
-	<div ng-show="data.firstPick">
+	<div ng-show="checkShowBigChampionSelection()">
 		<h1 class="select-champion-banner-title">CHOOSE YOUR CHAMPION</h1>
 		<div class="arrow"></div>
 		<div class="urf-big fx-fade-down fx-speed-1000" ng-click="openModal(data.champions)"></div>

@@ -29,6 +29,7 @@
                                         class="col-md-7 col-sm-12 col-xs-12 remove-side-padd"
                                         ng-model = "search.version"
                                         ng-options="patch.version as patch.version for patch in data.patches | filter:{ synched: true }">
+                                        <option value=""></option>
                                     </select>
                                 </div>
                                 <div class="col-xs-3">
