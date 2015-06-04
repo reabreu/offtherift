@@ -94,6 +94,11 @@ exports.oauthCallback = function(strategy) {
 				return res.redirect(loginUrl);
 			}
 
+            // new user from social network
+            if (user && redirectURL) {
+                return res.redirect(redirectURL);
+            }
+
 			req.login(user, function(err) {
 				if (err) {
 					return res.redirect(loginUrl);
@@ -172,19 +177,27 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
 
                 	RegistrationHash.findOne(query, null, function(err, userHash) {
                 		if (userHash) {
-                			console.log(userHash);
                 			if (userHash.hash &&
                 				userHash.activated) { // user registered and activated
                 				console.log('SUCCESS');
-                				done(err, user);
+                				return done(err, user);
                 			} else if (userHash.hash &&
                 				!userHash.activated) { // user needs to activate his account
                 				console.log('NEEDS_ACTIVATION');
+                                return done(err, user, '/#!/account/evaluate/activation');
                 			} else if (!userHash.hash) { // user needs a hash
-                				console.log('NEEDS_HASH');
+                                console.log('NEEDS_HASH');
+                				return done(err, user, '/#!/account/evaluate/hash');
                 			}
                 		} else { // user hash not found
-                			aDone(err, user.email);
+                            var hash = new RegistrationHash({
+                                email: user.email
+                            });
+
+                            hash.save(function() {
+                                console.log('NEW_USER_NEEDS_HASH');
+                                return done(err, user, '/#!/account/evaluate/new');
+                            });
                 		}
                 	});
 

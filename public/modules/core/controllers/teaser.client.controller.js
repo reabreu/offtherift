@@ -1,11 +1,15 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes',
-    function($scope, $timeout, $location, Hashes) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes', '$stateParams',
+    function($scope, $timeout, $location, Hashes, $stateParams) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
         $scope.errorMessage = "Hello World";
+
+        $scope.teaserEmail = "paulocaldeira17@gmail.com";
+
+        $scope.state = $stateParams.state;
 
         /**
          * Subscribe with specific email

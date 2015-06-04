@@ -40,6 +40,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('activation', {
 			url: '/account/activation/:hash',
 			templateUrl: 'modules/core/views/pages/user-activation.client.view.html'
+		}).
+		state('evaluate', {
+			url: '/account/evaluate/:state',
+			templateUrl: 'modules/core/views/pages/user-evaluate.client.view.html'
 		});
 
 	}
