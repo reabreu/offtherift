@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
@@ -9,6 +9,8 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         Metainformation.reset();
         $rootScope.pageKeywords = Metainformation.metaKeywords();
         $rootScope.pageTitle = Pagetitle.setTitle('Home');
+
+        $scope.state = $stateParams.state;
 
         /**
          * Subscribe with specific email

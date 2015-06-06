@@ -155,6 +155,11 @@ exports.generateRegistrationHashes = function (req, res, next) {
                                     message: errorHandler.getErrorMessage(err)
                                 });
                             } else {
+                                var userHashesAsync = [];
+
+                                userHashesAsync.push(function(hDone) {
+                                    hDone(null, []);
+                                });
 
                                 for (var i = 0; i < users.length; i++) {
                                     var userHash = users[i];
@@ -165,15 +170,45 @@ exports.generateRegistrationHashes = function (req, res, next) {
                                     }
 
                                     userHash.hash = hashes[i].hash;
-                                    userHash.save(function () {
-                                        mailingList.push({
-                                            email: userHash.email,
-                                            hash : userHash.hash
+
+                                    userHashesAsync.push(function(mailingList, hDone) {
+                                        userHash.save(function () {
+                                            mailingList.push({
+                                                email: userHash.email,
+                                                hash : userHash.hash
+                                            });
+                                            hDone(null, mailingList);
                                         });
                                     });
                                 }
 
-                                done(err, mailingList, missing);
+                                userHashesAsync.push(function (mailingList, hDone) {
+
+                                    // send mails
+                                    for (var i = 0; i < mailingList.length; i++) {
+                                        var mailOptions = {
+                                            email: mailingList[i].email,
+                                            hash: mailingList[i].hash
+                                        };
+
+                                        res.render('templates/invite-email', {
+                                            email: mailOptions.email,
+                                            appName: config.app.title,
+                                            url: 'http://' + req.headers.host + '/account/activation/' + mailOptions.hash
+                                        }, function(err, html) {
+
+                                            mailer.sendEmail({
+                                                email: mailOptions.email,
+                                                html: html
+                                            });
+
+                                        });
+                                    }
+
+                                    done(err, mailingList, missing);
+                                });
+
+                                async.waterfall(userHashesAsync);
                             }
                         });
                     } else {
@@ -183,7 +218,7 @@ exports.generateRegistrationHashes = function (req, res, next) {
                     }
 
                 },
-                function (mailingList, missing, done) { // generate hashes for existing users
+                function (mailingList, missing, done) {
                     if (typeof missing !== "undefined" &&
                         missing > 0) {
 
@@ -316,7 +351,7 @@ exports.subscribeEmail = function (req, res, next) {
                 }
             });
         },
-        _this.emailHashRegistration,
+        _this.emailHashRegistration(req, res, next),
         function (options, done) {
             if (!_.isEmpty(options)) {
                 return res.json({
@@ -445,58 +480,66 @@ exports.generateHashes = function (number, email) {
 
 /**
  * Regists an email with a hash (used on async.waterfall)
- * @param  {string}   email User Email
- * @param  {Function} done  Async done callback
+ * @param  {object}   req  Request Object
+ * @param  {object}   res  Response Object
+ * @param  {function} next Function
  */
-exports.emailHashRegistration = function (email, done) {
-    RegistrationHash.findOne({
-        email: { $exists: false },
-        activated: { $exists: false }
-    }, function(err, hash) {
-        if (!hash) {
+exports.emailHashRegistration = function(req, res, next) {
+    /**
+     * Regists an email with a hash (used on async.waterfall)
+     * @param  {string}   email User Email
+     * @param  {Function} done  Async done callback
+     */
+    return function (email, done) {
+        RegistrationHash.findOne({
+            email: { $exists: false },
+            activated: { $exists: false }
+        }, function(err, hash) {
+            if (!hash) {
 
-            var newHash = new RegistrationHash({ email: email });
+                var newHash = new RegistrationHash({ email: email });
 
-            newHash.save(function (err) {
-                done(err, {});
-            });
+                newHash.save(function (err) {
+                    done(err, {});
+                });
 
-        } else {
-            hash.email = email;
+            } else {
+                hash.email = email;
 
-            hash.save(function(err) {
-                if (err) {
-                    res.status(400).send({
-                        message: errorHandler.getErrorMessage(err)
-                    });
-                } else {
+                hash.save(function(err) {
+                    if (err) {
+                        res.status(400).send({
+                            message: errorHandler.getErrorMessage(err)
+                        });
+                    } else {
 
-                    // sends activation email
-                    async.waterfall([
-                        function(email, hash, aDone) {
-                            res.render('templates/invite-email', {
-                                email: email,
-                                appName: config.app.title,
-                                url: 'http://' + req.headers.host + '/account/activation/' + hash
-                            }, function(err, html) {
-
-                                aDone(err, {
+                        // sends activation email
+                        async.waterfall([
+                            function(aDone) {
+                                res.render('templates/invite-email', {
                                     email: email,
-                                    html : html
+                                    appName: config.app.title,
+                                    url: 'http://' + req.headers.host + '/account/activation/' + hash.hash
+                                }, function(err, html) {
+
+                                    aDone(err, {
+                                        email: email,
+                                        html : html
+                                    });
+
                                 });
+                            },
+                            mailer.sendEmailAsync,
+                            function (response, done) {
+                                done(err, response);
+                            }
+                        ], function(err) {
+                            if (err) return next(err);
+                        });
 
-                            });
-                        },
-                        mailer.sendEmail,
-                        function (response, done) {
-                            done(err, response);
-                        }
-                    ], function(err) {
-                        if (err) return next(err);
-                    });
-
-                }
-            });
-        }
-    });
+                    }
+                });
+            }
+        });
+    };
 };

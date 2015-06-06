@@ -164,12 +164,11 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		service: 'gmail',
+		/*service: 'gmail',
 		auth: {
 			user: process.env.MAILER_EMAIL_ID || 'GMAIL_USER',
 			pass: process.env.MAILER_PASSWORD || 'GMAIL_PASSWORD'
-		}
-		/*
+		}*/
 		from: process.env.MAILER_FROM || 'Inviter <inviter@offtherift.com>',
 		options: {
 			host: process.env.MAILER_SERVICE_PROVIDER || 'mail.offtherift.com',
@@ -177,10 +176,9 @@ module.exports = {
             secure: true,
             tls: { rejectUnauthorized: false },
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'noreply@offtherift.com',
-				pass: process.env.MAILER_PASSWORD || '3e27W3L0o9gZ'
+				user: process.env.MAILER_EMAIL_ID || 'donotreply@offtherift.com',
+				pass: process.env.MAILER_PASSWORD || 'p7JLbRosmir0SafYlNI9'
 			}
 		}
-		*/
 	}
 };
