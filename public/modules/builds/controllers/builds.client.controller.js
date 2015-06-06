@@ -1,10 +1,9 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q','$rootScope','Pagetitle','Metainformation',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q, $rootScope, Pagetitle, Metainformation) {
 		$scope.authentication 	= Authentication;
-
 		/**
 		 * Flags to contents states
 		 * @type {Object}
@@ -17,6 +16,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
+
+				/*Meta Tags Configuration*/
+				Metainformation.reset();
+				Metainformation.appendMetaKeywords([$scope.build.displayName, $scope.build.version, $scope.build.champion.name, $scope.build.champion.title, $scope.build.name]);
+				$rootScope.pageKeywords = Metainformation.metaKeywords();
+				$rootScope.pageTitle 	= Pagetitle.setTitle($scope.build.name);
 
 				$scope.data = {
 					currentSnapshot		: 0,
@@ -108,6 +113,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		* Build Creation/Editing  *
 		* ************************/
 		$scope.initBuild = function(){
+			Metainformation.reset();
+			$rootScope.pageKeywords = Metainformation.metaKeywords();
+			$rootScope.pageTitle = Pagetitle.setTitle('Build');
 			$scope.children = {items: null, runes: null, masteries: null};
 
 			$scope.blockSnapshot 	= false;
@@ -672,6 +680,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
+			Metainformation.reset();
+			$rootScope.pageKeywords = Metainformation.metaKeywords();
+			$rootScope.pageTitle 	= Pagetitle.setTitle('Browse Builds');
 
 			$scope.busy 	 = false;
 

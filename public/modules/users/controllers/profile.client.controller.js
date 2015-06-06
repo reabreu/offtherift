@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout','popularBuilds','Statistics',
-	function($scope, Authentication, Builds, ngProgress, $timeout,popularBuilds,Statistics) {
+angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout','popularBuilds','Statistics','$rootScope','Pagetitle','Metainformation',
+	function($scope, Authentication, Builds, ngProgress, $timeout,popularBuilds,Statistics, $rootScope, Pagetitle, Metainformation) {
 		$scope.authentication = Authentication;
 
         $scope.addBuild = function(elem, container){
@@ -11,6 +11,10 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
         };
 
         $scope.initDashboard = function(){
+            Metainformation.reset();
+            $rootScope.pageKeywords = Metainformation.metaKeywords();
+            $rootScope.pageTitle    = Pagetitle.setTitle('Dashboard');
+
             $scope.search = {
                 limit: 5,
                 group: 'mine'

@@ -1,11 +1,14 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes',
-    function($scope, $timeout, $location, Hashes) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
         $scope.errorMessage = "Hello World";
+        Metainformation.reset();
+        $rootScope.pageKeywords = Metainformation.metaKeywords();
+        $rootScope.pageTitle = Pagetitle.setTitle('Home');
 
         /**
          * Subscribe with specific email
@@ -23,6 +26,13 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                     }, 5000);
                 });
             }
+        };
+
+        $scope.runeTypes = {
+            'mark': 'Marks',
+            'glyph': 'Glyphs',
+            'seal': 'Seals',
+            'quintessence': 'Quintessences'
         };
     }
 ]);

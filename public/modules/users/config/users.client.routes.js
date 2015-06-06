@@ -9,7 +9,7 @@ angular.module('users').config(['$stateProvider',
 			url: '/dashboard',
 			templateUrl: 'modules/users/views/profile.client.view.html',
 			resolve: {
-				load: ['$q', 'Authentication', '$state','$timeout', function($q, Authentication, $state, $timeout) {
+				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {
 					if (angular.isDefined(Authentication) && Authentication.user) {
 						// Resolve the promise successfully
 						return $q.when();
@@ -17,9 +17,9 @@ angular.module('users').config(['$stateProvider',
 
 						// The next bit of code is asynchronously tricky.
 						$timeout(function() {
-						  // This code runs after the authentication promise has been rejected.
-						  // Go to the log-in page
-						  $state.go('teaser');
+							// This code runs after the authentication promise has been rejected.
+							// Go to the log-in page
+							$state.go('teaser');
 						})
 
 						// Reject the authentication promise to prevent the state from loading
@@ -28,22 +28,6 @@ angular.module('users').config(['$stateProvider',
 				}]
 			}
 		}).
-		state('profile', {
-			url: '/settings/profile',
-			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
-		}).
-		state('password', {
-			url: '/settings/password',
-			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
-		}).
-		state('accounts', {
-			url: '/settings/accounts',
-			templateUrl: 'modules/users/views/settings/social-accounts.client.view.html'
-		}).
-		state('registration', {
-			url: '/registration',
-			templateUrl: 'modules/users/views/authentication/signup.client.view.html'
-		}).
 		state('login', {
 			url: '/login',
 			templateUrl: 'modules/users/views/authentication/signin.client.view.html'
@@ -51,22 +35,6 @@ angular.module('users').config(['$stateProvider',
 		state('loginHash', {
 			url: '/login/:hash',
 			templateUrl: 'modules/users/views/authentication/signin.client.view.html'
-		}).
-		state('forgot', {
-			url: '/password/forgot',
-			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
-		}).
-		state('reset-invalid', {
-			url: '/password/reset/invalid',
-			templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
-		}).
-		state('reset-success', {
-			url: '/password/reset/success',
-			templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
-		}).
-		state('reset', {
-			url: '/password/reset/:token',
-			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
-		});
+		})
 	}
 ]);

@@ -19,7 +19,26 @@ angular.module('builds').config(['$stateProvider',
 		}).
 		state('createBuild', {
 			url: '/builds/create',
-			templateUrl: 'modules/builds/views/create-build.client.view.html'
+			templateUrl: 'modules/builds/views/create-build.client.view.html',
+			resolve: {
+				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {
+					if (angular.isDefined(Authentication) && Authentication.user) {
+						// Resolve the promise successfully
+						return $q.when();
+					} else {
+
+						// The next bit of code is asynchronously tricky.
+						$timeout(function() {
+							// This code runs after the authentication promise has been rejected.
+							// Go to the log-in page
+							$state.go('teaser');
+						})
+
+						// Reject the authentication promise to prevent the state from loading
+						return $q.reject();
+					}
+				}]
+			}
 		}).
 		state('viewBuild', {
 			url: '/builds/:buildId',
@@ -27,7 +46,26 @@ angular.module('builds').config(['$stateProvider',
 		}).
 		state('editBuild', {
 			url: '/builds/:buildId/edit',
-			templateUrl: 'modules/builds/views/create-build.client.view.html'
+			templateUrl: 'modules/builds/views/create-build.client.view.html',
+			resolve: {
+				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {
+					if (angular.isDefined(Authentication) && Authentication.user) {
+						// Resolve the promise successfully
+						return $q.when();
+					} else {
+
+						// The next bit of code is asynchronously tricky.
+						$timeout(function() {
+							// This code runs after the authentication promise has been rejected.
+							// Go to the log-in page
+							$state.go('teaser');
+						})
+
+						// Reject the authentication promise to prevent the state from loading
+						return $q.reject();
+					}
+				}]
+			}
 		});
 	}
 ]);

@@ -1,0 +1,141 @@
+.about-us-square{
+    background-color: rgba(255,255,255,0.3);
+    padding: 30px;
+    text-align: center;
+    cursor:pointer;
+
+    .author-title{
+        margin: 0px;
+        font-size: 50px;
+        font-weight: 300;
+    }
+
+    .author-firstname{
+        position: relative;
+        top: 10px;
+    }
+
+    .author-lastname{
+        position: relative;
+        top: -10px;
+    }
+
+    ul{
+        list-style-type: none;
+        padding-left: 0px;
+    }
+
+    &:hover{
+        background: none;
+
+        .author-title{
+            margin: 0px;
+            font-size: 30px;
+        }
+
+        li{
+            display: inline;
+        }
+
+        .contact-wrapper{
+            margin-top: 15px;
+        }
+
+        .author-firstname{
+            top: 0px;
+        }
+
+        .author-lastname{
+            top: 0px;
+        }
+    }
+
+    .show-hover{
+        display: none;
+
+        p{
+            font-weight: 300;
+        }
+    }
+    .show-normal{
+        display: inline-block;
+    }
+
+    &:hover{
+        .show-hover{
+            display: inline-block;
+        }
+        .show-normal{
+            display: none;
+        }
+    }
+}
+
+.small-separator{
+    width: 30px;
+    position: relative;
+    top: -5px;
+}
+
+.author-occupation{
+    font-size: 18px;
+    font-weight: 700;
+    position: relative;
+    top: -15px;
+    margin-top: 10px;
+}
+
+.ocuppation-wrapper{
+    position: relative;
+    top: -20px;
+}
+
+.contact,
+.contact-teaser{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    top: -5px;
+
+
+}
+
+.contact-teaser{
+    .fa-stack{
+        &:hover{
+            .icon-background-dark{
+                color: #1A9CB5;
+            }
+        }
+    }
+}
+
+.contact{
+    opacity: 0.5;
+    margin-right: 5px;
+    &:hover{
+        opacity: 1;
+    }
+}
+
+.icon-background{
+    color: white;
+    border-radius: 50%;
+}
+
+.icon-background-dark{
+    color: @water-blue;
+}
+
+.icon-social-white{
+    color: white;
+}
+.icon-social{
+    color: @water-blue;
+}
+
+.vertical-aligned{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
