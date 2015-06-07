@@ -712,7 +712,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.search.version = $stateParams.version;
 			}
 
-			if (!$scope.data.patches.length) {
+			if ($scope.data.patches.length == 0) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches = data.patches;
 					$scope.setChampionSearchListing();
@@ -724,6 +724,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.setChampionSearchListing = function(){
+			console.log('here');
 			$scope.cleanBadPatchSearch();
 
 			Repository.getChampions({version: $scope.data.patches[0].version, build: true}).then(function(data){
