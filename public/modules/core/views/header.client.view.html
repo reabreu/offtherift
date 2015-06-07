@@ -9,17 +9,17 @@
                 <div class="device-lg visible-lg">lg</div>-->
             </div>
             <div class="col-xs-2">
-                <a class="platform-title" ui-sref="dashboard">OfftheRift</a>
+                <a class="platform-title" ui-sref="dashboard"><img src="/modules/core/img/peixeboi.png" alt="logo"></a>
             </div>
             <div class="col-xs-5">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav pull-right">
                     <li ng-show = "authentication.user">
-                        <img class="avatar"otr-src"http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
+                        <a class="user-avatar">
+                            <img class="avatar"otr-src"http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
+                            <span>{{authentication.user.firstName}} {{authentication.user.lastName}}</span>
+                        </a>
                     </li>
                     <li ng-show = "authentication.user">
-                        <label class="user-label">{{authentication.user.firstName}} {{authentication.user.lastName}}</label>
-                    </li>
-                    <li ng-show = "authentication.user" style="border-left: 1px solid white;">
                         <a href="/auth/signout" class="no-subline signout">
                             Signout
                         </a>

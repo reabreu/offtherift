@@ -1,28 +1,55 @@
 .top-menu-nav{
     background-color:   @top-menu-background;
+
+    filter: alpha(opacity=90);
     opacity:            0.9;
 
     a{
         display: block;
     }
 
+    .platform-title {
+
+        img {
+            height: 30px;
+            width: 30px;
+        }
+    }
+
     ul{
         width: auto;
         list-style-type: none;
-        float: right;
-        margin-bottom: 0px;
-        margin-top: 8px;
+
+        margin-bottom: 0;
+        margin-top: 0;
+
+        font-size: 13px;
 
         li{
-            //background-clip: content-box;
-            display: inline-block;
-            padding: 0px 10px;
-            /*&:not(:last-child):not(:first-child){
-                border-right: 1px solid white;
-            }*/
+            a {
+                padding: 12px 15px 13px 15px;
 
-            label, a{
-                padding: 5px 10px;
+                &.user-avatar {
+                    padding: 10px 15px;
+
+                    .avatar{
+                        display: inline-block;
+
+                        height: 25px;
+                        width: 25px;
+
+                        background-color: white;
+                        border-radius: 50%;
+
+                        margin-right: 5px;
+                    }
+                }
+
+                &:hover,
+                &:focus {
+                    color: #FFFFFF;
+                    background-color: rgba(255, 255, 255, 0.3);
+                }
             }
         }
     }
@@ -35,10 +62,6 @@
     }
 }
 
-.user-label{
-    margin: 0px;
-}
-
 .menu{
     background-image: url('/modules/core/img/menu.png');
     background-size: 100%;
@@ -47,33 +70,16 @@
     width: 25px;
     height: 25px;
     border: 0px;
-    margin-top: 15px;
+    margin-top: 13px;
     position: relative;
     left: -15px;
 }
 
 .platform-title{
     text-align: center;
-    padding: 10px 5px;
+    padding: 8px 5px;
 }
 
 .top-menu{
     height: 45px;
-}
-
-.avatar{
-    display: inline-block;
-    height: 25px;
-    width: 25px;
-    background-color: white;
-    border-radius: 50%;
-    position: relative;
-    top: 3px;
-    left: 10px;
-}
-
-.signout{
-    font-size: 13px;
-    position: relative;
-    top: 2px;
 }
