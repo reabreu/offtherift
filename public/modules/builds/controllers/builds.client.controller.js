@@ -684,7 +684,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$rootScope.pageKeywords = Metainformation.metaKeywords();
 			$rootScope.pageTitle 	= Pagetitle.setTitle('Browse Builds');
 
-			$scope.busy 	 = false;
+			$scope.busy 	 = true;
 
 			$scope.builds   = [];
 
@@ -724,7 +724,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.setChampionSearchListing = function(){
-			console.log('here');
 			$scope.cleanBadPatchSearch();
 
 			Repository.getChampions({version: $scope.data.patches[0].version, build: true}).then(function(data){
@@ -743,7 +742,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					if(!exists)
 						$scope.search.champion_id = '';
 				}
-
+				$scope.busy 	 = false;
 				$scope.searchBuilds();
 
 			});
