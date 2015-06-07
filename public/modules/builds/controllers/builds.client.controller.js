@@ -702,7 +702,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.search.group = "public";
 				$scope.tablength = 5;
 			}else{
-				$scope.search.group = "mine";
+				$scope.search.group = "public";
+				//$scope.search.group = "mine";
 				$scope.tablength = 4;
 			}
 
