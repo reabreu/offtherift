@@ -33,5 +33,7 @@ module.exports = function(app) {
     app.route('/').get(core.index);
   }
 
+  app.route('/riot.txt').get(core.printRiotActivation);
+
 	app.route('/admin').get(users.hasAuthorization(['admin']),users.requiresLogin, core.admin);
 };

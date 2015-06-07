@@ -22,3 +22,7 @@ exports.admin = function(req, res) {
 		request: req
 	});
 };
+
+exports.printRiotActivation = function(req,res){
+    res.status(200).send('ac5e52d0-0ad0-482b-abfc-7368e9e9afd3');
+}

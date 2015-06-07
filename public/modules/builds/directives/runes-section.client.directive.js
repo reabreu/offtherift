@@ -139,8 +139,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout','$st
 
 					for (var i = 0; i < $scope.build.runes[tag].length; i++) {
 						if ($scope.build.runes[tag][i].id === id) {
-							$scope.build.runes[tag].splice(i, 1);
 							$scope.build.runes_aux.runeCount[id]--;
+							$scope.build.runes[tag].splice(i, 1);
 							break;
 						}
 					}
