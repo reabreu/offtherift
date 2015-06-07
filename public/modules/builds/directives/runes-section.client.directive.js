@@ -57,11 +57,19 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout','$st
 					quintessence: 	[]
 				};
 
+				$scope.runesFull = {
+					mark: 			false,
+					glyph: 			false,
+					seal: 			false,
+					quintessence: 	false
+				};
+
 				/**
 				 * Directive Initialization
 				 */
 				$scope.init = function () {
 					// get first runes
+					query.skip = $scope.runesByType[$scope.currentType].length;
 					$scope.getRunes(query, $scope.currentType);
 				};
 
@@ -161,11 +169,11 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout','$st
 					var loadQuery = angular.extend(query, {
 						type: type
 					});
-
 					Repository.getRunes(query).then(function (data) {
+
 						if (typeof data.runes !== "undefined" &&
 							data.runes.length == 0) {
-							$scope.full = true;
+							$scope.runesFull[query.type] = true;
 						}
 
 						if (typeof $scope.runesByType[type] !== "undefined" &&
@@ -185,7 +193,8 @@ angular.module('builds').directive('runesSection', ['Repository','$timeout','$st
 				 * @return {boolean}        Result
 				 */
 				$scope.loadMoreRunes = function (skip) {
-					if ($scope.loading || $scope.full) return;
+
+					if ($scope.loading || $scope.runesFull[$scope.currentType]) return;
 
 					var loadQuery = angular.extend(query, {
 						skip: skip
