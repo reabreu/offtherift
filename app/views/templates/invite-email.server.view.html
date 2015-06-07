@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-</head>
-<body>
+{% extends 'template.server.view.html' %}
+
+{% block html %}
     <p>Dear {{email}},</p>
+    <p>You have requested to an invite to access Offtherift Website.</p>
     <br>
-    <p>
-        You have requested to an invite to access Offtherift Website.
-    </p>
     <p>Please click the link bellow to create an account:</p>
     <p>{{url}}</p>
-    <strong>If you didn't make this request, you can ignore this email.</strong>
     <br>
     <br>
-    <p>The {{appName}} Support Team</p>
-</body>
-</html>
+    <p>The {{appName}} Team</p>
+    <strong style="color: #aaaaaa"><small>If you didn't make this request, you can ignore this email.</small></strong>
+{% endblock %}

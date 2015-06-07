@@ -141,12 +141,14 @@ module.exports = {
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || '671726556258325',
 		clientSecret: process.env.FACEBOOK_SECRET || '618e4ac3c109ed7e355da58b3cac3e51',
-		callbackURL: '/auth/facebook/callback'
+		callbackURL: '/auth/facebook/callback',
+		pageLink: 'http://www.facebook.com/offtheriftapp'
 	},
 	twitter: {
 		clientID: process.env.TWITTER_KEY || 'a098XpS0YtwADvALiOulQqQhg',
 		clientSecret: process.env.TWITTER_SECRET || 'CF4tZyT6m7IYk9vP4wipvyZdIO9zu9ftuCMrbT6WsIjPYL32y4',
-		callbackURL: '/auth/twitter/callback'
+		callbackURL: '/auth/twitter/callback',
+		pageLink: 'http://www.twitter.com/'
 	},
 	google: {
 		clientID: process.env.GOOGLE_ID || 'APP_ID',
@@ -169,7 +171,7 @@ module.exports = {
 			user: process.env.MAILER_EMAIL_ID || 'GMAIL_USER',
 			pass: process.env.MAILER_PASSWORD || 'GMAIL_PASSWORD'
 		}*/
-		from: process.env.MAILER_FROM || 'Inviter <inviter@offtherift.com>',
+		from: process.env.MAILER_FROM || 'Offtherift <donotreply@offtherift.com>',
 		options: {
 			host: process.env.MAILER_SERVICE_PROVIDER || 'mail.offtherift.com',
 			port: 465,

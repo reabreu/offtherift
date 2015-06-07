@@ -194,11 +194,14 @@ exports.generateRegistrationHashes = function (req, res, next) {
                                         res.render('templates/invite-email', {
                                             email: mailOptions.email,
                                             appName: config.app.title,
+                                            facebookLink: config.facebook.pageLink,
+                                            twitterLink: config.twitter.pageLink,
                                             url: 'http://' + req.headers.host + '/account/activation/' + mailOptions.hash
                                         }, function(err, html) {
 
                                             mailer.sendEmail({
                                                 email: mailOptions.email,
+                                                subject: 'Confirmation',
                                                 html: html
                                             });
 
@@ -519,11 +522,14 @@ exports.emailHashRegistration = function(req, res, next) {
                                 res.render('templates/invite-email', {
                                     email: email,
                                     appName: config.app.title,
+                                    facebookLink: config.facebook.pageLink,
+                                    twitterLink: config.twitter.pageLink,
                                     url: 'http://' + req.headers.host + '/account/activation/' + hash.hash
                                 }, function(err, html) {
 
                                     aDone(err, {
                                         email: email,
+                                        subject: 'Confirmation',
                                         html : html
                                     });
 
