@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = {
+	// htaccess protection
+	basicAuth: false,
 	app: {
 		title: 'offtherift',
 		description: 'Nice League of Legends Builds Generator',

@@ -1,7 +1,12 @@
 'use strict';
 
 
-var basicAuth = require('basic-auth');
+var basicAuth = require('basic-auth'),
+    _ = require('lodash'),
+    config = module.exports = _.extend(
+      require('../../config/env/all'),
+      require('../../config/env/' + process.env.NODE_ENV) || {}
+    );
 
 var auth = function (req, res, next) {
   function unauthorized(res) {
@@ -27,7 +32,8 @@ module.exports = function(app) {
 	var core = require('../../app/controllers/core.server.controller');
   var users = require('../../app/controllers/users.server.controller');
 
-  if( process.env.NODE_ENV === 'production' ) {
+  if (config.basicAuth &&
+      process.env.NODE_ENV === 'production') {
     app.route('/').get(auth,core.index);
   } else {
     app.route('/').get(core.index);

@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = {
+	// htaccess protection
+	basicAuth: false,
 	db: 'mongodb://localhost/offtherift-dev',
 	app: {
 		title: 'Offtherift - Development',
