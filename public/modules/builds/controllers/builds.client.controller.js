@@ -236,7 +236,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 
 			$scope.blockBuilder();
-			Repository.getChampions(params).then(function(data) {
+			Repository.getChampions(limitedParams).then(function(data) {
 				$scope.data.champions 			= data.champions;
 
 				Repository.getMasteries(params).then(function(data) {
