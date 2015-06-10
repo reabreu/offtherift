@@ -38,7 +38,8 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
                 days: 80
             };
 
-            popularBuilds.query($scope.search).$promise.then(function(data){
+            popularBuilds.mostPopular.query($scope.search).$promise.then(function(data){
+                data = data.splice(0,5);
                 $scope.popularBuilds   = [];
                 angular.forEach(data, function(build, index){
                     $timeout($scope.addBuild(build,$scope.popularBuilds), index * 300);

@@ -244,30 +244,18 @@ exports.getTotalStats = function(req,res,next){
 };
 
 exports.getPopularBuilds = function(req,res,next){
-    var limit       = req.param('limit');
-    var days        = req.param('days');
-    var asyncTasks  = [];
-
-    if(days == undefined || days == "")
-        days = 7;
-
-    if(limit == undefined || limit == "")
-        limit = 5;
-
     //buscar data da ultima build
     Build.findOne().sort('-created').exec(function(err, build) {
-        var nd = null;
 
-        if( build != null){
-            var lastBuildDate   = new Date(build.created);
-            var limitDate       = new Date(lastBuildDate);
+        var nd          = calculateMinimunDate(build.created, days);
+        var days        = req.param('days');
+        var limit       = req.param('limit');
 
-            limitDate.setDate(limitDate.getDate() - days); // minus the date
+        if(limit == undefined || limit == "")
+            limit = 5;
 
-            nd = new Date(limitDate);
-        } else{
-            nd = new Date();
-        }
+        if(days == undefined || days == "")
+            days = 7;
 
         Build.aggregate(
             [
@@ -292,41 +280,192 @@ exports.getPopularBuilds = function(req,res,next){
                 {
                     $sort : {totalFb: -1}
                 },
-                {   $limit : 5 }
+                {   $limit : 15 }
             ],
             function(err,result) {
-                var i;
-                var lastUpdatedIndex = result.length-1;
-
-                if(result.length == 0)
-                    return res.jsonp([]);
-
-                var getPopularChampion = function(result, callback) {
-                    Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
-                        result[lastUpdatedIndex].champion = { name : champion.name };
-                        lastUpdatedIndex--;
-
-                        callback(null, result);
-                    });
-                };
-
-                var pop = [function(callback) {
-                    Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
-                        result[lastUpdatedIndex].champion = { name : champion.name };
-                        lastUpdatedIndex--;
-
-                        callback(null,result);
-                    });
-                }];
-
-                for (var i = 0; i < result.length - 1; i++) {
-                    pop.push(getPopularChampion);
-                }
-
-                async.waterfall(pop, function (err,result) {
-                    res.jsonp(result);
-                });
+               buildStatisticsChampionArray(res, result);
             }
         );
     });
 };
+
+exports.getMostmostCommentedBuilds = function(req,res,next){
+    Build.findOne().sort('-created').exec(function(err, build) {
+        var nd          = calculateMinimunDate(build.created, days);
+        var days        = req.param('days');
+        var limit       = req.param('limit');
+
+        if(limit == undefined || limit == "")
+            limit = 5;
+
+        if(days == undefined || days == "")
+            days = 7;
+
+        Build.aggregate(
+            [
+                {
+                    $match : { created : {$gte: nd}, visible: true }
+                },
+                {
+                    $project: {
+                        facebook: {
+                            comment_count   : "$facebook.comment_count",
+                            share_count     : "$facebook.share_count",
+                            like_count     : "$facebook.like_count"
+                        },
+                        champion: "$champion",
+                        displayName: "$displayName",
+                        name: "$name",
+                        version: "$version",
+                        view_count: "$view_count",
+                        totalFbComments : { '$add' : [ "$facebook.comment_count"] }
+                    }
+                },
+                {
+                    $sort : {totalFbComments: -1}
+                },
+                {   $limit : 15 }
+            ],
+            function(err,result) {
+                buildStatisticsChampionArray(res, result);
+            }
+        );
+    });
+};
+
+exports.getMostmostSharedBuilds = function(req,res,next){
+    Build.findOne().sort('-created').exec(function(err, build) {
+        var nd          = calculateMinimunDate(build.created, days);
+        var days        = req.param('days');
+        var limit       = req.param('limit');
+
+        if(limit == undefined || limit == "")
+            limit = 5;
+
+        if(days == undefined || days == "")
+            days = 7;
+
+        Build.aggregate(
+            [
+                {
+                    $match : { created : {$gte: nd}, visible: true }
+                },
+                {
+                    $project: {
+                        facebook: {
+                            comment_count   : "$facebook.comment_count",
+                            share_count     : "$facebook.share_count",
+                            like_count     : "$facebook.like_count"
+                        },
+                        champion: "$champion",
+                        displayName: "$displayName",
+                        name: "$name",
+                        version: "$version",
+                        view_count: "$view_count",
+                        totalFbComments : { '$add' : [ "$facebook.share_count"] }
+                    }
+                },
+                {
+                    $sort : {totalFbComments: -1}
+                },
+                {   $limit : 15 }
+            ],
+            function(err,result) {
+                buildStatisticsChampionArray(res, result);
+            }
+        );
+    });
+};
+
+exports.getMostmostLikedBuilds = function(req,res,next){
+    Build.findOne().sort('-created').exec(function(err, build) {
+        var nd          = calculateMinimunDate(build.created, days);
+        var days        = req.param('days');
+        var limit       = req.param('limit');
+
+        if(limit == undefined || limit == "")
+            limit = 5;
+
+        if(days == undefined || days == "")
+            days = 7;
+
+        Build.aggregate(
+            [
+                {
+                    $match : { created : {$gte: nd}, visible: true }
+                },
+                {
+                    $project: {
+                        facebook: {
+                            comment_count   : "$facebook.comment_count",
+                            share_count     : "$facebook.share_count",
+                            like_count     : "$facebook.like_count"
+                        },
+                        champion: "$champion",
+                        displayName: "$displayName",
+                        name: "$name",
+                        version: "$version",
+                        view_count: "$view_count",
+                        totalFbComments : { '$add' : [ "$facebook.like_count"] }
+                    }
+                },
+                {
+                    $sort : {totalFbComments: -1}
+                },
+                {   $limit : 15 }
+            ],
+            function(err,result) {
+                buildStatisticsChampionArray(res, result);
+            }
+        );
+    });
+};
+
+function calculateMinimunDate(lastBuildDate, days){
+    var nd;
+
+    if( lastBuildDate != null){
+        var lastBuildDate   = new Date(lastBuildDate);
+        var limitDate       = new Date(lastBuildDate);
+
+        limitDate.setDate(limitDate.getDate() - days); // minus the date
+
+        nd = new Date(limitDate);
+    } else{
+        nd = new Date();
+    }
+    return nd;
+}
+
+function buildStatisticsChampionArray(res, result ){
+    if(result.length == 0)
+        return res.jsonp([]);
+
+    var lastUpdatedIndex = result.length-1;
+
+    var getPopularChampion = function(result, callback) {
+        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+            result[lastUpdatedIndex].champion = { name : champion.name };
+            lastUpdatedIndex--;
+
+            callback(null, result);
+        });
+    };
+
+    var pop = [function(callback) {
+        Champion.findOne({_id: result[lastUpdatedIndex].champion}).exec(function(err, champion) {
+            result[lastUpdatedIndex].champion = { name : champion.name };
+            lastUpdatedIndex--;
+
+            callback(null,result);
+        });
+    }];
+
+    for (var i = 0; i < result.length - 1; i++) {
+        pop.push(getPopularChampion);
+    }
+
+    async.waterfall(pop, function (err,result) {
+        res.jsonp({data:result});
+    });
+}

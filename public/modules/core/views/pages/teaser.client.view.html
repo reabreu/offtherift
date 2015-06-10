@@ -1,8 +1,196 @@
-<div id="header-unit" class="image-bg" data-ng-controller="TeaserController">
+<div id="header-unit" class="image-bg" data-ng-controller="TeaserController" ng-init="initTeaser()">
     <div class="container-fluid">
         <div class="row">
             <h1 class="teaser-tile"><span class="heavy">WELCOME</span>, SUMMONER</h1>
         </div>
+    <div class="dashboard-container">
+        <div class="row row-no-padding">
+            <div class="col-lg-2 col-xs-3 build-portrait-right">
+                <div class="build-wrapper">
+                    <div class="grey-portrait"></div>
+                    <div class="limiter"></div>
+                    <div class="build-info ">
+                        <div class="vertical-align label-wrapper">
+                            <div class="limiter"></div>
+                            <div class="build-label-container">
+                                <label class="build-title-label build-title-label-big">FAMOUS</label>
+                                <label class="build-sub-title-label">BUILDS</label>
+                            </div>
+                            <div class="limiter"></div>
+                        </div>
+                    </div>
+                    <div class="limiter"></div>
+                </div>
+            </div>
+            <div class="slick-right">
+                <slick infinite="true" arrows="false" autoplay="true" speed="1500" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="popularBuilds">
+                    <div
+                        ng-repeat="build in popularBuilds"
+                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+                        <div class="build-wrapper">
+                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                <img
+                                    class = "build-portrait img-responsive"
+                                    otr-src="{{build.champion.name | ddUnversioned}}"
+                                >
+                                <div class="build-info">
+                                    <label class="build-title">{{build.name}}</label>
+                                    <label class="build-author">by {{build.displayName}}</label>
+                                    <ul class="build-stats">
+                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                    </ul>
+                                    <label class="build-version">{{build.version}}</label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </slick>
+            </div>
+        </div>
+        <div class="row row-no-padding">
+            <div class="col-lg-2 col-xs-3 build-portrait-left">
+                <div class="build-wrapper">
+                    <div class="grey-portrait"></div>
+                    <div class="limiter"></div>
+                    <div class="build-info ">
+                        <div class="vertical-align label-wrapper">
+                            <div class="limiter"></div>
+                            <div class="build-label-container">
+                                <label class="build-title-label build-title-label-big">TOP</label>
+                                <label class="build-sub-title-label">TALKED</label>
+                            </div>
+                            <div class="limiter"></div>
+                        </div>
+                    </div>
+                    <div class="limiter"></div>
+                </div>
+            </div>
+            <div class="slick-left">
+                <slick infinite="true" arrows="false" autoplay="true" speed="1800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostCommented">
+                    <div
+                        ng-repeat="build in mostCommented"
+                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+                        <div class="build-wrapper">
+                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                <img
+                                    class = "build-portrait img-responsive"
+                                    otr-src="{{build.champion.name | ddUnversioned}}"
+                                >
+                                <div class="build-info">
+                                    <label class="build-title">{{build.name}}</label>
+                                    <label class="build-author">by {{build.displayName}}</label>
+                                    <ul class="build-stats">
+                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                    </ul>
+                                    <label class="build-version">{{build.version}}</label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </slick>
+            </div>
+        </div>
+        <div class="row row-no-padding">
+            <div class="col-lg-2 col-xs-3 build-portrait-right">
+                <div class="build-wrapper">
+                    <div class="grey-portrait"></div>
+                    <div class="limiter"></div>
+                    <div class="build-info ">
+                        <div class="vertical-align label-wrapper">
+                            <div class="limiter"></div>
+                            <div class="build-label-container">
+                                <label class="build-title-label build-title-label-big">TOP</label>
+                                <label class="build-sub-title-label">LIKED</label>
+                            </div>
+                            <div class="limiter"></div>
+                        </div>
+                    </div>
+                    <div class="limiter"></div>
+                </div>
+            </div>
+            <div class="slick-right">
+                <slick infinite="true" arrows="false" autoplay="true" speed="1250" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostLiked">
+                    <div
+                        ng-repeat="build in mostLiked"
+                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+                        <div class="build-wrapper">
+                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                <img
+                                    class = "build-portrait img-responsive"
+                                    otr-src="{{build.champion.name | ddUnversioned}}"
+                                >
+                                <div class="build-info">
+                                    <label class="build-title">{{build.name}}</label>
+                                    <label class="build-author">by {{build.displayName}}</label>
+                                    <ul class="build-stats">
+                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                    </ul>
+                                    <label class="build-version">{{build.version}}</label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </slick>
+            </div>
+        </div>
+        <div class="row row-no-padding">
+            <div class="col-lg-2 col-xs-3 build-portrait-left">
+                <div class="build-wrapper">
+                    <div class="grey-portrait"></div>
+                    <div class="limiter"></div>
+                    <div class="build-info ">
+                        <div class="vertical-align label-wrapper">
+                            <div class="limiter"></div>
+                            <div class="build-label-container">
+                                <label class="build-title-label build-title-label-big">TOP</label>
+                                <label class="build-sub-title-label">SHARED</label>
+                            </div>
+                            <div class="limiter"></div>
+                        </div>
+                    </div>
+                    <div class="limiter"></div>
+                </div>
+            </div>
+            <div class="slick-left">
+                <slick infinite="true" arrows="false" autoplay="true" speed="800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostShared">
+                    <div
+                        ng-repeat="build in mostShared"
+                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+                        <div class="build-wrapper">
+                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                <img
+                                    class = "build-portrait img-responsive"
+                                    otr-src="{{build.champion.name | ddUnversioned}}"
+                                >
+                                <div class="build-info">
+                                    <label class="build-title">{{build.name}}</label>
+                                    <label class="build-author">by {{build.displayName}}</label>
+                                    <ul class="build-stats">
+                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                    </ul>
+                                    <label class="build-version">{{build.version}}</label>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </slick>
+            </div>
+        </div>
+</div>
+
+
         <div class="row intro-container">
             <p>We hope you enjoy OfftheRift web app.</p>
             <p>Right now, our app lets you set up champion builds, and check how the champion statistics change through time as Riot releases new patches.</p>

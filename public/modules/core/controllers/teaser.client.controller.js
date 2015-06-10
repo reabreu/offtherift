@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
@@ -35,6 +35,37 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
             'glyph': 'Glyphs',
             'seal': 'Seals',
             'quintessence': 'Quintessences'
+        };
+
+
+        $scope.initTeaser = function(){
+
+            $scope.search = {
+                days: 40
+            };
+
+            popularBuilds.mostPopular.get($scope.search).$promise.then(function(result){
+                $scope.popularBuilds   = result.data;
+            });
+
+            popularBuilds.mostCommented.get($scope.search).$promise.then(function(result){
+                $scope.mostCommented   = result.data;
+            });
+
+            popularBuilds.mostShared.get($scope.search).$promise.then(function(result){
+                $scope.mostShared   = result.data;
+            });
+
+            popularBuilds.mostLiked.get($scope.search).$promise.then(function(result){
+                $scope.mostLiked   = result.data;
+            });
+
+        }
+
+        $scope.addBuild = function(elem, container){
+            return function(){
+                container.push(elem);
+            }
         };
     }
 ]);
