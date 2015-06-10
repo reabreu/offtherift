@@ -78,7 +78,7 @@
                                         'clear-sm-left'      : !($index % 3),
                                     }">
                                     <div class="build-wrapper">
-                                        <a href="/#!/builds/{{build._id}}">
+                                        <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
                                             <img
                                             class="build-portrait img-responsive"
                                             otr-src="{{build.champion.name | ddUnversioned}}">

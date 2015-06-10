@@ -33,7 +33,7 @@
 					class = "build-portrait-column col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
 					ng-class="{'hidden-xs hidden-sm hidden-md': $index > 2}">
 					<div class="build-wrapper">
-						<a href="/#!/builds/{{build._id}}">
+						<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
 							<img
 							class="build-portrait img-responsive"
 							otr-src="{{build.champion.name | ddUnversioned}}"
@@ -87,7 +87,7 @@
 					class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-easing-quad"
 					ng-class= "{'hidden-xs hidden-sm hidden-md': $index > 2}">
 					<div class="build-wrapper">
-						<a href="/#!/builds/{{build._id}}">
+						<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
 							<img
 								class = "build-portrait img-responsive"
 								otr-src="{{build.champion.name | ddUnversioned}}"

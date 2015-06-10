@@ -27,11 +27,11 @@ angular.module('builds').config(['$stateProvider',
 			}
 		}).
 		state('viewBuild', {
-			url: '/builds/:buildId',
+			url: '/builds/:build_name/:buildId',
 			templateUrl: 'modules/builds/views/view-build.client.view.html'
 		}).
 		state('editBuild', {
-			url: '/builds/:buildId/edit',
+			url: '/builds/:build_name/:buildId/edit',
 			templateUrl: 'modules/builds/views/create-build.client.view.html',
 			resolve: {
 				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {

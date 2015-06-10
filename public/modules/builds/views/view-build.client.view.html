@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="pull-right options-wrapper" data-ng-show="((authentication.user) && (authentication.user._id == build.user._id))">
-                        <a class="view-btn" href="/#!/builds/{{build._id}}/edit">
+                        <a class="view-btn" href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}/edit">
                             <span class="btn-editar build-edit"></span>
                         </a>
                         <a class="view-btn" data-ng-click="remove();">
