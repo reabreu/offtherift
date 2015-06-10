@@ -229,7 +229,6 @@ exports.getTotalStats = function(req,res,next){
             }
         ],
         function(err,result) {
-            console.log(result.length);
             if(result == 0){
                 result = [{
                     build_count: 0,
