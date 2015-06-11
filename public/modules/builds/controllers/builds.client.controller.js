@@ -484,6 +484,27 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
+		 * Search for champion
+		 * @param  {object} search Search Object
+		 */
+		$scope.searchChampion = function (search) {
+			$scope.data.champions = [];
+			$scope.state.champions.full = false;
+
+			var params = angular.extend({}, {
+				version: $scope.data.selectedPatch,
+				build: true,
+				limit: 30
+			}, search);
+
+			Repository.getChampions(params).then(function (data) {
+				for (var i = 0; i < data.champions.length; i++) {
+					$scope.data.champions.push(data.champions[i]);
+				}
+			});
+		};
+
+		/**
 		 * [closeModal Close modal]
 		 * @return {[type]}
 		 */
