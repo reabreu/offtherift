@@ -33,7 +33,8 @@ module.exports = {
 						'public/lib/yamm3/yamm/yamm.css',
 						'public/lib/ngprogress/ngProgress.css',
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.css',
-						'public/lib/angular-block-ui/dist/angular-block-ui.min.css'
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
+						'public/lib/slick-carousel/slick/slick.css'
 					],
 					js: [
 						'public/lib/jquery/dist/jquery.min.js',
@@ -60,7 +61,9 @@ module.exports = {
 						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js',
 						'public/lib/ngprogress/build/ngProgress.min.js',
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.js',
-						'public/lib/angular-block-ui/dist/angular-block-ui.min.js'
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
+						'public/lib/slick-carousel/slick/slick.min.js',
+						'public/lib/angular-slick/dist/slick.min.js'
 					]
 				},
 				css: [

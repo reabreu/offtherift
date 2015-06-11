@@ -680,16 +680,19 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
+
 			Metainformation.reset();
 			$rootScope.pageKeywords = Metainformation.metaKeywords();
 			$rootScope.pageTitle 	= Pagetitle.setTitle('Browse Builds');
 
 			$scope.busy 	 = true;
+			$scope.full 	= false;
 
 			$scope.builds   = [];
 
 			$scope.data 	= {
-				patches: Repository.getCachedPatches()
+				patches: Repository.getCachedPatches(),
+				timer: null
 			};
 
 			$scope.search 	= {
@@ -707,11 +710,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.tablength = 4;
 			}
 
-			//Verificar se foram definido params
-			if( typeof($stateParams.version) !== 'undefined'){
-				$scope.search.version = $stateParams.version;
-			}
-
 			if ($scope.data.patches.length == 0) {
 				Repository.getPatches().then(function(data){
 					$scope.data.patches = data.patches;
@@ -721,82 +719,149 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			} else {
 				$scope.setChampionSearchListing();
 			}
+
+			$scope.$watch('search.author', function () {
+				if(!$scope.busy)
+					$scope.evaluateAuthorSearch();
+			}, true);
+		};
+
+		$scope.evaluateAuthorSearch = function(){
+			$timeout.cancel($scope.data.timer);
+			$scope.data.timer = $timeout($scope.resetAndSearchBuilds,1000);
 		};
 
 		$scope.setChampionSearchListing = function(){
-			$scope.cleanBadPatchSearch();
 
 			Repository.getChampions({version: $scope.data.patches[0].version, build: true}).then(function(data){
+
 				$scope.data.champions = data.champions;
 
-				if( typeof($stateParams.champion) !== 'undefined'){
-					var exists = false;
-					for (var i = $scope.data.champions.length - 1; i >= 0; i--) {
-						if( $stateParams.champion  == $scope.data.champions[i].key){
-							$scope.search.champion_id = $scope.data.champions[i].id;
-							exists = true;
-							break;
-						}
-					};
-
-					if(!exists)
-						$scope.search.champion_id = '';
+				if( typeof($stateParams.target) !== 'undefined'){
+					//check if its champion or patch
+					if($stateParams.target.indexOf('.') !== -1){
+						$scope.search.version = $scope.checkValidPatch($stateParams.target);
+					} else {
+						$scope.search.champion_id = $scope.checkValidChampion($stateParams.target);
+					}
 				}
-				$scope.busy 	 = false;
-				$scope.searchBuilds();
 
+				if( typeof($stateParams.champion) !== 'undefined'){
+					$scope.search.champion_id = $scope.checkValidChampion($stateParams.champion);
+				}
+
+				if( typeof($stateParams.version) !== 'undefined'){
+					$scope.search.version = $scope.checkValidPatch($stateParams.version);
+				}
+
+				$scope.busy 	 = false;
+
+				$scope.loadMore();
 			});
 		}
 
-		$scope.cleanBadPatchSearch = function(){
-			//faço reset ao patch caso nao exista
-			var exists = false;
+		$scope.checkValidChampion = function( champion ) {
+			var champ_id = '';
+
+			for (var i = $scope.data.champions.length - 1; i >= 0; i--) {
+				if( champion  == $scope.data.champions[i].key){
+					champ_id = $scope.data.champions[i].id;
+					break;
+				}
+			};
+			return champ_id;
+		}
+
+		$scope.checkValidPatch = function( target_patch ){
+			var patch_version = '';
 
 			angular.forEach($scope.data.patches, function(patch, index){
-                if( $scope.search.version == patch.version )
-                	exists = true;
+                if( target_patch == patch.version ){
+                	patch_version = patch.version;
+                }
             });
-
-			if(!exists)
-				$scope.search.version = "";
+			return patch_version;
 		}
 
 		$scope.setGroup = function(group){
 			$scope.search.group = group;
-		}
-
-		$scope.loadMore = function() {
-			if ($scope.busy) return;
-    		$scope.searchBuilds();
+			$scope.resetAndSearchBuilds();
 		}
 
 		$scope.resetAndSearchBuilds = function(){
 			$scope.builds = [];
-			$scope.search.skip = 0;
-			$scope.searchBuilds();
+			$scope.full = false;
+			$scope.busy = false;
+			$scope.loadMore();
+		}
+
+		$scope.loadMore = function() {
+			if ($scope.busy || $scope.full) return;
+    		$scope.searchBuilds();
 		}
 
 		$scope.searchBuilds = function(){
 			ngProgress.start();
 
-			$scope.busy = true;
+			$scope.busy 		= true;
+			$scope.search.skip 	= $scope.builds.length;
+
 			Builds.query($scope.search).$promise.then(function(data){
 				var counter = 0;
-                angular.forEach(data, function(build, index){
-                    $timeout($scope.addBuild(build,$scope.builds), index * 100);
-                });
 
-                $scope.$on('fade-right:enter', function(){
-                	counter++;
-                	if(counter == data.length && data.length > 0){
-                		$scope.busy 	= false;
-                	}
-			    });
+				if(data.length == 0){
+					$scope.busy = false;
+					$scope.full = true;
 
-                $scope.search.skip += $scope.search.limit;
+				} else {
+					angular.forEach(data, function(build, index){
+	                    $timeout($scope.addBuild(build,$scope.builds), index * 100);
+	                });
+
+	                $scope.$on('fade-right:enter', function(){
+	                	counter++;
+	                	if(counter == data.length){
+	                		$scope.busy 	= false;
+	                	}
+				    });
+				}
+
 				ngProgress.complete();
 			});
 		};
+
+		$scope.setUrlParams = function(){
+			var dest_path = "/browse/";
+
+			if(
+				   typeof($scope.search.version)     	!== 'undefined'
+				&& typeof($scope.search.champion_id) 	!== 'undefined'
+				&& $scope.search.champion_id 			!= ''
+				&& $scope.search.version 				!= ''
+				&& $scope.search.champion_id 			!= null
+				&& $scope.search.version 				!= null
+				){
+				dest_path += $scope.getChampionById($scope.search.champion_id) + "/" + $scope.search.version;
+			}
+
+			else if( typeof($scope.search.champion_id) !== 'undefined' && $scope.search.champion_id != '' && $scope.search.champion_id != null){
+				dest_path += $scope.getChampionById($scope.search.champion_id);
+			}
+
+			else if( typeof($scope.search.version) !== 'undefined'  && $scope.search.version != '' && $scope.search.version != null){
+				dest_path += $scope.search.version;
+			}
+
+			$location.path(dest_path).replace();
+		}
+
+		$scope.getChampionById = function( id ){
+			for (var i = $scope.data.champions.length - 1; i >= 0; i--) {
+				if( id  == $scope.data.champions[i].id){
+					return $scope.data.champions[i].key;
+				}
+			};
+		}
 
 		// Find a list of Builds
 		$scope.find = function() {

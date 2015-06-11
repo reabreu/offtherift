@@ -2,7 +2,7 @@
 
 module.exports = {
 	// htaccess protection
-	basicAuth: false,
+	basicAuth: true,
 	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'ShellOtr:LlehsRt0@52.17.3.23:21345') + '/offtherift',
     app: {
         title: 'Offtherift',
@@ -33,7 +33,8 @@ module.exports = {
 						'public/lib/yamm3/yamm/yamm.css',
 						'public/lib/ngprogress/ngProgress.css',
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.css',
-						'public/lib/angular-block-ui/dist/angular-block-ui.min.css'
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
+						'public/lib/slick-carousel/slick/slick.css'
 					],
 					js: [
 						'public/lib/jquery/dist/jquery.min.js',
@@ -60,7 +61,9 @@ module.exports = {
 						'public/lib/angular-translate-loader-url/angular-translate-loader-url.min.js',
 						'public/lib/ngprogress/build/ngProgress.min.js',
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.js',
-						'public/lib/angular-block-ui/dist/angular-block-ui.min.js'
+						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
+						'public/lib/slick-carousel/slick/slick.min.js',
+						'public/lib/angular-slick/dist/slick.min.js'
 					]
 				},
 				css: [

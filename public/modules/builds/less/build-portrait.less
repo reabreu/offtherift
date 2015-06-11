@@ -5,12 +5,25 @@
     -o-transform:       skew(10deg);
     -ms-transform:      skew(10deg);
 }
+
 .skew-right{
     transform:          skew(-10deg);
     -webkit-transform:  skew(-10deg);
     -moz-transform:     skew(-10deg);
     -o-transform:       skew(-10deg);
     -ms-transform:      skew(-10deg);
+}
+
+.slick-right{
+    .slick-slider{
+        .skew-right;
+    }
+}
+
+.slick-left{
+    .slick-slider{
+        .skew-left;
+    }
 }
 
 @media(min-width: 50px){

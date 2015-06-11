@@ -20,7 +20,8 @@ var ApplicationConfiguration = (function() {
 		'pascalprecht.translate',
 		'ngProgress',
 		'shoppinpal.mobile-menu',
-		'blockUI'
+		'blockUI',
+		'slick'
 	];
 
 	// Add a new vertical module
