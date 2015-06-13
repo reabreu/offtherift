@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds', 'Repository', '$interval',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, Repository, $interval) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
@@ -11,6 +11,7 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $rootScope.pageTitle = Pagetitle.setTitle('Home');
 
         $scope.state = $stateParams.state;
+        $scope.champions = {};
 
         /**
          * Subscribe with specific email
@@ -40,6 +41,10 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
 
         $scope.initTeaser = function(){
 
+            getChampionsLinks();
+
+            $scope.math = Math;
+
             $scope.search = {
                 days: 40
             };
@@ -60,6 +65,22 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 $scope.mostLiked   = result.data;
             });
 
+        };
+
+        function getChampionsLinks() {
+            Repository.getPatches().then(function(patchInfo) {
+                $scope.formData 		= {
+                    enabled: 	true,
+                    build:      true,
+                    version: 	patchInfo.patches[0].version
+                };
+
+                Repository.getChampions($scope.formData).then(function(data) {
+                    for (var i = 0 ; i < data.champions.length; i++) {
+                        $scope.champions = data.champions;
+                    }
+                });
+            });
         }
 
         $scope.addBuild = function(elem, container){

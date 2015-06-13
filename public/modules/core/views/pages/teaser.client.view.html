@@ -1,651 +1,668 @@
 <div id="header-unit" class="image-bg" data-ng-controller="TeaserController" ng-init="initTeaser()">
-    <div class="container-fluid">
-        <div class="row">
-            <h1 class="teaser-tile"><span class="heavy">WELCOME</span>, SUMMONER</h1>
-        </div>
-    <div class="dashboard-container">
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-right">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="limiter"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">FAMOUS</label>
-                                <label class="build-sub-title-label">BUILDS</label>
-                            </div>
-                            <div class="limiter"></div>
-                        </div>
-                    </div>
-                    <div class="limiter"></div>
-                </div>
-            </div>
-            <div class="slick-right">
-                <slick infinite="true" arrows="false" autoplay="true" speed="1500" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="popularBuilds">
-                    <div
-                        ng-repeat="build in popularBuilds"
-                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    otr-src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </slick>
-            </div>
-        </div>
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-left">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="limiter"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">TOP</label>
-                                <label class="build-sub-title-label">TALKED</label>
-                            </div>
-                            <div class="limiter"></div>
-                        </div>
-                    </div>
-                    <div class="limiter"></div>
-                </div>
-            </div>
-            <div class="slick-left">
-                <slick infinite="true" arrows="false" autoplay="true" speed="1800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostCommented">
-                    <div
-                        ng-repeat="build in mostCommented"
-                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    otr-src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </slick>
-            </div>
-        </div>
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-right">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="limiter"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">TOP</label>
-                                <label class="build-sub-title-label">LIKED</label>
-                            </div>
-                            <div class="limiter"></div>
-                        </div>
-                    </div>
-                    <div class="limiter"></div>
-                </div>
-            </div>
-            <div class="slick-right">
-                <slick infinite="true" arrows="false" autoplay="true" speed="1250" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostLiked">
-                    <div
-                        ng-repeat="build in mostLiked"
-                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    otr-src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </slick>
-            </div>
-        </div>
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-left">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="limiter"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">TOP</label>
-                                <label class="build-sub-title-label">SHARED</label>
-                            </div>
-                            <div class="limiter"></div>
-                        </div>
-                    </div>
-                    <div class="limiter"></div>
-                </div>
-            </div>
-            <div class="slick-left">
-                <slick infinite="true" arrows="false" autoplay="true" speed="800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostShared">
-                    <div
-                        ng-repeat="build in mostShared"
-                        class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    otr-src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </slick>
-            </div>
-        </div>
-</div>
+	<div class="container-fluid">
+		<div class="row">
+			<h1 class="teaser-tile"><span class="heavy">WELCOME</span>, SUMMONER</h1>
+		</div>
+		<div class="dashboard-container">
+			<div class="row row-no-padding">
+				<div class="col-lg-2 col-xs-3 build-portrait-right">
+					<div class="build-wrapper">
+						<div class="grey-portrait"></div>
+						<div class="limiter"></div>
+						<div class="build-info ">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label build-title-label-big">FAMOUS</label>
+									<label class="build-sub-title-label">BUILDS</label>
+								</div>
+								<div class="limiter"></div>
+							</div>
+						</div>
+						<div class="limiter"></div>
+					</div>
+				</div>
+				<div class="slick-right">
+					<slick infinite="true" arrows="false" autoplay="true" speed="1500" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="popularBuilds">
+						<div
+								ng-repeat="build in popularBuilds"
+								class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+							<div class="build-wrapper">
+								<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+									<img
+											class = "build-portrait img-responsive"
+											otr-src="{{build.champion.name | ddUnversioned}}"
+											>
+									<div class="build-info">
+										<label class="build-title">{{build.name}}</label>
+										<label class="build-author">by {{build.displayName}}</label>
+										<ul class="build-stats">
+											<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+											<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+											<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+											<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+										</ul>
+										<label class="build-version">{{build.version}}</label>
+									</div>
+								</a>
+							</div>
+						</div>
+					</slick>
+				</div>
+			</div>
+			<div class="row row-no-padding">
+				<div class="col-lg-2 col-xs-3 build-portrait-left">
+					<div class="build-wrapper">
+						<div class="grey-portrait"></div>
+						<div class="limiter"></div>
+						<div class="build-info ">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label build-title-label-big">TOP</label>
+									<label class="build-sub-title-label">TALKED</label>
+								</div>
+								<div class="limiter"></div>
+							</div>
+						</div>
+						<div class="limiter"></div>
+					</div>
+				</div>
+				<div class="slick-left">
+					<slick infinite="true" arrows="false" autoplay="true" speed="1800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostCommented">
+						<div
+								ng-repeat="build in mostCommented"
+								class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+							<div class="build-wrapper">
+								<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+									<img
+											class = "build-portrait img-responsive"
+											otr-src="{{build.champion.name | ddUnversioned}}"
+											>
+									<div class="build-info">
+										<label class="build-title">{{build.name}}</label>
+										<label class="build-author">by {{build.displayName}}</label>
+										<ul class="build-stats">
+											<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+											<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+											<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+											<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+										</ul>
+										<label class="build-version">{{build.version}}</label>
+									</div>
+								</a>
+							</div>
+						</div>
+					</slick>
+				</div>
+			</div>
+			<div class="row row-no-padding">
+				<div class="col-lg-2 col-xs-3 build-portrait-right">
+					<div class="build-wrapper">
+						<div class="grey-portrait"></div>
+						<div class="limiter"></div>
+						<div class="build-info ">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label build-title-label-big">TOP</label>
+									<label class="build-sub-title-label">LIKED</label>
+								</div>
+								<div class="limiter"></div>
+							</div>
+						</div>
+						<div class="limiter"></div>
+					</div>
+				</div>
+				<div class="slick-right">
+					<slick infinite="true" arrows="false" autoplay="true" speed="1250" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostLiked">
+						<div
+								ng-repeat="build in mostLiked"
+								class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+							<div class="build-wrapper">
+								<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+									<img
+											class = "build-portrait img-responsive"
+											otr-src="{{build.champion.name | ddUnversioned}}"
+											>
+									<div class="build-info">
+										<label class="build-title">{{build.name}}</label>
+										<label class="build-author">by {{build.displayName}}</label>
+										<ul class="build-stats">
+											<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+											<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+											<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+											<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+										</ul>
+										<label class="build-version">{{build.version}}</label>
+									</div>
+								</a>
+							</div>
+						</div>
+					</slick>
+				</div>
+			</div>
+			<div class="row row-no-padding">
+				<div class="col-lg-2 col-xs-3 build-portrait-left">
+					<div class="build-wrapper">
+						<div class="grey-portrait"></div>
+						<div class="limiter"></div>
+						<div class="build-info ">
+							<div class="vertical-align label-wrapper">
+								<div class="limiter"></div>
+								<div class="build-label-container">
+									<label class="build-title-label build-title-label-big">TOP</label>
+									<label class="build-sub-title-label">SHARED</label>
+								</div>
+								<div class="limiter"></div>
+							</div>
+						</div>
+						<div class="limiter"></div>
+					</div>
+				</div>
+				<div class="slick-left">
+					<slick infinite="true" arrows="false" autoplay="true" speed="800" slides-to-show="5" touch-move="false" slides-to-scroll="1" init-onload=true data="mostShared">
+						<div
+								ng-repeat="build in mostShared"
+								class="col-lg-2 col-xs-3 fx-fade-right fx-speed-1000 fx-trigger fx-easing-quad">
+							<div class="build-wrapper">
+								<a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+									<img
+											class = "build-portrait img-responsive"
+											otr-src="{{build.champion.name | ddUnversioned}}"
+											>
+									<div class="build-info">
+										<label class="build-title">{{build.name}}</label>
+										<label class="build-author">by {{build.displayName}}</label>
+										<ul class="build-stats">
+											<li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+											<li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+											<li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+											<li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+										</ul>
+										<label class="build-version">{{build.version}}</label>
+									</div>
+								</a>
+							</div>
+						</div>
+					</slick>
+				</div>
+			</div>
+		</div>
 
 
-        <div class="row intro-container">
-            <p>We hope you enjoy OfftheRift web app.</p>
-            <p>Right now, our app lets you set up champion builds, and check how the champion statistics change through time as Riot releases new patches.</p>
-            <p>We're on closed Beta right now, but we'll be sending invitations as the time goes by and updating the application based on your feedback.</p>
-            <p>Keep scrolling and check how everything works!</p>
-        </div>
-        <div class="row">
-            <div class="col-xs-5 cancel-padding">
-                <div class="half-circle">
-                    <div class="first-step-image"></div>
+		<div class="row intro-container">
+			<p>We hope you enjoy OfftheRift web app.</p>
+			<p>Right now, our app lets you set up champion builds, and check how the champion statistics change through time as Riot releases new patches.</p>
+			<p>We're on closed Beta right now, but we'll be sending invitations as the time goes by and updating the application based on your feedback.</p>
+			<p>Keep scrolling and check how everything works!</p>
+		</div>
+		<div class="row">
+			<div class="col-xs-5 cancel-padding">
+				<div class="half-circle">
+					<div class="first-step-image"></div>
+				</div>
+				<div class="white-row"></div>
+			</div>
+			<div class="col-xs-7">
+				<table class="table-step">
+					<td class="text-right big-number">1 </td>
+					<td><div  class="step-description">Start by summoning your champion</div></td>
+				</table>
+			</div>
+		</div>
+		<div class="row step-two-container">
+			<div class="col-lg-6 col-md-8">
+				<table class="table-step">
+					<td class="text-center big-number">2 </td>
+					<td>
+						<div class="step-description">Add items trough multiple item sets</div>
+					</td>
+				</table>
+			</div>
+			<div class="col-lg-6 col-md-4">
+				<ul class="item-wrapper teaser-item-set">
+					<li class="item-slot">
+						<img otr-src="{{ '3001' | ddragon: '5.10.1':'item'}}">
+					</li>
+					<li class="item-slot">
+						<img otr-src="{{ '3105' | ddragon: '5.10.1':'item'}}">
+					</li>
+					<li class="item-slot">
+						<img otr-src="{{ '3113' | ddragon: '5.10.1':'item'}}">
+					</li>
+					<li class="item-slot">
+						<img otr-src="{{ '3301' | ddragon: '5.10.1':'item'}}">
+					</li>
+					<li class="item-slot">
+						<img otr-src="{{ '3003' | ddragon: '5.10.1':'item'}}">
+					</li>
+					<li class="item-slot">
+						<img otr-src="{{ '3751' | ddragon: '5.10.1':'item'}}">
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row step-three-container teaser-runes">
+			<div class="col-md-6 col-md-push-6">
+				<table class="table-step">
+					<td class="text-center big-number">3 </td>
+					<td>
+						<div class="step-description">Set up your runes</div>
+					</td>
+				</table>
+			</div>
+			<div class="col-md-6 col-md-pull-6">
+				<div class="runes-wrapper">
+					<div class="runes-title-container">
+						<div class="col-xs-3"><div class="rune-col-title"><span>Glyphs</span></div></div>
+						<div class="col-xs-3"><div class="rune-col-title"><span>Marks</span></div></div>
+						<div class="col-xs-3"><div class="rune-col-title"><span>Quints</span></div></div>
+						<div class="col-xs-3"><div class="rune-col-title"><span>Seals</span></div></div>
+					</div>
+					<div class="runes-builder-container">
+						<div class="col-xs-3 rune-collumn">
+							<div class="rune-column-item">
+								<span>1</span>
+								<img otr-src="{{ 'b_3_3' | ddragon: '5.9.1':'rune'}}"/>
+							</div>
+						</div>
+						<div class="col-xs-3 rune-collumn">
+							<div class="rune-column-item">
+								<span>2</span>
+								<img otr-src="{{ 'r_3_3' | ddragon: '5.9.1':'rune'}}"/>
+							</div>
+							<div class="rune-column-item">
+								<span>1</span>
+								<img otr-src="{{ 'r_1_3' | ddragon: '5.9.1':'rune'}}"/>
+							</div>
+						</div>
+						<div class="col-xs-3 rune-collumn">
+							<div class="rune-column-item">
+								<span>3</span>
+								<img otr-src="{{ 'bl_3_3' | ddragon: '5.9.1':'rune'}}"/>
+							</div>
+						</div>
+						<div class="col-xs-3 rune-collumn">
+							<div class="rune-column-item">
+								<span>1</span>
+								<img otr-src="{{ 'y_3_3' | ddragon: '5.9.1':'rune'}}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row step-four-container">
+			<div class="col-lg-6 col-md-8">
+				<table class="table-step">
+					<td class="text-center big-number">4 </td>
+					<td>
+						<div class="step-description">...don't forget your masteries!</div>
+					</td>
+				</table>
+			</div>
+			<div class="col-lg-6 col-md-4 teaser-masteries">
+				<div class="mastery-column">
+					<h3 class="mastery-title mastery-red" >Offense</h3>
+					<ul class="mastery-container">
+						<li class="mastery-item">
+							<img otr-src="{{ 4111 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4112 | ddragon: '5.9.1':'mastery'}}">
+							<label>4/4</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4113 | ddragon: '5.9.1':'mastery'}}">
+							<label>4/4</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4114 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4121 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4122 | ddragon: '5.9.1':'mastery'}}">
+							<label>3/3</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4123 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/3</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4124 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4131 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4132 | ddragon: '5.9.1':'mastery'}}">
+							<label>1/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4133 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4134 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/3</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4141 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4142 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/3</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4143 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/3</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4144 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4151 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4152 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/3</label>
+						</li>
+						<li class="mastery-item"></li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4154 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+						<li class="mastery-item"></li>
+						<li class="mastery-item">
+							<img otr-src="{{ 4162 | ddragon: '5.9.1':'mastery'}}">
+							<label>0/1</label>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row step-five-container">
+			<div class="col-xs-12">
+				<h1 class="text-center top30">As you build, we calculate the champion stats for you.</h1>
+			</div>
+			<div class="col-xs-12 teaser-stats">
+				<div class="stats-container">
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">HP</div>
+							<div class="stat-value-wrapper stat-value-hp">
+								<div class="stat-value">
+									<label>1034</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">Mana</div>
+							<div class="stat-value-wrapper stat-value-mp">
+								<div class="stat-value">
+									<label>1640</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">Hp5</div>
+							<div class="stat-value-wrapper stat-value-hpregen">
+								<div class="stat-value">
+									<label>5(14)</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">Manap5</div>
+							<div class="stat-value-wrapper stat-value-mpregen">
+								<div class="stat-value">
+									<label>2(21)</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">AD</div>
+							<div class="stat-value-wrapper stat-value-attackdamage">
+								<div class="stat-value">
+									<label>107</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">AP</div>
+							<div class="stat-value-wrapper stat-value-abilitypower">
+								<div class="stat-value">
+									<label>209</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">ArPen</div>
+							<div class="stat-value-wrapper stat-value-armorpenetration">
+								<div class="stat-value">
+									<label>0|0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">MPen</div>
+							<div class="stat-value-wrapper stat-value-magicpenetration">
+								<div class="stat-value">
+									<label>0|0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">LS</div>
+							<div class="stat-value-wrapper stat-value-lifesteal">
+								<div class="stat-value">
+									<label>0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">SV</div>
+							<div class="stat-value-wrapper stat-value-spellvamp">
+								<div class="stat-value">
+									<label>0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">AS</div>
+							<div class="stat-value-wrapper stat-value-attackspeed">
+								<div class="stat-value">
+									<label>0.83</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">CDR</div>
+							<div class="stat-value-wrapper stat-value-cooldownreduction">
+								<div class="stat-value">
+									<label>0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">Crit</div>
+							<div class="stat-value-wrapper stat-value-critchance">
+								<div class="stat-value">
+									<label>0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">Armor</div>
+							<div class="stat-value-wrapper stat-value-armor">
+								<div class="stat-value">
+									<label>90</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">Range</div>
+							<div class="stat-value-wrapper stat-value-attackrange">
+								<div class="stat-value">
+									<label>550</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">MR</div>
+							<div class="stat-value-wrapper stat-value-spellblock">
+								<div class="stat-value">
+									<label>120</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-left">
+							<div class="stat-designation">MS</div>
+							<div class="stat-value-wrapper stat-value-movespeed">
+								<div class="stat-value">
+									<label>320</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="stat-column">
+						<div class="stat-wrapper stat-wrapper-right">
+							<div class="stat-designation">Tenacity</div>
+							<div class="stat-value-wrapper stat-value-tenacity">
+								<div class="stat-value">
+									<label>0%</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<h5 class="text-center bottom30">PS: Hover everything and check which stats are affected by what!</h5>
+			</div>
+		</div>
+		<div class="row step-six-container">
+			<div class="col-md-6 col-md-push-6">
+				<table class="table-step">
+					<td class="text-center big-number">5 </td>
+					<td>
+						<div class="step-description">Send your build URL to your friends and let them comment about your ideias</div>
+					</td>
+				</table>
+			</div>
+			<div class="col-md-6 col-md-pull-6">
+				<i class="fa fa-users fa-6"></i>
+			</div>
+		</div>
+		<div class="row step-seven-container">
+			<h1 class="text-center top30 bottom30 heavy">We're just starting</h1>
+			<div class="support-container">
+				<p class="text-center">We have a lot of other ideias to bring to life!</p>
+				<p class="text-center">Help us support server costs and develop other tools by disabling AdBlock or through paypal at ********@offtherift.com </p>
+				<p class="text-center">You can contact us at ********@offtherift.com or follow us at our social media pages.</p>
+			</div>
+		</div>
+		<div class="row step-eight-container">
+			<div class="col-md-5 col-md-push-7 col-xs-7 col-xs-push-5 cancel-right-padding top30 bottom30">
+				<div class="half-circle-right">
+				</div>
+				<div class="white-row white-row-small follow-us">
+					Follow us
+					<div class="contact-teaser ml15">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
+							<i class="fa fa-facebook fa-stack-1x icon-social-white"></i>
+						</span>
+					</div>
+					<div class="contact-teaser">
+						<span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
+							<i class="fa fa-twitter fa-stack-1x icon-social-white"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row step-nine-container">
+            <div class="col-sm-4"></div>
+			<div class="col-sm-4">
+				<a ui-sref="listBuilds">
+					<div class="circle-text top120 browse-button"><div>Browse</div></div>
+				</a>
+			</div>
+            <div class="col-sm-4"></div>
+			<!--<div class="col-sm-4">
+				<a ui-sref="login">
+					<div class="circle-text top120 browse-button"><div>Login</div></div>
+				</a>
+			</div>
+			<div class="col-sm-4">
+				<a ui-sref="aboutus">
+					<div class="circle-text top120 browse-button"><div>About</div></div>
+				</a>
+			</div>-->
+			<div class="clearfix"></div>
+			<br>
+		</div>
+		<div class="row step-ten-container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div ng-repeat="c in champions track by $index">
+                        <div class="col-sm-3">
+                            <a href="/#!/browse/{{ champions[(($index%6) * math.ceil(champions.length/6)) + math.floor($index/6)].key }}">
+                                {{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].name }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="white-row"></div>
             </div>
-            <div class="col-xs-7">
-                <table class="table-step">
-                    <td class="text-right big-number">1 </td>
-                    <td><div  class="step-description">Start by summoning your champion</div></td>
-                </table>
-            </div>
-        </div>
-        <div class="row step-two-container">
-            <div class="col-lg-6 col-md-8">
-                <table class="table-step">
-                    <td class="text-center big-number">2 </td>
-                    <td>
-                        <div class="step-description">Add items trough multiple item sets</div>
-                    </td>
-                </table>
-            </div>
-            <div class="col-lg-6 col-md-4">
-                <ul class="item-wrapper teaser-item-set">
-                    <li class="item-slot">
-                        <img otr-src="{{ '3001' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                    <li class="item-slot">
-                        <img otr-src="{{ '3105' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                    <li class="item-slot">
-                        <img otr-src="{{ '3113' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                    <li class="item-slot">
-                        <img otr-src="{{ '3301' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                    <li class="item-slot">
-                        <img otr-src="{{ '3003' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                    <li class="item-slot">
-                        <img otr-src="{{ '3751' | ddragon: '5.10.1':'item'}}">
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="row step-three-container teaser-runes">
-            <div class="col-md-6 col-md-push-6">
-                <table class="table-step">
-                    <td class="text-center big-number">3 </td>
-                    <td>
-                        <div class="step-description">Set up your runes</div>
-                    </td>
-                </table>
-            </div>
-            <div class="col-md-6 col-md-pull-6">
-                <div class="runes-wrapper">
-                    <div class="runes-title-container">
-                        <div class="col-xs-3"><div class="rune-col-title"><span>Glyphs</span></div></div>
-                        <div class="col-xs-3"><div class="rune-col-title"><span>Marks</span></div></div>
-                        <div class="col-xs-3"><div class="rune-col-title"><span>Quints</span></div></div>
-                        <div class="col-xs-3"><div class="rune-col-title"><span>Seals</span></div></div>
-                    </div>
-                    <div class="runes-builder-container">
-                        <div class="col-xs-3 rune-collumn">
-                            <div class="rune-column-item">
-                                <span>1</span>
-                                <img otr-src="{{ 'b_3_3' | ddragon: '5.9.1':'rune'}}"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 rune-collumn">
-                            <div class="rune-column-item">
-                                <span>2</span>
-                                <img otr-src="{{ 'r_3_3' | ddragon: '5.9.1':'rune'}}"/>
-                            </div>
-                            <div class="rune-column-item">
-                                <span>1</span>
-                                <img otr-src="{{ 'r_1_3' | ddragon: '5.9.1':'rune'}}"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 rune-collumn">
-                            <div class="rune-column-item">
-                                <span>3</span>
-                                <img otr-src="{{ 'bl_3_3' | ddragon: '5.9.1':'rune'}}"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 rune-collumn">
-                            <div class="rune-column-item">
-                                <span>1</span>
-                                <img otr-src="{{ 'y_3_3' | ddragon: '5.9.1':'rune'}}"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row step-four-container">
-            <div class="col-lg-6 col-md-8">
-                <table class="table-step">
-                    <td class="text-center big-number">4 </td>
-                    <td>
-                        <div class="step-description">...don't forget your masteries!</div>
-                    </td>
-                </table>
-            </div>
-            <div class="col-lg-6 col-md-4 teaser-masteries">
-                <div class="mastery-column">
-                    <h3 class="mastery-title mastery-red" >Offense</h3>
-                    <ul class="mastery-container">
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4111 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4112 | ddragon: '5.9.1':'mastery'}}">
-                            <label>4/4</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4113 | ddragon: '5.9.1':'mastery'}}">
-                            <label>4/4</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4114 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4121 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4122 | ddragon: '5.9.1':'mastery'}}">
-                            <label>3/3</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4123 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/3</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4124 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4131 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4132 | ddragon: '5.9.1':'mastery'}}">
-                            <label>1/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4133 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4134 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/3</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4141 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4142 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/3</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4143 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/3</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4144 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4151 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4152 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/3</label>
-                        </li>
-                        <li class="mastery-item"></li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4154 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                        <li class="mastery-item"></li>
-                        <li class="mastery-item">
-                            <img otr-src="{{ 4162 | ddragon: '5.9.1':'mastery'}}">
-                            <label>0/1</label>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row step-five-container">
-            <div class="col-xs-12">
-                <h1 class="text-center top30">As you build, we calculate the champion stats for you.</h1>
-            </div>
-            <div class="col-xs-12 teaser-stats">
-                <div class="stats-container">
-                    <div class="stat-column">
-                        <div class="stat-wrapper stat-wrapper-left">
-                            <div class="stat-designation">HP</div>
-                            <div class="stat-value-wrapper stat-value-hp">
-                                <div class="stat-value">
-                                    <label>1034</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-column">
-                        <div class="stat-wrapper stat-wrapper-right">
-                            <div class="stat-designation">Mana</div>
-                            <div class="stat-value-wrapper stat-value-mp">
-                                <div class="stat-value">
-                                    <label>1640</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-column">
-                        <div class="stat-wrapper stat-wrapper-left">
-                            <div class="stat-designation">Hp5</div>
-                            <div class="stat-value-wrapper stat-value-hpregen">
-                                <div class="stat-value">
-                                    <label>5(14)</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-column">
-                        <div class="stat-wrapper stat-wrapper-right">
-                            <div class="stat-designation">Manap5</div>
-                            <div class="stat-value-wrapper stat-value-mpregen">
-                                <div class="stat-value">
-                                    <label>2(21)</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">AD</div>
-                        <div class="stat-value-wrapper stat-value-attackdamage">
-                            <div class="stat-value">
-                                <label>107</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">AP</div>
-                        <div class="stat-value-wrapper stat-value-abilitypower">
-                            <div class="stat-value">
-                                <label>209</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">ArPen</div>
-                        <div class="stat-value-wrapper stat-value-armorpenetration">
-                            <div class="stat-value">
-                                <label>0|0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">MPen</div>
-                        <div class="stat-value-wrapper stat-value-magicpenetration">
-                            <div class="stat-value">
-                                <label>0|0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">LS</div>
-                        <div class="stat-value-wrapper stat-value-lifesteal">
-                            <div class="stat-value">
-                                <label>0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">SV</div>
-                        <div class="stat-value-wrapper stat-value-spellvamp">
-                            <div class="stat-value">
-                                <label>0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">AS</div>
-                        <div class="stat-value-wrapper stat-value-attackspeed">
-                            <div class="stat-value">
-                                <label>0.83</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">CDR</div>
-                        <div class="stat-value-wrapper stat-value-cooldownreduction">
-                            <div class="stat-value">
-                                <label>0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">Crit</div>
-                        <div class="stat-value-wrapper stat-value-critchance">
-                            <div class="stat-value">
-                                <label>0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">Armor</div>
-                        <div class="stat-value-wrapper stat-value-armor">
-                            <div class="stat-value">
-                                <label>90</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">Range</div>
-                        <div class="stat-value-wrapper stat-value-attackrange">
-                            <div class="stat-value">
-                                <label>550</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">MR</div>
-                        <div class="stat-value-wrapper stat-value-spellblock">
-                            <div class="stat-value">
-                                <label>120</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-left">
-                        <div class="stat-designation">MS</div>
-                        <div class="stat-value-wrapper stat-value-movespeed">
-                            <div class="stat-value">
-                                <label>320</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="stat-column">
-                    <div class="stat-wrapper stat-wrapper-right">
-                        <div class="stat-designation">Tenacity</div>
-                        <div class="stat-value-wrapper stat-value-tenacity">
-                            <div class="stat-value">
-                                <label>0%</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <h5 class="text-center bottom30">PS: Hover everything and check which stats are affected by what!</h5>
-            </div>
-        </div>
-        <div class="row step-six-container">
-            <div class="col-md-6 col-md-push-6">
-                <table class="table-step">
-                    <td class="text-center big-number">5 </td>
-                    <td>
-                        <div class="step-description">Send your build URL to your friends and let them comment about your ideias</div>
-                    </td>
-                </table>
-            </div>
-            <div class="col-md-6 col-md-pull-6">
-                <i class="fa fa-users fa-6"></i>
-            </div>
-        </div>
-        <div class="row step-seven-container">
-            <h1 class="text-center top30 bottom30 heavy">We're just starting</h1>
-            <div class="support-container">
-                <p class="text-center">We have a lot of other ideias to bring to life!</p>
-                <p class="text-center">Help us support server costs and develop other tools by disabling AdBlock or through paypal at ********@offtherift.com </p>
-                <p class="text-center">You can contact us at ********@offtherift.com or follow us at our social media pages.</p>
-            </div>
-        </div>
-        <div class="row step-eight-container">
-            <div class="col-md-5 col-md-push-7 col-xs-7 col-xs-push-5 cancel-right-padding top30 bottom30">
-                <div class="half-circle-right">
-                </div>
-                <div class="white-row white-row-small follow-us">
-                    Follow us
-                    <div class="contact-teaser ml15">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
-                            <i class="fa fa-facebook fa-stack-1x icon-social-white"></i>
-                        </span>
-                    </div>
-                    <div class="contact-teaser">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
-                            <i class="fa fa-twitter fa-stack-1x icon-social-white"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row step-nine-container">
-            <div class="col-sm-4">
-                <a ui-sref="listBuilds">
-                    <div class="circle-text top120 browse-button"><div>Browse</div></div>
-                </a>
-            </div>
-            <div class="col-sm-4">
-                <a ui-sref="login">
-                    <div class="circle-text top120 browse-button"><div>Login</div></div>
-                </a>
-            </div>
-            <div class="col-sm-4">
-                <a ui-sref="aboutus">
-                    <div class="circle-text top120 browse-button"><div>About</div></div>
-                </a>
-            </div>
-            <div class="clearfix"></div>
-            <br>
-            <p class="text-center top17">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.
-League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-        </div>
-    </div>
+
+			<br>
+			<p class="text-center top17">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.
+				League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+		</div>
+	</div>
 </div>
