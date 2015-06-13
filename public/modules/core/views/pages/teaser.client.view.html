@@ -24,143 +24,145 @@
             </div>
         </div>
     </div>
-    <div class="dashboard-container intro-container">
-        <p>Below you can check the most famous builds on the app right now.</p>
-        <br>
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-right">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">FAMOUS</label>
-                                <label class="build-sub-title-label">BUILDS</label>
+    <div class="container">
+        <div class="dashboard-container intro-container">
+            <p>Below you can check the most famous builds on the app right now.</p>
+            <br>
+            <div class="row row-no-padding">
+                <div class="col-lg-2 col-xs-3 build-portrait-right">
+                    <div class="build-wrapper">
+                        <div class="grey-portrait"></div>
+                        <div class="build-info ">
+                            <div class="vertical-align label-wrapper">
+                                <div class="limiter"></div>
+                                <div class="build-label-container">
+                                    <label class="build-title-label build-title-label-big">FAMOUS</label>
+                                    <label class="build-sub-title-label">BUILDS</label>
+                                </div>
+                                <div class="limiter"></div>
                             </div>
-                            <div class="limiter"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slick-right">
-                <slick
-                    arrows="false"
-                    autoplay="true"
-                    speed="700"
-                    init-onload=true
-                    data="popularBuilds"
-                    responsive= "[
-                        {
-                          breakpoint: 30000,
-                          settings: {
-                            slidesToShow: 5,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            dots: false
-                          }
-                        },
-                        {
-                          breakpoint: 1200,
-                          settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            dots: false
-                          }
-                        }]">
-                    <div
-                        ng-repeat="build in popularBuilds"
-                        class="col-lg-2 col-xs-3">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </slick>
-            </div>
-        </div>
-        <div class="row row-no-padding">
-            <div class="col-lg-2 col-xs-3 build-portrait-left">
-                <div class="build-wrapper">
-                    <div class="grey-portrait"></div>
-                    <div class="build-info ">
-                        <div class="vertical-align label-wrapper">
-                            <div class="limiter"></div>
-                            <div class="build-label-container">
-                                <label class="build-title-label build-title-label-big">TOP</label>
-                                <label class="build-sub-title-label">LIKED</label>
+                <div class="slick-right">
+                    <slick
+                        arrows="false"
+                        autoplay="true"
+                        speed="700"
+                        init-onload=true
+                        data="popularBuilds"
+                        responsive= "[
+                            {
+                              breakpoint: 30000,
+                              settings: {
+                                slidesToShow: 5,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: false
+                              }
+                            },
+                            {
+                              breakpoint: 1200,
+                              settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: false
+                              }
+                            }]">
+                        <div
+                            ng-repeat="build in popularBuilds"
+                            class="col-lg-2 col-xs-3">
+                            <div class="build-wrapper">
+                                <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                    <img
+                                        class = "build-portrait img-responsive"
+                                        src="{{build.champion.name | ddUnversioned}}"
+                                    >
+                                    <div class="build-info">
+                                        <label class="build-title">{{build.name}}</label>
+                                        <label class="build-author">by {{build.displayName}}</label>
+                                        <ul class="build-stats">
+                                            <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                            <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                            <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                            <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                        </ul>
+                                        <label class="build-version">{{build.version}}</label>
+                                    </div>
+                                </a>
                             </div>
-                            <div class="limiter"></div>
+                        </div>
+                    </slick>
+                </div>
+            </div>
+            <div class="row row-no-padding">
+                <div class="col-lg-2 col-xs-3 build-portrait-left">
+                    <div class="build-wrapper">
+                        <div class="grey-portrait"></div>
+                        <div class="build-info ">
+                            <div class="vertical-align label-wrapper">
+                                <div class="limiter"></div>
+                                <div class="build-label-container">
+                                    <label class="build-title-label build-title-label-big">TOP</label>
+                                    <label class="build-sub-title-label">LIKED</label>
+                                </div>
+                                <div class="limiter"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="slick-left">
-                <slick
-                    arrows="false"
-                    autoplay="true"
-                    speed="700"
-                    init-onload=true
-                    data="popularBuilds"
-                    responsive= "[
-                        {
-                          breakpoint: 30000,
-                          settings: {
-                            slidesToShow: 5,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            dots: false
-                          }
-                        },
-                        {
-                          breakpoint: 1200,
-                          settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 1,
-                            infinite: true,
-                            dots: false
-                          }
-                        }]">
-                    <div
-                        ng-repeat="build in mostLiked"
-                        class="col-lg-2 col-xs-3">
-                        <div class="build-wrapper">
-                            <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
-                                <img
-                                    class = "build-portrait img-responsive"
-                                    src="{{build.champion.name | ddUnversioned}}"
-                                >
-                                <div class="build-info">
-                                    <label class="build-title">{{build.name}}</label>
-                                    <label class="build-author">by {{build.displayName}}</label>
-                                    <ul class="build-stats">
-                                        <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
-                                        <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
-                                        <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
-                                        <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
-                                    </ul>
-                                    <label class="build-version">{{build.version}}</label>
-                                </div>
-                            </a>
+                <div class="slick-left">
+                    <slick
+                        arrows="false"
+                        autoplay="true"
+                        speed="700"
+                        init-onload=true
+                        data="popularBuilds"
+                        responsive= "[
+                            {
+                              breakpoint: 30000,
+                              settings: {
+                                slidesToShow: 5,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: false
+                              }
+                            },
+                            {
+                              breakpoint: 1200,
+                              settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 1,
+                                infinite: true,
+                                dots: false
+                              }
+                            }]">
+                        <div
+                            ng-repeat="build in mostLiked"
+                            class="col-lg-2 col-xs-3">
+                            <div class="build-wrapper">
+                                <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
+                                    <img
+                                        class = "build-portrait img-responsive"
+                                        src="{{build.champion.name | ddUnversioned}}"
+                                    >
+                                    <div class="build-info">
+                                        <label class="build-title">{{build.name}}</label>
+                                        <label class="build-author">by {{build.displayName}}</label>
+                                        <ul class="build-stats">
+                                            <li><span class="light">Shares: </span><span class="heavy">{{build.facebook.share_count}}</span></li>
+                                            <li><span class="light">Comments: </span><span class="heavy">{{build.facebook.comment_count}}</span></li>
+                                            <li><span class="light">Likes: </span><span class="heavy">{{build.facebook.like_count}}</span></li>
+                                            <li><span class="light">Views: </span><span class="heavy">{{build.view_count}}</span></li>
+                                        </ul>
+                                        <label class="build-version">{{build.version}}</label>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </slick>
+                    </slick>
+                </div>
             </div>
         </div>
     </div>
@@ -576,11 +578,12 @@
             <p class="text-center">However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
             <p class="text-center">If you enjoy our work and want to see other tools being created please consider donating via paypal to ******@offtherift.com</p>
             <p class="text-center">We want to know your opinion. If you have ideias ou suggestions please contact us at ******@offtherift.com</p>
+            <p class="text-center">If you want to know more about the team, check out our <a class="link" ui-sref="aboutus">about us</a> page.</p>
         </div>
     </div>
     <div class="step-eight-container">
         <div class="row">
-            <div class="col-md-5 col-md-push-7 col-xs-7 col-xs-push-5 cancel-right-padding top17">
+            <div class="col-md-5 col-md-push-7 col-xs-7 col-xs-push-5 cancel-right-padding top30">
                 <div class="half-circle-right">
                 </div>
                 <div class="white-row white-row-small follow-us">
@@ -612,29 +615,25 @@
                 <a ui-sref="login">
                     <div class="circle-text top120 browse-button"><div>Login</div></div>
                 </a>
-            </div>
-            <div class="col-sm-4">
-                <a ui-sref="aboutus">
-                    <div class="circle-text top120 browse-button"><div>About</div></div>
-                </a>
             </div>-->
         </div>
     </div>
-    <div class="row step-nine-container">
+    <div class="step-nine-container">
         <div class="row">
-            <div class="col-sm-6">
-                <div ng-repeat="c in champions track by $index">
-                    <div class="col-sm-3">
-                        <a href="/#!/browse/{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].key }}">
-                            {{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].name }}
-                        </a>
+            <div class="top30">
+                <div class="col-sm-6">
+                    <div ng-repeat="c in champions track by $index">
+                        <div class="col-sm-3">
+                            <a href="/#!/browse/{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].key }}">
+                                {{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].name }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <br>
-        <p class="text-center top17">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+        <div class="row">
+            <p class="text-center top17">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
         </div>
     </div>
 </div>
