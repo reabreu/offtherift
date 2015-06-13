@@ -377,6 +377,12 @@ exports.getMostmostSharedBuilds = function(req,res,next){
     });
 };
 
+exports.countBuilds = function(req,res,next){
+    Build.count({}, function( err, count){
+        res.jsonp({num:count});
+    })
+}
+
 exports.getMostmostLikedBuilds = function(req,res,next){
     Build.findOne().sort('-created').exec(function(err, build) {
         var nd          = calculateMinimunDate(build.created, days);

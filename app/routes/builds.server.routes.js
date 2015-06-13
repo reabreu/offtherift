@@ -9,6 +9,7 @@ module.exports = function(app) {
 		.get(builds.list)
 		.post(users.requiresLogin, builds.create);
 
+	app.route('/builds/count').get(builds.countBuilds);
 	app.route('/builds/mostPopular').get(builds.getPopularBuilds);
 	app.route('/builds/mostCommented').get(builds.getMostmostCommentedBuilds);
 	app.route('/builds/mostShared').get(builds.getMostmostSharedBuilds);

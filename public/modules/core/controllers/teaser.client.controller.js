@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval','Userstatistics',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval, Userstatistics) {
 
         $scope.already = typeof $location.search().already !== "undefined";
 
@@ -37,6 +37,8 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
             'quintessence': 'Quintessences'
         };
 
+        $scope.buildsCountTo      = 0;
+        $scope.buildsCountFrom    = 0;
 
         $scope.initTeaser = function(){
 
@@ -48,24 +50,19 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 $scope.popularBuilds   = result.data;
             });
 
-            popularBuilds.mostCommented.get($scope.search).$promise.then(function(result){
-                $scope.mostCommented   = result.data;
-            });
-
-            popularBuilds.mostShared.get($scope.search).$promise.then(function(result){
-                $scope.mostShared   = result.data;
-            });
-
             popularBuilds.mostLiked.get($scope.search).$promise.then(function(result){
                 $scope.mostLiked   = result.data;
             });
 
-        }
+            popularBuilds.countBuilds.get().$promise.then(function(result){
+                $scope.buildsCountTo      = result.num;
+                $scope.buildsCountFrom    = result.num* 0.5;
+            });
 
-        $scope.addBuild = function(elem, container){
-            return function(){
-                container.push(elem);
-            }
-        };
+            Userstatistics.count.get().$promise.then(function(result){
+                $scope.usersCountTo      = result.num;
+                $scope.usersCountFrom    = result.num* 0.5;
+            });
+        }
     }
 ]);

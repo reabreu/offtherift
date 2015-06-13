@@ -6,7 +6,8 @@ angular.module('builds').factory('popularBuilds', [ '$resource',
             mostPopular:    $resource('builds/mostPopular'),
             mostCommented:  $resource('builds/mostCommented'),
             mostShared:     $resource('builds/mostShared'),
-            mostLiked:      $resource('builds/mostLiked')
+            mostLiked:      $resource('builds/mostLiked'),
+            countBuilds:    $resource('builds/count'),
         };
     }
 ]);
