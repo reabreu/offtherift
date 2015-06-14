@@ -179,14 +179,11 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
                 		if (userHash) {
                 			if (userHash.hash &&
                 				userHash.activated) { // user registered and activated
-                				console.log('SUCCESS');
                 				return done(err, user);
                 			} else if (userHash.hash &&
                 				!userHash.activated) { // user needs to activate his account
-                				console.log('NEEDS_ACTIVATION');
                                 return done(err, user, '/#!/account/evaluate/activation');
                 			} else if (!userHash.hash) { // user needs a hash
-                                console.log('NEEDS_HASH');
                 				return done(err, user, '/#!/account/evaluate/hash');
                 			}
                 		} else { // user hash not found
@@ -195,7 +192,6 @@ exports.saveOAuthUserProfile = function(req, providerUserProfile, done) {
                             });
 
                             hash.save(function() {
-                                console.log('NEW_USER_NEEDS_HASH');
                                 return done(err, user, '/#!/account/evaluate/new');
                             });
                 		}

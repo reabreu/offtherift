@@ -356,13 +356,11 @@ exports.subscribeEmail = function (req, res, next) {
         },
         _this.emailHashRegistration(req, res, next),
         function (options, done) {
-            if (!_.isEmpty(options)) {
-                return res.json({
-                    message: 'An email has been sent to ' + options.email + ' with further instructions.'
-                });
-            }
-
             done(null);
+
+            return res.json({
+                message: "Thank you for your registration. You'll be sent an activation email as soon as possible."
+            });
         }
     ], function(err) {
         if (err) return next(err);
@@ -499,7 +497,6 @@ exports.emailHashRegistration = function(req, res, next) {
             activated: { $exists: false }
         }, function(err, hash) {
             if (!hash) {
-
                 var newHash = new RegistrationHash({ email: email });
 
                 newHash.save(function (err) {
@@ -537,12 +534,12 @@ exports.emailHashRegistration = function(req, res, next) {
                             },
                             mailer.sendEmailAsync,
                             function (response, done) {
-                                done(err, response);
+                                done(err, {});
                             }
                         ], function(err) {
                             if (err) return next(err);
                         });
-
+                        done(err, {});
                     }
                 });
             }

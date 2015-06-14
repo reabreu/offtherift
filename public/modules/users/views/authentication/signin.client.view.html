@@ -2,17 +2,14 @@
     <div class="container login-wrapper">
         <div class="col-xs-6">
             <h1>LOGIN</h1>
-            <p>Please keep in mind that we're a indie project and we support server costs on ads, if you don't disable adBlock we can't maintain offtherift online.</p>
-            <p>To participate in the closed beta, save and share builds, you'll need to login with facebook.</p>
+            <p>If you wish to create your own builds you can by connecting the app with your facebook account.</p>
+            <p>If your account lacks activation, you'll be automatically registered for an activation email.</p>
             <div class="row">
                 <div class="col-md-6">
                     <a href="/auth/facebook" class="btn btn-label btn-social btn-facebook mb20">
                         <i class="fa fa-fw fa-facebook"></i>Connect with Facebook
                     </a>
                 </div>
-                <!--<div class="col-md-6">
-                    <a href="/auth/twitter" class="btn btn-label btn-social btn-twitter mb20"><i class="fa fa-fw fa-twitter"></i>Connect with Twitter</a><br>
-                </div>-->
             </div>
         </div>
         <div class="col-xs-6">
@@ -22,7 +19,7 @@
                     <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
                         <input type="text" id="username" name="username" class="input-login" data-ng-model="credentials.username" placeholder="Username">
                         <input type="password" id="password" name="password" class="input-login" data-ng-model="credentials.password" placeholder="Password">
-                        <button type="submit" class="btn-login">Login</button>
+                        <button type="submit" class="btn btn-login">Login</button>
                     </form>
                     <div data-ng-show="error" class="text-center text-danger mb10">
                         <strong data-ng-bind="error"></strong>
@@ -31,67 +28,4 @@
             </div>
         </div>
     </div>
-   <!-- <div class="page-heading">
-        <div class="container clearfix">
-            <h1 class="pull-left">Login</h1>
-        </div>
-    </div>
-    <div class="container" id="login-form">
-        <div class="row mb40">
-            <div class="col-md-6">
-                <div class="headline"><h2>Choose social account</h2></div>
-                <div>
-                    <p>To participate in the closed beta, save or share builds you'll need to login with a social account.</p>
-                    <p>By linking with you social account we can authenticate you in our website in a safe way.</p>
-                    <p>We use your info only to create a user profile for us, we won't ever share any personal info.</p>
-                </div>
-                <div class="row mb40">
-
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                <div class="panel-heading"><h2>If you received a invitational account, please login below</h2></div>
-                <div class="panel-body">
-                <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-user"></i>
-                                </span>
-                                </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-key"></i>
-                                </span>
-                                </div>
-                        </div>
-                    </div>
-
-                    <!--<div class="form-group">
-                        <div class="col-xs-12">
-                            <a href="/#!/password/forgot" class="pull-left">Forgot password?</a>
-                        </div>
-                    </div>
-
-
-
-                    <div class="panel-footer">
-                        <div class="clearfix">
-                            <a href="/#!/registration" class="btn btn-default pull-left">Register</a>
-
-                        </div>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>-->
 </section>

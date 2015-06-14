@@ -18,15 +18,12 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
          * @return {boolean} Result
          */
         $scope.subscribe = function () {
+            $scope.showMessage = "";
             if (typeof $scope.teaserEmail !== "undefined" &&
                 $scope.teaserEmail.match(/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/)) {
                 Hashes.subscribe.save({ email: $scope.teaserEmail }, function (res) {
                     $scope.teaserEmail  = "";
-                    var msg = $scope.showMessage;
                     $scope.showMessage = res.message;
-                    $timeout(function() {
-                        $scope.showMessage = msg;
-                    }, 5000);
                 });
             }
         };
@@ -79,6 +76,10 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 };
 
                 Repository.getChampions($scope.formData).then(function(data) {
+
+                    delete data.$promise;
+                    delete data.$resolve;
+
                     for (var i = 0 ; i < data.champions.length; i++) {
                         $scope.champions = data.champions;
                     }
