@@ -38,7 +38,7 @@ module.exports = function(app) {
   } else {
     app.route('/').get(core.index);
   }
-
+  app.route('/googleaa5bc3cf7ec54c4e.html').get(core.printGoogleActivation);
   app.route('/riot.txt').get(core.printRiotActivation);
 
 	app.route('/admin').get(users.hasAuthorization(['admin']),users.requiresLogin, core.admin);

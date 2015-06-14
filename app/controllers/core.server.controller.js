@@ -26,3 +26,7 @@ exports.admin = function(req, res) {
 exports.printRiotActivation = function(req,res){
     res.status(200).send('ac5e52d0-0ad0-482b-abfc-7368e9e9afd3');
 }
+
+exports.printGoogleActivation = function(req,res){
+    res.status(200).send('google-site-verification: googleaa5bc3cf7ec54c4e.html');
+}
