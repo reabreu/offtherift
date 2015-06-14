@@ -39,7 +39,6 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $scope.buildsCountFrom    = 0;
 
         $scope.initTeaser = function(){
-
             getChampionsLinks();
 
             $scope.math = Math;
