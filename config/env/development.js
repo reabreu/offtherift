@@ -178,7 +178,7 @@ module.exports = {
 		}*/
 		from: process.env.MAILER_FROM || 'Offtherift <donotreply@offtherift.com>',
 		options: {
-			host: process.env.MAILER_SERVICE_PROVIDER || 'cloudcat.redewt.net',
+			host: process.env.MAILER_SERVICE_PROVIDER || 'mail.offtherift.com',
 			port: 465,
             secure: true,
             tls: { rejectUnauthorized: false },
