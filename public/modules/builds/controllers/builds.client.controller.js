@@ -231,13 +231,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Repository.setSelectedPatch($scope.data.selectedPatch);
 
 			var params = {version: $scope.data.selectedPatch, build: true };
-			var limitedParams = angular.extend({}, params, {
+			$scope.paramsChampion = angular.extend({}, params, {
 				limit: 30
 			});
 
 			$scope.blockBuilder();
-			Repository.getChampions(limitedParams).then(function(data) {
-				$scope.data.champions 			= data.champions;
+			Repository.getChampions($scope.paramsChampion).then(function(data) {
+				$scope.data.champions = data.champions;
 
 				Repository.getMasteries(params).then(function(data) {
 					var oldPoints = $scope.data.masteries.slice(); // copy old values
@@ -469,14 +469,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			if ($scope.state.champions.loading ||
 				$scope.state.champions.full) return;
 
-			var params = {
-				version: $scope.data.selectedPatch,
-				build: true,
-				limit: 30,
+			$scope.paramsChampion = angular.extend({}, $scope.paramsChampion, {
 				skip: skip
-			};
+			});
 
-			Repository.getChampions(params).then(function (data) {
+			Repository.getChampions($scope.paramsChampion).then(function (data) {
 				for (var i = 0; i < data.champions.length; i++) {
 					$scope.data.champions.push(data.champions[i]);
 				}
@@ -491,13 +488,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			$scope.data.champions = [];
 			$scope.state.champions.full = false;
 
-			var params = angular.extend({}, {
-				version: $scope.data.selectedPatch,
-				build: true,
-				limit: 30
-			}, search);
+			console.log(search);
 
-			Repository.getChampions(params).then(function (data) {
+			$scope.paramsChampion = angular.extend({}, $scope.paramsChampion, search, {
+				skip: 0
+			});
+
+			Repository.getChampions($scope.paramsChampion).then(function (data) {
 				for (var i = 0; i < data.champions.length; i++) {
 					$scope.data.champions.push(data.champions[i]);
 				}
