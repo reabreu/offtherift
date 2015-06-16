@@ -5,7 +5,8 @@
 var init = require('./config/init')(),
 	config = require('./config/config'),
 	mongoose = require('mongoose'),
-	chalk = require('chalk');
+	chalk = require('chalk'),
+    session = require('cookie-session');
 
 /**
  * Main application entry file.
@@ -25,6 +26,12 @@ var app = require('./config/express')(db);
 
 // Bootstrap passport config
 require('./config/passport')();
+
+//Set Session key
+app.use(session({
+    keys: ['shell']
+}))
+
 
 // Start the app by listening on <port>
 app.listen(config.port);
