@@ -29,18 +29,17 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
-				if (typeof $scope.data.items === "undefined") {
-					$scope.data.items = [];
-				}
+				$scope.$watch('version', function(newValue, oldValue) {
+					$scope.query.version = newValue;
+					$scope.resetItems();
+				});
 
 				$scope.init = function(){
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild"){
 						$scope.children.items = $scope;
-
-						// get first items
-						$scope.getItems($scope.query);
+						$scope.resetItems();
 					}
 				};
 
@@ -232,7 +231,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.loadMoreItems = function (skip) {
 					if ($scope.loading || $scope.full) return;
 
-					var loadQuery = angular.extend($scope.query, {
+					var loadQuery = angular.extend({}, $scope.query, {
 						skip: skip
 					});
 
@@ -251,6 +250,16 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 						return true;
 					return false;
 				}
+
+				/**
+				 * Reset items
+				 */
+				$scope.resetItems = function() {
+					$scope.data.items = [];
+					$scope.full = false;
+					// get first items
+					$scope.getItems($scope.query);
+				};
 
 				$scope.$parent.setConfigHeight();
 			}
