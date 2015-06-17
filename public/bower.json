@@ -32,6 +32,7 @@
     "ng-modal": "*",
     "ng-mobile-menu": "~0.2.0",
     "angular-block-ui": "~0.2.0",
-    "angular-slick": "~0.2.1"
+    "angular-slick": "~0.2.1",
+    "zepto": "~1.1.6"
   }
 }
