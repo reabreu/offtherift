@@ -262,7 +262,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
 						// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
 						$scope.updateMasteries();
-						$scope.updateRunes();
 						$scope.updateSnapshots();
 						$scope.patchChanged = false;
 					}
@@ -279,7 +278,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
 					// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
 					$scope.updateMasteries();
-					$scope.updateRunes();
 					$scope.updateSnapshots();
 					$scope.patchChanged = false;
 				}
@@ -308,35 +306,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 							currentMastery.customEffect.value = 0;
 						}
 						break;
-					}
-				}
-			}
-		};
-
-		/**
-		 * Updates the runes from last selected patch to the new one.
-		 * @return
-		 */
-		$scope.updateRunes = function() {
-			// Iterate through all the runes in the build to update them.
-			for (var tag in $scope.build.runes) {
-				var runes = $scope.build.runes[tag];
-				var runeCount = runes.length;
-
-				// Remove each item and add it again with updated info.
-				for (var i = 0; i < runeCount; i++) {
-					var runeId = runes[i].id;
-
-					// Find the rune and add it to the build.
-					var dataRuneCount = $scope.data.runes.length;
-					for (var r = 0; r < dataRuneCount; r++) {
-						if ($scope.data.runes[r].id == runeId) {
-							// Remove the old rune.
-							$scope.children.runes.removeRune(tag, runeId);
-							// Add the new one.
-							$scope.children.runes.addRune($scope.data.runes[r]);
-							break;
-						}
 					}
 				}
 			}
@@ -487,8 +456,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		$scope.searchChampion = function (search) {
 			$scope.data.champions = [];
 			$scope.state.champions.full = false;
-
-			console.log(search);
 
 			$scope.paramsChampion = angular.extend({}, $scope.paramsChampion, search, {
 				skip: 0

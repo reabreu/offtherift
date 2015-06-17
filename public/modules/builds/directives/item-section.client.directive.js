@@ -29,7 +29,8 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
-				$scope.$watch('version', function(newValue, oldValue) {
+				// change version callback
+				$scope.$watch('version', function(newValue) {
 					$scope.query.version = newValue;
 					$scope.resetItems();
 				});
