@@ -26,14 +26,14 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 				});
 			}
 			loadChampions();
-		}
+		};
 
 		$scope.searchChampions = function(){
 			//Se for uma nova pesquisa, limpamos os dados
 			Repository.clearChampionPagination();
 			$scope.champions = [];
 			loadChampions();
-		}
+		};
 
 		/**
 		 * Method in charge of updating the champions variable in the current scope
@@ -45,7 +45,7 @@ angular.module('champions').controller('ChampionsController', ['$scope', '$state
 			Repository.getChampions($scope.formData).then(function(data) {
 				for (var i = 0 ; i < data.champions.length; i++) {
 					$scope.champions.push(data.champions[i]);
-				};
+				}
 			    $scope.busy 	= data.full;
 			    $scope.full 	= data.full;
 			});

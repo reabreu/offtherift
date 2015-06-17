@@ -4,6 +4,12 @@
     p{
         font-weight: 300;
     }
+
+    .btn-facebook:hover{
+        .fa-facebook{
+            color: @water-blue;
+        }
+    }
 }
 
 .inviter-login-container{
@@ -32,16 +38,30 @@
     font-size: 13px;
 }
 
-.btn-login{
+.btn{
     border: 1px solid white;
     background-color: transparent;
     height: 30px;
     width: 40%;
-    margin-top: 10px;
-    margin-left: 30%;
-
     &:hover{
         background: white;
         color: @water-blue;
     }
+}
+.btn-login{
+    margin-top: 10px;
+    margin-left: 30%;
+}
+
+.btn-register{
+    height: 25px;
+    line-height: 10px;
+
+    &:focus{
+        color: white;
+    }
+}
+
+.btn-facebook{
+    min-width: 200px;
 }

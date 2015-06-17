@@ -379,7 +379,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			// Redirect after save
 			$scope.buildService.$save(function(response) {
-				$location.path('builds/' + response._id + '/edit');
+				$location.path('builds/'+ response.name + '/' + response._id + '/edit');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

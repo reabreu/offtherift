@@ -1,8 +1,11 @@
 <section data-ng-controller="TeaserController">
     <div class="container" data-ng-switch on="state">
         <h1>Congratulations!</h1>
-        <p data-ng-switch-when="activation">Activation</p>
-        <p data-ng-switch-when="hash">Hash</p>
-        <p data-ng-switch-default>New</p>
+        <p class="top30" data-ng-switch-when="activation">Activation</p>
+        <p ckass="top30" data-ng-switch-when="hash">Hash</p>
+        <p data-ng-switch-default class="light top30">
+            <p class="light">Thank you for your registration on our app, you'll be sent an activation email as soon as possible.</p>
+            <p class="light">Meanwhile you can check the most popular builds at our <a class="underline" ui-sref="teaser">homepage</a> or <a class="underline" ui-sref="listBuilds">browse</a> existing ones.</p>
+        </p>
     </div>
 </section>

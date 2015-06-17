@@ -9,7 +9,8 @@ var mongoose = require('mongoose'),
     Champion   = mongoose.model('Champion'),
     http = require('http'),
     async   = require("async"),
-	_ = require('lodash');
+	_ = require('lodash'),
+    session = require('cookie-session');
 
 /**
  * Create a Build
@@ -35,9 +36,17 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
     var build = req.build;
-    build.view_count++;
 
-    build.save();
+    if (typeof(req.session.views) == 'undefined' || !Array.isArray(req.session.views)) {
+        req.session.views = [];
+    }
+
+    //Verificar se esta build esta na cookie
+    if (req.session.views.indexOf(build._id.toString()) == -1) {
+        req.session.views.push(build._id.toString());
+        build.view_count++;
+        build.save();
+    }
 
     var now = new Date();
     var updateDate = new Date(build.lastFacebookUpdate);
@@ -212,6 +221,9 @@ exports.hasAuthorization = function(req, res, next) {
 
 
 exports.getTotalStats = function(req,res,next){
+
+    if(typeof(req.user) === 'undefined') return res.jsonp({});
+
     Build.aggregate(
         [
             {
@@ -376,6 +388,12 @@ exports.getMostmostSharedBuilds = function(req,res,next){
         );
     });
 };
+
+exports.countBuilds = function(req,res,next){
+    Build.count({}, function( err, count){
+        res.jsonp({num:count});
+    })
+}
 
 exports.getMostmostLikedBuilds = function(req,res,next){
     Build.findOne().sort('-created').exec(function(err, build) {
