@@ -395,6 +395,29 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
+		 * Clear all the mastery points from the build.
+		 */
+		$scope.resetMasteries = function() {
+			$scope.build.masteries_aux = {
+				avaliable_points: 30,
+				points : {
+					offense:  0,
+					defense:  0,
+					utility:  0
+				},
+				enabled: 	{
+					offense: 4,
+					defense: 4,
+					utility:  4
+				}
+			};
+			$scope.build.masteries = [];
+			for (var i = $scope.data.masteries.length - 1; i >= 0; i--) {
+				$scope.data.masteries[i].points = 0;
+			};
+		};
+
+		/**
 		 * Method responsible for checking whether a build can be savec
 		 * @return Boolean
 		 */
