@@ -19,7 +19,8 @@
             <input
                 type        = "text"
                 class       = "build-input col-sm-12"
-                ng-model    = "itemSearch.name"
+                ng-model    = "query.name"
+                ng-change   = "searchItems(query)"
                 placeholder = "Search Item">
             <div class="clearfix"></div>
             <div class="item-list">
@@ -29,7 +30,7 @@
                         infinite-scroll-disabled        = "loading"
                         infinite-scroll-immediate-check = "false"
                         infinite-scroll-container       = "'#items-list'">
-                        <li ng-repeat = "item in data.items | filterItems:itemSearch">
+                        <li ng-repeat = "item in data.items | filterItems: query">
                                 <a
                                 tooltip-html-unsafe="{{item.description}}"
                                 tooltip-trigger="mouseenter"

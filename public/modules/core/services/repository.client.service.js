@@ -7,7 +7,12 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 		var patches 		= [];
 		var champions 		= [];
 		var items 			= [];
-		var runes 			= [];
+		var runes 			= {
+			mark:         [],
+			glyph:        [],
+			seal:         [],
+			quintessence: []
+		};
 		var masteries 		= [];
 		var selectedPatch 	= [];
 
@@ -29,8 +34,22 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 				full: false
 			},
 			runes: {
-				loading: true,
-				full: false
+				mark: {
+					loading: true,
+					full: false
+				},
+				glyph: {
+					loading: true,
+					full: false
+				},
+				seal: {
+					loading: true,
+					full: false
+				},
+				quintessence: {
+					loading: true,
+					full: false
+				}
 			},
 			masteries: {
 				loading: true,
@@ -109,22 +128,24 @@ angular.module('core').factory('Repository', ['Patches','Items','Runes','Champio
 					return { items: data };
 			    });
 			},
-			getRunes: function( search_params ){
-				this.state.runes.loading = true;
+			getRunes: function( search_params, type ){
+				this.state.runes[type].loading = true;
+				// merge type to search parameters
+				search_params = angular.extend({}, search_params, { type: type });
 				return Runes.data.query( search_params )
 				.$promise.then(function(data) {
-					runes = data;
+					runes[type] = data;
 
 					// set loading state
-					_this.state.runes.loading = false;
+					_this.state.runes[type].loading = false;
 
 					// check if it's full
 					if (typeof data !== "undefined" &&
 						data.length == 0) {
-						_this.state.runes.full = true;
+						_this.state.runes[type].full = true;
 					}
 
-					return { runes: data};
+					return { runes: data };
 			    });
 			},
 			getMasteries: function( search_params ) {

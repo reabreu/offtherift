@@ -27,15 +27,31 @@ angular.module('core').directive('otrSrc', [
 					});
 				};
 
-				loadImage(srcImage);
+				/**
+				 * Verify if image is cached on browser
+				 * @param  {string}  src Image Url
+				 * @return {Boolean}     Cached
+				 */
+				var isCached = function (src) {
+					var image = new Image();
+					image.src = src;
 
-				scope.$watch(function () {
-					return attrs.otrSrc;
-				}, function (newValue, oldValue) {
-					if (oldValue !== newValue) {
-						loadImage(newValue);
-					}
-				});
+					return image.complete;
+				};
+
+				if (!isCached(attrs.otrSrc)) { // not cached
+					loadImage(srcImage);
+
+					scope.$watch(function () {
+						return attrs.otrSrc;
+					}, function (newValue, oldValue) {
+						if (oldValue !== newValue) {
+							loadImage(newValue);
+						}
+					});
+				} else { // cached
+					element[0].src = attrs.otrSrc;
+				}
 			}
 		};
 	}

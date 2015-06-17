@@ -11,7 +11,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				build: 	'=',
 				children: '=',
 				loading: '=',
-				query: '=',
+				query: '=?',
 				full: '='
 			},
 			controller: function($scope){
@@ -21,30 +21,27 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 */
 				var defaultQuery = {
 					limit: 30,
-					version: $scope.version
+					version: $scope.version,
+					name: "",
+					tags: []
 				};
 
-				var query = typeof $scope.query !== "undefined" ?
+				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
+
+				// change version callback
+				$scope.$watch('version', function(newValue) {
+					$scope.query.version = newValue;
+					$scope.resetItems();
+				});
 
 				$scope.init = function(){
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild"){
 						$scope.children.items = $scope;
-
-						// get first items
-						$scope.getItems(query);
+						$scope.resetItems();
 					}
-				};
-
-				$scope.search = {
-					name: null
-				};
-
-				$scope.itemSearch = {
-					name: "",
-					tags: []
 				};
 
 				$scope.addItem = function(item, snapshot){
@@ -154,18 +151,18 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				};
 
 				$scope.toggleItemTag = function(tag) {
-					var idx = $scope.itemSearch.tags.indexOf(tag);
+					var idx = $scope.query.tags.indexOf(tag);
 
 					// is currently selected
 					if (idx > -1) {
-						$scope.itemSearch.tags.splice(idx, 1);
+						$scope.query.tags.splice(idx, 1);
 					} else {
-						$scope.itemSearch.tags.push(tag);
+						$scope.query.tags.push(tag);
 					}
 				};
 
 				$scope.itemFilterEnabled = function(tag) {
-					return ($scope.itemSearch.tags.indexOf(tag) > -1);
+					return ($scope.query.tags.indexOf(tag) > -1);
 				};
 
 				$scope.range = function(min, max, step){
@@ -235,11 +232,18 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				$scope.loadMoreItems = function (skip) {
 					if ($scope.loading || $scope.full) return;
 
-					var loadQuery = angular.extend(query, {
+					var loadQuery = angular.extend({}, $scope.query, {
 						skip: skip
 					});
 
 					$scope.getItems(loadQuery);
+				};
+
+				$scope.searchItems = function () {
+					$scope.data.items = [];
+					$scope.full = false;
+
+					$scope.loadMoreItems(0);
 				};
 
 				$scope.checkLevelSelection = function() {
@@ -247,6 +251,16 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 						return true;
 					return false;
 				}
+
+				/**
+				 * Reset items
+				 */
+				$scope.resetItems = function() {
+					$scope.data.items = [];
+					$scope.full = false;
+					// get first items
+					$scope.getItems($scope.query);
+				};
 
 				$scope.$parent.setConfigHeight();
 			}

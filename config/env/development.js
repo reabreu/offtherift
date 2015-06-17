@@ -63,7 +63,8 @@ module.exports = {
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.js',
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
 						'public/lib/slick-carousel/slick/slick.min.js',
-						'public/lib/angular-slick/dist/slick.min.js'
+						'public/lib/angular-slick/dist/slick.min.js',
+						'public/lib/zepto/zepto.min.js'
 					]
 				},
 				css: [
