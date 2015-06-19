@@ -12,6 +12,18 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		// Find existing Build
 		$scope.findOne = function() {
+			$scope.data = {
+				currentSnapshot		: 0,
+				timer				: null,
+				champions 			: [],
+				items 				: [],
+				runes 				: [],
+				masteries 			: [],
+				patches 			: Repository.getCachedPatches(),
+				selectedPatch 		: null,
+				selectedChampion 	: null
+			};
+
             $scope.absUrl = $location.absUrl().replace("#", "%23");
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
@@ -23,17 +35,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$rootScope.pageKeywords = Metainformation.metaKeywords();
 				$rootScope.pageTitle 	= Pagetitle.setTitle($scope.build.name);
 
-				$scope.data = {
-					currentSnapshot		: 0,
-					timer				: null,
-					champions 			: [],
-					items 				: [],
-					runes 				: [],
-					masteries 			: [],
-					patches 			: Repository.getCachedPatches(),
-					selectedPatch 		: null,
-					selectedChampion 	: null
-				};
+
 
 				if ($state.current.name == "viewBuild") {
 					var params = {version: $scope.build.version, build: true };

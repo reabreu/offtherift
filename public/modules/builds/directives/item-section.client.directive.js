@@ -12,7 +12,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				children: '=',
 				loading: '=',
 				query: '=?',
-				full: '='
+				full: '=?'
 			},
 			controller: function($scope){
 				/**

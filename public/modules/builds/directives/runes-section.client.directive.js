@@ -32,16 +32,18 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
-				// change version callback
-				$scope.$watch('version', function(newValue) {
-					$scope.query.version = newValue;
-					$scope.resetRunes().then(function() {
+				// change version callback only set when not viewing
+
+				if( $scope.buildMode != "viewBuild"){
+					$scope.$watch('version', function(newValue) {
+						$scope.query.version = newValue;
+						$scope.resetRunes();
 						// update runes from build
 						if (typeof $scope.build.runes !== "undefined") {
 							$scope.updateBuild();
 						}
 					});
-				});
+				}
 
 				$scope.runeTypes = {
 					'mark': 'Marks',
@@ -196,6 +198,9 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * Reset Runes
 				 */
 				$scope.resetRunes = function () {
+
+					if( $scope.buildMode == "viewBuild") return;
+
 					$scope.data.runes = {
 						mark:         [],
 						glyph:        [],
