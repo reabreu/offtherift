@@ -60,10 +60,13 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 $scope.buildsCountFrom    = result.num* 0.5;
             });
 
-            Userstatistics.count.get().$promise.then(function(result){
-                $scope.usersCountTo      = result.num;
-                $scope.usersCountFrom    = result.num* 0.5;
-            });
+            $timeout( function(){
+                Userstatistics.count.get().$promise.then(function(result){
+                    $scope.usersCountTo      = result.num;
+                    $scope.usersCountFrom    = result.num* 0.5;
+                });
+            }, 2000);
+
         };
 
         function getChampionsLinks() {
