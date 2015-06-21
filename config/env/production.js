@@ -118,8 +118,8 @@ module.exports = {
 		},
 	},
 	facebook: {
-		clientID: process.env.FACEBOOK_ID || '671726556258325',
-		clientSecret: process.env.FACEBOOK_SECRET || '618e4ac3c109ed7e355da58b3cac3e51',
+		clientID: process.env.FACEBOOK_ID || '671725859591728',
+		clientSecret: process.env.FACEBOOK_SECRET || 'c5f7ad8ea635f17ac4f2ff754537ea4c',
 		callbackURL: '/auth/facebook/callback',
 		pageLink: 'http://www.facebook.com/offtheriftapp'
 	},
