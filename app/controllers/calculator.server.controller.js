@@ -438,8 +438,8 @@ exports.processStats = function(request, admin) {
 				var firstCap  		= Math.min(parseFloat(Math.max(response.data[key] - 415, 0)), 75) * 0.8;
 				response.data[key] 	= parseInt(Math.round(secondCap + firstCap + Math.min(response.data[key], 415)));
 				break;
-			//case "armorpenetration":
-			//case "magicpenetration":
+			case "armorpenetration":
+			case "magicpenetration":
 			case "hpregen":
 			case "mpregen":
 				break;
@@ -482,7 +482,7 @@ function calculateStatValue(stat, resStats) {
 			return stat.base * (1 + statModifier);
 		case "armorpenetration":
 		case "magicpenetration":
-			return [flatBonus, (statModifier*100)];
+			return [Math.round(flatBonus), (statModifier*100)];
 		case "tenacity":
 			return statModifier*100;
 		case "movespeed":
