@@ -438,13 +438,13 @@ exports.processStats = function(request, admin) {
 				var firstCap  		= Math.min(parseFloat(Math.max(response.data[key] - 415, 0)), 75) * 0.8;
 				response.data[key] 	= parseInt(Math.round(secondCap + firstCap + Math.min(response.data[key], 415)));
 				break;
-			case "armorpenetration":
-			case "magicpenetration":
+			//case "armorpenetration":
+			//case "magicpenetration":
 			case "hpregen":
 			case "mpregen":
 				break;
 			default:
-				response.data[key] = Math.round(response.data[key] * 100) / 100;
+				response.data[key] = Math.round(response.data[key]);
 				break;
 		}
 	}
