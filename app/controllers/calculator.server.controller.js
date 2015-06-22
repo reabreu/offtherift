@@ -444,7 +444,7 @@ exports.processStats = function(request, admin) {
 			case "mpregen":
 				break;
 			default:
-				response.data[key] = Math.round(response.data[key]);
+				response.data[key] = Math.round(response.data[key] * 100) / 100;
 				break;
 		}
 	}
