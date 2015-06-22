@@ -417,7 +417,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			buildService.$update(function() {
 				$scope.buildChanged = false;
-				$location.path('builds/' + $scope.build._id + '/edit');
+				$location.path('builds/' + $scope.build.name + '/'  + $scope.build._id + '/edit');
 				$scope.unblockBuilder();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
