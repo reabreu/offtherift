@@ -12,6 +12,7 @@
                 <a class="platform-title" ui-sref="dashboard"><img src="/modules/core/img/peixeboi.png" alt="logo"></a>
             </div>
             <div class="col-xs-5">
+                {{authentication|json}}
                 <ul class="nav navbar-nav pull-right">
                     <li ng-show = "authentication.user">
                         <a class="user-avatar">
