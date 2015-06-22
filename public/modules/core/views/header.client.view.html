@@ -12,11 +12,10 @@
                 <a class="platform-title" ui-sref="dashboard"><img src="/modules/core/img/peixeboi.png" alt="logo"></a>
             </div>
             <div class="col-xs-5">
-                {{authentication|json}}
                 <ul class="nav navbar-nav pull-right">
                     <li ng-show = "authentication.user">
                         <a class="user-avatar">
-                            <img class="avatar" src="http://graph.facebook.com/{{authentication.providerData.id}}/picture">
+                            <img class="avatar" src="http://graph.facebook.com/{{authentication.user.providerData.id}}/picture">
                             <span>{{authentication.user.firstName}} {{authentication.user.lastName}}</span>
                         </a>
                     </li>
