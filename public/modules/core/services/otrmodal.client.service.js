@@ -20,6 +20,7 @@ angular.module('core').factory('$otrModal', ['$modal','$timeout',
 						var $h = $m.find('.modal-header:first');
 						var $b = $m.find('.modal-body:first');
 						var $f = $m.find('.modal-footer:first');
+						var $c = $m.find('.container-fluid:first');
 
 						// Window full height
 						var height = window.innerHeight;
@@ -34,6 +35,7 @@ angular.module('core').factory('$otrModal', ['$modal','$timeout',
 						}
 
 						$b.css('height', height);
+						$c.css('height', height);
 					}, 100);
 				});
 
