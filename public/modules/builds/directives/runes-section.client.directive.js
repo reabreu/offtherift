@@ -14,19 +14,22 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				version: '='
 			},
 			controller: function($scope) {
-				// default select type
-				$scope.currentType = 'mark';
 
 				// set build mode
 				$scope.buildMode = $state.current.name;
 
+				// default select type
+				var defaultType = 'mark';
 				/**
 				 * Default queries
 				 * @type {Object}
 				 */
 				var defaultQuery = {
 					limit: 30,
-					version: $scope.version
+					version: $scope.version,
+					type: defaultType,
+					name: "",
+					tags: []
 				};
 
 				$scope.query = typeof $scope.query !== "undefined" ?
@@ -52,11 +55,6 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					'quintessence': 'Quintessences'
 				};
 
-				$scope.runeSearch = {
-					name: "",
-					tags: []
-				};
-
 				$scope.runeLimits = {
 					mark: 9,
 					glyph: 9,
@@ -70,6 +68,13 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				$scope.init = function () {
 					// get first runes
 					$scope.resetRunes();
+				};
+
+				$scope.searchRunes = function () {
+					$scope.data.runes[$scope.query.type] = [];
+					$scope.state[$scope.query.type].full = false;
+
+					$scope.loadMoreRunes(0);
 				};
 
 				/**
@@ -93,19 +98,8 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					return false;
 				};
 
-				$scope.toggleRuneTag = function(tag) {
-					var idx = $scope.runeSearch.tags.indexOf(tag);
-
-					// is currently selected
-					if (idx > -1) {
-						$scope.runeSearch.tags.splice(idx, 1);
-					} else {
-						$scope.runeSearch.tags.push(tag);
-					}
-				};
-
 				$scope.runeFilterEnabled = function(tag) {
-					return ($scope.runeSearch.tags.indexOf(tag) > -1);
+					return ($scope.query.tags.indexOf(tag) > -1);
 				};
 
 				/**
@@ -158,10 +152,10 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				};
 
 				$scope.setCurrentType = function(tag) {
-					$scope.currentType = tag;
+					$scope.query.type = tag;
 
 					// initialize current type first runes
-					if ($scope.data.runes[$scope.currentType].length == 0) {
+					if ($scope.data.runes[$scope.query.type].length == 0) {
 						$scope.init();
 					}
 				};
@@ -198,14 +192,14 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 */
 				$scope.loadMoreRunes = function (skip) {
 
-					if ($scope.state[$scope.currentType].loading ||
-						$scope.state[$scope.currentType].full) return;
+					if ($scope.state[$scope.query.type].loading ||
+						$scope.state[$scope.query.type].full) return;
 
 					var loadQuery = angular.extend({}, $scope.query, {
 						skip: skip
 					});
 
-					return $scope.getRunes(loadQuery, $scope.currentType);
+					return $scope.getRunes(loadQuery, $scope.query.type);
 				};
 
 				/**
@@ -224,7 +218,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					$scope.state.seal.full = false;
 					$scope.state.quintessence.full = false;
 
-					return $scope.getRunes($scope.query, $scope.currentType);
+					return $scope.getRunes($scope.query, $scope.query.type);
 				};
 
 				/**
