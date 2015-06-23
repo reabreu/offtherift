@@ -33,14 +33,16 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
 				// change version callback
-				$scope.$watch('version', function(newValue) {
-					$scope.query.version = newValue;
-					$scope.resetRunes().then(function() {
-						// update runes from build
-						if (typeof $scope.build.runes !== "undefined") {
-							$scope.updateBuild();
-						}
-					});
+				$scope.$watch('version', function(newValue, oldValue) {
+					if (newValue !== oldValue) {
+						$scope.query.version = newValue;
+						$scope.resetRunes().then(function() {
+							// update runes from build
+							if (typeof $scope.build.runes !== "undefined") {
+								$scope.updateBuild();
+							}
+						});
+					}
 				});
 
 				$scope.runeTypes = {
@@ -70,11 +72,25 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					$scope.resetRunes();
 				};
 
-				$scope.distribute = function() {
-
-					if( $scope.buildMode == "viewBuild") return;
-
-					$scope.children.runes = $scope;
+				/**
+				 * Distribute rune to his tag
+				 * @param  {object}  rune Rune Object
+				 * @return {boolean} 	  Added
+				 */
+				$scope.distribute = function(rune) {
+					if (typeof rune !== "undefined") {
+						for (var tag in $scope.data.runes) {
+							if (typeof rune.tags !== "undefined" &&
+								rune.tags.indexOf(tag) != -1) {
+								// Remove the old rune.
+								$scope.removeRune(tag, rune.id);
+								// Add the new one.
+								$scope.addRune(rune);
+								return true;
+							}
+						}
+					}
+					return false;
 				};
 
 				$scope.toggleRuneTag = function(tag) {
@@ -216,61 +232,88 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @return
 				 */
 				$scope.updateBuild = function() {
-					// Iterate through all the runes in the build to update them.
-					for (var tag in $scope.build.runes) {
-						var runes = $scope.build.runes[tag];
-						var runeCount = runes.length;
-
-						// Remove each item and add it again with updated info.
-						for (var i = 0; i < runeCount; i++) {
-							var runeId = runes[i].id;
-
-							$scope.getRune(tag, runeId).then(function (data) {
-								// Remove the old rune.
-								$scope.removeRune(data.tag, data.rune.id);
-								// Add the new one.
-								$scope.addRune(data.rune);
-							});
+					return $scope.loadRunes().then(function (runes) {
+						// Iterate through all the runes in the build to update them
+						for (var i = 0; i < runes.length; i++) {
+							$scope.distribute(runes[i]);
 						}
-					}
+					});
 				};
 
 				/**
-				 * Returns rune by id and tag
+				 * Returns runes by using id's
+				 * @return {object} Rune
+				 */
+				$scope.loadRunes = function () {
+					var deferred = $q.defer();
+
+					var scopedRunes   = [];
+					var unloadedRunes = [];
+
+					// Iterate through all the runes in the build to update them.
+					for (var tag in $scope.build.runes) {
+						var runes = $scope.build.runes[tag];
+
+						// Load runes from scope
+						for (var i = 0; i < runes.length; i++) {
+							var rune = $scope.getRuneFromScope(tag, runes[i].id);
+
+							if (rune) {
+								scopedRunes.push(rune);
+							} else {
+								unloadedRunes.push(runes[i].id);
+							}
+						}
+					}
+
+					// load runes from database
+					if (unloadedRunes.length > 0) {
+						$scope.getRunesFromDatabase(tag, unloadedRunes).then(function (data) {
+							for (var i = 0; i < data.length; i++) {
+								scopedRunes.push(data[i]);
+							}
+
+							deferred.resolve(scopedRunes);
+						});
+					} else {
+						deferred.resolve(scopedRunes);
+					}
+
+					return deferred.promise;
+				};
+
+				/**
+				 *
+				 * Returns rune by id and tag from scope array
 				 * @param  {string} tag    Rune tag
 				 * @param  {int}    runeId Rune Identification
 				 * @return {object}        Rune
 				 */
-				$scope.getRune = function (tag, runeId) {
-					var deferred = $q.defer();
-
-					var result = { tag: tag };
-
+				$scope.getRuneFromScope = function (tag, runeId) {
 					// Find the rune and add it to the build.
 					var dataRuneCount = $scope.data.runes[tag].length;
 					for (var r = 0; r < dataRuneCount; r++) {
 						if ($scope.data.runes[tag][r].id == runeId) {
-							angular.extend(result, { rune: $scope.data.runes[tag][r] });
-							deferred.resolve(result);
+							return $scope.data.runes[tag][r];
 						}
 					}
+					return false;
+				};
 
-					// If rune is not on cached array
-					if (typeof result.rune === "undefined") {
-						var params = {
-							version: $scope.query.version,
-							riotId: runeId
-						};
+				/**
+				 * Returns rune by id and tag from database
+				 * @param  {string} tag   Rune tag
+				 * @param  {int}    runes Rune Identifications
+				 * @return {object}       Promise
+				 */
+				$scope.getRunesFromDatabase = function (tag, runes) {
+					var params = {
+						version: $scope.query.version,
+						riotId: runes
+					};
 
-						// Get from database
-						Runes.data.query(params)
-							.$promise.then(function(data) {
-								angular.extend(result, { rune: data[0] });
-								deferred.resolve(result);
-							});
-					}
-
-					return deferred.promise;
+					// Get from database
+					return Runes.data.query(params).$promise;
 				};
 			}
 		};
