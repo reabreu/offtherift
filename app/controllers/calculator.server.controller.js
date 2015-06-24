@@ -482,7 +482,7 @@ function calculateStatValue(stat, resStats) {
 			return stat.base * (1 + statModifier);
 		case "armorpenetration":
 		case "magicpenetration":
-			return [flatBonus, (statModifier*100)];
+			return [Math.round(flatBonus), (statModifier*100)];
 		case "tenacity":
 			return statModifier*100;
 		case "movespeed":

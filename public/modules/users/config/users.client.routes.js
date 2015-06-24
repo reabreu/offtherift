@@ -10,7 +10,7 @@ angular.module('users').config(['$stateProvider',
 			templateUrl: 'modules/users/views/profile.client.view.html',
 			resolve: {
 				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {
-					Urlprotection.checkSendToHome($q, Authentication, $state, $timeout);
+					return Urlprotection.checkSendToHome($q, Authentication, $state, $timeout);
 				}]
 			}
 		}).

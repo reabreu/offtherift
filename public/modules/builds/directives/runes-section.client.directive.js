@@ -8,7 +8,6 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 			scope: {
 				data: '=',
 				build: '=',
-				children: '=',
 				query: '=?',
 				state: '=',
 				version: '='
@@ -35,14 +34,17 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
-				// change version callback
+				// change version callback only set when not viewing
 				$scope.$watch('version', function(newValue, oldValue) {
 					if (newValue !== oldValue) {
 						$scope.query.version = newValue;
 						$scope.resetRunes().then(function() {
 							// update runes from build
 							if (typeof $scope.build.runes !== "undefined") {
-								$scope.updateBuild();
+								$scope.updateBuild().then(function () {
+									// evoques calculate from BuildsController
+									$scope.$parent.evaluateStatsRequest();
+								});
 							}
 						});
 					}
@@ -82,7 +84,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @param  {object}  rune Rune Object
 				 * @return {boolean} 	  Added
 				 */
-				$scope.distribute = function(rune) {
+				var distribute = function(rune) {
 					if (typeof rune !== "undefined") {
 						for (var tag in $scope.data.runes) {
 							if (typeof rune.tags !== "undefined" &&
@@ -166,7 +168,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @param  {object}  type  Rune type
 				 * @return {boolean}
 				 */
-				$scope.getRunes = function (query, type) {
+				var getRunes = function (query, type) {
 					return Repository.getRunes(query, type).then(function (data) {
 
 						if (typeof data.runes !== "undefined" &&
@@ -199,7 +201,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 						skip: skip
 					});
 
-					return $scope.getRunes(loadQuery, $scope.query.type);
+					return getRunes(loadQuery, $scope.query.type);
 				};
 
 				/**
@@ -218,7 +220,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					$scope.state.seal.full = false;
 					$scope.state.quintessence.full = false;
 
-					return $scope.getRunes($scope.query, $scope.query.type);
+					return getRunes($scope.query, $scope.query.type);
 				};
 
 				/**
@@ -226,10 +228,10 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @return
 				 */
 				$scope.updateBuild = function() {
-					return $scope.loadRunes().then(function (runes) {
+					return loadRunes().then(function (runes) {
 						// Iterate through all the runes in the build to update them
 						for (var i = 0; i < runes.length; i++) {
-							$scope.distribute(runes[i]);
+							distribute(runes[i]);
 						}
 					});
 				};
@@ -238,7 +240,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * Returns runes by using id's
 				 * @return {object} Rune
 				 */
-				$scope.loadRunes = function () {
+				var loadRunes = function () {
 					var deferred = $q.defer();
 
 					var scopedRunes   = [];
@@ -250,7 +252,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 
 						// Load runes from scope
 						for (var i = 0; i < runes.length; i++) {
-							var rune = $scope.getRuneFromScope(tag, runes[i].id);
+							var rune = getRuneFromScope(tag, runes[i].id);
 
 							if (rune) {
 								scopedRunes.push(rune);
@@ -262,7 +264,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 
 					// load runes from database
 					if (unloadedRunes.length > 0) {
-						$scope.getRunesFromDatabase(tag, unloadedRunes).then(function (data) {
+						getRunesFromDatabase(tag, unloadedRunes).then(function (data) {
 							for (var i = 0; i < data.length; i++) {
 								scopedRunes.push(data[i]);
 							}
@@ -283,7 +285,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @param  {int}    runeId Rune Identification
 				 * @return {object}        Rune
 				 */
-				$scope.getRuneFromScope = function (tag, runeId) {
+				var getRuneFromScope = function (tag, runeId) {
 					// Find the rune and add it to the build.
 					var dataRuneCount = $scope.data.runes[tag].length;
 					for (var r = 0; r < dataRuneCount; r++) {
@@ -300,7 +302,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @param  {int}    runes Rune Identifications
 				 * @return {object}       Promise
 				 */
-				$scope.getRunesFromDatabase = function (tag, runes) {
+				var getRunesFromDatabase = function (tag, runes) {
 					var params = {
 						version: $scope.query.version,
 						riotId: runes

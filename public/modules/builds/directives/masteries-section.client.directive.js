@@ -7,15 +7,11 @@ angular.module('builds').directive('masteriesSection', ['$state',
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'=',
-				children: '='
+				build: 	'='
 			},
 			controller: function($scope, $element){
 
 				$scope.buildMode = $state.current.name;
-
-				if( $scope.buildMode != "viewBuild")
-					$scope.children.masteries = $scope;
 
 				$scope.addRank = function($event, masterie){
 					if( $scope.buildMode == "viewBuild") return;
@@ -50,7 +46,6 @@ angular.module('builds').directive('masteriesSection', ['$state',
 							return;
 						}
 					}
-					console.log('aquiii3');
 
 					if(masterie.points > 0){
 						$scope.build.masteries_aux.points[masterie.masteryTree.toLowerCase()]--;
@@ -73,13 +68,31 @@ angular.module('builds').directive('masteriesSection', ['$state',
 					};
 
 					var length = masterie.customEffect.length;
-					//retirar efeitos que queremos adicionar
-					for (var i =0; i < length; i++) {
-						if( masterie.customEffect[i].rank == masterie.points){
-							$scope.build.masteries.push({id: masterie.id, customEffect: masterie.customEffect[i]});
+					if (length == 0) {
+						// create a new, empty effect to store the points
+						var newEffect = {
+							"global" : false,
+							"rank" : masterie.points,
+							"name" : "",
+							"src" : "",
+							"perlevel" : false,
+							"unique" : false,
+							"type" : "flat",
+							"value" : "0",
+							"dest" : "hp"
+						};
+
+						$scope.build.masteries.push({id: masterie.id, customEffect: newEffect});
+					}
+					else {
+						//retirar efeitos que queremos adicionar
+						for (var i =0; i < length; i++) {
+							if( masterie.customEffect[i].rank == masterie.points){
+								$scope.build.masteries.push({id: masterie.id, customEffect: masterie.customEffect[i]});
+							}
 						}
 					}
-				}
+				};
 
 				$scope.checkDependecy = function(masterie){
 					if (masterie.prereq == "0"){

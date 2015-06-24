@@ -51,6 +51,7 @@ angular.module('core').directive('otrSrc', [
 					});
 				} else { // cached
 					element[0].src = attrs.otrSrc;
+					element.removeClass('label-portrait');
 				}
 			}
 		};

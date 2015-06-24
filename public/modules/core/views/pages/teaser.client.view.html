@@ -1,15 +1,18 @@
 <div id="header-unit" class="teaser-wrapper image-bg" data-ng-controller="TeaserController" ng-init="initTeaser()">
     <div class="container-fluid">
-        <div class="row">
-            <h1 class="teaser-tile">WELCOME, SUMMONER</h1>
+        <div class="row top30 bottom20">
+            <p class="teaser-title text-center heavy">WELCOME</p>
+            <p class="text-center teaser-sub-title light">SUMMONER</p>
         </div>
         <div class="row intro-container">
-            <p>Meet OfftheRift web app.</p>
-            <p>Here you can set up and share League of Legends champion builds and check how champion statistics change through time as Riot releases new patches.</p>
-            <p>We're on closed Beta right now, that means you can check public builds, but you'll need to get an invitation to create your own.</p>
-            <p>Keep scrolling and check how everything works!</p>
+            <div class="col-sm-12 col-md-push-2 col-md-8">
+                 <p>Meet  <a class="link-twitter" href="https://twitter.com/OfftheRift_app" target="_blank">#OfftheRift</a> web app.</p>
+                <p>Here you can set up and share League of Legends champion builds and check how champion statistics change through time as Riot releases new patches.</p>
+                <p>We're on closed Beta right now, that means you can check public builds, but you'll need to get an invitation to create your own.</p>
+                <p>Keep scrolling and check how everything works!</p>
+            </div>
         </div>
-        <div class="row statistics-wrapper">
+        <div class="row statistics-wrapper top10">
             <div class="col-md-3 col-md-push-3 col-sm-12">
                 <h1 class="statistic-container">
                     <span class="heavy statistic-number" count-to="{{buildsCountTo}}" value="{{buildsCountFrom}}" duration="1"></span>
@@ -24,8 +27,9 @@
             </div>
         </div>
         <div class="dashboard-container intro-container">
-            <p>Below you can check the most famous builds on the app right now.</p>
-            <br>
+            <div class="bottom20">
+                <p>Below you can check the most famous builds on the app right now.</p>
+            </div>
             <div class="row row-no-padding">
                 <div class="col-lg-2 col-xs-3 build-portrait-right">
                     <div class="build-wrapper">
@@ -163,38 +167,39 @@
                 </div>
             </div>
         </div>
-        <div class="row mt15">
-            <div class="intro-container">
+        <div class="row intro-container">
+            <div class="col-sm-12 col-md-push-2 col-md-8">
                 <p>Our builder has the advantage of providing real-time champion statistics as you set up your own builds.</p>
                 <p>We chose to open it as a Beta so you can help shape the final version with us.</p>
                 <p>Right now, the stats are calculated based on items, runes, masteries and champion's growth and base statistics</p>
                 <p>We do plan on adding the champion abilites as the final piece of the builder and making some other cool tools for you guys.</p>
             </div>
-            <br>
-            <h2 class="text-center bottom30">Creating your own build:</h2>
-            <div class="col-xs-5 cancel-padding">
+        </div>
+        <div class="row">
+            <h1 class="text-center bottom50 top50 big-text">Creating your own build</h1>
+            <div class="col-md-push-5 col-md-6">
+                <table class="table-step">
+                    <td class="text-right big-number">1 </td>
+                    <td><div  class="step-description">Start by summoning your champion.<br> The app will fetch the base stats and show them to you.</div></td>
+                </table>
+            </div>
+            <div class="col-md-pull-6 col-md-5 cancel-padding">
                 <div class="half-circle">
                     <div class="first-step-image"></div>
                 </div>
                 <div class="white-row"></div>
             </div>
-            <div class="col-xs-7">
-                <table class="table-step">
-                    <td class="text-right big-number">1 </td>
-                    <td><div  class="step-description">Start by summoning your champion. The app will fetch the base stats and show you them to you.</div></td>
-                </table>
-            </div>
         </div>
-        <div class="row step-two-container">
-            <div class="col-lg-6 col-md-8">
+        <div class="row step-two-container dark-row">
+            <div class="col-md-push-1 col-md-6">
                 <table class="table-step">
                     <td class="text-center big-number">2 </td>
                     <td>
-                        <div class="step-description">Search and add items to your build. As you add the app will recalculate the stats.</div>
+                        <div class="step-description">Search and add items to your build. <br>As you do the app will recalculate the stats.</div>
                     </td>
                 </table>
             </div>
-            <div class="col-lg-6 col-md-4">
+            <div class="col-md-push-2 col-md-3">
                 <ul class="item-wrapper teaser-item-set">
                     <li class="item-slot">
                         <img otr-src="{{ '3001' | ddragon: '5.10.1':'item'}}">
@@ -218,15 +223,15 @@
             </div>
         </div>
         <div class="row step-three-container teaser-runes">
-            <div class="col-md-6 col-md-push-6">
+            <div class="col-md-5 col-md-push-6">
                 <table class="table-step">
                     <td class="text-center big-number">3 </td>
                     <td>
-                        <div class="step-description">You can add runes as well. Hover everything you add to your build to see what it affects.</div>
+                        <div class="step-description">You can also add runes. <br>Hover everything to see the affected stats.</div>
                     </td>
                 </table>
             </div>
-            <div class="col-md-6 col-md-pull-6">
+            <div class="col-md-5 col-md-pull-4">
                 <div class="runes-wrapper">
                     <div class="runes-title-container">
                         <div class="col-xs-3"><div class="rune-col-title"><span>Glyphs</span></div></div>
@@ -267,18 +272,18 @@
                 </div>
             </div>
         </div>
-        <div class="row step-four-container">
-            <div class="col-lg-6 col-md-8">
+        <div class="row step-four-container dark-row">
+            <div class="col-sm-push-1 col-sm-6">
                 <table class="table-step">
                     <td class="text-center big-number">4 </td>
                     <td>
-                        <div class="step-description">Masteries are important as well. Select them and the build is ready to be shared.</div>
+                        <div class="step-description">Masteries are considered as well. <br>Select them and the build is ready to be shared.</div>
                     </td>
                 </table>
             </div>
-            <div class="col-lg-6 col-md-4 teaser-masteries">
+            <div class="col-sm-push-2 col-sm-3 teaser-masteries">
                 <div class="mastery-column">
-                    <h3 class="mastery-title mastery-red" >Offense</h3>
+                    <h3 class="mastery-title mastery-red">Offense</h3>
                     <ul class="mastery-container">
                         <li class="mastery-item">
                             <img otr-src="{{ 4111 | ddragon: '5.9.1':'mastery'}}">
@@ -367,10 +372,7 @@
             </div>
         </div>
         <div class="row step-five-container">
-            <div class="col-xs-12">
-                <h1 class="text-center top30">With everything you add, we calculate the champion stats for you.</h1>
-            </div>
-            <div class="col-xs-12 teaser-stats">
+            <div class="col-xs-6 teaser-stats">
                 <div class="stats-container">
                     <div class="stat-column">
                         <div class="stat-wrapper stat-wrapper-left">
@@ -554,9 +556,15 @@
                 </div>
                 </div>
             </div>
+            <div class="col-xs-6 top40 vertical-banner">
+                <p>With everything</p>
+                <p>you add</p>
+                <p>we <span class="bold">calculate</span></p>
+                <p>the stats for you.</p>
+            </div>
         </div>
-        <div class="row step-six-container">
-            <div class="col-md-6 col-md-push-6">
+        <div class="row step-six-container dark-row">
+            <div class="col-md-push-1 col-md-6">
                 <table class="table-step">
                     <td class="text-center big-number">5 </td>
                     <td>
@@ -564,88 +572,123 @@
                     </td>
                 </table>
             </div>
-            <div class="col-md-6 col-md-pull-6">
+            <div class="col-md-push-1 col-md-4 col-community">
                 <i class="fa fa-users fa-6"></i>
             </div>
         </div>
         <div class="row step-seven-container">
-            <h1 class="text-center top30 bottom30 heavy">OfftheRift is maintained via donationware</h1>
-            <div class="support-container">
-                <p class="text-center">We won't charge users to use our app.</p>
-                <p class="text-center">However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
-                <p class="text-center">If you enjoy our work and want to see other tools being created please consider donating via paypal to ******@offtherift.com</p>
-                <p class="text-center">We want to know your opinion. If you have ideias or suggestions please contact us at
-                    <a class="link grey" href="mailto:feedback@offtherift.com">
-                                            feedback@offtherift.com
-                    </a></p>
-                <p class="text-center">If you want to know more about the team, check out our <a class="link" ui-sref="aboutus">about us</a> page.</p>
+            <div class="col-sm-12 col-md-push-2 col-md-8">
+                <h1 class="text-center top30 bottom30"><span class="big-text light">OfftheRift is maintained via</span> <span class="big-text heavy">donationware</span></h1>
+                <div class="support-container">
+                    <p class="text-center">We won't charge users to use our app.</p>
+                    <p class="text-center">However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
+                    <p class="text-center">If you enjoy our work and want to see other tools being created please consider donating via paypal to ******@offtherift.com</p>
+                    <p class="text-center">We want your opinion. If you have ideias or suggestions please contact us at
+                        <a class="link grey" href="mailto:feedback@offtherift.com">feedback@offtherift.com</a>
+                    </p>
+                    <!--<p class="text-center">If you want to know more about the team, check out our <a class="link" ui-sref="aboutus">about us</a> page.</p>-->
+                </div>
             </div>
         </div>
         <div class="step-eight-container">
             <div class="row">
-                <div class="col-md-5 col-md-push-7 col-xs-7 col-xs-push-5 cancel-right-padding top30">
+                <div class="col-lg-8 col-lg-push-4 col-md-9 col-md-push-3 col-xs-12 cancel-right-padding top50 bottom50">
                     <div class="half-circle-right">
                     </div>
-                    <div class="white-row white-row-small follow-us bottom30">
-                        Follow us
-                        <div class="contact-teaser ml15">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
-                                <i class="fa fa-facebook fa-stack-1x icon-social-white"></i>
-                            </span>
+                    <div class="white-row white-row-small bottom30">
+                        <span class="follow-us">Follow us</span>
+                        <div class="contact-teaser  contact-teaser-icon ml30">
+                            <a href="https://www.facebook.com/offtheriftapp" target="_blank">
+                                <span class="fa-stack fa-lg fa-3x">
+                                    <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
+                                    <i class="fa fa-facebook fa-stack-1x icon-social-white"></i>
+                                </span>
+                            </a>
                         </div>
-                        <div class="contact-teaser">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
-                                <i class="fa fa-twitter fa-stack-1x icon-social-white"></i>
-                            </span>
+                        <div class="contact-teaser contact-teaser-icon">
+                            <a href="https://twitter.com/OfftheRift_app" target="_blank">
+                                <span class="fa-stack fa-lg fa-3x">
+                                    <i class="fa fa-circle fa-stack-2x icon-background-dark"></i>
+                                    <i class="fa fa-twitter fa-stack-1x icon-social-white"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row step-nine-container">
-            <div class="top30 bottom30">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h1 class="text-center">Browse builds by champion</h1>
-                        </div>
+        <div class="row step-join dark-row">
+            <div class="col-xs-12">
+                <h1 class="big-text text-center">Join us</h1>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="light text-center">Enter your facebook email and you'll receive an invitation to join the OfftheRift project.</p>
+                </div>
+            </div>
+            <div class="row top17">
+                <div class="col-xs-4 col-xs-push-3">
+                    <input class="build-input" ng-model="teaserEmail">
+                </div>
+                <div class="col-xs-4 col-xs-push-3">
+                    <button class="btn btn-register" ng-click="subscribe()">Register</button>
+                </div>
+            </div>
+            <div class="row top10">
+                <div class="col-sm-12 text-center">
+                    <strong data-ng-bind="showMessage" class="light"></strong>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 top30">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <a ui-sref="listBuilds">
+                            <button class="btn-circle btn-round-big pull-right">
+                                Browse
+                            </button>
+                        </a>
                     </div>
-                    <div class="row champion-listing bottom30">
-                        <div ng-repeat="c in champions track by $index"
-                            class="col-sm-3">
-                            <a href="/#!/browse/{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].key }}">
-                               &nbsp;{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].name }}
-                            </a>
-                        </div>
+                    <div class="col-xs-push-2 col-xs-5 pull-left">
+                        <a ui-sref="login">
+                            <button class="btn-circle btn-round-medium top40">
+                                Login
+                            </button>
+                        </a>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h1 class="">Join us</h1>
-                        </div>
+                <div class="row">
+                    <div class="col-xs-push-5 col-xs-2">
+                        <a ui-sref="aboutus">
+                            <button class="btn-circle btn-round-medium btn-about">
+                                About
+                            </button>
+                        </a>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            Submit your facebook email and once you receive our invitation, you can login in the app.
-                        </div>
-                    </div>
-                    <div class="row top17">
-                        <div class="col-xs-8"><input class="build-input" ng-model="teaserEmail"></div>
-                        <div class="col-xs-4 "><button class="btn btn-register" ng-click="subscribe()">Register</button></div>
-                    </div>
-                    <div class="row top10">
-                        <div class="col-sm-12">
-                            <strong data-ng-bind="showMessage"></strong>
-                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="row step-nine-container dark-row top30 bottom30">
+            <div class="col-xs-12">
+                <h1 class="text-center top20 bottom20">Browse builds by champion</h1>
+                <div class="row champion-listing bottom30">
+                    <div ng-repeat="c in champions track by $index"
+                        class="col-xs-3">
+                        <a href="/#!/browse/{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].key }}">
+                           &nbsp;{{ champions[(($index%4) * math.ceil(champions.length/4)) + math.floor($index/4)].name }}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <p class="text-center top17">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-        </div>
+            <div class="col-xs-6">
+                <p class="text-center light">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
+            </div>
+            <div class="col-xs-6">
+                <p class="text-center light">This website uses cookies to ensure you get the best experience on our website</p>
+            </div>
+       </div>
     </div>
 </div>

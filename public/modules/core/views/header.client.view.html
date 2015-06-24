@@ -5,7 +5,7 @@
                 <button ng-show = "authentication.user" class="pull-left menu" menu-control></button>
                 <!--<div class="device-xs visible-xs">xs</div>
                 <div class="device-sm visible-sm">sm</div>
-                <div class="device-md visible-md">d</div>
+                <div class="device-md visible-md">md</div>
                 <div class="device-lg visible-lg">lg</div>-->
             </div>
             <div class="col-xs-2">
@@ -15,7 +15,7 @@
                 <ul class="nav navbar-nav pull-right">
                     <li ng-show = "authentication.user">
                         <a class="user-avatar">
-                            <img class="avatar"otr-src"http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg">
+                            <img class="avatar" src="http://graph.facebook.com/{{authentication.user.providerData.id}}/picture">
                             <span>{{authentication.user.firstName}} {{authentication.user.lastName}}</span>
                         </a>
                     </li>

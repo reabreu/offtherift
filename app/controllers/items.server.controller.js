@@ -107,8 +107,13 @@ exports.list = function(req, res) {
 	if(enabled != undefined)
 		query.enabled = enabled;
 
-	if(riotId != undefined)
-		query.id = riotId;
+	if (riotId != undefined) {
+		if (_.isArray(riotId)) {
+    		query.id = { "$in": riotId };
+		} else {
+    		query.id = riotId;
+		}
+	}
 
 	Item.find(query,select,options).sort('name').exec(function(err, items) {
 		if (err) {

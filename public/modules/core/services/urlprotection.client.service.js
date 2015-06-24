@@ -15,7 +15,7 @@ angular.module('core').factory('Urlprotection', [
 						// This code runs after the authentication promise has been rejected.
 						// Go to the log-in page
 						$state.go('teaser');
-					})
+					});
 
 					// Reject the authentication promise to prevent the state from loading
 					return $q.reject();

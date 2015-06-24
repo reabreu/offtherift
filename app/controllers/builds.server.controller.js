@@ -179,7 +179,7 @@ exports.list = function(req, res) {
 		query.visible 	= true;
 
 		if (author != undefined && author != ""){
-			query.displayName = {"$regex": author};
+			query['$text'] = { $search: author};
 		}
 	}
 
