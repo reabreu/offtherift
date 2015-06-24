@@ -108,7 +108,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 		$scope.setConfigHeight = function(){
 			var windowHeight = $window.innerHeight;
-			angular.element('.configuration-wrapper').height(windowHeight - 110);
+			var finalHeight = windowHeight - 115;
+
+			if (finalHeight < 598) finalHeight = 598;
+
+			angular.element('.configuration-wrapper').height(finalHeight);
 		};
 
 		/**************************
@@ -380,6 +384,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		 * @return {[type]}
 		 */
 		$scope.openModal = function ( champions ) {
+
+			if ($state.current.name == "viewBuild") return;
+
 			$scope.modal = $otrModal.open({
 				scope: $scope,
 				templateUrl: 'modules/builds/views/select-champion.client.view.html',

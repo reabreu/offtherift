@@ -8,7 +8,7 @@
                 class        = "form-control input-sm"
                 ng-model     = "search.name"
                 ng-keyup     = "searchChampion(search)">
-            <span class="glyphicon glyphicon-remove pull-right" ng-click="closeModal()"></span>
+            <i class="fa fa-times close-icon" ng-click="closeModal()"></i>
         </h3>
     </div>
     <div class="modal-body" id="modal-body-champions">
@@ -31,8 +31,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="closeModal();">Close</button>
     </div>
 </section>
