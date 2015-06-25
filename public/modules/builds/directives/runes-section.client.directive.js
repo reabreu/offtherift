@@ -9,7 +9,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				data: '=',
 				build: '=',
 				query: '=?',
-				state: '=',
+				state: '=?',
 				version: '='
 			},
 			controller: function($scope) {
@@ -68,6 +68,8 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * Directive Initialization
 				 */
 				$scope.init = function () {
+					if($scope.buildMode == "viewBuild") return;
+
 					// get first runes
 					$scope.resetRunes();
 				};

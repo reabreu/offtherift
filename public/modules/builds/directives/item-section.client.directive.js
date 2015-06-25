@@ -9,7 +9,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				data: 	'=',
 				version: '=',
 				build: 	'=',
-				loading: '=',
+				loading: '=?',
 				query: '=?',
 				full: '=?'
 			},
