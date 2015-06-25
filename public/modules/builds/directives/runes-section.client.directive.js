@@ -8,53 +8,53 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 			scope: {
 				data: '=',
 				build: '=',
-				children: '=',
 				query: '=?',
-				state: '=',
+				state: '=?',
 				version: '='
 			},
 			controller: function($scope) {
-				// default select type
-				$scope.currentType = 'mark';
 
 				// set build mode
 				$scope.buildMode = $state.current.name;
 
+				// default select type
+				var defaultType = 'mark';
 				/**
 				 * Default queries
 				 * @type {Object}
 				 */
 				var defaultQuery = {
 					limit: 30,
-					version: $scope.version
+					version: $scope.version,
+					type: defaultType,
+					name: "",
+					tags: []
 				};
 
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
 				// change version callback only set when not viewing
-
-				if( $scope.buildMode != "viewBuild"){
-					$scope.$watch('version', function(newValue) {
+				$scope.$watch('version', function(newValue, oldValue) {
+					if (newValue !== oldValue) {
 						$scope.query.version = newValue;
-						$scope.resetRunes();
-						// update runes from build
-						if (typeof $scope.build.runes !== "undefined") {
-							$scope.updateBuild();
-						}
-					});
-				}
+						$scope.resetRunes().then(function() {
+							// update runes from build
+							if (typeof $scope.build.runes !== "undefined") {
+								$scope.updateBuild().then(function () {
+									// evoques calculate from BuildsController
+									$scope.$parent.evaluateStatsRequest();
+								});
+							}
+						});
+					}
+				});
 
 				$scope.runeTypes = {
 					'mark': 'Marks',
 					'glyph': 'Glyphs',
 					'seal': 'Seals',
 					'quintessence': 'Quintessences'
-				};
-
-				$scope.runeSearch = {
-					name: "",
-					tags: []
 				};
 
 				$scope.runeLimits = {
@@ -68,30 +68,42 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * Directive Initialization
 				 */
 				$scope.init = function () {
+					if($scope.buildMode == "viewBuild") return;
+
 					// get first runes
 					$scope.resetRunes();
 				};
 
-				$scope.distribute = function() {
+				$scope.searchRunes = function () {
+					$scope.data.runes[$scope.query.type] = [];
+					$scope.state[$scope.query.type].full = false;
 
-					if( $scope.buildMode == "viewBuild") return;
-
-					$scope.children.runes = $scope;
+					$scope.loadMoreRunes(0);
 				};
 
-				$scope.toggleRuneTag = function(tag) {
-					var idx = $scope.runeSearch.tags.indexOf(tag);
-
-					// is currently selected
-					if (idx > -1) {
-						$scope.runeSearch.tags.splice(idx, 1);
-					} else {
-						$scope.runeSearch.tags.push(tag);
+				/**
+				 * Distribute rune to his tag
+				 * @param  {object}  rune Rune Object
+				 * @return {boolean} 	  Added
+				 */
+				var distribute = function(rune) {
+					if (typeof rune !== "undefined") {
+						for (var tag in $scope.data.runes) {
+							if (typeof rune.tags !== "undefined" &&
+								rune.tags.indexOf(tag) != -1) {
+								// Remove the old rune.
+								$scope.removeRune(tag, rune.id);
+								// Add the new one.
+								$scope.addRune(rune);
+								return true;
+							}
+						}
 					}
+					return false;
 				};
 
 				$scope.runeFilterEnabled = function(tag) {
-					return ($scope.runeSearch.tags.indexOf(tag) > -1);
+					return ($scope.query.tags.indexOf(tag) > -1);
 				};
 
 				/**
@@ -144,10 +156,10 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				};
 
 				$scope.setCurrentType = function(tag) {
-					$scope.currentType = tag;
+					$scope.query.type = tag;
 
 					// initialize current type first runes
-					if ($scope.data.runes[$scope.currentType].length == 0) {
+					if ($scope.data.runes[$scope.query.type].length == 0) {
 						$scope.init();
 					}
 				};
@@ -158,7 +170,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @param  {object}  type  Rune type
 				 * @return {boolean}
 				 */
-				$scope.getRunes = function (query, type) {
+				var getRunes = function (query, type) {
 					return Repository.getRunes(query, type).then(function (data) {
 
 						if (typeof data.runes !== "undefined" &&
@@ -184,23 +196,20 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 */
 				$scope.loadMoreRunes = function (skip) {
 
-					if ($scope.state[$scope.currentType].loading ||
-						$scope.state[$scope.currentType].full) return;
+					if ($scope.state[$scope.query.type].loading ||
+						$scope.state[$scope.query.type].full) return;
 
 					var loadQuery = angular.extend({}, $scope.query, {
 						skip: skip
 					});
 
-					return $scope.getRunes(loadQuery, $scope.currentType);
+					return getRunes(loadQuery, $scope.query.type);
 				};
 
 				/**
 				 * Reset Runes
 				 */
 				$scope.resetRunes = function () {
-
-					if( $scope.buildMode == "viewBuild") return;
-
 					$scope.data.runes = {
 						mark:         [],
 						glyph:        [],
@@ -213,7 +222,7 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 					$scope.state.seal.full = false;
 					$scope.state.quintessence.full = false;
 
-					return $scope.getRunes($scope.query, $scope.currentType);
+					return getRunes($scope.query, $scope.query.type);
 				};
 
 				/**
@@ -221,61 +230,88 @@ angular.module('builds').directive('runesSection', ['Repository', '$timeout', '$
 				 * @return
 				 */
 				$scope.updateBuild = function() {
-					// Iterate through all the runes in the build to update them.
-					for (var tag in $scope.build.runes) {
-						var runes = $scope.build.runes[tag];
-						var runeCount = runes.length;
-
-						// Remove each item and add it again with updated info.
-						for (var i = 0; i < runeCount; i++) {
-							var runeId = runes[i].id;
-
-							$scope.getRune(tag, runeId).then(function (data) {
-								// Remove the old rune.
-								$scope.removeRune(data.tag, data.rune.id);
-								// Add the new one.
-								$scope.addRune(data.rune);
-							});
+					return loadRunes().then(function (runes) {
+						// Iterate through all the runes in the build to update them
+						for (var i = 0; i < runes.length; i++) {
+							distribute(runes[i]);
 						}
-					}
+					});
 				};
 
 				/**
-				 * Returns rune by id and tag
+				 * Returns runes by using id's
+				 * @return {object} Rune
+				 */
+				var loadRunes = function () {
+					var deferred = $q.defer();
+
+					var scopedRunes   = [];
+					var unloadedRunes = [];
+
+					// Iterate through all the runes in the build to update them.
+					for (var tag in $scope.build.runes) {
+						var runes = $scope.build.runes[tag];
+
+						// Load runes from scope
+						for (var i = 0; i < runes.length; i++) {
+							var rune = getRuneFromScope(tag, runes[i].id);
+
+							if (rune) {
+								scopedRunes.push(rune);
+							} else {
+								unloadedRunes.push(runes[i].id);
+							}
+						}
+					}
+
+					// load runes from database
+					if (unloadedRunes.length > 0) {
+						getRunesFromDatabase(tag, unloadedRunes).then(function (data) {
+							for (var i = 0; i < data.length; i++) {
+								scopedRunes.push(data[i]);
+							}
+
+							deferred.resolve(scopedRunes);
+						});
+					} else {
+						deferred.resolve(scopedRunes);
+					}
+
+					return deferred.promise;
+				};
+
+				/**
+				 *
+				 * Returns rune by id and tag from scope array
 				 * @param  {string} tag    Rune tag
 				 * @param  {int}    runeId Rune Identification
 				 * @return {object}        Rune
 				 */
-				$scope.getRune = function (tag, runeId) {
-					var deferred = $q.defer();
-
-					var result = { tag: tag };
-
+				var getRuneFromScope = function (tag, runeId) {
 					// Find the rune and add it to the build.
 					var dataRuneCount = $scope.data.runes[tag].length;
 					for (var r = 0; r < dataRuneCount; r++) {
 						if ($scope.data.runes[tag][r].id == runeId) {
-							angular.extend(result, { rune: $scope.data.runes[tag][r] });
-							deferred.resolve(result);
+							return $scope.data.runes[tag][r];
 						}
 					}
+					return false;
+				};
 
-					// If rune is not on cached array
-					if (typeof result.rune === "undefined") {
-						var params = {
-							version: $scope.query.version,
-							riotId: runeId
-						};
+				/**
+				 * Returns rune by id and tag from database
+				 * @param  {string} tag   Rune tag
+				 * @param  {int}    runes Rune Identifications
+				 * @return {object}       Promise
+				 */
+				var getRunesFromDatabase = function (tag, runes) {
+					var params = {
+						version: $scope.query.version,
+						riotId: runes
+					};
 
-						// Get from database
-						Runes.data.query(params)
-							.$promise.then(function(data) {
-								angular.extend(result, { rune: data[0] });
-								deferred.resolve(result);
-							});
-					}
-
-					return deferred.promise;
+					// Get from database
+					return Runes.data.query(params).$promise;
 				};
 			}
 		};

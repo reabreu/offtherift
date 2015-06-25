@@ -122,7 +122,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			Metainformation.reset();
 			$rootScope.pageKeywords = Metainformation.metaKeywords();
 			$rootScope.pageTitle = Pagetitle.setTitle('Build');
-			$scope.children = {items: null, runes: null, masteries: null};
 
 			$scope.blockSnapshot 	= false;
 			$scope.enabledView 		= false;
@@ -268,25 +267,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 					if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
 						// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
 						$scope.updateMasteries();
-						$scope.updateSnapshots();
 						$scope.patchChanged = false;
 					}
 
 					$scope.enabledView = true;
 					$scope.unblockBuilder();
 				});
-
-				if ($state.current.name == "editBuild") {
-					$scope.populateMasteries();
-				}
-
-				// Update build information with loaded patch.
-				if (typeof($scope.patchChanged) !== 'undefined' && $scope.patchChanged) {
-					// ORDER MATTERS! calculatedStats are calculated in the end for EACH snapshot.
-					$scope.updateMasteries();
-					$scope.updateSnapshots();
-					$scope.patchChanged = false;
-				}
 
 				$scope.enabledView = true;
 				$scope.unblockBuilder();
@@ -314,52 +300,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						break;
 					}
 				}
-			}
-		};
-
-		/**
-		 * Updates all the snapshots from last selected patch to the new one.
-		 * @return
-		 */
-		$scope.updateSnapshots = function() {
-			// Iterate through the snapshots to update the items.
-			var snapCount = $scope.build.snapshot.length;
-			for (var snapIter =  0; snapIter < snapCount; snapIter++) {
-				var currentSnap = $scope.build.snapshot[snapIter];
-
-				// Remove all the current items and re-add them with updated information.
-				for (var counter = currentSnap.items.length - 1; counter >= 0 ; counter--) {
-					var itemId = currentSnap.items[0].id;
-
-					// Search for the item and add it if it exists.
-					var itemCount = $scope.data.items.length;
-					for (var itemIter = 0; itemIter < itemCount; itemIter++) {
-						if ($scope.data.items[itemIter].id == itemId) {
-							// Remove the information from the old item.
-							$scope.children.items.removeItem(0, snapIter);
-							// Add information from the new item.
-							$scope.children.items.addItem($scope.data.items[itemIter], snapIter);
-							break;
-						}
-					}
-				}
-
-				// Update the trinket
-				if (currentSnap.trinket != null) {
-					// Search for the item and add it if it exists.
-					var itemCount = $scope.data.items.length;
-					for (var itemIter = 0; itemIter < itemCount; itemIter++) {
-						if ($scope.data.items[itemIter].id == currentSnap.trinket.id) {
-							// Remove the information from the old item.
-							$scope.children.items.removeItem(7);
-							// Add information from the new item.
-							$scope.children.items.addItem($scope.data.items[itemIter], snapIter);
-							break;
-						}
-					}
-				}
-
-				$scope.calculate(snapIter, true);
 			}
 		};
 
@@ -509,22 +449,42 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		/**
-		 * [setSelectedChampion setCurrentSelectedChammpion]
+		 * Change selected champion
+		 * @param {object} champion Selected Champion
 		 */
 		$scope.setSelectedChampion = function(champion){
 			$scope.data.firstPick = false;
 			var params = {version: $scope.data.selectedPatch, riotId: champion.id, data: true };
 			$scope.blockBuilder();
 			Repository.getChampions(params).then(function(data) {
-				var changed = $scope.data.selectedChampion != null &&
-								$scope.data.selectedChampion._id != data.champions[0]._id;
+				if ($scope.data.selectedChampion != null &&
+					$scope.data.selectedChampion._id != data.champions[0]._id) {
+					removeChampionItems();
+				}
 
 				$scope.data.selectedChampion 	= data.champions[0];
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
-				if (changed) $scope.children.items.removeChampionItems();
 				$scope.unblockBuilder();
 			});
+		};
+
+		/**
+		 * Remove champion items on change
+		 */
+		var removeChampionItems = function() {
+			for (var snapshot = $scope.build.snapshot.length - 1; snapshot >= 0; snapshot--) {
+				// Remove all items related to the previous champion.
+				var items = $scope.build.snapshot[snapshot].items;
+				for (var i = $scope.build.snapshot[snapshot].championItems.length - 1; i >= 0; i--) {
+					for (var c = items.length-1; c >= 0; c--) {
+						if (items[c].id === $scope.build.snapshot[snapshot].championItems[i]) {
+							items.splice(c, 1);
+						}
+					}
+					$scope.build.snapshot[snapshot].championItems.splice(i, 1);
+				}
+			}
 		};
 
 		/**

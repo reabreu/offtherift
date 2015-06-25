@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Repository',
-	function( ngToast, $state, Repository ) {
+angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Repository', 'Items', '$q',
+	function(ngToast, $state, Repository, Items, $q) {
 		return {
 			templateUrl: 'modules/builds/views/item-section.client.view.html',
 			restrict: 'E',
@@ -9,8 +9,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				data: 	'=',
 				version: '=',
 				build: 	'=',
-				children: '=',
-				loading: '=',
+				loading: '=?',
 				query: '=?',
 				full: '=?'
 			},
@@ -26,20 +25,54 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 					tags: []
 				};
 
+				/**
+				 * Updates all the snapshots from last selected patch to the new one.
+				 * @return
+				 */
+				$scope.updateSnapshots = function() {
+					// TODO: Update trinket on patch change
+
+					return true;
+
+					// Update the trinket
+					if (currentSnap.trinket != null) {
+						// Search for the item and add it if it exists.
+						var itemCount = $scope.data.items.length;
+						for (var itemIter = 0; itemIter < itemCount; itemIter++) {
+							if ($scope.data.items[itemIter].id == currentSnap.trinket.id) {
+								// Remove the information from the old item.
+								$scope.removeItem(7);
+								// Add information from the new item.
+								$scope.addItem($scope.data.items[itemIter], snapIter);
+								break;
+							}
+						}
+					}
+				};
+
 				$scope.query = typeof $scope.query !== "undefined" ?
 					angular.extend({}, $scope.query, defaultQuery) : defaultQuery;
 
 				// change version callback
-				$scope.$watch('version', function(newValue) {
-					$scope.query.version = newValue;
-					$scope.resetItems();
+				$scope.$watch('version', function(newValue, oldValue) {
+					if (newValue !== oldValue) {
+						$scope.query.version = newValue;
+						$scope.resetItems().then(function () {
+							// update items from build snapshots
+							$scope.updateBuildSnapshots().then(function () {
+								// update snapshot's items
+								$scope.updateSnapshots();
+								// evoques calculate from BuildsController
+								$scope.$parent.evaluateStatsRequest();
+							});
+						});
+					}
 				});
 
 				$scope.init = function(){
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild"){
-						$scope.children.items = $scope;
 						$scope.resetItems();
 					}
 				};
@@ -177,26 +210,6 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 					return element.name.toLowerCase().indexOf($scope.search.name.toLowerCase()) > -1;
 				};
 
-				$scope.removeChampionItems = function() {
-					var changed; // check if any item was removed
-					for (var snapshot = $scope.build.snapshot.length - 1; snapshot >= 0; snapshot--) {
-						changed = false;
-						// Remove all items related to the previous champion.
-						var items = $scope.build.snapshot[snapshot].items;
-						for (var i = $scope.build.snapshot[snapshot].championItems.length - 1; i >= 0; i--) {
-							for (var c = items.length-1; c >= 0; c--) {
-								if (items[c].id === $scope.build.snapshot[snapshot].championItems[i]) {
-									items.splice(c, 1);
-									changed = true;
-								}
-							}
-							$scope.build.snapshot[snapshot].championItems.splice(i, 1);
-						}
-
-						if (changed) $scope.$parent.calculate(snapshot, true);
-					}
-				}
-
 				/**
 				 * Set current build level
 				 */
@@ -212,7 +225,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 * @return {boolean}
 				 */
 				$scope.getItems = function (query) {
-					Repository.getItems(query).then(function (data) {
+					return Repository.getItems(query).then(function (data) {
 						if (typeof $scope.data.items !== "undefined" &&
 							$scope.data.items == 0) {
 							$scope.data.items = data.items;
@@ -259,7 +272,120 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 					$scope.data.items = [];
 					$scope.full = false;
 					// get first items
-					$scope.getItems($scope.query);
+					return $scope.getItems($scope.query);
+				};
+
+				/**
+				 * Updates the runes from last selected patch to the new one.
+				 * @return
+				 */
+				$scope.updateBuildSnapshots = function() {
+					return loadItems().then(function (items) {
+						// Iterate through the items and update snapshots
+						for (var i = 0; i < items.length; i++) {
+							distribute(items[i]);
+						}
+					});
+				};
+
+				/**
+				 * Distribute item to his tag
+				 * @param  {object}  item Item Object
+				 * @return {boolean} 	  Added
+				 */
+				var distribute = function(item) {
+					if (typeof item !== "undefined") {
+						// Iterate through the snapshots to update the items.
+						for (var i =  0; i < $scope.build.snapshot.length; i++) {
+							var snapshot = $scope.build.snapshot[i];
+
+							// Remove all the current items and re-add them with updated information.
+							for (var j = 0; j < snapshot.items.length; j++) {
+								if (snapshot.items[j].id == item.id) {
+									// Remove the information from the old item.
+									$scope.removeItem(j, i);
+									// Add information from the new item.
+									$scope.addItem(item, i);
+
+									break;
+								}
+							}
+						}
+					}
+					return true;
+				};
+
+				/**
+				 * Returns items by using id's
+				 * @return {object} Item
+				 */
+				var loadItems = function () {
+					var deferred = $q.defer();
+
+					var scopedItems   = [];
+					var unloadedItems = [];
+
+					// Iterate through the snapshots to update the items.
+					for (var i =  0; i < $scope.build.snapshot.length; i++) {
+						var snapshot = $scope.build.snapshot[i];
+
+						// Remove all the current items and re-add them with updated information.
+						for (var j = snapshot.items.length - 1; j >= 0 ; j--) {
+							var item = getItemFromScope(snapshot.items[j].id);
+
+							if (item) {
+								scopedItems.push(item);
+							} else {
+								unloadedItems.push(snapshot.items[j].id);
+							}
+						}
+					}
+
+					// load items from database
+					if (unloadedItems.length > 0) {
+						getItemsFromDatabase(unloadedItems).then(function (data) {
+							for (var i = 0; i < data.length; i++) {
+								scopedItems.push(data[i]);
+							}
+
+							deferred.resolve(scopedItems);
+						});
+					} else {
+						deferred.resolve(scopedItems);
+					}
+
+					return deferred.promise;
+				};
+
+				/**
+				 *
+				 * Returns item by id
+				 * @param  {int}    itemId Item Identification
+				 * @return {object}        Item
+				 */
+				var getItemFromScope = function (itemId) {
+					// Find the item and add it to the build.
+					for (var r = 0; r < $scope.data.items.length; r++) {
+						if ($scope.data.items[r].id == itemId) {
+							return $scope.data.items[r];
+						}
+					}
+					return false;
+				};
+
+				/**
+				 * Returns item by id
+				 * @param  {int}    items Item Identifications
+				 * @return {object}       Promise
+				 */
+				var getItemsFromDatabase = function (items) {
+					var params = {
+						version: $scope.query.version,
+						riotId: items
+					};
+
+					// Get from database
+					return Items.data.query(params).$promise;
 				};
 
 				$scope.$parent.setConfigHeight();

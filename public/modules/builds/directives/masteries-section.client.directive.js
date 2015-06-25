@@ -7,15 +7,11 @@ angular.module('builds').directive('masteriesSection', ['$state',
 			restrict: 'E',
 			scope: {
 				data: 	'=',
-				build: 	'=',
-				children: '='
+				build: 	'='
 			},
 			controller: function($scope, $element){
 
 				$scope.buildMode = $state.current.name;
-
-				if( $scope.buildMode != "viewBuild")
-					$scope.children.masteries = $scope;
 
 				$scope.addRank = function($event, masterie){
 					if( $scope.buildMode == "viewBuild") return;

@@ -6,24 +6,25 @@
 					<li ng-repeat="(key, value) in runeTypes">
 						<a class="btn btn-default"
 						ng-click="setCurrentType(key)"
-						ng-class="{'btn-rune-selected': key == currentType}">{{value.substring(0,5)}}</a>
+						ng-class="{'btn-rune-selected': key == query.type}">{{value.substring(0,5)}}</a>
 					</li>
 				</ul>
 				<input
 				type        = "text"
 				id          = "focusedinput"
 				class       = "build-input"
-				ng-model    = "runeSearch.name"
+				ng-model    = "query.name"
+                ng-change   = "searchRunes()"
 				placeholder = "Rune Name">
 	            <div class="clearfix"></div>
 	            <div class="item-list">
-	                <div class="spinner spinner-xs" ng-show="state[currentType].loading"></div>
+	                <div class="spinner spinner-xs" ng-show="state[query.type].loading"></div>
 	                <div class="item-listing" id="runes-list" prevent-window-scroll>
-	                    <ul infinite-scroll                 = "loadMoreRunes(data.runes[currentType].length);$event.stopPropagation()"
-	                        infinite-scroll-disabled        = "state[currentType].loading"
+	                    <ul infinite-scroll                 = "loadMoreRunes(data.runes[query.type].length);$event.stopPropagation()"
+	                        infinite-scroll-disabled        = "state[query.type].loading"
 	                        infinite-scroll-immediate-check = "false"
 	                        infinite-scroll-container       = "'#runes-list'">
-			                <li ng-model="runeSearch" ng-repeat="rune in data.runes[currentType] | filterRunes:runeSearch" >
+			                <li ng-repeat="rune in data.runes[query.type] | filterRunes:query" >
 			                        <a
 			                        tooltip-html-unsafe="{{rune.description}}"
 			                        tooltip-trigger="mouseenter"
