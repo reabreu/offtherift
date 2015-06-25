@@ -3,7 +3,7 @@
         <div>
             <img
                 class="champion-avatar inline-block"
-                src="{{ build.champion.image.full | ddragon: build.champion.version:'champion'}}">
+                src="{{ (build.champion.image.full || data.selectedChampion.image.full)  | ddragon: (build.champion.version || data.selectedChampion.version):'champion'}}">
         </div>
         <div class="champion-name-wrapper absolute-top">
             <label class="champion-name">{{build.champion.name || 'Summon'}}</label>
