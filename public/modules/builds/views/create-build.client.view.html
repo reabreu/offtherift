@@ -53,10 +53,10 @@
 							<a
 								class="btn-build-action btn-build-action-yellow"
 								href="#"
-								ng-click="update()"
+								ng-click="callAction()"
 								ng-show="enabledView"
 								ng-class="{'btn-build-action-yellow' : buildChanged, 'btn-build-action-green' : !buildChanged}">
-								{{buildChanged ? 'Save changes' : 'Build up to date'}}
+								{{buildChanged ? 'Save and Exit' : 'Exit'}}
 							</a>
 						</div>
 					</div>

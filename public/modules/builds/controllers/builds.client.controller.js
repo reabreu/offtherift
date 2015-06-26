@@ -55,6 +55,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 
 				if ($state.current.name != "viewBuild") {
+
+					if(Authentication.user._id != $scope.build.user._id) $location.path('builds/'+ $scope.build.name + '/' + $scope.build._id );
+
 					$scope.data.selectedPatch 	= $scope.build.version;
 					var params 					= {version: $scope.data.selectedPatch, riotId: $scope.build.champion_id, data: true };
 					Repository.getChampions(params).then(function(data) {
@@ -354,6 +357,13 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 			});
 		};
 
+		$scope.callAction = function(){
+			if(!$scope.buildChanged)
+				$location.path('builds/' + $scope.build.name + '/'  + $scope.build._id);
+			else
+				$scope.update();
+		}
+
 		// Update existing Build
 		$scope.update = function() {
 			$scope.blockBuilder();
@@ -361,7 +371,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			buildService.$update(function() {
 				$scope.buildChanged = false;
-				$location.path('builds/' + $scope.build.name + '/'  + $scope.build._id + '/edit');
+				$location.path('builds/' + $scope.build.name + '/'  + $scope.build._id);
 				$scope.unblockBuilder();
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;

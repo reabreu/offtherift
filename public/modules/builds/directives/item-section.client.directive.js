@@ -168,6 +168,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
                         $scope.build.snapshot[snapshot].trinket = null;
                     } else {
                         id = $scope.build.snapshot[snapshot].items[index].id;
+                        console.log('aquiii');
                         $scope.build.snapshot[snapshot].items.splice(index,1);
                     }
 

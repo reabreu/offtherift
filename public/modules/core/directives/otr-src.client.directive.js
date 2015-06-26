@@ -13,7 +13,7 @@ angular.module('core').directive('otrSrc', [
 				var loadImage = function (src) {
 					element[0].src = "/modules/core/img/loaders/loader.svg";
 
-					element.off('load').on('load', function(e) {
+					element.on('load', function(e) {
 						e.preventDefault();
 						if (this.src !== src) {
 							element.fadeOut(function () {
@@ -24,6 +24,8 @@ angular.module('core').directive('otrSrc', [
 			                	});
 		                	});
 						}
+
+						element.off('load')
 					});
 				};
 
@@ -39,20 +41,27 @@ angular.module('core').directive('otrSrc', [
 					return image.complete;
 				};
 
-				if (!isCached(attrs.otrSrc)) { // not cached
-					loadImage(srcImage);
+				loadImage(attrs.otrSrc);
 
-					scope.$watch(function () {
-						return attrs.otrSrc;
-					}, function (newValue, oldValue) {
-						if (oldValue !== newValue) {
+				scope.$watch(function () {
+					return attrs.otrSrc;
+				}, function (newValue, oldValue) {
+					if (oldValue !== newValue &&
+						newValue != '#') {
+						element.removeClass('hidden');
+						if (!isCached(newValue)) { // not cached
 							loadImage(newValue);
+
+						} else { // cached
+
+							element[0].src = newValue;
+							element.removeClass('label-portrait');
 						}
-					});
-				} else { // cached
-					element[0].src = attrs.otrSrc;
-					element.removeClass('label-portrait');
-				}
+					}
+
+					if(newValue == "#")
+						element.addClass('hidden');
+				});
 			}
 		};
 	}

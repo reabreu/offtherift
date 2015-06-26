@@ -1,17 +1,24 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval','Userstatistics','Repository',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval, Userstatistics,Repository) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval','Userstatistics','Repository','$cookies',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval, Userstatistics,Repository,$cookies) {
 
-        $scope.already = typeof $location.search().already !== "undefined";
-
-        $scope.errorMessage = "Hello World";
         Metainformation.reset();
-        $rootScope.pageKeywords = Metainformation.metaKeywords();
-        $rootScope.pageTitle = Pagetitle.setTitle('Home');
 
-        $scope.state = $stateParams.state;
-        $scope.champions = {};
+        $scope.already          = typeof $location.search().already !== "undefined";
+        $scope.errorMessage     = "Hello World";
+        $rootScope.pageKeywords = Metainformation.metaKeywords();
+        $rootScope.pageTitle    = Pagetitle.setTitle('Home');
+        $scope.state            = $stateParams.state;
+        $scope.champions        = {};
+
+        //Cookie confirmation
+        //Retrieving a cookie
+        $scope.cookieConfirmation  = $cookies['cookieConfirmation'];
+
+        $scope.setCookieConfirmation = function(){
+            $cookies['cookieConfirmation'] = $scope.cookieConfirmation = true;
+        }
 
         /**
          * Subscribe with specific email
@@ -60,12 +67,15 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 $scope.buildsCountFrom    = result.num* 0.5;
             });
 
-            $timeout( function(){
-                Userstatistics.count.get().$promise.then(function(result){
-                    $scope.usersCountTo      = result.num;
-                    $scope.usersCountFrom    = result.num* 0.5;
-                });
-            }, 2000);
+            Userstatistics.count.get().$promise.then(function(result){
+                $scope.usersCountTo      = result.num;
+                $scope.usersCountFrom    = result.num* 0.5;
+            });
+
+            Userstatistics.unSetHash.get().$promise.then(function(result){
+                $scope.unsetCountTo      = result.unactivated;
+                $scope.unsetCountFrom    = result.unactivated* 0.5;
+            });
 
         };
 

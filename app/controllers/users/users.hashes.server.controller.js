@@ -314,6 +314,22 @@ exports.hasUnsedHashes = function (req, res, next) {
     });
 };
 
+exports.countUnsetHashes = function (req, res, next) {
+    var query = {
+        activated: { $exists: false }
+    };
+
+    RegistrationHash.count(query).exec(function(err, count) {
+        if (err) {
+            res.status(400).send({
+                message: errorHandler.getErrorMessage(err)
+            });
+        } else {
+            res.json({ unactivated: count });
+        }
+    });
+}
+
 /**
  * Sends an email with login hash
  * @param  {string} to Email requested

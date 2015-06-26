@@ -58,16 +58,19 @@
                     ng-repeat="n in range(1,6) track by $index"
                     ng-mouseover="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index],$event);"
                     ng-mouseleave="$parent.$parent.hoverOut()">
+
                     <img
                         tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].items[$index].name}}"
                         tooltip-trigger="mouseenter"
                         tooltip-placement="top"
                         tooltip-popup-delay = "600"
                         ng-hide="build.snapshot[data.currentSnapshot].items[$index].id==null"
+                        ng-class="{'hidden': typeof(build.snapshot[data.currentSnapshot].items[$index]) == 'undefined'}"
                         ng-click="removeItem($index)"
                         title=""
                         alt="Slot {{$index+1}}"
                         otr-src="{{ build.snapshot[data.currentSnapshot].items[$index].id | ddragon: build.version:'item'}}">
+
                 </li>
                 <li class="item-slot"
                     ng-mouseover="$parent.hoverIn(build.snapshot[data.currentSnapshot].trinket,$event);"

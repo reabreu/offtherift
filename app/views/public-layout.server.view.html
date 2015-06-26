@@ -85,6 +85,9 @@
             </div>
 
             <div id="sp-page">
+                <div class="cookie-jar light" data-ng-controller  = "TeaserController" id="cookie-alert" ng-show="!cookieConfirmation">
+                    By using our site, you agree to the use of cookies to enhance your experience.  <i class="fa fa-times fa-times-cookie pull-right" ng-click="setCookieConfirmation()"></i>
+                </div>
                 <header
                         data-ng-controller  = "HeaderController"
                         data-ng-include     = "'/modules/core/views/header.client.view.html'"

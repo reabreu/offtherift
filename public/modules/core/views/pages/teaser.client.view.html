@@ -3,27 +3,32 @@
         <div class="row top30 bottom20">
             <p class="teaser-title text-center heavy">WELCOME</p>
             <p class="text-center teaser-sub-title light">SUMMONER</p>
-<!--<a href='http://ko-fi.com?i=2284LMFL0ERNH' target='_blank'><img style='border:0px' src='https://az743702.vo.msecnd.net/cdn/btn1.png' border='0' alt='Buy Me A Coffee at Ko-Fi.com' /></a>-->
- </div>
+        </div>
         <div class="row intro-container">
             <div class="col-sm-12 col-md-push-2 col-md-8">
-                 <p>Meet  <a class="link-twitter" href="https://twitter.com/OfftheRift_app" target="_blank">#OfftheRift</a> web app.</p>
+                <p>Meet <a class="link-twitter" href="https://twitter.com/OfftheRift_app" target="_blank">#OfftheRift</a> web app.</p>
                 <p>Here you can set up and share League of Legends champion builds and check how champion statistics change through time as Riot releases new patches.</p>
                 <p>We're on closed Beta right now, that means you can check public builds, but you'll need to get an invitation to create your own.</p>
                 <p>Keep scrolling and check how everything works!</p>
             </div>
         </div>
         <div class="row statistics-wrapper top10">
-            <div class="col-md-3 col-md-push-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <h1 class="statistic-container">
                     <span class="heavy statistic-number" count-to="{{buildsCountTo}}" value="{{buildsCountFrom}}" duration="1"></span>
                     Total Builds
                 </h1>
             </div>
-            <div class="col-md-3 col-md-push-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <h1 class="statistic-container">
                     <span class="heavy statistic-number" count-to="{{usersCountTo}}" value="{{usersCountFrom}}" duration="1"></span>
                     Registered Users
+                </h1>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <h1 class="statistic-container">
+                    <span class="heavy statistic-number" count-to="{{unsetCountTo}}" value="{{unsetCountFrom}}" duration="1"></span>
+                    Waiting Invitation
                 </h1>
             </div>
         </div>
@@ -76,7 +81,7 @@
                         <div
                             ng-repeat="build in popularBuilds"
                             class="col-lg-2 col-xs-3">
-                            <div class="build-wrapper">
+                            <div class="build-wrapper build-link">
                                 <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
                                     <img
                                         class = "build-portrait img-responsive"
@@ -144,7 +149,7 @@
                         <div
                             ng-repeat="build in mostLiked"
                             class="col-lg-2 col-xs-3">
-                            <div class="build-wrapper">
+                            <div class="build-wrapper build-link">
                                 <a href="/#!/builds/{{build.name | encodeUricomponent}}/{{build._id}}">
                                     <img
                                         class = "build-portrait img-responsive"
@@ -583,7 +588,7 @@
                 <div class="support-container">
                     <p class="text-center">We won't charge users to use our app.</p>
                     <p class="text-center">However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
-                    <p class="text-center">If you enjoy our work and want to see other tools being created please consider donating via paypal to ******@offtherift.com</p>
+                    <p class="text-center">If you enjoy our work and want to see other cool tools from us please consider <a href='http://ko-fi.com?i=2284LMFL0ERNH' target='_blank'>paying us a coffee</a></p>
                     <p class="text-center">We want your opinion. If you have ideas or suggestions please contact us at
                         <a class="link grey" href="mailto:feedback@offtherift.com">feedback@offtherift.com</a>
                     </p>
@@ -683,11 +688,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12">
                 <p class="text-center light">Offtherift isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends.League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.</p>
-            </div>
-            <div class="col-xs-6">
-                <p class="text-center light">This website uses cookies to ensure you get the best experience on our website</p>
             </div>
        </div>
     </div>
