@@ -316,7 +316,7 @@ exports.hasUnsedHashes = function (req, res, next) {
 
 exports.countUnsetHashes = function (req, res, next) {
     var query = {
-        activated: { $exists: false }
+        hash: { $exists: false }
     };
 
     RegistrationHash.count(query).exec(function(err, count) {
