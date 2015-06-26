@@ -281,38 +281,27 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 */
 				$scope.updateBuildSnapshots = function() {
 					return loadItems().then(function (items) {
-						// Iterate through the items and update snapshots
-						for (var i = 0; i < items.length; i++) {
-							distribute(items[i]);
-						}
-					});
-				};
-
-				/**
-				 * Distribute item to his tag
-				 * @param  {object}  item Item Object
-				 * @return {boolean} 	  Added
-				 */
-				var distribute = function(item) {
-					if (typeof item !== "undefined") {
 						// Iterate through the snapshots to update the items.
 						for (var i =  0; i < $scope.build.snapshot.length; i++) {
 							var snapshot = $scope.build.snapshot[i];
 
 							// Remove all the current items and re-add them with updated information.
-							for (var j = 0; j < snapshot.items.length; j++) {
-								if (snapshot.items[j].id == item.id) {
-									// Remove the information from the old item.
-									$scope.removeItem(j, i);
-									// Add information from the new item.
-									$scope.addItem(item, i);
+							for (var j = snapshot.items.length - 1; j >= 0; j--) {
 
-									break;
+								// Iterate through the items and update snapshots
+								for (var h = 0; h < items.length; h++) {
+									if (snapshot.items[0].id == items[h].id) {
+										// Remove the information from the old item.
+										$scope.removeItem(0, i);
+										// Add information from the new item.
+										$scope.addItem(items[h], i);
+
+										break;
+									}
 								}
 							}
 						}
-					}
-					return true;
+					});
 				};
 
 				/**
