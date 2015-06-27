@@ -27,7 +27,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
             $scope.absUrl = $location.absUrl().replace("#", "%23");
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
+
 				$scope.build = data.data;
+
+				console.log();
+				$scope.setChampionBackground($scope.build.champion.key);
 
 				/*Meta Tags Configuration*/
 				Metainformation.reset();
@@ -473,10 +477,18 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 
 				$scope.data.selectedChampion 	= data.champions[0];
+				$scope.setChampionBackground($scope.data.selectedChampion.key);
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
 				$scope.unblockBuilder();
 			});
+		};
+
+		$scope.setChampionBackground = function(key) {
+			var element = angular.element('.champion-splash');
+			element.css({
+	            'background-image': 'url(http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + key +'_0.jpg)',
+	        });
 		};
 
 		/**

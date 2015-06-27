@@ -198,7 +198,7 @@ exports.list = function(req, res) {
  */
 exports.buildByID = function(req, res, next, id) {
 
-    var populateQuery       = [{path:'user', select:'displayName'}, {path:'champion', select:'name image title version partype'}];
+    var populateQuery       = [{path:'user', select:'displayName'}, {path:'champion', select:'name image title version partype key'}];
 
 	Build.findById(id).populate(populateQuery).exec(function(err, build) {
 		if (err) return next(err);
