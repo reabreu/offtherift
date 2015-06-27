@@ -24,7 +24,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				selectedChampion 	: null
 			};
 
-            $scope.absUrl = $location.absUrl().replace("#", "%23");
+            $scope.absUrl = $location.absUrl();
 
 			Builds.get({buildId: $stateParams.buildId}, function(data) {
 				$scope.build = data.data;
