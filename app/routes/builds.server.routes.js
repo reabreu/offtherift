@@ -5,6 +5,8 @@ module.exports = function(app) {
 	var builds = require('../../app/controllers/builds.server.controller');
 
 	// Builds Routes
+	app.route('/%23!/builds/:buildName/:buildHash').get(builds.redirectToBuild);
+
 	app.route('/builds')
 		.get(builds.list)
 		.post(users.requiresLogin, builds.create);

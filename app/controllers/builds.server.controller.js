@@ -56,7 +56,7 @@ exports.read = function(req, res) {
     if (updateDate <= now || res.isAdmin) {
         // Url from which we pretend to extract the like/share/comment count
         var url         = res.locals.url;
-        var facebookApi = 'http://api.facebook.com/method/links.getStats?format=json&urls=' + url.replace("/builds", "/#!/builds/"+ trimBuildName(build.name))+ '';
+        var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url.replace("/builds", "/%23!/builds/"+ trimBuildName(build.name))+ '&format=json';
 
         // Get facebook counts for the current build.
         http.get(facebookApi, function(info) {
@@ -493,4 +493,8 @@ function trimBuildName(name){
                 .replace(/^-+|-+$/g, '')
                 .replace(/[^a-zA-Z0-9]+/g, '-')
                 .trim();
+}
+
+exports.redirectToBuild = function(req,res,next){
+    res.redirect(req.url.replace("%23", "#"));
 }
