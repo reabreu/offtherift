@@ -434,7 +434,7 @@ copyTasks.push(function(callback){
 
         for (var i = total - 1; i >= 0; i--) {
             //get item from dest version
-            Item.findOneAndUpdate( {version: destPatch, id: items[i].id} , {tags: items[i].tags, customEffect: items[i].customEffect, enabled: items[i].enabled} , null, function(err,doc){
+            Item.findOneAndUpdate( {version: destPatch, id: items[i].id, name : items[i].name} , {tags: items[i].tags, customEffect: items[i].customEffect, enabled: items[i].enabled} , null, function(err,doc){
                 if (doc !== null) {
                     ++copied;
                 }
@@ -461,7 +461,7 @@ copyTasks.push(function(callback){
         for (var i = total - 1; i >= 0; i--) {
 
             //get item from dest version
-            Rune.findOneAndUpdate( {version: destPatch, id: runes[i].id} , {customEffect: runes[i].customEffect, enabled: runes[i].enabled} , null, function(err,doc){
+            Rune.findOneAndUpdate( {version: destPatch, id: runes[i].id, name : runes[i].name} , {customEffect: runes[i].customEffect, enabled: runes[i].enabled} , null, function(err,doc){
                 if (doc !== null) {
                     ++copied;
                 }
@@ -488,7 +488,7 @@ copyTasks.push(function(callback){
         for (var i = total - 1; i >= 0; i--) {
 
             //get item from dest version
-            Masterie.findOneAndUpdate( {version: destPatch, id: masteries[i].id} , {customEffect: masteries[i].customEffect, enabled: masteries[i].enabled} , null, function(err,doc){
+            Masterie.findOneAndUpdate( {version: destPatch, id: masteries[i].id, name : masteries[i].name} , {customEffect: masteries[i].customEffect, enabled: masteries[i].enabled} , null, function(err,doc){
                 if (doc !== null) {
                     ++copied;
                 }
@@ -515,7 +515,7 @@ copyTasks.push(function(callback){
         for (var i = total - 1; i >= 0; i--) {
 
             //get item from dest version
-            Champion.findOneAndUpdate( {version: destPatch, id: champions[i].id} , {customEffect: champions[i].customEffect, enabled: champions[i].enabled} , null, function(err,doc){
+            Champion.findOneAndUpdate( {version: destPatch, id: champions[i].id, name : champions[i].name} , {customEffect: champions[i].customEffect, enabled: champions[i].enabled} , null, function(err,doc){
                 if (doc !== null) {
                     ++copied;
                 }

@@ -56,7 +56,6 @@ exports.read = function(req, res) {
     if (updateDate <= now || res.isAdmin) {
         // Url from which we pretend to extract the like/share/comment count
         var url = res.locals.url;
-
         var facebookApi = 'http://api.facebook.com/method/links.getStats?urls=' + url.replace("/builds", "/%23!/builds")+ '&format=json';
 
         // Get facebook counts for the current build.
