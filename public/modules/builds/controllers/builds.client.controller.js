@@ -618,7 +618,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				level: 	 1,
 				items:   [],
 				trinket: null,
-				name: 	 ''
+				name: 	 '',
+				championItems : []
 			};
 
 			$scope.build.snapshot.push(snapTmp);

@@ -6,8 +6,8 @@
                 src="{{ (build.champion.image.full || data.selectedChampion.image.full)  | ddragon: (build.champion.version || data.selectedChampion.version):'champion'}}">
         </div>
         <div class="champion-name-wrapper absolute-top">
-            <label class="champion-name">{{build.champion.name || 'Summon'}}</label>
-            <label class="champion-title">{{build.champion.title || 'your champion'}}</label>
+            <label class="champion-name">{{ (build.champion.name || data.selectedChampion.name) || 'Summon'}}</label>
+            <label class="champion-title">{{ (build.champion.title || data.selectedChampion.title) || 'your champion'}}</label>
         </div>
     </div>
     <div class="row row-no-padding stats-container fx-fade-down fx-speed-1000" ng-show="build.calculatedStats[data.currentSnapshot].hp != 'n/a'">
@@ -23,7 +23,7 @@
         </div>
         <div class="stat-column">
             <div class="stat-wrapper stat-wrapper-right">
-                <div class="stat-designation">{{build.champion.partype}}</div>
+                <div class="stat-designation">{{build.champion.partype || data.selectedChampion.partype}}</div>
                 <div class="stat-value-wrapper stat-value-mp">
                     <div class="stat-value">
                         <label>{{build.calculatedStats[data.currentSnapshot].mp}}</label>
@@ -43,7 +43,7 @@
         </div>
         <div class="stat-column">
             <div class="stat-wrapper stat-wrapper-right">
-                <div class="stat-designation">{{build.champion.partype}}p5</div>
+                <div class="stat-designation">{{build.champion.partype || data.selectedChampion.partype}}p5</div>
                 <div class="stat-value-wrapper stat-value-mpregen">
                     <div class="stat-value">
                         <label>{{build.calculatedStats[data.currentSnapshot].mpregen | regenStat }}</label>
