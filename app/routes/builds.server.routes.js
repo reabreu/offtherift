@@ -5,6 +5,10 @@ module.exports = function(app) {
 	var builds = require('../../app/controllers/builds.server.controller');
 
 	// Builds Routes
+	//
+	// http://www.offtherift.com/%23!/builds/supporter-zyra/557dfba443ee25e4247540cc
+	app.route('/%23!/builds/:buildName/:buildHash').get(builds.redirectToBuild);
+
 	app.route('/builds')
 		.get(builds.list)
 		.post(users.requiresLogin, builds.create);

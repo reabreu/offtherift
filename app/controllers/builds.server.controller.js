@@ -494,3 +494,7 @@ function trimBuildName(name){
                 .replace(/[^a-zA-Z0-9]+/g, '-')
                 .trim();
 }
+
+exports.redirectToBuild = function(req,res,next){
+    res.redirect(req.url.replace("%23", "#"));
+}
