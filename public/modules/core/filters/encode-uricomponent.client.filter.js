@@ -8,7 +8,7 @@ angular.module('core').filter('encodeUricomponent', [
             //
             if (typeof(input) === 'undefined') return '';
 
-            return input.toLowerCase()
+            return  input.toLowerCase()
                         .replace(/^-+|-+$/g, '')
                         .replace(/[^a-zA-Z0-9]+/g, '-')
                         .trim();
