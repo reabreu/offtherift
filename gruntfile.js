@@ -220,7 +220,7 @@ module.exports = function(grunt) {
 	});
 
 	// Default task(s).
-	grunt.registerTask('default', ['concurrent:default', 'less']); /*lint removed*/
+	grunt.registerTask('default', ['concurrent:default', 'less:development']); /*lint removed*/
 
 	// Debug task.
 	grunt.registerTask('debug', ['lint', 'concurrent:debug']);
