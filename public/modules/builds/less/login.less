@@ -41,11 +41,13 @@
 .btn{
     border: 1px solid white;
     background-color: transparent;
-    height: 30px;
-    width: 40%;
     &:hover{
         background: white;
         color: @water-blue;
+
+        .fa {
+            color: @water-blue;
+        }
     }
 }
 .btn-login{
@@ -66,9 +68,6 @@
 }
 
 .btn-register{
-    height: 25px;
-    line-height: 10px;
-
     &:focus{
         background: white;
         color: @water-blue;

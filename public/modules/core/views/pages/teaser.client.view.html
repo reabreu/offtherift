@@ -12,22 +12,22 @@
                 <p>Keep scrolling and check how everything works!</p>
             </div>
         </div>
-        <div class="row statistics-wrapper top10">
-            <div class="col-md-4 col-sm-12">
-                <h1 class="statistic-container">
-                    <span class="heavy statistic-number" count-to="{{buildsCountTo}}" value="{{buildsCountFrom}}" duration="1"></span>
+        <div class="row teaser-row dark-row">
+            <div class="col-md-4 col-sm-12 text-center">
+                <span class="heavy statistic-number" count-to="{{buildsCountTo}}" value="{{buildsCountFrom}}" duration="1"></span>
+                <h1 class="statistic-container top0">
                     Total Builds
                 </h1>
             </div>
-            <div class="col-md-4 col-sm-12">
-                <h1 class="statistic-container">
-                    <span class="heavy statistic-number" count-to="{{usersCountTo}}" value="{{usersCountFrom}}" duration="1"></span>
+            <div class="col-md-4 col-sm-12 text-center">
+                <span class="heavy statistic-number" count-to="{{usersCountTo}}" value="{{usersCountFrom}}" duration="1"></span>
+                <h1 class="statistic-container top0">
                     Registered Users
                 </h1>
             </div>
-            <div class="col-md-4 col-sm-12">
-                <h1 class="statistic-container">
-                    <span class="heavy statistic-number" count-to="{{unsetCountTo}}" value="{{unsetCountFrom}}" duration="1"></span>
+            <div class="col-md-4 col-sm-12 text-center">
+                <span class="heavy statistic-number" count-to="{{unsetCountTo}}" value="{{unsetCountFrom}}" duration="1"></span>
+                <h1 class="statistic-container top0">
                     Waiting Invitation
                 </h1>
             </div>
@@ -181,7 +181,7 @@
                 <p>We do plan on adding the champion abilites as the final piece of the builder and making some other cool tools for you guys.</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row teaser-row">
             <h1 class="text-center bottom50 top50 big-text">Creating your own build</h1>
             <div class="col-md-push-5 col-md-6">
                 <table class="table-step">
@@ -199,7 +199,7 @@
         <div class="row step-two-container dark-row">
             <div class="col-md-push-1 col-md-6">
                 <table class="table-step">
-                    <td class="text-center big-number">2 </td>
+                    <td class="text-center big-number">2</td>
                     <td>
                         <div class="step-description">Search and add items to your build. <br>As you do the app will recalculate the stats.</div>
                     </td>
@@ -228,7 +228,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row step-three-container teaser-runes">
+        <div class="row step-three-container teaser-runes teaser-row">
             <div class="col-md-5 col-md-push-6">
                 <table class="table-step">
                     <td class="text-center big-number">3 </td>
@@ -278,8 +278,8 @@
                 </div>
             </div>
         </div>
-        <div class="row step-four-container dark-row">
-            <div class="col-sm-push-1 col-sm-6">
+        <div class="row step-four-container dark-row teaser-row">
+            <div class="col-md-push-1 col-md-6 col-sm-12">
                 <table class="table-step">
                     <td class="text-center big-number">4 </td>
                     <td>
@@ -287,7 +287,7 @@
                     </td>
                 </table>
             </div>
-            <div class="col-sm-push-2 col-sm-3 teaser-masteries">
+            <div class="col-md-push-2 col-md-3 col-sm-12 teaser-masteries">
                 <div class="mastery-column">
                     <h3 class="mastery-title mastery-red">Offense</h3>
                     <ul class="mastery-container">
@@ -377,7 +377,7 @@
                 </div>
             </div>
         </div>
-        <div class="row step-five-container">
+        <div class="row step-five-container teaser-row">
             <div class="col-xs-6 teaser-stats">
                 <div class="stats-container">
                     <div class="stat-column">
@@ -583,16 +583,22 @@
             </div>
         </div>
         <div class="row step-seven-container">
-            <div class="col-sm-12 col-md-push-2 col-md-8">
+            <div class="col-sm-12 col-md-push-2 col-md-8 text-center">
                 <h1 class="text-center top30 bottom30"><span class="big-text light">OfftheRift is maintained via</span> <span class="big-text heavy">donationware</span></h1>
                 <div class="support-container">
-                    <p class="text-center">We won't charge users to use our app.</p>
-                    <p class="text-center">However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
-                    <p class="text-center">If you enjoy our work and want to see other cool tools from us please consider <a href='http://ko-fi.com?i=2284LMFL0ERNH' target='_blank'>paying us a coffee</a></p>
-                    <p class="text-center">We want your opinion. If you have ideas or suggestions please contact us at
-                        <a class="link grey" href="mailto:feedback@offtherift.com">feedback@offtherift.com</a>
-                    </p>
+                    <h2>We won't charge users to use our app!</h2>
+                    <p>However keep in mind that we can't maintain the app online or develop other cool tools without your support.</p>
                 </div>
+                <h2>We want your opinion!</h2>
+                <p class="text-center">If you have ideas or suggestions please contact us at
+                    <a class="link grey" href="mailto:feedback@offtherift.com">feedback@offtherift.com</a>
+                </p>
+            </div>
+        </div>
+        <div class="row step-seven-container top20">
+            <div class="col-sm-12 col-md-push-2 col-md-8 text-center">
+                    <h3 class="text-center">If you enjoy our work and want to see other cool tools from us please consider</h3>
+                <a href='http://ko-fi.com?i=2284LMFL0ERNH' target="_blank" class="btn btn-default btn-lg"><i class="fa fa-coffee"></i> Paying us a coffee</a>
             </div>
         </div>
         <div class="step-eight-container">
@@ -622,21 +628,21 @@
                 </div>
             </div>
         </div>
-        <div class="row step-join dark-row">
+        <div class="row step-join dark-row teaser-row">
             <div class="col-xs-12">
                 <h1 class="big-text text-center">Join us</h1>
             </div>
             <div class="row">
-                <div class="col-xs-12">
-                    <p class="light text-center">Enter your facebook email and you'll receive an invitation to join the OfftheRift project.</p>
+                <div class="col-xs-12 text-center">
+                    <h3 class="light">Enter your facebook email and you'll receive an invitation to join the OfftheRift project.</h3>
                 </div>
             </div>
             <div class="row top17">
-                <div class="col-xs-4 col-xs-push-3">
-                    <input class="build-input" ng-model="teaserEmail">
+                <div class="col-xs-4 col-xs-offset-3">
+                    <input class="form-control input-lg" ng-model="teaserEmail">
                 </div>
-                <div class="col-xs-4 col-xs-push-3">
-                    <button class="btn btn-register" ng-click="subscribe()">Register</button>
+                <div class="col-xs-2">
+                    <button class="btn btn-register btn-block btn-lg" ng-click="subscribe()">Register</button>
                 </div>
             </div>
             <div class="row top10">
@@ -645,8 +651,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 top30">
+        <div class="row teaser-row">
+            <div class="col-sm-12">
                 <div class="row">
                     <div class="col-xs-5">
                         <a ui-sref="listBuilds">
@@ -674,9 +680,9 @@
                 </div>
             </div>
         </div>
-        <div class="row step-nine-container dark-row top30 bottom30">
-            <div class="col-xs-12">
-                <h1 class="text-center top20 bottom20">Browse builds by champion</h1>
+        <div class="row step-nine-container dark-row teaser-row">
+            <div class="col-md-6 col-md-offset-3 col-sm-12">
+                <h1 class="text-center top60 bottom40">Browse builds by champion</h1>
                 <div class="row champion-listing bottom30">
                     <div ng-repeat="c in champions track by $index"
                         class="col-xs-3">
