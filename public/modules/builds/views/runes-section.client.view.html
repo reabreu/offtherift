@@ -19,7 +19,7 @@
 	            <div class="clearfix"></div>
 	            <div class="item-list">
 	                <div class="spinner spinner-xs" ng-show="state[query.type].loading"></div>
-	                <div class="item-listing" id="runes-list" prevent-window-scroll>
+	                <otr-perfect-scrollbar class="item-listing" id="runes-list" wheel-propagation="false" min-scrollbar-length="20" reset-on-change="query.type">
 	                    <ul infinite-scroll                 = "loadMoreRunes(data.runes[query.type].length);$event.stopPropagation()"
 	                        infinite-scroll-disabled        = "state[query.type].loading"
 	                        infinite-scroll-immediate-check = "false"
@@ -41,7 +41,7 @@
 			                    </a>
 			                </li>
 			            </ul>
-			        </div>
+			        </otr-perfect-scrollbar>
 			    </div>
             </div>
 		</div>

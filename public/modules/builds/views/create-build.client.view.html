@@ -62,10 +62,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-fluid configuration-wrapper">
-				<div class="row">
-					<div class="col-sm-12">
-						<label class="build-title">ITEMS</label>
+			<otr-perfect-scrollbar class="configuration-wrapper" wheel-propagation="true">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<label class="build-title">ITEMS</label>
+						</div>
 					</div>
 					<div class="row">
 				        <div class="col-sm-12">
@@ -92,33 +94,39 @@
 				        	</ul>
 				        </div>
 				    </div>
-					<div class="col-sm-12">
-						<div class="build-config-panel item-config-panel">
-							<item-section build="build" data="data" version="data.selectedPatch" loading="state.items.loading" full="state.items.full"></item-section>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="build-config-panel item-config-panel">
+								<item-section build="build" data="data" version="data.selectedPatch" loading="state.items.loading" full="state.items.full"></item-section>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<label class="build-title">RUNES</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="build-config-panel">
+								<runes-section build="build" data="data" version="data.selectedPatch" state="state.runes"></runes-section>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<label class="build-title">MASTERIES</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="build-config-panel">
+								<masteries-section build="build" data="data"></masteries-section>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<label class="build-title">RUNES</label>
-					</div>
-					<div class="col-sm-12">
-						<div class="build-config-panel">
-							<runes-section build="build" data="data" version="data.selectedPatch" state="state.runes"></runes-section>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-sm-12">
-						<label class="build-title">MASTERIES</label>
-					</div>
-					<div class="col-sm-12">
-						<div class="build-config-panel">
-							<masteries-section build="build" data="data"></masteries-section>
-						</div>
-					</div>
-				</div>
-			</div>
+			</otr-perfect-scrollbar>
 		</div>
 	 </div>
 </section>

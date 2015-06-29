@@ -25,7 +25,7 @@
             <div class="clearfix"></div>
             <div class="item-list">
                 <div class="spinner spinner-xs" ng-show="loading"></div>
-                <div class="item-listing" id="items-list" prevent-window-scroll>
+                <otr-perfect-scrollbar class="item-listing" id="items-list" wheel-propagation="false" min-scrollbar-length="20">
                     <ul infinite-scroll                 = "loadMoreItems(data.items.length);$event.stopPropagation()"
                         infinite-scroll-disabled        = "loading"
                         infinite-scroll-immediate-check = "false"
@@ -48,7 +48,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </otr-perfect-scrollbar>
             </div>
         </div>
         <div ng-class="{'col-md-pull-5 col-md-7': buildMode == 'createBuild' || buildMode == 'editBuild','col-sm-12': buildMode == 'viewBuild' }">

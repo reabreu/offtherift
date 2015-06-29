@@ -119,7 +119,9 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			if (finalHeight < 598) finalHeight = 598;
 
-			angular.element('.configuration-wrapper').height(finalHeight);
+			$(function () {
+				angular.element('.configuration-wrapper').height(finalHeight);
+			});
 		};
 
 		/**************************

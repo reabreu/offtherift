@@ -38,60 +38,66 @@
         </div>
         <div ng-include="'modules/builds/views/champion-stats.client.view.html'"></div>
         <div class="stats-configuration-wrapper fx-fade-down fx-speed-1000" ng-show="build.champion_id != null">
-            <div class="container-fluid configuration-wrapper">
-                <div class="row">
-                    <div class="col-md-5">
-                        <label class="build-title">ITEMS</label>
-                        <ul class="snapshot-container">
-                            <li
-                                ng-repeat="snap in build.snapshot track by $index"
-                                ng-click="setCurrentSnap($index)"
-                                ng-class="{'selected-snap': data.currentSnapshot == $index}">
-                                {{build.snapshot[$index].name}}
-                            </li>
-                            <li
-                                class="filler-tab"
-                                ng-repeat="n in range(1, 5 - build.snapshot.length)">
-                            </li>
-                        </ul>
-                        <div class="build-config-panel item-config-panel">
-                            <item-section build="build" data="data"></item-section>
+            <otr-perfect-scrollbar class="configuration-wrapper" wheel-propagation="true" min-scrollbar-length="20">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="build-title">ITEMS</label>
+                            <ul class="snapshot-container">
+                                <li
+                                    ng-repeat="snap in build.snapshot track by $index"
+                                    ng-click="setCurrentSnap($index)"
+                                    ng-class="{'selected-snap': data.currentSnapshot == $index}">
+                                    {{build.snapshot[$index].name}}
+                                </li>
+                                <li
+                                    class="filler-tab"
+                                    ng-repeat="n in range(1, 5 - build.snapshot.length)">
+                                </li>
+                            </ul>
+                            <div class="build-config-panel item-config-panel">
+                                <item-section build="build" data="data"></item-section>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <label class="build-title">RUNES</label>
+                            <div class="build-config-panel runes-config-panel">
+                                <runes-section build="build" data="data"></runes-section>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-7">
-                        <label class="build-title">RUNES</label>
-                        <div class="build-config-panel runes-config-panel">
-                            <runes-section build="build" data="data"></runes-section>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="build-title">MASTERIES</label>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label class="build-title">MASTERIES</label>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="build-config-panel">
-                            <masteries-section build="build" data="data"></masteries-section>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="build-config-panel">
+                                <masteries-section build="build" data="data"></masteries-section>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label class="build-title">COMMENTS</label>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="build-title">COMMENTS</label>
+                        </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="fb-comments build-config-panel">
-                            <div class="fb-parse">
-                                <fb:comments data-href="{{absUrl}}"
-                                             data-numposts="5"
-                                             data-colorscheme="light"
-                                             data-width="100%">
-                                </fb:comments>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="fb-comments build-config-panel">
+                                <div class="fb-parse">
+                                    <fb:comments data-href="{{absUrl}}"
+                                                 data-numposts="5"
+                                                 data-colorscheme="light"
+                                                 data-width="100%">
+                                    </fb:comments>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </otr-perfect-scrollbar>
         </div>
     </div>
 </section>
