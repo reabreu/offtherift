@@ -65,6 +65,8 @@ module.exports = {
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.js',
 						'public/lib/slick-carousel/slick/slick.min.js',
 						'public/lib/angular-slick/dist/slick.min.js',
+						'public/lib/zepto/zepto.min.js',
+						'public/lib/perfect-scrollbar/min/perfect-scrollbar.min.js',
 						'public/lib/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js'
 					]
 				},
