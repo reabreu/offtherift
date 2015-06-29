@@ -12,6 +12,8 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $scope.state            = $stateParams.state;
         $scope.champions        = {};
 
+        FB.XFBML.parse();
+
         //Cookie confirmation
         //Retrieving a cookie
         $scope.cookieConfirmation  = $cookies['cookieConfirmation'];
