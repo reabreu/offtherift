@@ -34,6 +34,7 @@ module.exports = {
 						'public/lib/ngprogress/ngProgress.css',
 						'public/lib/ng-mobile-menu/dist/ng-mobile-menu.min.css',
 						'public/lib/angular-block-ui/dist/angular-block-ui.min.css',
+						'public/lib/slick-carousel/slick/slick.css',
 						'public/lib/perfect-scrollbar/min/perfect-scrollbar.min.css'
 					],
 					js: [
