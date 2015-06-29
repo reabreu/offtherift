@@ -1,8 +1,8 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q','$rootScope','Pagetitle','Metainformation',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q, $rootScope, Pagetitle, Metainformation) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q','$rootScope','Pagetitle','Metainformation','Championbackground',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q, $rootScope, Pagetitle, Metainformation, Championbackground) {
 		$scope.authentication 	= Authentication;
 		/**
 		 * Flags to contents states
@@ -31,7 +31,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$scope.build = data.data;
 
 				console.log();
-				$scope.setChampionBackground($scope.build.champion.key);
+				Championbackground.setChampionBackground($scope.build.champion.key);
 
 				/*Meta Tags Configuration*/
 				Metainformation.reset();
@@ -479,18 +479,11 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				}
 
 				$scope.data.selectedChampion 	= data.champions[0];
-				$scope.setChampionBackground($scope.data.selectedChampion.key);
+				Championbackground.setChampionBackground($scope.data.selectedChampion.key);
 				$scope.build.champion_id 		= champion.id;
 				$scope.build.champion 			= $scope.data.selectedChampion._id;
 				$scope.unblockBuilder();
 			});
-		};
-
-		$scope.setChampionBackground = function(key) {
-			var element = angular.element('.champion-splash');
-			element.css({
-	            'background-image': 'url(http://ddragon.leagueoflegends.com/cdn/img/champion/splash/' + key +'_0.jpg)',
-	        });
 		};
 
 		/**
@@ -682,7 +675,7 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 		};
 
 		$scope.initBuildBrowsing = function(){
-
+			Championbackground.setChampionBackground("Ekko");
 			Metainformation.reset();
 			$rootScope.pageKeywords = Metainformation.metaKeywords();
 			$rootScope.pageTitle 	= Pagetitle.setTitle('Browse Builds');
