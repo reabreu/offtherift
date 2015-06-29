@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval','Userstatistics','Repository','$cookies',
-    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval, Userstatistics,Repository,$cookies) {
+angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$location', 'Hashes','$rootScope','Pagetitle','Metainformation','$stateParams','popularBuilds','$interval','Userstatistics','Repository','$cookies','Championbackground',
+    function($scope, $timeout, $location, Hashes, $rootScope, Pagetitle, Metainformation, $stateParams,popularBuilds, $interval, Userstatistics,Repository,$cookies, Championbackground) {
 
         Metainformation.reset();
 
@@ -11,8 +11,6 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $rootScope.pageTitle    = Pagetitle.setTitle('Home');
         $scope.state            = $stateParams.state;
         $scope.champions        = {};
-
-        FB.XFBML.parse();
 
         //Cookie confirmation
         //Retrieving a cookie
@@ -48,6 +46,8 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $scope.buildsCountFrom    = 0;
 
         $scope.initTeaser = function(){
+            FB.XFBML.parse();
+            Championbackground.setChampionBackground("Ekko");
             getChampionsLinks();
 
             $scope.math = Math;

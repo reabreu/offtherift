@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout','popularBuilds','Statistics','$rootScope','Pagetitle','Metainformation',
-	function($scope, Authentication, Builds, ngProgress, $timeout,popularBuilds,Statistics, $rootScope, Pagetitle, Metainformation) {
+angular.module('users').controller('ProfileController', ['$scope', 'Authentication','Builds','ngProgress','$timeout','popularBuilds','Statistics','$rootScope','Pagetitle','Metainformation','Championbackground',
+	function($scope, Authentication, Builds, ngProgress, $timeout,popularBuilds,Statistics, $rootScope, Pagetitle, Metainformation, Championbackground) {
 		$scope.authentication = Authentication;
 
         $scope.addBuild = function(elem, container){
@@ -11,6 +11,7 @@ angular.module('users').controller('ProfileController', ['$scope', 'Authenticati
         };
 
         $scope.initDashboard = function(){
+            Championbackground.setChampionBackground("Ekko");
             Metainformation.reset();
             $rootScope.pageKeywords = Metainformation.metaKeywords();
             $rootScope.pageTitle    = Pagetitle.setTitle('Dashboard');
