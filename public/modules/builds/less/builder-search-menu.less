@@ -11,7 +11,8 @@
 
 .item-listing{
     height:257px;
-    overflow-y:scroll;
+    position: relative;
+    overflow-y:hidden;
     border:1px solid white;
     list-style-type: none;
     padding:        0px;
@@ -25,6 +26,8 @@
         padding: 0;
 
         li{
+            border-bottom: 1px solid @water-blue;
+
             a{
                 display: block;
                 padding: 10px;
@@ -34,7 +37,10 @@
                     background-color: rgba(255, 255, 255, 0.85);
                 }
             }
-            border-bottom: 1px solid @water-blue;
+
+            &:last-child {
+                border-bottom: none;
+            }
         }
     }
 }
