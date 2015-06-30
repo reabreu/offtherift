@@ -39,8 +39,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 				$rootScope.pageKeywords = Metainformation.metaKeywords();
 				$rootScope.pageTitle 	= Pagetitle.setTitle($scope.build.name);
 
-
-
 				if ($state.current.name == "viewBuild") {
 					var params = {version: $scope.build.version, build: true };
 
@@ -69,7 +67,8 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 						$scope.getPatchInfo();
 					});
 				} else {
-					FB.XFBML.parse();
+					if (typeof FB != 'undefined')
+						FB.XFBML.parse();
 				}
 			});
 		};

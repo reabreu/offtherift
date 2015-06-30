@@ -46,14 +46,13 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
         $scope.buildsCountFrom    = 0;
 
         $scope.initTeaser = function(){
-            FB.XFBML.parse();
             Championbackground.setChampionBackground("Ekko");
             getChampionsLinks();
 
             $scope.math = Math;
 
             $scope.search = {
-                days: 40
+                days: 10
             };
 
             popularBuilds.mostPopular.get($scope.search).$promise.then(function(result){
@@ -79,6 +78,8 @@ angular.module('core').controller('TeaserController', ['$scope', '$timeout', '$l
                 $scope.unsetCountFrom    = result.unactivated* 0.5;
             });
 
+            if (typeof FB != 'undefined')
+                FB.XFBML.parse();
         };
 
         function getChampionsLinks() {
