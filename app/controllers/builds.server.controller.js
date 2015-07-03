@@ -103,8 +103,8 @@ function saveAndReturn(res, build) {
                 message: errorHandler.getErrorMessage(err)
             });
         }
+        res.jsonp({data: build});
     });
-    res.jsonp({data: build});
 }
 
 /**

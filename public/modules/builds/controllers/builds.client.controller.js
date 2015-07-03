@@ -1,8 +1,8 @@
 'use strict';
 
 // Builds controller
-angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q','$rootScope','Pagetitle','Metainformation','Championbackground',
-	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q, $rootScope, Pagetitle, Metainformation, Championbackground) {
+angular.module('builds').controller('BuildsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Builds', 'Repository','$modal','Calculate', 'ngProgress','$timeout','$state','$window','blockUI', '$otrModal', '$q','$rootScope','Pagetitle','Metainformation','Championbackground','ngToast',
+	function($scope, $stateParams, $location, Authentication, Builds, Repository,$modal,Calculate,ngProgress,$timeout,$state,$window,blockUI, $otrModal, $q, $rootScope, Pagetitle, Metainformation, Championbackground, ngToast) {
 		$scope.authentication 	= Authentication;
 		/**
 		 * Flags to contents states
@@ -30,7 +30,6 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 				$scope.build = data.data;
 
-				console.log();
 				Championbackground.setChampionBackground($scope.build.champion.key);
 
 				/*Meta Tags Configuration*/
@@ -354,6 +353,12 @@ angular.module('builds').controller('BuildsController', ['$scope', '$stateParams
 
 			$scope.buildService = new Builds ($scope.build);
 
+			if($scope.authentication.user == "") {
+				ngToast.create({
+					content: "Please login to save builds"
+				});
+				return;
+			}
 			// Redirect after save
 			$scope.buildService.$save(function(response) {
 				$location.path('builds/'+ response.name + '/' + response._id + '/edit');

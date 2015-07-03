@@ -19,12 +19,7 @@ angular.module('builds').config(['$stateProvider',
 		}).
 		state('createBuild', {
 			url: '/builds/create',
-			templateUrl: 'modules/builds/views/create-build.client.view.html',
-			resolve: {
-				load: ['$q', 'Authentication', '$state','$timeout','Urlprotection', function($q, Authentication, $state, $timeout, Urlprotection ) {
-					return Urlprotection.checkSendToHome($q, Authentication, $state, $timeout);
-				}]
-			}
+			templateUrl: 'modules/builds/views/create-build.client.view.html'
 		}).
 		state('viewBuild', {
 			url: '/builds/:build_name/:buildId',
