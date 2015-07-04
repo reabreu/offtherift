@@ -95,9 +95,6 @@ angular.module('builds').directive('masteriesSection', ['$state',
 				};
 
 				$scope.checkDependecy = function(masterie){
-					if($scope.build.masteries_aux.avaliable_points == 0 && masterie.points == 0){
-						return false;
-					}
 					if (masterie.prereq == "0"){
 						return true;
 					} else {
@@ -109,7 +106,17 @@ angular.module('builds').directive('masteriesSection', ['$state',
 						}
 					}
 					return false;
-				}
+				};
+
+				$scope.checkEnabled = function(masterie) {
+					if($scope.build.masteries_aux.avaliable_points == 0 && masterie.points == 0){
+						return false;
+					}
+					if($scope.buildMode == 'viewBuild' && masterie.points == 0){
+						return false;
+					}
+					return true;
+				};
 			}
 		};
 	}
