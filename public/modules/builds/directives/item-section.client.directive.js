@@ -70,11 +70,14 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				});
 
 				$scope.init = function(){
+					$scope.itemTree = null;
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild"){
 						$scope.resetItems();
 					}
+
+					$scope.getItemTree(3078, '5.12.1'); // DEBUG
 				};
 
 				$scope.addItem = function(item, snapshot){
@@ -376,6 +379,63 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 
 					// Get from database
 					return Items.data.query(params).$promise;
+				};
+
+				/**
+				 * Loads the dependencies tree for the item with given id into $scope.itemTree
+				 * @param  int		itemId  Id of the root item of the tree.
+				 * @param  string	version Version from where we should get the information.
+				 * @return
+				 */
+				$scope.getItemTree = function(itemId, version) {
+					$scope.itemTree = {}; // start with a clean tree
+
+					// TODO: Refactor to get only the necessary items...
+					Repository.getItems({ 'version' : version }).then(function(data) {
+						// Get the information of the root item.
+						for (var i = data.items.length - 1; i >= 0; i--) {
+							if (data.items[i].id == itemId) {
+								// Insert the root node into the tree.
+								$scope.itemTree.item = data.items[i];
+								$scope.itemTree.dependencies = getDependencies(data.items[i], data.items);
+								break;
+							}
+						};
+
+						console.log($scope.itemTree);
+					});
+				};
+
+				/**
+				 * Get a list of nodes of the items that build into given item.
+				 * WARNING: PREPARE FOR RECURSIVE BONANZA! xD
+				 * @param  {[type]} itemId [description]
+				 * @param  {[type]} items  [description]
+				 * @return [node] Nodes with the information of the base items.
+				 */
+				var getDependencies = function(item, itemList) {
+					// Indexes of the items that should be added to the tree.
+					var search = (typeof item.from === 'undefined') ? [] : item.from;
+					var result = [];
+
+					// Dig Deeper
+					for (var i = search.length - 1; i >= 0; i--) {
+						var nextNode = {};
+
+						// Get the item information for search[i].
+						for (var j = itemList.length - 1; j >= 0; j--) {
+							if (itemList[j].id == search[i]) {
+								nextNode.item = itemList[j];
+								break;
+							}
+						};
+
+						nextNode.Dependencies = getDependencies(nextNode.item, itemList);
+						
+						result.push(nextNode);
+					}
+
+					return result;
 				};
 
 				$scope.$parent.setConfigHeight();
