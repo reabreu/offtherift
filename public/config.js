@@ -21,7 +21,8 @@ var ApplicationConfiguration = (function() {
 		'ngProgress',
 		'shoppinpal.mobile-menu',
 		'blockUI',
-		'slick'
+		'slick',
+		'ui.tree'
 	];
 
 	// Add a new vertical module

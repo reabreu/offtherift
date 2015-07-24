@@ -1,93 +1,122 @@
+<!-- DEBUG -->
+<div ui-tree>
+		<!-- Root tree-->
+		<ol ui-tree-nodes="" ng-model="itemTree">
+			<li ng-repeat="root in itemTree" ui-tree-node data-nodrag>
+				<div ui-tree-handle>
+					{{root.item.name}}
+				</div>
+				<!-- Root item's tree -->
+				<ol ui-tree-nodes="" ng-model="root.dependencies">
+					<li ng-repeat="node in root.dependencies" ui-tree-node data-nodrag>
+						<div ui-tree-handle>
+							{{node.item.name}}
+						</div>
+						<!-- 2nd level items' trees -->
+						<ol ui-tree-nodes="" ng-model="node.dependencies">
+							<li ng-repeat="subNode in node.dependencies" ui-tree-node data-nodrag>
+								<div ui-tree-handle>
+									{{subNode.item.name}}
+								</div>
+								{{subNode.item.name}}
+							</li>
+						</ol>
+					</li>
+				</ol>
+			</li>
+		</ol>
+	</div>
+
 <div ng-init="init()">
-    <div class="row">
-        <div class="col-sm-12" ng-switch="checkLevelSelection()">
-            <div class="level-wrapper" ng-switch-when="true">
-                <div class="level-container" ng-repeat="n in range(1,18)">
-                    <span ng-click="setLevel(n)" ng-class="{'selected-level': build.snapshot[data.currentSnapshot].level == n}" class="level-badge">{{n}}</span>
-                </div>
-            </div>
-            <div ng-switch-when="false">
-                <p class="text-center top10">
-                    <label class="light view-level-label">Level: </label>
-                    <label class="strong view-level">{{build.snapshot[data.currentSnapshot].level}}</label>
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="row" ng-switch="$parent.showSearch(buildMode)">
-        <div class="col-md-5 col-md-push-7"  ng-switch-when="true" >
-            <input
-                type        = "text"
-                class       = "build-input col-sm-12"
-                ng-model    = "query.name"
-                ng-change   = "searchItems()"
-                placeholder = "Search Item">
-            <div class="clearfix"></div>
-            <div class="item-list">
-                <div class="spinner spinner-xs" ng-show="loading"></div>
-                <otr-perfect-scrollbar class="item-listing" id="items-list" wheel-propagation="false" min-scrollbar-length="20">
-                    <ul infinite-scroll                 = "loadMoreItems(data.items.length);$event.stopPropagation()"
-                        infinite-scroll-disabled        = "loading"
-                        infinite-scroll-immediate-check = "false"
-                        infinite-scroll-container       = "'#items-list'">
-                        <li ng-repeat = "item in data.items | filterItems: query">
-                                <a
-                                tooltip-html-unsafe="{{item.description}}"
-                                tooltip-trigger="mouseenter"
-                                tooltip-placement="left"
-                                tooltip-popup-delay = "600"
-                                href="#"
-                                ng-click="addItem(item);$event.preventDefault(); $event.stopPropagation();">
-                                <div class="item-container">
-                                    <img  title="" alt="avatar" otr-src="{{ item.image.full | ddragon: item.version:'item'}}">
-                                </div>
-                                <div class="item-description">
-                                    <span class="title">{{item.name}}</span>
-                                    <span class="description">{{item.plaintext}}</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </otr-perfect-scrollbar>
-            </div>
-        </div>
-        <div ng-class="{'col-md-pull-5 col-md-7': buildMode == 'createBuild' || buildMode == 'editBuild','col-sm-12': buildMode == 'viewBuild' }">
-            <ul class="item-wrapper">
-                <li
-                    class="item-slot"
-                    ng-repeat="n in range(1,6) track by $index"
-                    ng-mouseover="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index],$event);"
-                    ng-mouseleave="$parent.$parent.hoverOut()">
+	<div class="row">
+		<div class="col-sm-12" ng-switch="checkLevelSelection()">
+			<div class="level-wrapper" ng-switch-when="true">
+				<div class="level-container" ng-repeat="n in range(1,18)">
+					<span ng-click="setLevel(n)" ng-class="{'selected-level': build.snapshot[data.currentSnapshot].level == n}" class="level-badge">{{n}}</span>
+				</div>
+			</div>
+			<div ng-switch-when="false">
+				<p class="text-center top10">
+					<label class="light view-level-label">Level: </label>
+					<label class="strong view-level">{{build.snapshot[data.currentSnapshot].level}}</label>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-switch="$parent.showSearch(buildMode)">
+		<div class="col-md-5 col-md-push-7"  ng-switch-when="true" >
+			<input
+				type        = "text"
+				class       = "build-input col-sm-12"
+				ng-model    = "query.name"
+				ng-change   = "searchItems()"
+				placeholder = "Search Item">
+			<div class="clearfix"></div>
+			<div class="item-list">
+				<div class="spinner spinner-xs" ng-show="loading"></div>
+				<otr-perfect-scrollbar class="item-listing" id="items-list" wheel-propagation="false" min-scrollbar-length="20">
+					<ul infinite-scroll                 = "loadMoreItems(data.items.length);$event.stopPropagation()"
+						infinite-scroll-disabled        = "loading"
+						infinite-scroll-immediate-check = "false"
+						infinite-scroll-container       = "'#items-list'">
+						<li ng-repeat = "item in data.items | filterItems: query">
+								<a
+								tooltip-html-unsafe="{{item.description}}"
+								tooltip-trigger="mouseenter"
+								tooltip-placement="left"
+								tooltip-popup-delay = "600"
+								href="#"
+								ng-click="addItem(item);$event.preventDefault(); $event.stopPropagation();">
+								<div class="item-container">
+									<img  title="" alt="avatar" otr-src="{{ item.image.full | ddragon: item.version:'item'}}">
+								</div>
+								<div class="item-description">
+									<span class="title">{{item.name}}</span>
+									<span class="description">{{item.plaintext}}</span>
+								</div>
+							</a>
+						</li>
+					</ul>
+				</otr-perfect-scrollbar>
+			</div>
+		</div>
+		<div ng-class="{'col-md-pull-5 col-md-7': buildMode == 'createBuild' || buildMode == 'editBuild','col-sm-12': buildMode == 'viewBuild' }">
+			<ul class="item-wrapper">
+				<li
+					class="item-slot"
+					ng-repeat="n in range(1,6) track by $index"
+					ng-mouseover="$parent.$parent.hoverIn(build.snapshot[data.currentSnapshot].items[$index],$event);"
+					ng-mouseleave="$parent.$parent.hoverOut()">
 
-                    <img
-                        tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].items[$index].name}}"
-                        tooltip-trigger="mouseenter"
-                        tooltip-placement="top"
-                        tooltip-popup-delay = "600"
-                        ng-hide="build.snapshot[data.currentSnapshot].items[$index].id==null"
-                        ng-class="{'hidden': typeof(build.snapshot[data.currentSnapshot].items[$index]) == 'undefined'}"
-                        ng-click="removeItem($index)"
-                        title=""
-                        alt="Slot {{$index+1}}"
-                        otr-src="{{ build.snapshot[data.currentSnapshot].items[$index].id | ddragon: build.version:'item'}}">
+					<img
+						tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].items[$index].name}}"
+						tooltip-trigger="mouseenter"
+						tooltip-placement="top"
+						tooltip-popup-delay = "600"
+						ng-hide="build.snapshot[data.currentSnapshot].items[$index].id==null"
+						ng-class="{'hidden': typeof(build.snapshot[data.currentSnapshot].items[$index]) == 'undefined'}"
+						ng-click="removeItem($index)"
+						title=""
+						alt="Slot {{$index+1}}"
+						otr-src="{{ build.snapshot[data.currentSnapshot].items[$index].id | ddragon: build.version:'item'}}">
 
-                </li>
-                <li class="item-slot"
-                    ng-mouseover="$parent.hoverIn(build.snapshot[data.currentSnapshot].trinket,$event);"
-                    ng-mouseleave="$parent.hoverOut(build.snapshot[data.currentSnapshot].trinket);">
-                    <img
-                        tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].trinket.name}}"
-                        tooltip-trigger="mouseenter"
-                        tooltip-placement="top"
-                        tooltip-popup-delay = "600"
-                        ng-hide="build.snapshot[data.currentSnapshot].trinket==null"
-                        ng-model="build.snapshot[data.currentSnapshot].trinket"
-                        ng-click="removeItem(7)"
-                        title=""
-                        alt="Trinket"
-                        otr-src="{{ build.snapshot[data.currentSnapshot].trinket.id | ddragon: build.version:'item'}}">
-                </li>
-            </ul>
-        </div>
-    </div>
+				</li>
+				<li class="item-slot"
+					ng-mouseover="$parent.hoverIn(build.snapshot[data.currentSnapshot].trinket,$event);"
+					ng-mouseleave="$parent.hoverOut(build.snapshot[data.currentSnapshot].trinket);">
+					<img
+						tooltip-html-unsafe="{{build.snapshot[data.currentSnapshot].trinket.name}}"
+						tooltip-trigger="mouseenter"
+						tooltip-placement="top"
+						tooltip-popup-delay = "600"
+						ng-hide="build.snapshot[data.currentSnapshot].trinket==null"
+						ng-model="build.snapshot[data.currentSnapshot].trinket"
+						ng-click="removeItem(7)"
+						title=""
+						alt="Trinket"
+						otr-src="{{ build.snapshot[data.currentSnapshot].trinket.id | ddragon: build.version:'item'}}">
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

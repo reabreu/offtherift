@@ -33,6 +33,7 @@
     "angular-block-ui": "~0.2.0",
     "angular-slick": "~0.2.1",
     "zepto": "~1.1.6",
-    "angular-perfect-scrollbar": "~0.0.4"
+    "angular-perfect-scrollbar": "~0.0.4",
+    "angular-ui-tree": "~2.6.0"
   }
 }

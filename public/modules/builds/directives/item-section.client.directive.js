@@ -62,7 +62,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 							$scope.updateBuildSnapshots().then(function () {
 								// update snapshot's items
 								$scope.updateSnapshots();
-								// evoques calculate from BuildsController
+								// evokes calculate from BuildsController
 								$scope.$parent.evaluateStatsRequest();
 							});
 						});
@@ -70,7 +70,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				});
 
 				$scope.init = function(){
-					$scope.itemTree = null;
+					$scope.itemTree = [];
 					$scope.buildMode = $state.current.name;
 
 					if( $scope.buildMode != "viewBuild"){
@@ -388,7 +388,8 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 * @return
 				 */
 				$scope.getItemTree = function(itemId, version) {
-					$scope.itemTree = {}; // start with a clean tree
+					$scope.itemTree = []; // start with a clean tree
+					var newRoot = {id : 1};
 
 					// TODO: Refactor to get only the necessary items...
 					Repository.getItems({ 'version' : version }).then(function(data) {
@@ -396,12 +397,12 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 						for (var i = data.items.length - 1; i >= 0; i--) {
 							if (data.items[i].id == itemId) {
 								// Insert the root node into the tree.
-								$scope.itemTree.item = data.items[i];
-								$scope.itemTree.dependencies = getDependencies(data.items[i], data.items);
+								newRoot.item = data.items[i];
+								newRoot.dependencies = getDependencies(data.items[i], data.items, 10);
 								break;
 							}
 						};
-
+						$scope.itemTree.push(newRoot);
 						console.log($scope.itemTree);
 					});
 				};
@@ -413,14 +414,14 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 				 * @param  {[type]} items  [description]
 				 * @return [node] Nodes with the information of the base items.
 				 */
-				var getDependencies = function(item, itemList) {
+				var getDependencies = function(item, itemList, level) {
 					// Indexes of the items that should be added to the tree.
 					var search = (typeof item.from === 'undefined') ? [] : item.from;
 					var result = [];
 
 					// Dig Deeper
 					for (var i = search.length - 1; i >= 0; i--) {
-						var nextNode = {};
+						var nextNode = {id : level + i + 1};
 
 						// Get the item information for search[i].
 						for (var j = itemList.length - 1; j >= 0; j--) {
@@ -430,7 +431,7 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 							}
 						};
 
-						nextNode.Dependencies = getDependencies(nextNode.item, itemList);
+						nextNode.Dependencies = getDependencies(nextNode.item, itemList, nextNode.id*10);
 						
 						result.push(nextNode);
 					}
@@ -442,4 +443,4 @@ angular.module('builds').directive('itemSection', [ 'ngToast','$state', 'Reposit
 			}
 		};
 	}
-]);
+]).requires.push('ui.tree');
